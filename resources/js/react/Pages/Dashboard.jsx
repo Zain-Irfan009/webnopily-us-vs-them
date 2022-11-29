@@ -104,7 +104,7 @@ export function Dashboard({ setLocationChange }) {
                                 primaryAction={
                                     {
                                         content:
-                                            <Link url='/templates'>
+                                            <Link url='/admin/apps/us-vs-them/templates'>
                                                 Change your  template
                                             </Link>
                                         ,
