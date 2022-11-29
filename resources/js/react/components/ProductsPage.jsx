@@ -1,8 +1,9 @@
-import {gql, useQuery} from '@apollo/client';
-import {Banner} from '@shopify/polaris';
+import { gql, useQuery } from '@apollo/client';
+import { Banner } from '@shopify/polaris';
 import React from 'react';
-import {ProductsList} from "./ProductsList";
-import {Loading} from '@shopify/app-bridge-react';
+import { ProductsList } from "./ProductsList";
+import { Loading } from '@shopify/app-bridge-react';
+import UsVsThem from "../../../../routes/admin/UsVsThem";
 
 const PRODUCTS_QUERY = gql`{
   products(first: 10) {
@@ -19,19 +20,22 @@ const PRODUCTS_QUERY = gql`{
 
 
 function ProductsPage() {
-    const {loading, error, data} = useQuery(PRODUCTS_QUERY);
+  const { loading, error, data } = useQuery(PRODUCTS_QUERY);
 
-    if (loading) return (
-        <Loading/>
-    );
+  if (loading) return (
+    <Loading />
+  );
 
-    if (error) return (
-        <Banner status="critical">
-            There was an issue loading products.
-        </Banner>
-    );
+  if (error) return (
+    <Banner status="critical">
+      There was an issue loading products.
+    </Banner>
+  );
 
-    return <ProductsList data={data}/>;
+  return (
+    // <ProductsList data={data}/>
+    <UsVsThem />
+  );
 }
 
 export default ProductsPage;

@@ -1,6 +1,5 @@
 import { ResourceItem, ResourceList, TextStyle } from "@shopify/polaris";
 import React from "react";
-import UsVsThem from "../../../../routes/admin/UsVsThem";
 
 export function ProductsList({ data }) {
 
@@ -11,26 +10,26 @@ export function ProductsList({ data }) {
         };
     });
     return (
-        // <ResourceList
-        //     showHeader
-        //     resourceName={{ singular: 'product', plural: 'products' }}
-        //     items={products}
-        //     renderItem={({ id, title }) => {
+        <ResourceList
+            showHeader
+            resourceName={{ singular: 'product', plural: 'products' }}
+            items={products}
+            renderItem={({ id, title }) => {
 
-        //         return (
-        //             <ResourceItem
-        //                 id={id}
-        //                 accessibilityLabel={`View details for ${title}`}
-        //             >
-        //                 <h3>
-        //                     <TextStyle variation="strong">{title}</TextStyle>
-        //                 </h3>
-        //             </ResourceItem>
-        //         );
-        //     }}
-        // >
-        // </ResourceList>
+                return (
+                    <ResourceItem
+                        id={id}
+                        accessibilityLabel={`View details for ${title}`}
+                    >
+                        <h3>
+                            <TextStyle variation="strong">{title}</TextStyle>
+                        </h3>
+                    </ResourceItem>
+                );
+            }}
+        >
+        </ResourceList>
 
-        <UsVsThem />
+        
     )
 }
