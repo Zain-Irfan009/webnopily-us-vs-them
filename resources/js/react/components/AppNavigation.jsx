@@ -1,7 +1,7 @@
 import React from "react";
-import {AppLink, NavigationMenu} from '@shopify/app-bridge/actions';
-import {useAppBridge} from '@shopify/app-bridge-react';
-import {useLocation} from 'react-router-dom';
+import { AppLink, NavigationMenu } from '@shopify/app-bridge/actions';
+import { useAppBridge } from '@shopify/app-bridge-react';
+import { useLocation } from 'react-router-dom';
 
 function AppNavigation() {
     const app = useAppBridge();
@@ -18,8 +18,18 @@ function AppNavigation() {
         destination: '/templates',
     });
 
+    const locations = AppLink.create(app, {
+        label: 'Locations',
+        destination: '/locations',
+    });
+
+    const settings = AppLink.create(app, {
+        label: 'Settings',
+        destination: '/settings',
+    });
+
     const navigationMenu = NavigationMenu.create(app, {
-        items: [dashboard, templates],
+        items: [dashboard, templates, locations, settings],
     });
 
     switch (location.pathname) {
@@ -29,8 +39,14 @@ function AppNavigation() {
         case "/templates":
             navigationMenu.set({ active: templates });
             break;
+        case "/locations":
+            navigationMenu.set({ active: locations });
+            break;
+        case "/settings":
+            navigationMenu.set({ active: settings });
+            break;
         default:
-            navigationMenu.set({active: undefined});
+            navigationMenu.set({ active: undefined });
     }
 
     return null

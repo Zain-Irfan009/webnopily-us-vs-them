@@ -17,7 +17,7 @@ import '../../../public/css/index.css';
 import '../../../public/css/theme.css';
 import '../../../public/css/usVsThem.css';
 
-import { Dashboard, Templates } from './Pages/index'
+import { Dashboard, Templates, Settings, Locations } from './Pages/index'
 
 
 function userLoggedInFetch(app) {
@@ -70,7 +70,9 @@ function App({shop, host, apiKey}) {
                         <PageLayout>
                             <Switch>
                                 <Route exact path="/" component={Dashboard} />
-                                <Route path="/templates" component={Templates}/>                        
+                                <Route path="/templates" component={Templates}/> 
+                                <Route path="/locations" component={Locations} /> 
+                                <Route path="/settings" component={Settings} />                        
                             </Switch>
                         </PageLayout>
                     </AppBridgeApolloProvider>
