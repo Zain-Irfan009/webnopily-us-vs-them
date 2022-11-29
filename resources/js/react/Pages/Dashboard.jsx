@@ -25,6 +25,10 @@ export function Dashboard({ setLocationChange }) {
         setAppEnable(!appEnable)
     }
 
+    const handleLocationChange = () => {
+        location.pathname = '/templates'
+    }
+
     return (
         <div className='Dashboard1'>
             <Page
@@ -90,9 +94,13 @@ export function Dashboard({ setLocationChange }) {
                                         This is your dashboard. It gathers all your templates. You can create as many
                                         as you want for each product.
                                     </p>
-                                    <Link to='/templates'>
-                                        <Button size="slim" >Create a Table</Button>
-                                    </Link>
+                                    {/* <Link to='/templates'>
+                                        <Button size="slim">Create a Table</Button>
+                                    </Link> */}
+
+
+                                    <Button size="slim" onClick={handleLocationChange}>Create a Table</Button>
+
                                 </Stack>
                             </div>
                         </Card>
