@@ -1,5 +1,6 @@
-import { Page, Card, Layout, MediaCard, Button, Stack, Badge, Banner, List, Link, Popover, ActionList } from '@shopify/polaris';
+import { Page, Card, Layout, MediaCard, Button, Stack, Badge, Banner, List, Popover, ActionList } from '@shopify/polaris';
 import React, { useState, useCallback, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const tables = [
     {
@@ -89,7 +90,7 @@ export function Dashboard({ setLocationChange }) {
                                         This is your dashboard. It gathers all your templates. You can create as many
                                         as you want for each product.
                                     </p>
-                                    <Link url='/templates'>
+                                    <Link to='/templates'>
                                         <Button size="slim" >Create a Table</Button>
                                     </Link>
                                 </Stack>
@@ -104,13 +105,13 @@ export function Dashboard({ setLocationChange }) {
                                 primaryAction={
                                     {
                                         content:
-                                            <Link url='/admin/apps/us-vs-them/templates'>
+                                            <Link to='/admin/apps/us-vs-them/templates'>
                                                 Change your  template
                                             </Link>
                                         ,
 
                                         onAction: () => {
-                                            setLocationChange("/admin/apps/usVsThem/Templates")
+                                            // setLocationChange("/admin/apps/usVsThem/Templates")
                                         },
                                     }
                                 }
