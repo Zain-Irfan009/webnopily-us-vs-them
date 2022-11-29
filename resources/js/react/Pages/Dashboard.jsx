@@ -16,7 +16,7 @@ const tables = [
     }
 ]
 
-export default function UsVsThem({ setLocationChange }) {
+export function Dashboard({ setLocationChange }) {
 
     const [appEnable, setAppEnable] = useState(false)
     const handleAppEnable = () => {

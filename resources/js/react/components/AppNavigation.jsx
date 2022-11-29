@@ -8,25 +8,26 @@ function AppNavigation() {
 
     const location = useLocation();
 
-    const home = AppLink.create(app, {
-        label: 'Home',
+    const dashboard = AppLink.create(app, {
+        label: 'Dashboard',
         destination: '/',
     });
 
-    const example = AppLink.create(app, {
-        label: 'Example',
-        destination: '/example',
+    const templates = AppLink.create(app, {
+        label: 'Templates',
+        destination: '/templates',
     });
+
     const navigationMenu = NavigationMenu.create(app, {
-        items: [home, example],
+        items: [dashboard, templates],
     });
 
     switch (location.pathname) {
         case "/":
-            navigationMenu.set({active: home});
+            navigationMenu.set({ active: dashboard });
             break;
-        case "/example":
-            navigationMenu.set({active: example});
+        case "/templates":
+            navigationMenu.set({ active: templates });
             break;
         default:
             navigationMenu.set({active: undefined});

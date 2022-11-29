@@ -3,7 +3,7 @@ import { Banner } from '@shopify/polaris';
 import React from 'react';
 import { ProductsList } from "./ProductsList";
 import { Loading } from '@shopify/app-bridge-react';
-import UsVsThem from "../../../../routes/admin/UsVsThem";
+
 
 const PRODUCTS_QUERY = gql`{
   products(first: 10) {
@@ -33,8 +33,8 @@ function ProductsPage() {
   );
 
   return (
-    // <ProductsList data={data}/>
-    <UsVsThem />
+    <ProductsList data={data}/>
+    // <UsVsThem />
   );
 }
 
