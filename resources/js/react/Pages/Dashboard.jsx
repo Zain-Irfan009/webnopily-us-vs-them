@@ -89,7 +89,7 @@ export function Dashboard({ setLocationChange }) {
                                         This is your dashboard. It gathers all your templates. You can create as many
                                         as you want for each product.
                                     </p>
-                                    <Link url='/admin/apps/us-vs-them/templates'>
+                                    <Link url='/templates'>
                                         <Button size="slim" >Create a Table</Button>
                                     </Link>
                                 </Stack>
@@ -104,7 +104,7 @@ export function Dashboard({ setLocationChange }) {
                                 primaryAction={
                                     {
                                         content:
-                                            <Link url='/admin/apps/us-vs-them/templates'>
+                                            <Link url='/templates'>
                                                 Change your  template
                                             </Link>
                                         ,
