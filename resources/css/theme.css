@@ -1,0 +1,145 @@
+html {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --top-bar-background: #000;
+    --top-bar-color: #fff;
+    --top-bar-background-lighter: hsla(198, 33%, 55%, 1);
+    --p-on-surface-background: #262626;
+    --pc-top-bar-color: #fff;
+    --pc-top-bar-background: #000;
+    --pc-top-bar-background-darker: #5E6365;
+    --pc-top-bar-background-lighter: #3D3F40;
+    --pc-top-bar-border: #000;
+    --pc-thumbnail-extra-small-size: 1.5rem;
+    --pc-thumbnail-small-size: 2.5rem;
+    --pc-thumbnail-medium-size: 3.75rem;
+    --pc-thumbnail-large-size: 5rem;
+}
+
+
+/* ---------------Polaris Bug--------------------- */
+
+.Polaris-Popover__Section .Polaris-Stack__Item .Polaris-Button--plain .Polaris-Button__Content::before,
+.Polaris-Sheet .Polaris-Stack__Item .Polaris-Button--plain .Polaris-Button__Content::before {
+    content: 'clear';
+}
+
+.Polaris-Filters-ConnectedFilterControl__MoreFiltersButtonContainer .Polaris-Button__Content::before {
+    content: 'More Filters';
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.Polaris-Filters__FiltersContainer .Polaris-Filters__FiltersContainerHeader,
+.Polaris-Filters__FiltersContainer .Polaris-Filters__FiltersContainerFooter,
+.Polaris-Sheet .Polaris-Filters__FiltersContainerHeader {
+    position: relative;
+}
+
+.Polaris-Filters__FiltersContainer .Polaris-Filters__FiltersContainerHeader h3::before,
+.Polaris-Sheet .Polaris-Filters__FiltersContainerHeader h3::before {
+    position: absolute;
+    content: 'More Filters';
+    font-size: var(--p-font-size-300);
+    line-height: var(--p-font-line-height-3);
+    font-weight: var(--p-font-weight-semibold);
+    bottom: 13px;
+}
+
+.Polaris-Sheet .Polaris-Filters__FiltersContainerHeader h3::before {
+    right: 40%;
+}
+
+.Polaris-Filters__FiltersContainer .Polaris-Filters__FiltersContainerFooter .Polaris-Button,
+.Polaris-Sheet .Polaris-Filters__FiltersContainerHeader .Polaris-Button--primary {
+    min-width: 50px;
+}
+
+.Polaris-Filters__FiltersContainer .Polaris-Filters__FiltersContainerFooter .Polaris-Button__Content::before {
+    position: absolute;
+    content: 'Clear';
+}
+
+.Polaris-Sheet .Polaris-Filters__FiltersMobileContainerFooter .Polaris-Button__Content::before {
+    position: absolute;
+    content: 'Clear all filters';
+}
+
+.Polaris-Filters__FiltersContainer .Polaris-Filters__FiltersContainerFooter div .Polaris-Button__Content::before,
+.Polaris-Sheet .Polaris-Filters__FiltersContainerHeader .Polaris-Button--primary .Polaris-Button__Content::before {
+    position: absolute;
+    content: 'Done';
+}
+
+.Polaris-Popover__Section {
+    min-width: 130px;
+}
+
+
+/* ---------------------------Polaris Buttons------------------------- */
+
+.Polaris-Button {
+    background: var(--p-surface);
+}
+
+.Polaris-Button--primary {
+    background: var(--p-action-primary);
+}
+
+.Polaris-Button--destructive {
+    background: var(--p-action-critical);
+}
+
+.Polaris-Frame-Toast__Action .Polaris-Button {
+    background: transparent;
+}
+
+
+
+/* ---------------------------other changings in theme------------------------- */
+
+.Polris-Contextual-SaveBar {
+    height: 0;
+}
+
+
+/* -----------------------TopBar------------------------------ */
+.Polaris-TopBar-Menu__Activator:hover {
+    background: transparent;
+}
+
+/*
+.Polaris-TopBar {
+  background-color: var(--top-bar-background);
+  border-color: var(--pc-top-bar-border);
+}
+
+.Polaris-TopBar__SecondaryMenu svg {
+  fill: var(--pc-top-bar-color);
+}
+
+.Polaris-TopBar-UserMenu__Details .Polaris-Text--truncate {
+  color: var(--pc-top-bar-color);
+}
+
+.Polaris-TopBar-UserMenu__Details .Polaris-Text--subdued {
+  color: var(--pc-top-bar-color);
+  opacity: 0.7;
+}
+
+.Polaris-TopBar-Menu__Activator:active,
+.Polaris-TopBar-Menu__Activator[aria-expanded='true'] {
+  background-color: var(--pc-top-bar-background-lighter);
+} */

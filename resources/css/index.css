@@ -1,0 +1,300 @@
+.Polaris-Table .Polaris-Card__Section {
+  padding: 0;
+}
+
+.data-table-pagination {
+  display: flex;
+  justify-content: center;
+  border-top: var(--p-border-base);
+  margin: auto;
+  padding: var(--p-space-6) var(--p-space-4);
+}
+
+.Polaris-Table .Polaris-Avatar {
+  background: var(--p-surface);
+  border: var(--p-border-divider);
+  border-radius: var(--p-border-radius-1);
+  width: var(--pc-thumbnail-small-size);
+  min-width: var(--pc-thumbnail-extra-small-size);
+}
+
+.Polaris-Table .Polaris-Avatar__Image {
+  color: var(--p-icon-subdued);
+  object-fit: contain;
+}
+
+.Polaris-Table .Polaris-IndexTable-Product-Column {
+  max-width: 15vw;
+  min-width: 12rem;
+}
+
+.Polaris-Table .Polaris-IndexTable-Product-Column a {
+  color: var(--p-text);
+  font-weight: var(--p-font-weight-semibold);
+  text-decoration: none;
+}
+
+.Polaris-Table .Polaris-IndexTable-Product-Column a:hover {
+  text-decoration: underline;
+}
+
+.Polaris-Table .Polaris-IndexTable-Image {
+  width: 3.75rem;
+}
+
+.Polaris-Product-Actions {
+  margin-top: var(--p-space-4);
+}
+
+.Polaris-Product-Actions .Polaris-Button--destructive {
+  background: #0000;
+  border: var(--p-border-width-1) solid var(--p-border-critical);
+  box-shadow: none;
+  color: var(--p-interactive-critical);
+}
+
+.Polaris-Product-Actions .Polaris-Button--destructive:hover {
+  background: var(--p-surface-critical-subdued);
+  border: var(--p-border-width-1) solid var(--p-border-critical);
+}
+
+.Product-Card-Sales-Channel .Polaris-Card__SectionHeader .Polaris-Text--headingSm {
+  font-size: var(--p-font-size-75);
+}
+
+.Sales-Channels-Stack .Polaris-Stack .Polaris-Stack__Item p::before {
+  content: '';
+  display: inline-block;
+  height: 0.625rem;
+  width: 0.625rem;
+  -moz-border-radius: 7.5px;
+  -webkit-border-radius: 7.5px;
+  border-radius: 7.5px;
+  background-color: #108043;
+  margin-right: 10px;
+}
+
+.Polaris-Product-Gallery .Polaris-Thumbnail,
+.Polaris-Product-DropZone .Polaris-DropZone {
+  width: 130px;
+  height: 130px;
+}
+
+.Polaris-Product-DropZone-Extra {
+  border: var(--p-border-width-1) dashed var(--p-border-neutral-subdued);
+  border-radius: var(--p-border-radius-large);
+}
+
+.Insights-Card .Polaris-Card,
+.Product-Organization-Card .Polaris-Card,
+.OnlineStore-Card .Polaris-Card {
+  background-color: var(--p-surface-subdued);
+  margin-top: var(--p-space-4);
+}
+
+.Insights-Card .Polaris-Card .Polaris-Card__Section {
+  margin-top: -8px;
+}
+
+.Insights-Card .Polaris-Card .Polaris-Card__Section .Polaris-Text--root {
+  color: var(--p-text-subdued);
+}
+
+.Product-Organization-Card .Polaris-Card__Section {
+  border-top: none;
+  padding: 0;
+  padding-left: var(--p-space-4);
+  padding-right: var(--p-space-4);
+  padding-top: var(--p-space-4);
+}
+
+.Product-Organization-Card .Polaris-Card__Section:last-child {
+  padding-bottom: var(--p-space-4);
+}
+
+@media (min-width: 30.625em) {
+  .Product-Organization-Card .Polaris-Card__Section {
+    padding-left: var(--p-space-5);
+    padding-right: var(--p-space-5);
+  }
+}
+
+.Polaris-Modal-Section .Modal-Product-Tags ul,
+.Polaris-Modal-Section .Modal-Product-Tags .Polaris-Box {
+  padding-top: 0;
+}
+
+.Polaris-Modal-Section .Modal-Product-Tags .Polaris-Box p {
+  color: var(--p-text-subdued);
+}
+
+.Product-Options {
+  margin-top: var(--p-space-4);
+}
+
+.Product-Tags {
+  margin-top: -30px;
+}
+
+.Product-Tags .Polaris-TextField__VerticalContent {
+  overflow: hidden;
+}
+
+.Product-Tags-Stack .Polaris-Stack {
+  margin-top: 0;
+}
+
+/* .Variants-Edit-Button {
+  position: sticky;
+  right: -1px;
+  background-color: var(--p-surface);
+  z-index: var(--pc-index-table-sticky-cell);
+  filter: drop-shadow(-0.0625rem 0 0 var(--p-divider));
+} */
+
+
+.Product-Options-Card {
+  margin-top: var(--p-space-5);
+}
+
+.Product-Options-Card .Polaris-Card__Section {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top: var(--p-border-divider);
+}
+
+.Product-Options-Card .Polaris-Stack__Item .Polaris-ButtonGroup .Polaris-ButtonGroup__Item .Polaris-Button--plain {
+  border: var(--p-border-width-1) solid var(--p-border-neutral-subdued);
+  border-bottom-color: var(--p-border-shadow-subdued);
+  border-radius: var(--p-border-radius-1);
+  border-top-color: var(--p-border-subdued);
+  box-shadow: var(--p-shadow-button);
+  color: var(--p-text);
+  min-height: var(--pc-button-slim-min-height);
+  padding: var(--pc-button-slim-vertical-padding) var(--p-space-3);
+
+}
+
+.Product-Options-Card .Polaris-Stack__Item .Polaris-ButtonGroup .Polaris-ButtonGroup__Item .Polaris-Button--plain .Polaris-Button__Text {
+  font-size: var(--p-font-size-100);
+  font-weight: var(--p-font-weight-medium);
+}
+
+.Product-Options-Card .Product-Options-Section {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.Product-Options-Card .Product-Options-Control {
+  cursor: grab;
+  display: inline-flex;
+  justify-content: center;
+  line-height: 1;
+}
+
+.Product-Options-Card .Product-Options-Control span {
+  display: block;
+  height: 1.25rem;
+  margin: auto;
+  max-height: 100%;
+  max-width: 100%;
+  width: 1.25rem;
+}
+
+.Product-Options-Card .Product-Options-Control span svg {
+  fill: var(--p-icon);
+}
+
+.Product-Options-Card .Product-Options-Grid {
+  padding-left: 25px;
+}
+
+.Product-Options-Card .Product-Options-Heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Product-Options-Card .Polaris-Tag {
+  margin-right: var(--p-space-2);
+  margin-top: var(--p-space-2);
+  border-radius: var(--p-border-radius-5);
+  font-size: .8125rem;
+  font-weight: var(--p-font-weight-regular);
+  line-height: var(--p-font-line-height-1);
+}
+
+.Product-Options-Card .Add-Variant {
+  cursor: pointer;
+}
+
+.Product-Options-Card .Add-Variant .Product-Options-Control span svg {
+  fill: var(--p-interactive);
+}
+
+.Product-Options-Card .Product-Options-Grid .Add-Product-Variant p {
+  color: var(--p-interactive);
+}
+
+.Product-Options-Card .Add-Variant:hover .Product-Options-Grid .Add-Product-Variant p,
+.Product-Options-Card .Add-Variant:hover .Product-Options-Control span svg {
+  color: var(--p-interactive-hovered);
+  fill: var(--p-interactive-hovered);
+}
+
+
+.Product-Variants-Table .Polaris-Avatar {
+  border: var(--p-border-divider);
+}
+
+.Product-Variants-Table .Polaris-IndexTable-Image img {
+  object-fit: contain;
+}
+
+.Product-Variants-Table .Polaris-IndexTable-Product-Column {
+  min-width: 10rem;
+  word-break: break-all;
+}
+
+.Product-Variants-Table .Polaris-IndexTable-Price {
+  min-width: 9.5rem;
+}
+
+.Product-Variants-Table .Polaris-IndexTable-Qunatity {
+  min-width: 7.5rem;
+}
+
+.Variants-Filter-Section {
+  padding-bottom: 30px;
+}
+
+
+
+.Product-Seo-Title {
+  word-wrap: break-word;
+  margin-bottom: var(--p-space-05);
+  color: #1a0dab;
+  font-size: 1.125rem;
+  line-height: 1.3125rem;
+  word-break: break-word;
+  font-weight: var(--p-font-weight-regular);
+}
+
+.Product-Seo-Url {
+  font-weight: var(--p-font-weight-regular);
+  word-wrap: break-word;
+  margin-bottom: var(--p-space-05);
+  color: #006621;
+  line-height: var(--p-font-line-height-1);
+  font-size: .8125rem;
+}
+
+.Product-Seo-Description {
+  word-wrap: break-word;
+  color: #545454;
+  line-height: 1.125rem;
+  font-size: .8125rem;
+  font-weight: var(--p-font-weight-regular);
+}

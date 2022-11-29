@@ -14,6 +14,11 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import ClientRouter from "./components/ClientRouter";
 import AppNavigation from "./components/AppNavigation";
 
+import '../../css/index.css'
+import '../../css/theme.css'
+import '../../css/usVsThem.css'
+
+
 function userLoggedInFetch(app) {
     const fetchFunction = authenticatedFetch(app);
 
