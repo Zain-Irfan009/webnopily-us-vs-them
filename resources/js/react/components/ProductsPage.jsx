@@ -33,5 +33,4 @@ function ProductsPage() {
 
     return <ProductsList data={data}/>;
 }
-
 export default ProductsPage;
