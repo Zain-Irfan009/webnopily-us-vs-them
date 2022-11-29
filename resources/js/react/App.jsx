@@ -9,7 +9,7 @@ import translations from "@shopify/polaris/locales/en.json";
 import '@shopify/polaris/dist/styles.css';
 import PageLayout from "./components/PageLayout";
 import {Provider, useAppBridge} from '@shopify/app-bridge-react';
-import {BrowserRouter, Routes, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import ClientRouter from "./components/ClientRouter";
 import AppNavigation from "./components/AppNavigation";
 
@@ -68,15 +68,10 @@ function App({shop, host, apiKey}) {
                     <AppBridgeApolloProvider>
                         <AppNavigation/>
                         <PageLayout>
-                            {/* <Switch>
-                                <Route path="/example" component={ExamplePage}/>
-                                <Route path="/" component={Dashboard}/>
-                            </Switch> */}
-                            <Routes>
-                                <Route path="/" element={<Dashboard />} />
-                                <Route path='templates' element={<Templates/>} />
-                                
-                            </Routes>
+                            <Switch>
+                                <Route exact path="/" component={Dashboard} />
+                                <Route path="/templates" component={Templates}/>                        
+                            </Switch>
                         </PageLayout>
                     </AppBridgeApolloProvider>
                 </AppProvider>
