@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { Page, Layout, Card, Select, Icon, Stack, TextField, Loading } from '@shopify/polaris';
 import { CircleTickMajor, CircleCancelMajor } from '@shopify/polaris-icons';
-import { Table1, Table2, Table3, Table4, SideBarNavigation } from '../../components/usVsThem/index';
+import { Table1, Table2, Table3, Table4, SideBarNavigation } from '../components/usVsThem/index';
 
 export function TemplatePage3({ activePage, setActivePage, selectedTemplate, setSelectedTemplate }) {
 
@@ -52,7 +52,7 @@ export function TemplatePage3({ activePage, setActivePage, selectedTemplate, set
         )
       ))
       setThemeInputTable1(theme)
-      
+
       setAllValues(values)
     }
   }, [advantagesCount])
@@ -220,7 +220,7 @@ export function TemplatePage3({ activePage, setActivePage, selectedTemplate, set
 
 
           <Layout.Section secondary>
-            <SideBarNavigation activePage={activePage} setActivePage={setActivePage}  />
+            <SideBarNavigation activePage={activePage} setActivePage={setActivePage} />
 
             <div className='Advantages-Tables-Preview'>
               {(() => {
