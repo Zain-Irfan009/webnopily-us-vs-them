@@ -24,10 +24,6 @@ export function Dashboard({ setLocationChange }) {
         setAppEnable(!appEnable)
     }
 
-    const handleLocationChange = () => {
-        setLocationChange('/admin/apps/usVsThem/Templates')
-    }
-
     return (
         <div className='Dashboard1'>
             <Page
@@ -93,7 +89,7 @@ export function Dashboard({ setLocationChange }) {
                                         This is your dashboard. It gathers all your templates. You can create as many
                                         as you want for each product.
                                     </p>
-                                    <Link url='/admin/apps/usVsThem/Templates' onClick={handleLocationChange}>
+                                    <Link url='/admin/apps/us-vs-them/templates'>
                                         <Button size="slim" >Create a Table</Button>
                                     </Link>
                                 </Stack>
@@ -108,7 +104,7 @@ export function Dashboard({ setLocationChange }) {
                                 primaryAction={
                                     {
                                         content:
-                                            <Link url='/admin/apps/usVsThem/Templates'>
+                                            <Link url='/admin/apps/us-vs-them/templates'>
                                                 Change your  template
                                             </Link>
                                         ,
@@ -148,31 +144,6 @@ export function Dashboard({ setLocationChange }) {
                         )}
 
                     </Layout.Section>
-
-                    {/* <Layout.Section>
-                        <Card>
-                            <div className='Polaris-MediaCard'>
-                                <div className='Polaris-MediaCard__MediaContainer'>
-                                    <img src='https://i.ibb.co/tM13T2k/Screenshot-2.jpg' alt="table1" className='MediaCard-Img' />
-                                </div>
-
-                                <div className='Polaris-MediaCard__InfoContainer'>
-                                    <div className='Polaris-Card__Section'>
-
-                                        <Stack vertical spacing='baseTight'>
-                                            <div className='Polaris-MediaCard__Heading'>
-                                                <h2>First Table</h2>
-                                            </div>
-                                        </Stack>
-                                    </div>
-                                </div>
-                            </div>
-                        </Card>
-                    </Layout.Section> */}
-
-                    {/* <Layout.Section secondary>
-
-                    </Layout.Section> */}
                 </Layout>
             </Page>
         </div>
