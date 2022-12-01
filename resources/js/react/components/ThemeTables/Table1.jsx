@@ -3,6 +3,8 @@ import { Card, IndexTable, Icon, Stack, Button } from '@shopify/polaris';
 import {
     TickMinor, CancelMinor, MobileMajor, DesktopMajor, CircleTickMajor, CircleCancelMajor
 } from '@shopify/polaris-icons';
+import {useAppQuery} from "../hooks/index";
+import axios from 'axios';
 
 
 export function Table1({ themePc, themeMobile, btnShow, setActivePage, selectedTemplate, setSelectedTemplate }) {
@@ -15,9 +17,19 @@ export function Table1({ themePc, themeMobile, btnShow, setActivePage, selectedT
         setSelectedTemplate(1)
     }
 
-    const handleCustomizeTable = () => {
-        setSelectedTemplate(1)
-        setActivePage(3)
+    const handleCustomizeTable = async () => {
+
+      const response= await axios
+            .post(
+                `http://app-template-php.test/api/step-1?template_id=1&shop_name=zain-store-tlx.myshopify.com`
+            )
+            .then(res => {
+                console.log(res);
+                setSelectedTemplate(1)
+                setActivePage(3)
+            })
+            .catch(error =>
+                console.log(error));
     }
 
 
