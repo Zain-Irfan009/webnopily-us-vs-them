@@ -58,6 +58,9 @@
     width: 100%;
 }
 
+.Navigation-Frame .Polaris-Frame__Main {
+    padding: 0;
+}
 /* ----------------------UsVsThem Dashboard1--------------------------- */
 
 .Templates-Page .Polaris-Layout .Polaris-Layout__Section {
