@@ -5,7 +5,7 @@ import {
 } from '@shopify/polaris-icons';
 
 
-export function Table1({ themePc, themeMobile, setActivePage, selectedTemplate, setSelectedTemplate }) {
+export function Table1({ themePc, themeMobile, btnShow, setActivePage, selectedTemplate, setSelectedTemplate }) {
     const [screen, setScreen] = useState(true)
     const handleScreenSelection = () => {
         setScreen(!screen)
@@ -16,6 +16,7 @@ export function Table1({ themePc, themeMobile, setActivePage, selectedTemplate, 
     }
 
     const handleCustomizeTable = () => {
+        setSelectedTemplate(1)
         setActivePage(3)
     }
 
@@ -97,15 +98,22 @@ export function Table1({ themePc, themeMobile, setActivePage, selectedTemplate, 
 
     return (
         <Card sectioned>
-            <div className={`${screen ? 'Theme1-Pc-Table' : 'Theme1-Mobile-Table'} Theme-Table`}>
-                <IndexTable
-                    resourceName={resourceName}
-                    itemCount={screen ? themePc?.length : themeMobile?.length}
-                    selectable={false}
-                    headings={screen ? themeHeadingsPc : themeHeadingsMobile}
-                >
-                    {screen ? themeRowsPc : themeRowsMobile}
-                </IndexTable>
+            <div className='Theme-Card-Content'>
+                <div className={`${screen ? 'Theme1-Pc-Table' : 'Theme1-Mobile-Table'} Theme-Table`}>
+                    <IndexTable
+                        resourceName={resourceName}
+                        itemCount={screen ? themePc?.length : themeMobile?.length}
+                        selectable={false}
+                        headings={screen ? themeHeadingsPc : themeHeadingsMobile}
+                    >
+                        {screen ? themeRowsPc : themeRowsMobile}
+                        <IndexTable.Row>
+                            <IndexTable.Cell>;</IndexTable.Cell>
+                            <IndexTable.Cell>;</IndexTable.Cell>
+                            <IndexTable.Cell>;</IndexTable.Cell>
+                        </IndexTable.Row>
+                    </IndexTable>
+                </div>
 
                 <div className='Screen-Selection'>
                     <Stack>
@@ -123,13 +131,18 @@ export function Table1({ themePc, themeMobile, setActivePage, selectedTemplate, 
                         </div>
 
                         <div className='Screen-Selection-Btn'>
-                            {selectedTemplate === 1 ?
+                            {/* {selectedTemplate === 1 ?
                                 <Button onClick={handleCustomizeTable}>Customize</Button> :
                                 <Button primary onClick={handleSelectTable}>Select</Button>
+                            } */}
+                            {
+                                btnShow &&
+                                <Button primary onClick={handleCustomizeTable}>Select</Button>
                             }
                         </div>
                     </Stack>
                 </div>
+
             </div>
         </Card>
     )

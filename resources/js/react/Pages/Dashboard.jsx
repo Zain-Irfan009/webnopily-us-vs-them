@@ -94,12 +94,12 @@ export function Dashboard({ setLocationChange }) {
                                         This is your dashboard. It gathers all your templates. You can create as many
                                         as you want for each product.
                                     </p>
-                                    {/* <Link to='/templates'>
+                                    <Link to='/templates'>
                                         <Button size="slim">Create a Table</Button>
-                                    </Link> */}
+                                    </Link>
 
 
-                                    <Button size="slim" onClick={handleLocationChange}>Create a Table</Button>
+                                    {/* <Button size="slim" onClick={handleLocationChange}>Create a Table</Button> */}
 
                                 </Stack>
                             </div>

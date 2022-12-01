@@ -5,7 +5,7 @@ import {
 } from '@shopify/polaris-icons';
 
 
-export function Table2({ themePc, themeMobile, setActivePage, selectedTemplate, setSelectedTemplate }) {
+export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMobile, btnShow, setActivePage, selectedTemplate, setSelectedTemplate }) {
     const [screen, setScreen] = useState(true)
     const handleScreenSelection = () => {
         setScreen(!screen)
@@ -16,6 +16,7 @@ export function Table2({ themePc, themeMobile, setActivePage, selectedTemplate, 
     }
 
     const handleCustomizeTable = () => {
+        setSelectedTemplate(2)
         setActivePage(3)
     }
 
@@ -107,36 +108,38 @@ export function Table2({ themePc, themeMobile, setActivePage, selectedTemplate, 
         ),
     );
 
-    const themeHeadingsPc =
-        [
-            { title: '' },
-            { title: 'Your Brand' },
-            { title: 'Competitor 1' },
-            { title: 'Competitor 2' },
-            { title: 'Competitor 3' },
-            { title: 'Competitor 4' },
-        ]
+    // const themeHeadingsPc =
+    //     [
+    //         { title: '' },
+    //         { title: 'Your Brand' },
+    //         { title: 'Competitor 1' },
+    //         { title: 'Competitor 2' },
+    //         { title: 'Competitor 3' },
+    //         { title: 'Competitor 4' },
+    //     ]
 
-    const themeHeadingsMobile =
-        [
-            { title: '' },
-            { title: 'Advantage 1' },
-            { title: 'Advantage 2' },
-            { title: 'Advantage 3' },
-            { title: 'Advantage 4' },
-        ]
+    // const themeHeadingsMobile =
+    //     [
+    //         { title: '' },
+    //         { title: 'Advantage 1' },
+    //         { title: 'Advantage 2' },
+    //         { title: 'Advantage 3' },
+    //         { title: 'Advantage 4' },
+    //     ]
 
     return (
         <Card sectioned>
-            <div className={`${screen ? 'Theme2-Pc-Table' : 'Theme2-Mobile-Table'} Theme-Table`}>
-                <IndexTable
-                    resourceName={resourceName}
-                    itemCount={screen ? themePc?.length : themeMobile?.length}
-                    selectable={false}
-                    headings={screen ? themeHeadingsPc : themeHeadingsMobile}
-                >
-                    {screen ? themeRowsPc : themeRowsMobile}
-                </IndexTable>
+            <div className='Theme-Card-Content'>
+                <div className={`${screen ? 'Theme2-Pc-Table' : 'Theme2-Mobile-Table'} Theme-Table`}>
+                    <IndexTable
+                        resourceName={resourceName}
+                        itemCount={screen ? themePc?.length : themeMobile?.length}
+                        selectable={false}
+                        headings={screen ? themeHeadingsPc : themeHeadingsMobile}
+                    >
+                        {screen ? themeRowsPc : btnShow ? themeRowsMobile : themeRowsPc}
+                    </IndexTable>
+                </div>
 
                 <div className='Screen-Selection'>
                     <Stack>
@@ -158,10 +161,14 @@ export function Table2({ themePc, themeMobile, setActivePage, selectedTemplate, 
                                 <Button onClick={handleCustomizeTable}>Customize</Button> :
                                 <Button primary onClick={handleSelectTable}>Select</Button>
                             } */}
-                            <Button primary>Select</Button>
+                            {
+                                btnShow &&
+                                <Button primary onClick={handleCustomizeTable}>Select</Button>
+                            }
                         </div>
                     </Stack>
                 </div>
+
             </div>
         </Card>
     )

@@ -283,6 +283,26 @@ const theme4Mobile = [
   },
 ]
 
+const themeHeadingsPc =
+  [
+    { title: '' },
+    { title: 'Your Brand' },
+    { title: 'Competitor 1' },
+    { title: 'Competitor 2' },
+    { title: 'Competitor 3' },
+    { title: 'Competitor 4' },
+  ]
+
+const themeHeadingsMobile =
+  [
+    { title: '' },
+    { title: 'Advantage 1' },
+    { title: 'Advantage 2' },
+    { title: 'Advantage 3' },
+    { title: 'Advantage 4' },
+  ]
+
+
 export function TemplatePage2({ setActivePage, selectedTemplate, setSelectedTemplate }) {
 
   return (
@@ -301,25 +321,26 @@ export function TemplatePage2({ setActivePage, selectedTemplate, setSelectedTemp
           </Layout.Section>
 
           <Layout.Section oneHalf >
-            <Table1 themePc={theme1Pc} themeMobile={theme1Mobile} setActivePage={setActivePage}
+            <Table1 themePc={theme1Pc} themeMobile={theme1Mobile} setActivePage={setActivePage} btnShow={true}
               selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
           </Layout.Section>
 
 
           <Layout.Section oneHalf>
-            <Table2 themePc={theme2Pc} themeMobile={theme2Mobile} setActivePage={setActivePage}
+            <Table2 themePc={theme2Pc} themeMobile={theme2Mobile} setActivePage={setActivePage} btnShow={true}
+              selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate}
+              themeHeadingsMobile={themeHeadingsMobile} themeHeadingsPc={themeHeadingsPc} />
+          </Layout.Section>
+
+
+          <Layout.Section oneHalf>
+            <Table3 themePc={theme3Pc} themeMobile={theme3Mobile} setActivePage={setActivePage} btnShow={true}
               selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
           </Layout.Section>
 
 
           <Layout.Section oneHalf>
-            <Table3 themePc={theme3Pc} themeMobile={theme3Mobile} setActivePage={setActivePage}
-              selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
-          </Layout.Section>
-
-
-          <Layout.Section oneHalf>
-            <Table4 themePc={theme4Pc} themeMobile={theme4Mobile} setActivePage={setActivePage}
+            <Table4 themePc={theme4Pc} themeMobile={theme4Mobile} setActivePage={setActivePage} btnShow={true}
               selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
           </Layout.Section>
 
@@ -330,12 +351,3 @@ export function TemplatePage2({ setActivePage, selectedTemplate, setSelectedTemp
 }
 
 
-
-// {
-//   !screen[1] &&
-//   <IndexTable.Row>
-//     <IndexTable.Cell></IndexTable.Cell>
-//     <IndexTable.Cell></IndexTable.Cell>
-//     <IndexTable.Cell></IndexTable.Cell>
-//   </IndexTable.Row>
-// } 

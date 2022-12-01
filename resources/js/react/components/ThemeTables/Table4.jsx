@@ -4,7 +4,7 @@ import {
     MobileMajor, DesktopMajor, CircleTickMinor, CircleCancelMinor, CircleTickMajor, CircleCancelMajor
 } from '@shopify/polaris-icons';
 
-export function Table4({ themePc, themeMobile, setActivePage, selectedTemplate, setSelectedTemplate }) {
+export function Table4({ themePc, themeMobile, btnShow, setActivePage, selectedTemplate, setSelectedTemplate }) {
     const [screen, setScreen] = useState(true)
     const handleScreenSelection = () => {
         setScreen(!screen)
@@ -12,9 +12,11 @@ export function Table4({ themePc, themeMobile, setActivePage, selectedTemplate, 
 
     const handleSelectTable = () => {
         setSelectedTemplate(4)
+
     }
 
     const handleCustomizeTable = () => {
+        setSelectedTemplate(4)
         setActivePage(3)
     }
 
@@ -99,15 +101,17 @@ export function Table4({ themePc, themeMobile, setActivePage, selectedTemplate, 
 
     return (
         <Card sectioned>
-            <div className={`${screen ? 'Theme4-Pc-Table' : 'Theme4-Mobile-Table'} Theme-Table`}>
-                <IndexTable
-                    resourceName={resourceName}
-                    itemCount={themePc?.length}
-                    selectable={false}
-                    headings={themeHeadingsPc}
-                >
-                    {screen ? themeRowsPc : themeRowsMobile}
-                </IndexTable>
+            <div className='Theme-Card-Content'>
+                <div className={`${screen ? 'Theme4-Pc-Table' : 'Theme4-Mobile-Table'} Theme-Table`}>
+                    <IndexTable
+                        resourceName={resourceName}
+                        itemCount={themePc?.length}
+                        selectable={false}
+                        headings={themeHeadingsPc}
+                    >
+                        {screen ? themeRowsPc : themeRowsMobile}
+                    </IndexTable>
+                </div>
 
                 <div className='Screen-Selection'>
                     <Stack>
@@ -129,7 +133,10 @@ export function Table4({ themePc, themeMobile, setActivePage, selectedTemplate, 
                                 <Button onClick={handleCustomizeTable}>Customize</Button> :
                                 <Button primary onClick={handleSelectTable}>Select</Button>
                             } */}
-                            <Button primary>Select</Button>
+                            {
+                                btnShow &&
+                                <Button primary onClick={handleCustomizeTable}>Select</Button>
+                            }
                         </div>
                     </Stack>
                 </div>
