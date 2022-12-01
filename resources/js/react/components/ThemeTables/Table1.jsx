@@ -3,36 +3,12 @@ import { Card, IndexTable, Icon, Stack, Button } from '@shopify/polaris';
 import {
     TickMinor, CancelMinor, MobileMajor, DesktopMajor, CircleTickMajor, CircleCancelMajor
 } from '@shopify/polaris-icons';
-import {useAppQuery} from "../hooks/index";
-import axios from 'axios';
 
-
-export function Table1({ themePc, themeMobile, btnShow, setActivePage, selectedTemplate, setSelectedTemplate }) {
+export function Table1({ themePc, themeMobile, btnShow, handleCustomizeTable }) {
     const [screen, setScreen] = useState(true)
     const handleScreenSelection = () => {
         setScreen(!screen)
     }
-
-    const handleSelectTable = () => {
-        setSelectedTemplate(1)
-    }
-
-    const handleCustomizeTable = async () => {
-
-      const response= await axios
-            .post(
-                `http://app-template-php.test/api/step-1?template_id=1&shop_name=zain-store-tlx.myshopify.com`
-            )
-            .then(res => {
-                console.log(res);
-                setSelectedTemplate(1)
-                setActivePage(3)
-            })
-            .catch(error =>
-                console.log(error));
-    }
-
-
     const resourceName = {
         singular: 'theme',
         plural: 'themes',
@@ -143,13 +119,9 @@ export function Table1({ themePc, themeMobile, btnShow, setActivePage, selectedT
                         </div>
 
                         <div className='Screen-Selection-Btn'>
-                            {/* {selectedTemplate === 1 ?
-                                <Button onClick={handleCustomizeTable}>Customize</Button> :
-                                <Button primary onClick={handleSelectTable}>Select</Button>
-                            } */}
                             {
                                 btnShow &&
-                                <Button primary onClick={handleCustomizeTable}>Select</Button>
+                                <Button primary onClick={() => handleCustomizeTable(1)}>Select</Button>
                             }
                         </div>
                     </Stack>

@@ -5,20 +5,12 @@ import {
 } from '@shopify/polaris-icons';
 
 
-export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMobile, btnShow, setActivePage, selectedTemplate, setSelectedTemplate }) {
+export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMobile, btnShow, handleCustomizeTable }) {
     const [screen, setScreen] = useState(true)
     const handleScreenSelection = () => {
         setScreen(!screen)
     }
 
-    const handleSelectTable = () => {
-        setSelectedTemplate(2)
-    }
-
-    const handleCustomizeTable = () => {
-        setSelectedTemplate(2)
-        setActivePage(3)
-    }
 
     const resourceName = {
         singular: 'theme',
@@ -108,24 +100,6 @@ export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMob
         ),
     );
 
-    // const themeHeadingsPc =
-    //     [
-    //         { title: '' },
-    //         { title: 'Your Brand' },
-    //         { title: 'Competitor 1' },
-    //         { title: 'Competitor 2' },
-    //         { title: 'Competitor 3' },
-    //         { title: 'Competitor 4' },
-    //     ]
-
-    // const themeHeadingsMobile =
-    //     [
-    //         { title: '' },
-    //         { title: 'Advantage 1' },
-    //         { title: 'Advantage 2' },
-    //         { title: 'Advantage 3' },
-    //         { title: 'Advantage 4' },
-    //     ]
 
     return (
         <Card sectioned>
@@ -157,13 +131,9 @@ export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMob
                         </div>
 
                         <div className='Screen-Selection-Btn'>
-                            {/* {selectedTemplate === 2 ?
-                                <Button onClick={handleCustomizeTable}>Customize</Button> :
-                                <Button primary onClick={handleSelectTable}>Select</Button>
-                            } */}
                             {
                                 btnShow &&
-                                <Button primary onClick={handleCustomizeTable}>Select</Button>
+                                <Button primary onClick={() => handleCustomizeTable(2)}>Select</Button>
                             }
                         </div>
                     </Stack>

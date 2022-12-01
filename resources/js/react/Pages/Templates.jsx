@@ -11,20 +11,21 @@ export function Templates({ setLocationChange, themePc, themeMobile }) {
   let templateSelected = '';
   const [activePage, setActivePage] = useState(3)
   const [selectedTemplate, setSelectedTemplate] = useState(1)
-    const handleCustomizeTable = async (id) => {
 
-        const response= await axios
-            .post(
-                `http://app-template-php.test/api/step-1?template_id=${id}&shop_name=zain-store-tlx.myshopify.com`
-            )
-            .then(res => {
-                console.log(res);
-                setSelectedTemplate(id)
-                setActivePage(3)
-            })
-            .catch(error =>
-                console.log(error));
-    }
+  const handleCustomizeTable = async (id) => {
+
+    const response = await axios
+      .post(
+        `http://app-template-php.test/api/step-1?template_id=${id}&shop_name=zain-store-tlx.myshopify.com`
+      )
+      .then(res => {
+        console.log(res);
+        setSelectedTemplate(id)
+        setActivePage(3)
+      })
+      .catch(error =>
+        console.log(error));
+  }
 
   return (
     <div className='Navigation-Frame'>
@@ -36,7 +37,7 @@ export function Templates({ setLocationChange, themePc, themeMobile }) {
               {(() => {
                 switch (activePage) {
                   case 2:
-                    return <TemplatePage2 selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} setActivePage={setActivePage} />
+                    return <TemplatePage2 handleCustomizeTable={handleCustomizeTable()} />
                   case 3:
                     return <TemplatePage3 activePage={activePage} setActivePage={setActivePage} setLocationChange={setLocationChange}
                       selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
