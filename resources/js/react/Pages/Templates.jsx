@@ -11,15 +11,7 @@ export function Templates({ setLocationChange }) {
   const [activePage, setActivePage] = useState(3)
   const [selectedTemplate, setSelectedTemplate] = useState(1)
 
-  let host2 = location.ancestorOrigins[0];
   let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
-  
-
-  useEffect(() => {
-    console.log('host: ', host);
-    console.log('host2: ', host2);
-  }, [host])
-  
 
   const handleCustomizeTable = async (id) => {
 
@@ -33,7 +25,7 @@ export function Templates({ setLocationChange }) {
         setActivePage(3)
       })
       .catch(error =>
-        console.log(error));
+        console.warn(error));
   }
 
   return (
