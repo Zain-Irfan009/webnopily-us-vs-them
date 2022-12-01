@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { Page, Layout, Text, Card, Select, Icon, Stack, TextField, Loading, } from '@shopify/polaris';
 import { CircleTickMajor, CircleCancelMajor } from '@shopify/polaris-icons';
-import { Table1, Table2, Table3, Table4, SideBarNavigation } from '../../components/usVsThem/index';
+import { Table1, Table2, Table3, Table4, SideBarNavigation } from './index';
 
 const themeHeadingsPc =
   [
