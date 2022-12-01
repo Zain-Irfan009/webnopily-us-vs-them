@@ -8,7 +8,7 @@ import axios from "axios";
 
 export function Templates({ setLocationChange, themePc, themeMobile }) {
 
-  let templateSelected = '';
+ 
   const [activePage, setActivePage] = useState(3)
   const [selectedTemplate, setSelectedTemplate] = useState(1)
 
