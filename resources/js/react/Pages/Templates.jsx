@@ -1,5 +1,5 @@
 import { Layout, Frame } from '@shopify/polaris';
-import React, { useState, } from 'react';
+import React, { useState,useEffect } from 'react';
 
 import {
   TemplatePage1, TemplatePage2, TemplatePage3, TemplatePage4, SideBarNavigation
