@@ -37,5 +37,4 @@ function ProductsPage() {
     // <UsVsThem />
   );
 }
-
 export default ProductsPage;

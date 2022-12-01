@@ -31,7 +31,6 @@ function AppNavigation() {
     const navigationMenu = NavigationMenu.create(app, {
         items: [dashboard, templates, locations, settings],
     });
-
     switch (location.pathname) {
         case "/":
             navigationMenu.set({ active: dashboard });

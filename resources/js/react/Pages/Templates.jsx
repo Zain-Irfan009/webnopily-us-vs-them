@@ -11,7 +11,6 @@ export function Templates({ setLocationChange, themePc, themeMobile }) {
   const [activePage, setActivePage] = useState(3)
   const [selectedTemplate, setSelectedTemplate] = useState(1)
 
-
   return (
     <div className={`Templates-Page`}>
       <Layout>
