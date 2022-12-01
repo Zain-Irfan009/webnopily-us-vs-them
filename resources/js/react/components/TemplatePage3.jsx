@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { Page, Layout, Text, Card, Select, Icon, Stack, TextField, Loading, } from '@shopify/polaris';
 import { CircleTickMajor, CircleCancelMajor } from '@shopify/polaris-icons';
 import { Table1, Table2, Table3, Table4, SideBarNavigation } from './index';
-
+import axios from "axios";
 
 const themeHeadingsPc =
   [
@@ -203,7 +203,20 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
 
   // }, [allValues, brandValue, competitorValue])
 
+    const submitData = async () => {
 
+        const response = await axios
+            .post(
+                `http://us-vs-them.test/api/step-2?template_id=${id}&shop_name=${host}`
+            )
+            .then(res => {
+                console.log(res);
+                setSelectedTemplate(id)
+                setActivePage(3)
+            })
+            .catch(error =>
+                console.warn(error));
+    }
 
   return (
     <div className='Template-Page3'>
