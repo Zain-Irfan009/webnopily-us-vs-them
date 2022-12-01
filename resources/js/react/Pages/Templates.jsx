@@ -5,7 +5,7 @@ import {
   TemplatePage1, TemplatePage2, TemplatePage3, TemplatePage4, SideBarNavigation
 } from '../components';
 
-export default function Templates({ setLocationChange, themePc, themeMobile }) {
+export function Templates({ setLocationChange, themePc, themeMobile }) {
 
   let templateSelected = '';
   const [activePage, setActivePage] = useState(3)
