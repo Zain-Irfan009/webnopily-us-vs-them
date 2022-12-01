@@ -37,7 +37,7 @@ export function Templates({ setLocationChange, themePc, themeMobile }) {
               {(() => {
                 switch (activePage) {
                   case 2:
-                    return <TemplatePage2 handleCustomizeTable={handleCustomizeTable()} />
+                    return <TemplatePage2 handleCustomizeTable={handleCustomizeTable} />
                   case 3:
                     return <TemplatePage3 activePage={activePage} setActivePage={setActivePage} setLocationChange={setLocationChange}
                       selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
