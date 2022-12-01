@@ -2,9 +2,8 @@ import { Page, Layout, Pagination, Button, Navigation, Link, Loading } from '@sh
 import React, { useState, useCallback } from 'react';
 
 import {
-  TemplatePage1, TemplatePage2, TemplatePage3, TemplatePage4, SideBarNavigation,
-  Table1, Table2, Table3, Table4
-} from '../../../../components';
+  TemplatePage1, TemplatePage2, TemplatePage3, TemplatePage4, SideBarNavigation
+} from '../components';
 
 export default function Templates({ setLocationChange, themePc, themeMobile }) {
 
