@@ -303,7 +303,7 @@ const themeHeadingsMobile =
   ]
 
 
-export function TemplatePage2({ setActivePage, selectedTemplate, setSelectedTemplate, handleCustomizeTable }) {
+export function TemplatePage2({ handleCustomizeTable }) {
 
   return (
     <div className='Template-Page2'>
@@ -332,14 +332,12 @@ export function TemplatePage2({ setActivePage, selectedTemplate, setSelectedTemp
 
 
           <Layout.Section oneHalf>
-            <Table3 themePc={theme3Pc} themeMobile={theme3Mobile} setActivePage={setActivePage} btnShow={true}
-              selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
+            <Table3 themePc={theme3Pc} themeMobile={theme3Mobile} btnShow={true} handleCustomizeTable={handleCustomizeTable} />
           </Layout.Section>
 
 
           <Layout.Section oneHalf>
-            <Table4 themePc={theme4Pc} themeMobile={theme4Mobile} setActivePage={setActivePage} btnShow={true}
-              selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
+            <Table4 themePc={theme4Pc} themeMobile={theme4Mobile} btnShow={true} handleCustomizeTable={handleCustomizeTable} />
           </Layout.Section>
 
         </Layout>

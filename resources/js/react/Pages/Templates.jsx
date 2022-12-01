@@ -6,17 +6,26 @@ import {
 } from '../components';
 import axios from "axios";
 
-export function Templates({ setLocationChange, themePc, themeMobile }) {
+export function Templates({ setLocationChange }) {
 
- 
   const [activePage, setActivePage] = useState(3)
   const [selectedTemplate, setSelectedTemplate] = useState(1)
+
+  let host2 = location.ancestorOrigins[0];
+  let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+  
+
+  useEffect(() => {
+    console.log('host: ', host);
+    console.log('host2: ', host2);
+  }, [host])
+  
 
   const handleCustomizeTable = async (id) => {
 
     const response = await axios
       .post(
-        `http://us-vs-them.test/api/step-1?template_id=${id}&shop_name=zain-store-tlx.myshopify.com`
+        `http://us-vs-them.test/api/step-1?template_id=${id}&shop_name=${host}`
       )
       .then(res => {
         console.log(res);
