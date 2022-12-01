@@ -1,6 +1,8 @@
 import { Page, Card, Layout, MediaCard, Button, Stack, Badge, Banner, List, Popover, ActionList } from '@shopify/polaris';
 import React, { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Redirect } from '@shopify/app-bridge/actions';
+import createApp from '@shopify/app-bridge/development';
 
 const tables = [
     {
@@ -17,17 +19,21 @@ const tables = [
     }
 ]
 
-export function Dashboard({ setLocationChange }) {
+export function Dashboard({ setLocationChange,config }) {
 
     const [appEnable, setAppEnable] = useState(false)
     const handleAppEnable = () => {
         console.log('enabled click');
         setAppEnable(!appEnable)
     }
-
+    const app = createApp(config);
     const handleLocationChange = () => {
-        location.pathname = '/templates'
+        const redirect = Redirect.create(app);
+        redirect.dispatch(Redirect.Action.APP, `/templates` );
     }
+    useEffect(() => {
+        console.log(config);
+    }, [config])
 
     return (
         <div className='Dashboard1'>
@@ -113,7 +119,7 @@ export function Dashboard({ setLocationChange }) {
                                 primaryAction={
                                     {
                                         content:
-                                            <Link to='/admin/apps/us-vs-them/templates'>
+                                            <Link to='/templates'>
                                                 Change your  template
                                             </Link>
                                         ,

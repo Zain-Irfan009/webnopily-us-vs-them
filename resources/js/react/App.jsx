@@ -69,10 +69,10 @@ function App({shop, host, apiKey}) {
                         <AppNavigation/>
                         <PageLayout>
                             <Switch>
-                                <Route exact path="/" component={Dashboard} />
-                                <Route path="/templates" component={Templates}/> 
-                                <Route path="/locations" component={Locations} /> 
-                                <Route path="/settings" component={Settings} />                        
+                                <Route exact path="/" component={() => (<Dashboard config={config} />)}/>
+                                <Route path="/templates" component={Templates}/>
+                                <Route path="/locations" component={Locations} />
+                                <Route path="/settings" component={Settings} />
                             </Switch>
                         </PageLayout>
                     </AppBridgeApolloProvider>

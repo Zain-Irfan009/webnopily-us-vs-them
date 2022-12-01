@@ -24,7 +24,7 @@ function AppNavigation() {
     });
 
     const settings = AppLink.create(app, {
-        label: 'Settings',
+        label: 'Settings1',
         destination: '/settings',
     });
 

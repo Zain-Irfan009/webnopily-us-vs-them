@@ -26,10 +26,13 @@ use Shopify\Webhooks\Topics;
 */
 
 Route::fallback(function (Request $request) {
+//    dd($request->query('shop'));
+//    dd($request->all());
     $shop = Utils::sanitizeShopDomain($request->query('shop'));
     $host = $request->query('host');
     $appInstalled = Session::where('shop', $shop)->exists();
     if ($appInstalled) {
+//        dd(Context::$API_KEY,$shop,$host);
         return view('react', [
             'shop' => $shop,
             'host' => $host,
