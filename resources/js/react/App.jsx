@@ -68,7 +68,6 @@ function App({shop, host, apiKey}) {
                 <AppProvider i18n={translations}>
                     <AppBridgeApolloProvider>
                         <AppNavigation/>
-                        <PageLayout>
 
                             <Switch>
                                 <Route exact path="/" component={() => (<Dashboard config={config} />)}/>
@@ -76,7 +75,6 @@ function App({shop, host, apiKey}) {
                                 <Route path="/locations" component={Locations} />
                                 <Route path="/settings" component={Settings} />
                             </Switch>
-                        </PageLayout>
                     </AppBridgeApolloProvider>
                 </AppProvider>
             </Provider>
