@@ -204,11 +204,11 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
   // }, [allValues, brandValue, competitorValue])
 
   const submitData = async () => {
+    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
 
     const response = await axios
       .post(
-        // `http://us-vs-them.test/api/step-2?template_id=${id}&shop_name=${host}`
-          `http://us-vs-them.test/api/step-2?brand=${yourBrand}&competitor=${otherCompetitors}&advantages=${allValues}`
+        `http://app-template-php.test/api/step-2?brand=${yourBrand}&competitor=${otherCompetitors}&advantages=${allValues}&brands=${brandValue}&competitors${competitorValue}&template_id=${'1'}&template_name=${templateName}&user_template_id=${'111'}&background_color1=${colorValues.background1}&background_color2=${colorValues.background2}&column1_color=${colorValues.advantageColumn1}&column2_color=${colorValues.advantageColumn2}&column3_color=${colorValues.advantageColumn3}&brand_checkbox_color1=${colorValues.brandCheck}&brand_checkbox_color2=${colorValues.brandCross}&competitors_checkbox_color1=${colorValues.competitorCheck}&competitors_checkbox_color2=${colorValues.competitorCross}&shop_name=${host}`
       )
       .then(res => {
         console.log(res);
