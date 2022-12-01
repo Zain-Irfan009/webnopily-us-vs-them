@@ -16,7 +16,7 @@ export function Templates({ setLocationChange, themePc, themeMobile }) {
 
     const response = await axios
       .post(
-        `http://app-template-php.test/api/step-1?template_id=${id}&shop_name=zain-store-tlx.myshopify.com`
+        `http://us-vs-them.test/api/step-1?template_id=${id}&shop_name=zain-store-tlx.myshopify.com`
       )
       .then(res => {
         console.log(res);
