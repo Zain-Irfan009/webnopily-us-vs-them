@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { Page, Layout, Text, Card, Select, Icon, Stack, TextField, Loading, } from '@shopify/polaris';
+import { Page, Layout, Text, Card, Select, Icon, Stack, TextField, Loading, Button} from '@shopify/polaris';
 import { CircleTickMajor, CircleCancelMajor } from '@shopify/polaris-icons';
 import { Table1, Table2, Table3, Table4, SideBarNavigation } from './index';
 import axios from "axios";
@@ -203,20 +203,25 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
 
   // }, [allValues, brandValue, competitorValue])
 
-    const submitData = async () => {
+  const submitData = async () => {
 
-        const response = await axios
-            .post(
-                `http://us-vs-them.test/api/step-2?template_id=${id}&shop_name=${host}`
-            )
-            .then(res => {
-                console.log(res);
-                setSelectedTemplate(id)
-                setActivePage(3)
-            })
-            .catch(error =>
-                console.warn(error));
-    }
+    const response = await axios
+      .post(
+        // `http://us-vs-them.test/api/step-2?template_id=${id}&shop_name=${host}`
+          `http://us-vs-them.test/api/step-2?brand=${yourBrand}&competitor=${otherCompetitors}&advantages=${allValues}`
+      )
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error =>
+        console.warn(error));
+  }
+
+  useEffect(() => {
+    console.log(allValues);
+    console.log(`http://us-vs-them.test/api/step-2?brand=${yourBrand}&competitor=${otherCompetitors}&advantages=${allValues}`);
+  }, [allValues])
+
 
   return (
     <div className='Template-Page3'>
@@ -664,6 +669,8 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
               })()}
 
             </div>
+
+            <Button onClick={submitData}>Submit</Button>
           </Layout.Section>
         </Layout>
       </Page>
