@@ -1,4 +1,4 @@
-import { Layout,  Frame } from '@shopify/polaris';
+import { Layout, Frame } from '@shopify/polaris';
 import React, { useState, } from 'react';
 
 import {
@@ -12,35 +12,39 @@ export function Templates({ setLocationChange, themePc, themeMobile }) {
   const [selectedTemplate, setSelectedTemplate] = useState(1)
 
   return (
-    <div className={`Templates-Page`}>
-      <Layout>
-        <Layout.Section >
+    <div className='Navigation-Frame'>
+      <Frame>
+        <div className={`Templates-Page`}>
+          <Layout>
+            <Layout.Section >
 
-          {(() => {
-            switch (activePage) {
-              case 2:
-                return <TemplatePage2 selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} setActivePage={setActivePage} />
-              case 3:
-                return <TemplatePage3 activePage={activePage} setActivePage={setActivePage} setLocationChange={setLocationChange}
-                  selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
-              case 4:
-                return <TemplatePage4 selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
-              default:
-                return <TemplatePage1 setActivePage={setActivePage} />
+              {(() => {
+                switch (activePage) {
+                  case 2:
+                    return <TemplatePage2 selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} setActivePage={setActivePage} />
+                  case 3:
+                    return <TemplatePage3 activePage={activePage} setActivePage={setActivePage} setLocationChange={setLocationChange}
+                      selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
+                  case 4:
+                    return <TemplatePage4 selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
+                  default:
+                    return <TemplatePage1 setActivePage={setActivePage} />
+                }
+
+              })()}
+
+
+            </Layout.Section>
+            {
+              activePage != 3 &&
+              <Layout.Section secondary>
+                <SideBarNavigation activePage={activePage} setActivePage={setActivePage} setLocationChange={setLocationChange} />
+              </Layout.Section>
             }
 
-          })()}
-
-
-        </Layout.Section>
-        {
-          activePage != 3 &&
-          <Layout.Section secondary>
-            <SideBarNavigation activePage={activePage} setActivePage={setActivePage} setLocationChange={setLocationChange} />
-          </Layout.Section>
-        }
-
-      </Layout>
+          </Layout>
+        </div>
+      </Frame>
     </div>
   );
 }
