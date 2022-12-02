@@ -1,6 +1,6 @@
 import {
     Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List, Link, Modal,
-    Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, Loading
+    Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, TextField, Loading
 } from '@shopify/polaris';
 import { HorizontalDotsMinor } from '@shopify/polaris-icons';
 import createApp from '@shopify/app-bridge/development';
@@ -10,24 +10,16 @@ import axios from "axios";
 
 
 export function Dashboard({ setLocationChange, config, setActivePage }) {
-
+    const app = createApp(config);
     const [appEnable, setAppEnable] = useState(false)
 
-    const app = createApp(config);
-    const handleAppEnable = () => {
-        console.log('enabled click');
-        setAppEnable(!appEnable)
-    }
-
-
-    const handleLocationChange = () => {
-        const redirect = Redirect.create(app);
-        redirect.dispatch(Redirect.Action.APP, `/templates`);
-        setLocationChange('/admin/apps/usVsThem/Templates')
-    }
     const [products, setProducts] = useState([])
     const [showProducts, setShowProducts] = useState(false)
     const [selectedItems, setSelectedItems] = useState([]);
+    const [templateRenameValue, setTemplateRenameValue] = useState()
+    const [templateRenameUserId, setTemplateRenameUserId] = useState()
+
+    const [renameModalActive, setRenameModalActive] = useState(false);
     const [popoverActive, setPopoverActive] = useState({});
     const [renameToastActive, setRenameToastActive] = useState(false);
     const [deletetoastActive, setDeletetoastActive] = useState(false);
@@ -35,6 +27,7 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
 
     const [templateTable, setTemplateTable] = useState([]);
     const [loading, setLoading] = useState(true)
+    
 
     const getData = async () => {
         let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
@@ -57,12 +50,37 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
         getData();
     }, []);
 
+    const handleAppEnable = () => {
+        console.log('enabled click');
+        setAppEnable(!appEnable)
+    }
+
+    const handleLocationChange = () => {
+        setLocationChange('/admin/apps/usVsThem/Templates')
+    }
+
+    const handleRenameModal = (id, name) => {
+        setRenameModalActive(true)
+        setTemplateRenameValue(name)
+        setTemplateRenameUserId(id)
+    }
+
+    const handleRenameValue = useCallback((newValue) => setTemplateRenameValue(newValue), []);
+
+    function isValueInvalid(content) {
+        if (!content) {
+            return true;
+        }
+
+        return content.length < 1;
+    }
+    const isTemplateNameInvalid = isValueInvalid(templateRenameValue);
+
     const toggleToastActive = () => {
         setRenameToastActive(false);
         setDeletetoastActive(false);
         setDuplicatetoastActive(false);
     }
-
 
     const toastRename = renameToastActive ? (
         <Toast content="Template Rename Sucessfully" onDismiss={toggleToastActive} duration={1500} />
@@ -117,6 +135,7 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
     const handleRenameTemplate = (id) => {
         console.log(`rename clicked ${id}`);
         setPopoverActive(false)
+        setRenameModalActive(false)
         setRenameToastActive(!renameToastActive)
 
     }
@@ -197,6 +216,34 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
     return (
         <div className='Dashboard'>
             <Frame>
+                {renameModalActive &&
+                    <Modal
+                        open={renameModalActive}
+                        onClose={() => setRenameModalActive(false)}
+                        title="Rename Template"
+                        primaryAction={{
+                            content: 'Rename',
+                            onAction: handleRenameTemplate,
+                        }}
+                        secondaryActions={[
+                            {
+                                content: 'Cancel',
+                                onAction: () => setRenameModalActive(false),
+                            },
+                        ]}
+                    >
+                        <Modal.Section>
+                            <TextField
+                                label="Template Name"
+                                value={templateRenameValue}
+                                onChange={handleRenameValue}
+                                error={isTemplateNameInvalid && "template name can't be empty"}
+                                autoComplete="off"
+                            />
+                        </Modal.Section>
+                    </Modal>
+                }
+
                 {loading ? <Loading /> :
                     <Page
                         title="Us vs Them"
@@ -297,7 +344,7 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
                                                                         {
                                                                             id: user_template_id,
                                                                             content: 'Rename',
-                                                                            onAction: () => handleRenameTemplate(user_template_id),
+                                                                            onAction: () => handleRenameModal(user_template_id, name)
                                                                         },
                                                                         {
                                                                             id: user_template_id,
