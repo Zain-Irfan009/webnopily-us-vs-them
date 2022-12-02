@@ -6,9 +6,9 @@ import {
 } from '../components';
 import axios from "axios";
 
-export function Templates({ setLocationChange }) {
+export function Templates({ setLocationChange,activePage, setActivePage }) {
 
-  const [activePage, setActivePage] = useState(1)
+  // const [activePage, setActivePage] = useState(1)
   const [selectedTemplate, setSelectedTemplate] = useState(1)
   const [userTemplateId, setUserTemplateId] = useState()
   const [loading, setLoading] = useState(true)
@@ -34,9 +34,9 @@ export function Templates({ setLocationChange }) {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1000);
-  }, [])
-  
+    }, 500);
+  }, [activePage])
+
 
   return (
     <div className='Navigation-Frame'>

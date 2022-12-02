@@ -9,9 +9,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from "axios";
 
 
-export function Dashboard({ setLocationChange,config }) {
+export function Dashboard({ setLocationChange,config,setActivePage }) {
 
     const [appEnable, setAppEnable] = useState(false)
+
     const app = createApp(config);
     const handleAppEnable = () => {
         console.log('enabled click');
@@ -44,7 +45,7 @@ export function Dashboard({ setLocationChange,config }) {
                 setTemplateTable(res.data.result);
                 setTimeout(() => {
                     setLoading(false)
-                }, 1000);
+                }, 0);
             })
             .catch(error =>
                 alert('Error: ', error));
@@ -130,6 +131,12 @@ export function Dashboard({ setLocationChange,config }) {
 
     const handleCustomizeTemplate = (id) => {
         console.log(`customize template clicked ${id}`);
+        // setActivePage(3);
+        // handleLocationChange();
+        // const redirect = Redirect.create(app);
+        // redirect.dispatch(Redirect.Action.APP, `/templates/page1` );
+        // setLocationChange('/admin/apps/usVsThem/Templates')
+
     }
 
     const handleChangeTemplate = (id) => {
@@ -280,9 +287,17 @@ export function Dashboard({ setLocationChange,config }) {
 
                                                         <div className='Polaris-MediaCard__ActionContainer'>
                                                             <ButtonGroup>
+
                                                                 <Button primary onClick={() => handleSelectProducts(user_template_id)}>Select Product</Button>
                                                                 <Button onClick={() => handleChangeTemplate(user_template_id)}>Change Template</Button>
-                                                                <Button onClick={() => handleCustomizeTemplate(user_template_id)}>Customize Template</Button>
+                                                                {/*<Link url='/admin/apps/usVsThem/Templates' >*/}
+                                                                {/*    <Button onClick={() => handleCustomizeTemplate(user_template_id)}>Customize Template</Button>*/}
+
+                                                                {/*</Link>*/}
+                                                                <Link url='/admin/apps/usVsThem/Templates/page1' onClick={() => handleCustomizeTemplate(user_template_id)} >
+                                                                    <Button>Customize Template</Button>
+
+                                                                </Link>
                                                                 <Button plain onClick={() => handlePreviewTemplate(user_template_id)}>Preview</Button>
                                                             </ButtonGroup>
                                                         </div>

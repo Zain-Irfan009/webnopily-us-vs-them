@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import {Redirect} from "@shopify/app-bridge/actions";
 import {authenticatedFetch} from "@shopify/app-bridge-utils"
@@ -14,11 +14,12 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import ClientRouter from "./components/ClientRouter";
 import AppNavigation from "./components/AppNavigation";
 
+
 import '../../../public/css/index.css';
 import '../../../public/css/theme.css';
 import '../../../public/css/usVsThem.css';
 
-import { Dashboard, Templates, Settings, Locations } from './Pages/index'
+import { Dashboard, Templates, Settings, Locations,TemplatePage1 } from './Pages/index'
 
 
 function userLoggedInFetch(app) {
@@ -60,6 +61,7 @@ function AppBridgeApolloProvider({children}) {
 
 function App({shop, host, apiKey}) {
     const config = {apiKey: apiKey, shopOrigin: shop, host: host, forceRedirect: true};
+    const [activePage, setActivePage] = useState(1)
 
     return (
         <BrowserRouter>
@@ -70,8 +72,9 @@ function App({shop, host, apiKey}) {
                         <AppNavigation/>
 
                             <Switch>
-                                <Route exact path="/" component={() => (<Dashboard config={config} />)}/>
-                                <Route path="/templates" component={Templates}/>
+                                <Route exact path="/" component={() => (<Dashboard config={config} setActivePage={setActivePage} />)}/>
+                                <Route path="/templates/page1" component={TemplatePage1} />
+                                <Route path="/templates" component={ () => (<Templates activePage={activePage} setActivePage={setActivePage}  />)} />
                                 <Route path="/locations" component={Locations} />
                                 <Route path="/settings" component={Settings} />
                             </Switch>
