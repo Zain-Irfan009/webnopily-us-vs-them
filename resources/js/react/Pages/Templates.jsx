@@ -1,5 +1,5 @@
 import { Layout, Frame } from '@shopify/polaris';
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   TemplatePage1, TemplatePage2, TemplatePage3, TemplatePage4, SideBarNavigation
@@ -12,19 +12,19 @@ export function Templates({ setLocationChange }) {
   const [selectedTemplate, setSelectedTemplate] = useState(1)
   const [userTemplateId, setUserTemplateId] = useState()
 
-  let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
 
   const handleCustomizeTable = async (id) => {
-
+    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+    
     const response = await axios
       .post(
         `http://us-vs-them.test/api/step-1?template_id=${id}&shop_name=${host}`
       )
       .then(res => {
         console.log(res);
-        setSelectedTemplate(id)
         setActivePage(3)
-        setUserTemplateId(111)
+        setSelectedTemplate(res.data.result.template_id)
+        setUserTemplateId(res.data.result.user_template_id)
       })
       .catch(error =>
         console.warn(error));

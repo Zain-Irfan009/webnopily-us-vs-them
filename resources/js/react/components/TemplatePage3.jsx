@@ -210,7 +210,7 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
       const response = await axios.post('http://us-vs-them.test/api/step-2', data)
       console.log(response);
     } catch (error) {
-      console.log(error.response.data);
+      console.warn(error.response.data);
     }
   }
 
