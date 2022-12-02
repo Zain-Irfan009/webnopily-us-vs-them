@@ -10,6 +10,7 @@ export function Templates({ setLocationChange }) {
 
   const [activePage, setActivePage] = useState(3)
   const [selectedTemplate, setSelectedTemplate] = useState(1)
+  const [userTemplateId, setUserTemplateId] = useState()
 
   let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
 
@@ -23,6 +24,7 @@ export function Templates({ setLocationChange }) {
         console.log(res);
         setSelectedTemplate(id)
         setActivePage(3)
+        setUserTemplateId(111)
       })
       .catch(error =>
         console.warn(error));
@@ -41,7 +43,7 @@ export function Templates({ setLocationChange }) {
                     return <TemplatePage2 handleCustomizeTable={handleCustomizeTable} />
                   case 3:
                     return <TemplatePage3 activePage={activePage} setActivePage={setActivePage} setLocationChange={setLocationChange}
-                      selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
+                      selectedTemplate={selectedTemplate} userTemplateId={userTemplateId} />
                   case 4:
                     return <TemplatePage4 selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
                   default:
