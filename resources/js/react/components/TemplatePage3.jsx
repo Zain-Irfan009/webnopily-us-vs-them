@@ -38,17 +38,6 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
     competitorCross: '#7b7eac'
   })
 
-    const [colorValues2, setColorValues2] = useState({
-        background1: '%23ffffff',
-        background2: '%23ebecf0',
-        advantageColumn1: '%23626dff',
-        advantageColumn2: '%23c94ff',
-        advantageColumn3: '%23a9afff',
-        brandCheck: '%23474b8b',
-        brandCross: '%237b7eac',
-        competitorCheck: '%23474b8b',
-        competitorCross: '%237b7eac'
-    })
 
   const [themeInputTable1, setThemeInputTable1] = useState([]);
   const [themeInputTable2, setThemeInputTable2] = useState([]);
@@ -195,49 +184,41 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
     }
     const handleColorValues = e => {
     setColorValues({ ...colorValues, [e.target.name]: e.target.value });
-      let newTestArray = JSON.parse(
-          JSON.stringify(e.target.value).replaceAll('#', '%23')
-      );
-      setColorValues2({ ...colorValues2, [e.target.name]: newTestArray });
   }
 
 
-  // useEffect(() => {
-  //   console.log('templateName: ', templateName);
-  //   console.log('yourBrand: ', yourBrand);
-  //   console.log('otherCompetitors: ', otherCompetitors);
-  //   console.log('allValues: ', allValues);
-  //   console.log('brandValue: ', brandValue);
-  //   console.log('competitorValue: ', competitorValue);
-  //   console.log('colorValues: ', colorValues);
-
-  // }, [allValues, brandValue, competitorValue])
 
   const submitData = async () => {
     let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
-      let newTestArray = JSON.parse(
-          JSON.stringify(colorValues).replaceAll('#', '%23')
-      );
 
-      console.log(        `http://us-vs-them.test/api/step-2?brand=${yourBrand}&competitor=${otherCompetitors}&advantages=${allValues}&brands=${brandValue}&competitors=${competitorValue}&template_id=${'1'}&template_name=${templateName}&user_template_id=${'111'}&background_color1=${colorValues2.background1}&background_color2=${colorValues2.background2}&column1_color=${colorValues2.advantageColumn1}&column2_color=${colorValues2.advantageColumn2}&column3_color=${colorValues2.advantageColumn3}&brand_checkbox_color1=${colorValues2.brandCheck}&brand_checkbox_color2=${colorValues2.brandCross}&competitors_checkbox_color1=${colorValues2.competitorCheck}&competitors_checkbox_color2=${colorValues2.competitorCross}&shop_name=${host}`
-      );
+     let data= [{
+                 brand: yourBrand,
+              competitor: otherCompetitors,
+              advantages:allValues,
+              brands:brandValue,
+              competitors:competitorValue,
+              template_id:1,
+              template_name:templateName,
+              user_template_id:111,
+              background_color1:colorValues.background1,
+              background_color2:colorValues.background2,
+              column1_color:colorValues.advantageColumn1,
+              column2_color:colorValues.advantageColumn2,
+              column3_color:colorValues.advantageColumn3,
+              brand_checkbox_color1:colorValues.brandCheck,
+              brand_checkbox_color2:colorValues.brandCross,
+              competitors_checkbox_color1:colorValues.competitorCheck,
+              competitors_checkbox_color2:colorValues.competitorCross,
+              shop_name:host,
+      }];
 
-    const response = await axios
-      .post(
-        `http://us-vs-them.test/api/step-2?brand=${yourBrand}&competitor=${otherCompetitors}&advantages=${allValues}&brands=${brandValue}&competitors=${competitorValue}&template_id=${'1'}&template_name=${templateName}&user_template_id=${'111'}&background_color1=${colorValues2.background1}&background_color2=${colorValues2.background2}&column1_color=${colorValues2.advantageColumn1}&column2_color=${colorValues2.advantageColumn2}&column3_color=${colorValues2.advantageColumn3}&brand_checkbox_color1=${colorValues2.brandCheck}&brand_checkbox_color2=${colorValues2.brandCross}&competitors_checkbox_color1=${colorValues2.competitorCheck}&competitors_checkbox_color2=${colorValues2.competitorCross}&shop_name=${host}`
-      )
-      .then(res => {
-        console.log(res);
-      })
-      .catch(error =>
-        console.warn(error));
+      try {
+          const response = await axios.post('http://us-vs-them.test/api/step-2', data)
+          console.log(response);
+      } catch (error) {
+          console.log(error.response.data);
+      }
   }
-
-  useEffect(() => {
-    console.log(allValues);
-    console.log(`http://us-vs-them.test/api/step-2?brand=${yourBrand}&competitor=${otherCompetitors}&advantages=${allValues}`);
-  }, [allValues])
-
 
   return (
     <div className='Template-Page3'>

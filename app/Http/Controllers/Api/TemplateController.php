@@ -147,15 +147,12 @@ dd($request->all());
                 $user_template->save();
 
                 $items_array=[];
-                $advantages_exp=explode(',',$request->advantages);
-                $brands_exp=explode(',',$request->brands);
 
-                $competitors_exp=explode(',',$request->competitors);
-                foreach ($advantages_exp as $index=> $value){
+                foreach ($request->advantages as $index=> $value){
                     $advantage=new Advantage();
                     $advantage->advantage=$value;
-                    $advantage->brand=$brands_exp[$index];
-                    $advantage->competitors=$competitors_exp[$index];
+                    $advantage->brand=$request->brands[$index];
+                    $advantage->competitors=$request->competitors[$index];
                     $advantage->user_template_id=$user_template->id;
                     $advantage->shop_id=$shop->id;
                     $advantage->save();
