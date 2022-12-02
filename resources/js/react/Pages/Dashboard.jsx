@@ -1,26 +1,27 @@
 import {
     Page, Card, Layout, ButtonGroup, Button, Stack, Badge, EmptyState,
-    Banner, List, Link, Modal, Toast, ActionList, Icon, Loading
+    Banner, List, Link, Modal, Toast, ActionList, Icon,Frame, Loading
 } from '@shopify/polaris';
 import { HorizontalDotsMinor } from '@shopify/polaris-icons';
+import createApp from '@shopify/app-bridge/development';
+import { Redirect } from '@shopify/app-bridge/actions';
 import React, { useState, useEffect, useRef } from 'react';
 import axios from "axios";
-// import {Template1Image} from './33.png';
-// import Template2Image from '/public/images/112.png'
-// import Template3Image from '/public/images/22.png'
-// import Template4Image from '/public/images/11.png'
-// import Template1Image from '../../../assets/33.png'
-// import Template2Image from './33.png';
 
-export function Dashboard({ setLocationChange }) {
+
+export function Dashboard({ setLocationChange,config }) {
 
     const [appEnable, setAppEnable] = useState(false)
+    const app = createApp(config);
     const handleAppEnable = () => {
         console.log('enabled click');
         setAppEnable(!appEnable)
     }
 
+
     const handleLocationChange = () => {
+        const redirect = Redirect.create(app);
+        redirect.dispatch(Redirect.Action.APP, `/templates` );
         setLocationChange('/admin/apps/usVsThem/Templates')
     }
 
@@ -143,7 +144,9 @@ export function Dashboard({ setLocationChange }) {
 
 
     return (
+
         <div className='Dashboard'>
+            <Frame>
             {loading ? <Loading /> :
                 <Page
                     title="Us vs Them"
@@ -218,17 +221,22 @@ export function Dashboard({ setLocationChange }) {
                                 <Card sectioned>
                                     <EmptyState
                                         heading="No template saved yet!"
-                                        action={{ content: 'Create Template' }}
+                                        // action={
+                                        //     // { content: 'Create Template' }
+                                        //     <Link url='/admin/apps/usVsThem/Templates' onClick={handleLocationChange}>
+                                        //         <Button size="slim" >Create Template</Button>
+                                        //     </Link>
+                                        // }
                                         image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
                                     >
                                     </EmptyState>
                                 </Card>
                                 :
-                                templateTable?.map(({ name, template_id, user_template_id }, index) =>
+                                templateTable?.map(({ name,image, template_id, user_template_id }, index) =>
                                     <Card key={user_template_id}>
                                         <div className='Polaris-MediaCard'>
                                             <div className='Polaris-MediaCard__MediaContainer'>
-                                                {MediaCardImage(user_template_id)}
+                                                <img alt={`Template ${user_template_id}`} src={image} className='MediaCard-Img' />
                                             </div>
                                             <div className='Polaris-MediaCard__InfoContainer'>
                                                 <div className='Polaris-Card__Section'>
@@ -293,31 +301,10 @@ export function Dashboard({ setLocationChange }) {
                     {toastDelete}
                     {toastDuplicate}
                 </Page>}
+            </Frame>
         </div>
     );
 }
 
-function MediaCardImage(id) {
-    return (
-        <>
-            {/*{*/}
-            {/*    (() => {*/}
-            {/*        switch (id) {*/}
-            {/*            case 1:*/}
-            {/*                return <img alt={`Template ${id}`} src={Template1Image} className='MediaCard-Img' />*/}
-            {/*            case 2:*/}
-            {/*                return <img alt={`Template ${id}`} src={Template2Image} className='MediaCard-Img' />*/}
-            {/*            case 3:*/}
-            {/*                return <img alt={`Template ${id}`} src={Template3Image} className='MediaCard-Img' />*/}
-            {/*            case 4:*/}
-            {/*                return <img alt={`Template ${id}`} src={Template4Image} className='MediaCard-Img' />*/}
-            {/*            default:*/}
-            {/*                break*/}
-            {/*        }*/}
 
-            {/*    })()*/}
-            {/*}*/}
-        </>
-    );
-}
 

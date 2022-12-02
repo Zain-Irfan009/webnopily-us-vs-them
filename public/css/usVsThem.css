@@ -18,6 +18,10 @@
     --template-table4-rows-light-color: #D2E8F4;
 }
 
+.Dashboard .Polaris-Frame{
+    margin-bottom: 2rem;
+
+}
 .Templates-Page {
     position: relative;
     height: 100%;
