@@ -1,10 +1,13 @@
 import { Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List, Link, Modal, Toast, ActionList, Icon, } from '@shopify/polaris';
 import { HorizontalDotsMinor } from '@shopify/polaris-icons';
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import Template1Image from '../../../assets/33.png'
-import Template2Image from '../../../assets/112.png'
-import Template3Image from '../../../assets/22.png'
-import Template4Image from '../../../assets/11.png'
+import axios from "axios";
+// import {Template1Image} from './33.png';
+// import Template2Image from '/public/images/112.png'
+// import Template3Image from '/public/images/22.png'
+// import Template4Image from '/public/images/11.png'
+// import Template1Image from '../../../assets/33.png'
+// import Template2Image from './33.png';
 
 const tables = [
     {
@@ -25,7 +28,7 @@ const tables = [
     }
 ]
 
-export default function UsVsThem({ setLocationChange }) {
+export function Dashboard({ setLocationChange }) {
 
     const [appEnable, setAppEnable] = useState(false)
     const handleAppEnable = () => {
@@ -41,6 +44,30 @@ export default function UsVsThem({ setLocationChange }) {
     const [renameToastActive, setRenameToastActive] = useState(false);
     const [deletetoastActive, setDeletetoastActive] = useState(false);
     const [duplicatetoastActive, setDuplicatetoastActive] = useState(false);
+
+    const [templateTable,setTemplateTable]=useState([]);
+
+const getData=async ()=>{
+    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+    const response = await axios
+        .get(
+            `http://us-vs-them.test/api/current-templates?shop_name=${host}`
+        )
+        .then(res => {
+            console.log(res);
+            setTemplateTable(res.data.result);
+
+
+        })
+        .catch(error =>
+            console.warn(error));
+}
+    useEffect( () => {
+       getData();
+        setTimeout(() => {
+            console.log(templateTable);
+        }, 2000);
+    }, []);
 
     const toggleToastActive = () => {
         setRenameToastActive(false);
@@ -203,38 +230,38 @@ export default function UsVsThem({ setLocationChange }) {
                             </div>
                         </Card>
 
-                        {tables?.map(({ name, image }, index) =>
-                            <Card key={index}>
+                        {templateTable?.map(({ name,template_id,user_template_id }, index) =>
+                            <Card key={user_template_id}>
                                 <div className='Polaris-MediaCard'>
                                     <div className='Polaris-MediaCard__MediaContainer'>
-                                        {MediaCardImage(index + 1)}
+                                        {MediaCardImage(user_template_id )}
                                     </div>
                                     <div className='Polaris-MediaCard__InfoContainer'>
                                         <div className='Polaris-Card__Section'>
                                             <div className="Polaris-MediaCard__Popover" ref={wrapperRef}>
 
-                                                <Button plain size='slim' onClick={() => togglePopoverActive(index + 1)}>
+                                                <Button plain size='slim' onClick={() => togglePopoverActive(user_template_id)}>
                                                     <Icon source={HorizontalDotsMinor} color="base"></Icon>
                                                 </Button>
-                                                {popoverActive[index + 1] &&
+                                                {popoverActive[user_template_id] &&
 
                                                     <ActionList
                                                         actionRole="menuitem"
                                                         items={[
                                                             {
-                                                                id: index + 1,
+                                                                id: user_template_id ,
                                                                 content: 'Rename',
-                                                                onAction: () => handleRenameTemplate(index + 1),
+                                                                onAction: () => handleRenameTemplate(user_template_id),
                                                             },
                                                             {
-                                                                id: index + 1,
+                                                                id: user_template_id,
                                                                 content: 'Duplicate',
-                                                                onAction: () => handleDuplicateTemplate(index + 1)
+                                                                onAction: () => handleDuplicateTemplate(user_template_id)
                                                             },
                                                             {
-                                                                id: index + 1,
+                                                                id: user_template_id,
                                                                 content: 'Delete',
-                                                                onAction: () => handleDeleteTemplate(index + 1)
+                                                                onAction: () => handleDeleteTemplate(user_template_id)
                                                             },
 
                                                         ]}
@@ -251,10 +278,10 @@ export default function UsVsThem({ setLocationChange }) {
 
                                                 <div className='Polaris-MediaCard__ActionContainer'>
                                                     <ButtonGroup>
-                                                        <Button primary onClick={() => handleSelectProducts(index + 1)}>Select Product</Button>
-                                                        <Button onClick={() => handleChangeTemplate(index + 1)}>Change Template</Button>
-                                                        <Button onClick={() => handleCustomizeTemplate(index + 1)}>Customize Template</Button>
-                                                        <Button plain onClick={() => handlePreviewTemplate(index + 1)}>Preview</Button>
+                                                        <Button primary onClick={() => handleSelectProducts(user_template_id)}>Select Product</Button>
+                                                        <Button onClick={() => handleChangeTemplate(user_template_id)}>Change Template</Button>
+                                                        <Button onClick={() => handleCustomizeTemplate(user_template_id)}>Customize Template</Button>
+                                                        <Button plain onClick={() => handlePreviewTemplate(user_template_id)}>Preview</Button>
                                                     </ButtonGroup>
                                                 </div>
                                             </Stack>
@@ -280,23 +307,23 @@ export default function UsVsThem({ setLocationChange }) {
 function MediaCardImage(id) {
     return (
         <>
-            {
-                (() => {
-                    switch (id) {
-                        case 1:
-                            return <img alt={`Template ${id}`} src={Template1Image} className='MediaCard-Img' />
-                        case 2:
-                            return <img alt={`Template ${id}`} src={Template2Image} className='MediaCard-Img' />
-                        case 3:
-                            return <img alt={`Template ${id}`} src={Template3Image} className='MediaCard-Img' />
-                        case 4:
-                            return <img alt={`Template ${id}`} src={Template4Image} className='MediaCard-Img' />
-                        default:
-                            break
-                    }
+            {/*{*/}
+            {/*    (() => {*/}
+            {/*        switch (id) {*/}
+            {/*            case 1:*/}
+            {/*                return <img alt={`Template ${id}`} src={Template1Image} className='MediaCard-Img' />*/}
+            {/*            case 2:*/}
+            {/*                return <img alt={`Template ${id}`} src={Template2Image} className='MediaCard-Img' />*/}
+            {/*            case 3:*/}
+            {/*                return <img alt={`Template ${id}`} src={Template3Image} className='MediaCard-Img' />*/}
+            {/*            case 4:*/}
+            {/*                return <img alt={`Template ${id}`} src={Template4Image} className='MediaCard-Img' />*/}
+            {/*            default:*/}
+            {/*                break*/}
+            {/*        }*/}
 
-                })()
-            }
+            {/*    })()*/}
+            {/*}*/}
         </>
     );
 }
