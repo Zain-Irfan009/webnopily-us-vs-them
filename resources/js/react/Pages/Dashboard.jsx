@@ -144,8 +144,23 @@ export function Dashboard({ setLocationChange,config,setActivePage }) {
 
     }
 
-    const handleSelectProducts = (id) => {
+    const handleSelectProducts =async (id) => {
         console.log(`select products clicked ${id}`);
+
+            let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+            const response = await axios
+                .get(
+                    `http://us-vs-them.test/api/products?user_template_id=${id}&shop_name=${host}`
+                )
+                .then(res => {
+                    console.log(res);
+
+                })
+                .catch(error =>
+                    alert('Error: ', error));
+
+
+
     }
 
 

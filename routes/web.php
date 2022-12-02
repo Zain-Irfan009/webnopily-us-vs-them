@@ -119,6 +119,7 @@ Route::get('/rest-example', function (Request $request) {
 
     return response($result->getDecodedBody());
 })->middleware('shopify.auth:online');
+Route::get('sync-products',[App\Http\Controllers\ProductController::class,'SyncProdcuts'])->middleware('shopify.auth:online');
 
 Route::post('/webhooks', function (Request $request) {
     try {

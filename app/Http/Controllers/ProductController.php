@@ -11,8 +11,9 @@ use Shopify\Clients\Rest;
 class ProductController extends Controller
 {
     public function SyncProdcuts(Request $request){
-       $session = $request->get('shopifySession');
-        $shop = new Rest($session->getShop(), $session->getAccessToken());
+     dd($request->All());
+//        $session = $request->get('shopifySession');
+//        $shop = new Rest($session->getShop(), $session->getAccessToken());
         $result = $shop->get('products', [], ['limit' => 250]);
         $products=$result->getDecodedBody();
 

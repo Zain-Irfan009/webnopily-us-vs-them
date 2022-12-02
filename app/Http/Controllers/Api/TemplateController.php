@@ -380,8 +380,10 @@ class TemplateController extends ApiController
 
             $shop=Session::where('shop',$request->shop_name)->first();
 
+
             if(isset($request->user_template_id)) {
                 $user_template = UserTemplate::where('id', $request->user_template_id)->where('shop_id', $shop->id)->first();
+
                 $products = Product::with(['templateProducts' => function ($q) use ($user_template) {
                     $q->where('user_template_id', $user_template->id);
 
