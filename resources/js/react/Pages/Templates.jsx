@@ -27,7 +27,7 @@ export function Templates({ setLocationChange }) {
         setUserTemplateId(res.data.result.user_template_id)
       })
       .catch(error =>
-        console.warn(error));
+        alert('Error: ', error));
   }
 
   return (

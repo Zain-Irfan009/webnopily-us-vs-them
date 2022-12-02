@@ -124,6 +124,7 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
       setThemeInputTable4(theme4)
     }
   }, [advantagesCount])
+  
   const handleAllValues = e => {
     setAllValues({ ...allValues, [e.target.name - 1]: e.target.value });
     themeInputTable1[e.target.name - 1].name = e.target.value;
@@ -210,7 +211,7 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
       const response = await axios.post('http://us-vs-them.test/api/step-2', data)
       console.log(response);
     } catch (error) {
-      console.warn(error.response.data);
+      alert('Error: ', error);
     }
   }
 
