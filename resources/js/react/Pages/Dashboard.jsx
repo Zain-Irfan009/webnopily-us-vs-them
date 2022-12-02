@@ -1,5 +1,5 @@
 import {
-    Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List, Link, Modal,
+    Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List, Link, Modal, MediaCard,
     Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, TextField, Loading
 } from '@shopify/polaris';
 import { HorizontalDotsMinor } from '@shopify/polaris-icons';
@@ -20,14 +20,13 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
     const [templateRenameUserId, setTemplateRenameUserId] = useState()
 
     const [renameModalActive, setRenameModalActive] = useState(false);
-    const [popoverActive, setPopoverActive] = useState({});
     const [renameToastActive, setRenameToastActive] = useState(false);
     const [deletetoastActive, setDeletetoastActive] = useState(false);
     const [duplicatetoastActive, setDuplicatetoastActive] = useState(false);
 
     const [templateTable, setTemplateTable] = useState([]);
     const [loading, setLoading] = useState(true)
-    
+
 
     const getData = async () => {
         let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
@@ -92,28 +91,12 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
         <Toast content="Template Duplicate Sucessfully" onDismiss={toggleToastActive} duration={1500} />
     ) : null;
 
-
-    function togglePopoverActive(id) {
-        setPopoverActive((prev) => {
-            let toggleId;
-            if (prev[id]) {
-                toggleId = { [id]: false };
-            } else {
-                toggleId = { [id]: true };
-            }
-            return { ...toggleId };
-        });
-    }
-
     function useOutsideAlerter(ref, id) {
         useEffect(() => {
 
             function handleClickOutside(event) {
                 if (ref.current && !ref.current.contains(event.target)) {
-                    if (id === 1) {
-                        setPopoverActive(false)
-                    }
-                    else if (id === 2) {
+                    if (id === 2) {
                         setShowProducts(false)
                         setSelectedItems([])
                     }
@@ -126,15 +109,13 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
         }, [ref]);
     }
 
-    const popOverRef = useRef(null);
     const productsRef = useRef(null);
-    useOutsideAlerter(popOverRef, 1);
     useOutsideAlerter(productsRef, 2);
 
 
     const handleRenameTemplate = (id) => {
         console.log(`rename clicked ${id}`);
-        setPopoverActive(false)
+
         setRenameModalActive(false)
         setRenameToastActive(!renameToastActive)
 
@@ -142,14 +123,14 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
 
     const handleDuplicateTemplate = (id) => {
         console.log(`duplicate clicked ${id}`);
-        setPopoverActive(false)
+       
         setDuplicatetoastActive(!duplicatetoastActive)
 
     }
 
     const handleDeleteTemplate = (id) => {
         console.log(`delete clicked ${id}`);
-        setPopoverActive(false)
+        
         setDeletetoastActive(!deletetoastActive)
 
     }
@@ -324,6 +305,7 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
                                     </Card>
                                     :
                                     templateTable?.map(({ name, image, template_id, user_template_id }, index) =>
+                                    <>
                                         <Card key={user_template_id}>
                                             <div className='Polaris-MediaCard'>
                                                 <div className='Polaris-MediaCard__MediaContainer'>
@@ -421,6 +403,86 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
                                                 </div>
                                             </div>
                                         </Card>
+
+                                            <MediaCard
+                                                key={user_template_id}
+                                                title={name}
+                                                description={
+                                                    <span className='MediaCard-Description'>
+                                                        Here is the current Template that you've choosen. You can customize it every time you want.
+                                                        <ButtonGroup id='MediaCard-BtnGroup'>
+                                                            <span>
+                                                                <Button primary onClick={() => handleSelectProducts(user_template_id)}
+                                                                    id='MediaCard-Btn'>Select Product</Button>
+                                                                {showProducts[user_template_id] &&
+                                                                    <span className='Polaris-MediaCard-Table'>
+                                                                        <Card>
+                                                                            <ResourceList
+                                                                                resourceName={{ singular: 'product', plural: 'products' }}
+                                                                                items={products}
+                                                                                renderItem={(item) => {
+                                                                                    const { id, image, name } = item;
+                                                                                    const media = <Avatar size="small" shape="square" name={name} source={image} />;
+                                                                                    return (
+                                                                                        <ResourceItem
+                                                                                            id={id}
+                                                                                            media={media}
+                                                                                            accessibilityLabel={`View details for ${name}`}
+                                                                                        >
+                                                                                            <Text variant="bodyMd" fontWeight="bold" as="h3">
+                                                                                                {name}
+                                                                                            </Text>
+
+                                                                                        </ResourceItem>
+                                                                                    );
+                                                                                }}
+                                                                                selectedItems={selectedItems}
+                                                                                onSelectionChange={setSelectedItems}
+                                                                                selectable
+                                                                            />
+                                                                            <span className='Products-Confirm-Btn'>
+                                                                                <Button primary onClick={() => handleSubmitProduct(user_template_id)}> Confirm</Button>
+                                                                            </span>
+                                                                        </Card>
+                                                                    </span>
+                                                                }
+                                                            </span>
+                                                            <Button onClick={() => handleChangeTemplate(user_template_id)}>Change Template</Button>
+
+                                                            <Link url='/admin/apps/usVsThem/Templates/page1' onClick={() => handleCustomizeTemplate(user_template_id)} >
+                                                                <Button>Customize Template</Button>
+
+                                                            </Link>
+                                                            <Button plain onClick={() => handlePreviewTemplate(user_template_id)}>Preview</Button>
+                                                        </ButtonGroup>
+                                                    </span>
+                                                }
+
+                                                popoverActions={[
+                                                    {
+                                                        id: user_template_id,
+                                                        content: 'Rename',
+                                                        onAction: () => handleRenameModal(user_template_id, name)
+                                                    },
+                                                    {
+                                                        id: user_template_id,
+                                                        content: 'Duplicate',
+                                                        onAction: () => handleDuplicateTemplate(user_template_id)
+                                                    },
+                                                    {
+                                                        id: user_template_id,
+                                                        content: 'Delete',
+                                                        onAction: () => handleDeleteTemplate(user_template_id)
+                                                    }
+                                                ]}
+                                            >
+                                                <img
+                                                    alt="table"
+                                                    className='MediaCard-Img'
+                                                    src={image}
+                                                />
+                                            </MediaCard>
+                                        </>
                                     )
                                 }
 
