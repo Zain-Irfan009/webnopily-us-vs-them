@@ -38,6 +38,18 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
     competitorCross: '#7b7eac'
   })
 
+    const [colorValues2, setColorValues2] = useState({
+        background1: '%23ffffff',
+        background2: '%23ebecf0',
+        advantageColumn1: '%23626dff',
+        advantageColumn2: '%23c94ff',
+        advantageColumn3: '%23a9afff',
+        brandCheck: '%23474b8b',
+        brandCross: '%237b7eac',
+        competitorCheck: '%23474b8b',
+        competitorCross: '%237b7eac'
+    })
+
   const [themeInputTable1, setThemeInputTable1] = useState([]);
   const [themeInputTable2, setThemeInputTable2] = useState([]);
   const [themeInputTable2Mobile, setThemeInputTable2Mobile] = useState([]);
@@ -52,145 +64,143 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
   const handleCustomAdvantagesCount = useCallback((value) => setCustomAdvantagesCount(value), []);
 
 
-  useEffect(() => {
-    if (!loading) {
-      setLoading(true);
+    useEffect(() => {
+        if (!loading) {
+            setLoading(true);
+        }
+        setTimeout(() => {
+            setLoading(false);
+        }, 300);
+        {
+            let theme1 = [];
+            let theme2Pc = [];
+            let theme3 = [];
+            let theme3Mobile = [];
+            let theme4 = [];
+            // let advantagesValues = [];
+            // let brandValues = [];
+            // let competitorValues = [];
+            let advantagesValues = {};
+            let brandValues = {};
+            let competitorValues = {};
+            [...Array(Number(advantagesCount))].map((item, index) => (
+                advantagesValues = ({ ...advantagesValues, [index]: `Advantage ${index + 1}` }),
+                    brandValues = ({ ...brandValues, [index]: true }),
+                    competitorValues = ({ ...competitorValues, [index]: false }),
+                    // advantagesValues.push(`Advantage ${index + 1}`),
+                    // brandValues.push(true),
+                    // competitorValues.push(false),
+                    theme1.push(
+                        {
+                            name: `Advantage ${index + 1}`,
+                            yourBrand: true,
+                            competitor: false,
+                        },
+                    ),
+                    theme2Pc.push(
+                        {
+                            name: `Advantage ${index + 1}`,
+                            yourBrand: true,
+                            competitor1: false,
+                            competitor2: false,
+                            competitor3: false,
+                            competitor4: false,
+                        },
+                    ),
+                    theme3.push(
+                        {
+                            name: `Advantage ${index + 1}`,
+                            yourBrand: 'true',
+                            competitor1: 'false',
+                            competitor2: 'false',
+                            competitor3: 'false',
+                        },
+                    ),
+                    theme3Mobile.push(
+                        {
+                            name: `Advantage ${index + 1}`,
+                            yourBrand: 'true',
+                            competitor: 'false',
+                        },
+                    ),
+                    theme4.push(
+                        {
+                            name: 'advantage 1',
+                            yourBrand: 'true',
+                            others: 'false',
+                        },
+                    )
+            ))
+            setAllValues(advantagesValues)
+            setBrandValue(brandValues)
+            setCompetitorValue(competitorValues)
+            setThemeInputTable1(theme1)
+            setThemeInputTable2(theme2Pc)
+            setThemeInputTable3(theme3)
+            setThemeInputTable3Mobile(theme3Mobile)
+            setThemeInputTable4(theme4)
+        }
+    }, [advantagesCount])
+    const handleAllValues = e => {
+        setAllValues({ ...allValues, [e.target.name - 1]: e.target.value });
+        themeInputTable1[e.target.name - 1].name = e.target.value;
+        themeInputTable2[e.target.name - 1].name = e.target.value;
+        themeInputTable3[e.target.name - 1].name = e.target.value;
+        themeInputTable3Mobile[e.target.name - 1].name = e.target.value;
+        themeInputTable4[e.target.name - 1].name = e.target.value;
     }
-    setTimeout(() => {
-      setLoading(false);
-    }, 300);
-
-    {
-      let theme1 = [];
-      let theme2Pc = [];
-      let theme3 = [];
-      let theme3Mobile = [];
-      let theme4 = [];
-      let advantagesValues = [];
-      let brandValues = [];
-      let competitorValues = [];
-      [...Array(Number(advantagesCount))].map((item, index) => (
-        // advantagesValues.push({ name: `Advantage ${index + 1}` }),
-        advantagesValues.push(`Advantage ${index + 1}`),
-        brandValues.push(true),
-        competitorValues.push(false),
-        theme1.push(
-          {
-            name: `Advantage ${index + 1}`,
-            yourBrand: true,
-            competitor: false,
-          },
-        ),
-        theme2Pc.push(
-          {
-            name: `Advantage ${index + 1}`,
-            yourBrand: true,
-            competitor1: false,
-            competitor2: false,
-            competitor3: false,
-            competitor4: false,
-          },
-        ),
-        theme3.push(
-          {
-            name: `Advantage ${index + 1}`,
-            yourBrand: 'true',
-            competitor1: 'false',
-            competitor2: 'false',
-            competitor3: 'false',
-          },
-        ),
-        theme3Mobile.push(
-          {
-            name: `Advantage ${index + 1}`,
-            yourBrand: 'true',
-            competitor: 'false',
-          },
-        ),
-        theme4.push(
-          {
-            name: 'advantage 1',
-            yourBrand: 'true',
-            others: 'false',
-          },
-        )
-      ))
-      setThemeInputTable1(theme1)
-      setThemeInputTable2(theme2Pc)
-      setThemeInputTable3(theme3)
-      setThemeInputTable3Mobile(theme3Mobile)
-      setThemeInputTable4(theme4)
-
-      setAllValues(advantagesValues)
-      setBrandValue(brandValues)
-      setCompetitorValue(competitorValues)
+    const handleBrandValue = e => {
+        themeInputTable3[e.target.name].yourBrand = e.target.value;
+        themeInputTable4[e.target.name].yourBrand = e.target.value;
+        themeInputTable3Mobile[e.target.name].yourBrand = e.target.value;
+        if (e.target.value === 'true') {
+            setBrandValue({ ...brandValue, [e.target.name]: true });
+            themeInputTable1[e.target.name].yourBrand = true;
+            themeInputTable2[e.target.name].yourBrand = true;
+        }
+        else if (e.target.value === 'false') {
+            setBrandValue({ ...brandValue, [e.target.name]: false });
+            themeInputTable1[e.target.name].yourBrand = false;
+            themeInputTable2[e.target.name].yourBrand = false;
+        }
+        else {
+            themeInputTable1[e.target.name].yourBrand = e.target.value;
+        }
     }
-  }, [advantagesCount])
-
-  const handleAllValues = e => {
-    // setAllValues({ ...allValues, [e.target.name - 1]:  e.target.value });
-    setAllValues({ ...allValues, [e.target.name - 1]: e.target.value });
-    themeInputTable1[e.target.name - 1].name = e.target.value;
-    themeInputTable2[e.target.name - 1].name = e.target.value;
-    themeInputTable3[e.target.name - 1].name = e.target.value;
-    themeInputTable3Mobile[e.target.name - 1].name = e.target.value;
-    themeInputTable4[e.target.name - 1].name = e.target.value;
-
-  }
-
-  const handleBrandValue = e => {
-    setBrandValue({ ...brandValue, [e.target.name]: e.target.value });
-
-    themeInputTable3[e.target.name].yourBrand = e.target.value;
-    themeInputTable4[e.target.name].yourBrand = e.target.value;
-    themeInputTable3Mobile[e.target.name].yourBrand = e.target.value;
-
-    if (e.target.value === 'true') {
-      themeInputTable1[e.target.name].yourBrand = true;
-      themeInputTable2[e.target.name].yourBrand = true;
+    const handleCompetitorValue = e => {
+        themeInputTable3[e.target.name].competitor1 = e.target.value;
+        themeInputTable3[e.target.name].competitor2 = e.target.value;
+        themeInputTable3[e.target.name].competitor3 = e.target.value;
+        themeInputTable3Mobile[e.target.name].competitor = e.target.value;
+        themeInputTable4[e.target.name].others = e.target.value;
+        if (e.target.value === 'true') {
+            setCompetitorValue({ ...competitorValue, [e.target.name]: true });
+            themeInputTable1[e.target.name].competitor = true;
+            themeInputTable2[e.target.name].competitor1 = true;
+            themeInputTable2[e.target.name].competitor2 = true;
+            themeInputTable2[e.target.name].competitor3 = true;
+            themeInputTable2[e.target.name].competitor4 = true;
+        }
+        else if (e.target.value === 'false') {
+            setCompetitorValue({ ...competitorValue, [e.target.name]: false });
+            themeInputTable1[e.target.name].competitor = false;
+            themeInputTable2[e.target.name].competitor1 = false;
+            themeInputTable2[e.target.name].competitor2 = false;
+            themeInputTable2[e.target.name].competitor3 = false;
+            themeInputTable2[e.target.name].competitor4 = false;
+        }
+        else {
+            themeInputTable1[e.target.name].competitor = e.target.value;
+        }
     }
-    else if (e.target.value === 'false') {
-      themeInputTable1[e.target.name].yourBrand = false;
-      themeInputTable2[e.target.name].yourBrand = false;
-    }
-    else {
-      themeInputTable1[e.target.name].yourBrand = e.target.value;
-    }
-
-  }
-
-  const handleCompetitorValue = e => {
-    setCompetitorValue({ ...competitorValue, [e.target.name]: e.target.value });
-
-    themeInputTable3[e.target.name].competitor1 = e.target.value;
-    themeInputTable3[e.target.name].competitor2 = e.target.value;
-    themeInputTable3[e.target.name].competitor3 = e.target.value;
-    themeInputTable3Mobile[e.target.name].competitor = e.target.value;
-    themeInputTable4[e.target.name].others = e.target.value;
-
-    if (e.target.value === 'true') {
-      themeInputTable1[e.target.name].competitor = true;
-      themeInputTable2[e.target.name].competitor1 = true;
-      themeInputTable2[e.target.name].competitor2 = true;
-      themeInputTable2[e.target.name].competitor3 = true;
-      themeInputTable2[e.target.name].competitor4 = true;
-    }
-    else if (e.target.value === 'false') {
-      themeInputTable1[e.target.name].competitor = false;
-      themeInputTable2[e.target.name].competitor1 = false;
-      themeInputTable2[e.target.name].competitor2 = false;
-      themeInputTable2[e.target.name].competitor3 = false;
-      themeInputTable2[e.target.name].competitor4 = false;
-    }
-    else {
-      themeInputTable1[e.target.name].competitor = e.target.value;
-    }
-
-  }
-
-  const handleColorValues = e => {
+    const handleColorValues = e => {
     setColorValues({ ...colorValues, [e.target.name]: e.target.value });
+      let newTestArray = JSON.parse(
+          JSON.stringify(e.target.value).replaceAll('#', '%23')
+      );
+      setColorValues2({ ...colorValues2, [e.target.name]: newTestArray });
   }
+
 
   // useEffect(() => {
   //   console.log('templateName: ', templateName);
@@ -205,10 +215,16 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
 
   const submitData = async () => {
     let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+      let newTestArray = JSON.parse(
+          JSON.stringify(colorValues).replaceAll('#', '%23')
+      );
+
+      console.log(        `http://us-vs-them.test/api/step-2?brand=${yourBrand}&competitor=${otherCompetitors}&advantages=${allValues}&brands=${brandValue}&competitors=${competitorValue}&template_id=${'1'}&template_name=${templateName}&user_template_id=${'111'}&background_color1=${colorValues2.background1}&background_color2=${colorValues2.background2}&column1_color=${colorValues2.advantageColumn1}&column2_color=${colorValues2.advantageColumn2}&column3_color=${colorValues2.advantageColumn3}&brand_checkbox_color1=${colorValues2.brandCheck}&brand_checkbox_color2=${colorValues2.brandCross}&competitors_checkbox_color1=${colorValues2.competitorCheck}&competitors_checkbox_color2=${colorValues2.competitorCross}&shop_name=${host}`
+      );
 
     const response = await axios
       .post(
-        `http://app-template-php.test/api/step-2?brand=${yourBrand}&competitor=${otherCompetitors}&advantages=${allValues}&brands=${brandValue}&competitors${competitorValue}&template_id=${'1'}&template_name=${templateName}&user_template_id=${'111'}&background_color1=${colorValues.background1}&background_color2=${colorValues.background2}&column1_color=${colorValues.advantageColumn1}&column2_color=${colorValues.advantageColumn2}&column3_color=${colorValues.advantageColumn3}&brand_checkbox_color1=${colorValues.brandCheck}&brand_checkbox_color2=${colorValues.brandCross}&competitors_checkbox_color1=${colorValues.competitorCheck}&competitors_checkbox_color2=${colorValues.competitorCross}&shop_name=${host}`
+        `http://us-vs-them.test/api/step-2?brand=${yourBrand}&competitor=${otherCompetitors}&advantages=${allValues}&brands=${brandValue}&competitors=${competitorValue}&template_id=${'1'}&template_name=${templateName}&user_template_id=${'111'}&background_color1=${colorValues2.background1}&background_color2=${colorValues2.background2}&column1_color=${colorValues2.advantageColumn1}&column2_color=${colorValues2.advantageColumn2}&column3_color=${colorValues2.advantageColumn3}&brand_checkbox_color1=${colorValues2.brandCheck}&brand_checkbox_color2=${colorValues2.brandCross}&competitors_checkbox_color1=${colorValues2.competitorCheck}&competitors_checkbox_color2=${colorValues2.competitorCross}&shop_name=${host}`
       )
       .then(res => {
         console.log(res);

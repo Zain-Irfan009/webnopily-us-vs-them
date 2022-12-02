@@ -115,6 +115,7 @@ class TemplateController extends ApiController
         }
 
         public function Step2Template(Request $request){
+dd($request->all());
 
             $template=Template::find($request->template_id);
             $shop=Session::where('shop',$request->shop_name)->first();
@@ -146,11 +147,15 @@ class TemplateController extends ApiController
                 $user_template->save();
 
                 $items_array=[];
-                foreach ($request->advantages as $index=> $value){
+                $advantages_exp=explode(',',$request->advantages);
+                $brands_exp=explode(',',$request->brands);
+
+                $competitors_exp=explode(',',$request->competitors);
+                foreach ($advantages_exp as $index=> $value){
                     $advantage=new Advantage();
                     $advantage->advantage=$value;
-                    $advantage->brand=$request->brands[$index];
-                    $advantage->competitors=$request->competitors[$index];
+                    $advantage->brand=$brands_exp[$index];
+                    $advantage->competitors=$competitors_exp[$index];
                     $advantage->user_template_id=$user_template->id;
                     $advantage->shop_id=$shop->id;
                     $advantage->save();
