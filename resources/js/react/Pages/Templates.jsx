@@ -1,4 +1,4 @@
-import { Layout, Frame } from '@shopify/polaris';
+import { Layout, Frame, Loading } from '@shopify/polaris';
 import React, { useState, useEffect } from 'react';
 
 import {
@@ -11,6 +11,7 @@ export function Templates({ setLocationChange }) {
   const [activePage, setActivePage] = useState(1)
   const [selectedTemplate, setSelectedTemplate] = useState(1)
   const [userTemplateId, setUserTemplateId] = useState()
+  const [loading, setLoading] = useState(true)
 
 
   const handleCustomizeTable = async (id) => {
@@ -30,9 +31,17 @@ export function Templates({ setLocationChange }) {
         alert('Error: ', error));
   }
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [])
+  
+
   return (
     <div className='Navigation-Frame'>
       <Frame>
+        {loading ? <Loading/> :
         <div className={`Templates-Page`}>
           <Layout>
             <Layout.Section >
@@ -62,7 +71,7 @@ export function Templates({ setLocationChange }) {
             }
 
           </Layout>
-        </div>
+        </div>}
       </Frame>
     </div>
   );
