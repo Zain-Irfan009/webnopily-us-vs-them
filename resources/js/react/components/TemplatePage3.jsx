@@ -185,7 +185,7 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
   const submitData = async () => {
     let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
 
-    let data = [{
+    let data = {
       brand: yourBrand,
       competitor: otherCompetitors,
       advantages: allValues,
@@ -204,7 +204,7 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
       competitors_checkbox_color1: colorValues.competitorCheck,
       competitors_checkbox_color2: colorValues.competitorCross,
       shop_name: host,
-    }];
+    };
 
     try {
       const response = await axios.post('http://us-vs-them.test/api/step-2', data)

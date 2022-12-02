@@ -115,9 +115,10 @@ class TemplateController extends ApiController
         }
 
         public function Step2Template(Request $request){
-dd($request->all());
-
+//dd($request->template_id);
+//dd($request->all());
             $template=Template::find($request->template_id);
+
             $shop=Session::where('shop',$request->shop_name)->first();
 
             if($template){
@@ -139,6 +140,7 @@ dd($request->all());
                 $user_template->background_color2=$request->background_color2;
                 $user_template->column1_color=$request->column1_color;
                 $user_template->column2_color=$request->column2_color;
+                $user_template->column3_color=$request->column3_color;
                 $user_template->brand_checkbox_color1=$request->brand_checkbox_color1;
                 $user_template->brand_checkbox_color2=$request->brand_checkbox_color2;
                 $user_template->competitors_checkbox_color1=$request->competitors_checkbox_color1;
@@ -149,6 +151,7 @@ dd($request->all());
                 $items_array=[];
 
                 foreach ($request->advantages as $index=> $value){
+
                     $advantage=new Advantage();
                     $advantage->advantage=$value;
                     $advantage->brand=$request->brands[$index];
@@ -157,20 +160,20 @@ dd($request->all());
                     $advantage->shop_id=$shop->id;
                     $advantage->save();
 
-                    if($request->brands[$index] =='true'){
+                    if($request->brands[$index] ==true){
                         $brand=true;
                     }else{
                         $brand=false;
                     }
-                    if($request->competitors[$index] =='true'){
+                    if($request->competitors[$index] ==true){
                         $competitor=true;
                     }else{
                         $competitor=false;
                     }
                     $item=[
                        'advantage'=>$value,
-                       'brand'=>$brand,
-                       'competitor'=>$competitor,
+                       'brand'=>$request->brands[$index],
+                       'competitor'=>$request->competitors[$index],
                     ];
                     array_push($items_array,$item);
                 }

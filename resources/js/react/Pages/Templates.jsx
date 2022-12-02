@@ -8,20 +8,20 @@ import axios from "axios";
 
 export function Templates({ setLocationChange }) {
 
-  const [activePage, setActivePage] = useState(3)
+  const [activePage, setActivePage] = useState(1)
   const [selectedTemplate, setSelectedTemplate] = useState(1)
   const [userTemplateId, setUserTemplateId] = useState()
 
 
   const handleCustomizeTable = async (id) => {
     let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
-    
+
     const response = await axios
       .post(
         `http://us-vs-them.test/api/step-1?template_id=${id}&shop_name=${host}`
       )
       .then(res => {
-        console.log(res);
+        console.log(res.data.result);
         setActivePage(3)
         setSelectedTemplate(res.data.result.template_id)
         setUserTemplateId(res.data.result.user_template_id)
