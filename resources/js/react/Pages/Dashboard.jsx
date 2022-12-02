@@ -1,6 +1,6 @@
 import {
-    Page, Card, Layout, ButtonGroup, Button, Stack, Badge, EmptyState,
-    Banner, List, Link, Modal, Toast, ActionList, Icon,Frame, Loading
+    Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List, Link, Modal,
+    Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, Loading
 } from '@shopify/polaris';
 import { HorizontalDotsMinor } from '@shopify/polaris-icons';
 import createApp from '@shopify/app-bridge/development';
@@ -9,7 +9,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from "axios";
 
 
-export function Dashboard({ setLocationChange,config,setActivePage }) {
+export function Dashboard({ setLocationChange, config, setActivePage }) {
 
     const [appEnable, setAppEnable] = useState(false)
 
@@ -22,10 +22,12 @@ export function Dashboard({ setLocationChange,config,setActivePage }) {
 
     const handleLocationChange = () => {
         const redirect = Redirect.create(app);
-        redirect.dispatch(Redirect.Action.APP, `/templates` );
+        redirect.dispatch(Redirect.Action.APP, `/templates`);
         setLocationChange('/admin/apps/usVsThem/Templates')
     }
-
+    const [products, setProducts] = useState([])
+    const [showProducts, setShowProducts] = useState(false)
+    const [selectedItems, setSelectedItems] = useState([]);
     const [popoverActive, setPopoverActive] = useState({});
     const [renameToastActive, setRenameToastActive] = useState(false);
     const [deletetoastActive, setDeletetoastActive] = useState(false);
@@ -85,12 +87,18 @@ export function Dashboard({ setLocationChange,config,setActivePage }) {
         });
     }
 
-    function useOutsideAlerter(ref) {
+    function useOutsideAlerter(ref, id) {
         useEffect(() => {
 
             function handleClickOutside(event) {
                 if (ref.current && !ref.current.contains(event.target)) {
-                    setPopoverActive(false)
+                    if (id === 1) {
+                        setPopoverActive(false)
+                    }
+                    else if (id === 2) {
+                        setShowProducts(false)
+                        setSelectedItems([])
+                    }
                 }
             }
             document.addEventListener("mousedown", handleClickOutside);
@@ -100,8 +108,10 @@ export function Dashboard({ setLocationChange,config,setActivePage }) {
         }, [ref]);
     }
 
-    const wrapperRef = useRef(null);
-    useOutsideAlerter(wrapperRef);
+    const popOverRef = useRef(null);
+    const productsRef = useRef(null);
+    useOutsideAlerter(popOverRef, 1);
+    useOutsideAlerter(productsRef, 2);
 
 
     const handleRenameTemplate = (id) => {
@@ -144,193 +154,236 @@ export function Dashboard({ setLocationChange,config,setActivePage }) {
 
     }
 
-    const handleSelectProducts =async (id) => {
+    const handleSelectProducts = async (id) => {
         console.log(`select products clicked ${id}`);
 
-            let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
-            const response = await axios
-                .get(
-                    `http://us-vs-them.test/api/products?user_template_id=${id}&shop_name=${host}`
-                )
-                .then(res => {
-                    console.log(res);
-
+        let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+        const response = await axios
+            .get(
+                `http://us-vs-them.test/api/products?user_template_id=${id}&shop_name=${host}`
+            )
+            .then(res => {
+                console.log(res);
+                setProducts(res.data.result)
+                let arr = []
+                res.data.result?.map((item) => {
+                    if (item.selected === true) {
+                        arr.push(item.id)
+                    }
                 })
-                .catch(error =>
-                    alert('Error: ', error));
+                setSelectedItems(arr)
 
+                setShowProducts((prev) => {
+                    let toggleId;
+                    if (prev[id]) {
+                        toggleId = { [id]: false };
+                    } else {
+                        toggleId = { [id]: true };
+                    }
+                    return { ...toggleId };
+                });
 
+            })
+            .catch(error =>
+                alert('Error: ', error));
+    }
 
+    const handleSubmitProduct = async (id) => {
+        console.log(`submit products ${id} `);
     }
 
 
 
     return (
-
         <div className='Dashboard'>
             <Frame>
-            {loading ? <Loading /> :
-                <Page
-                    title="Us vs Them"
-                    titleMetadata={
-                        <>
-                            <Badge status="success">Active</Badge>
-                            <Badge status="attention">Pending Install</Badge>
-                        </>
-                    }
-                    primaryAction={
-                        {
-                            content: appEnable ? 'Disable the app' : 'Enable the app',
-                            onAction: () => {
-                                setAppEnable(!appEnable)
-                            },
+                {loading ? <Loading /> :
+                    <Page
+                        title="Us vs Them"
+                        titleMetadata={
+                            <>
+                                <Badge status="success">Active</Badge>
+                                <Badge status="attention">Pending Install</Badge>
+                            </>
                         }
-                    }
-                    actionGroups={[
-                        {
-                            title: 'More actions',
-                            accessibilityLabel: 'Action group label',
-                            actions: [
-                                {
-                                    content: 'Info',
-                                    accessibilityLabel: 'Individual action label',
-                                    onAction: () => { },
+                        primaryAction={
+                            {
+                                content: appEnable ? 'Disable the app' : 'Enable the app',
+                                onAction: () => {
+                                    setAppEnable(!appEnable)
                                 },
-                            ],
-                        },
-                    ]}
-                >
-                    <Layout>
-                        <Layout.Section >
-                            {!appEnable &&
-                                <div className='App-Banner'>
-                                    <Banner
-                                        title="Your Us vs Them Widget was created. Now install the forms theme app embed."
-                                        action={
-                                            {
-                                                content: 'Go to online store',
-                                                onAction: () => { },
-                                            }
-                                        }
-                                        status="warning"
-                                    >
-                                        <List>
-                                            <List.Item>
-                                                In order for your widgets to work on your storefront, go to your online store editor
-                                                and turn on the forms theme app embed.
-                                            </List.Item>
-                                        </List>
-                                    </Banner>
-                                </div>
                             }
+                        }
+                        actionGroups={[
+                            {
+                                title: 'More actions',
+                                accessibilityLabel: 'Action group label',
+                                actions: [
+                                    {
+                                        content: 'Info',
+                                        accessibilityLabel: 'Individual action label',
+                                        onAction: () => { },
+                                    },
+                                ],
+                            },
+                        ]}
+                    >
+                        <Layout>
+                            <Layout.Section >
+                                {!appEnable &&
+                                    <div className='App-Banner'>
+                                        <Banner
+                                            title="Your Us vs Them Widget was created. Now install the forms theme app embed."
+                                            action={
+                                                {
+                                                    content: 'Go to online store',
+                                                    onAction: () => { },
+                                                }
+                                            }
+                                            status="warning"
+                                        >
+                                            <List>
+                                                <List.Item>
+                                                    In order for your widgets to work on your storefront, go to your online store editor
+                                                    and turn on the forms theme app embed.
+                                                </List.Item>
+                                            </List>
+                                        </Banner>
+                                    </div>
+                                }
 
-                            <Card sectioned>
-                                <h5>Your current templates</h5>
-                                <div className='Current-Templates-Card-Content'>
-                                    <Stack>
-                                        <p>
-                                            This is your dashboard. It gathers all your templates. You can create as many
-                                            as you want for each product.
-                                        </p>
-                                        <Link url='/admin/apps/usVsThem/Templates' onClick={handleLocationChange}>
-                                            <Button size="slim" >Create a Table</Button>
-                                        </Link>
-                                    </Stack>
-                                </div>
-                            </Card>
-
-                            {templateTable.length < 1 ?
                                 <Card sectioned>
-                                    <EmptyState
-                                        heading="No template saved yet!"
-                                        // action={
-                                        //     // { content: 'Create Template' }
-                                        //     <Link url='/admin/apps/usVsThem/Templates' onClick={handleLocationChange}>
-                                        //         <Button size="slim" >Create Template</Button>
-                                        //     </Link>
-                                        // }
-                                        image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
-                                    >
-                                    </EmptyState>
+                                    <h5>Your current templates</h5>
+                                    <div className='Current-Templates-Card-Content'>
+                                        <Stack>
+                                            <p>
+                                                This is your dashboard. It gathers all your templates. You can create as many
+                                                as you want for each product.
+                                            </p>
+                                            <Link url='/admin/apps/usVsThem/Templates' onClick={handleLocationChange}>
+                                                <Button size="slim" >Create a Table</Button>
+                                            </Link>
+                                        </Stack>
+                                    </div>
                                 </Card>
-                                :
-                                templateTable?.map(({ name,image, template_id, user_template_id }, index) =>
-                                    <Card key={user_template_id}>
-                                        <div className='Polaris-MediaCard'>
-                                            <div className='Polaris-MediaCard__MediaContainer'>
-                                                <img alt={`Template ${user_template_id}`} src={image} className='MediaCard-Img' />
-                                            </div>
-                                            <div className='Polaris-MediaCard__InfoContainer'>
-                                                <div className='Polaris-Card__Section'>
-                                                    <div className="Polaris-MediaCard__Popover" ref={wrapperRef}>
 
-                                                        <Button plain size='slim' onClick={() => togglePopoverActive(user_template_id)}>
-                                                            <Icon source={HorizontalDotsMinor} color="base"></Icon>
-                                                        </Button>
-                                                        {popoverActive[user_template_id] &&
+                                {templateTable.length < 1 ?
+                                    <Card sectioned>
+                                        <EmptyState
+                                            heading="No template saved yet!"
+                                            image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+                                        >
+                                        </EmptyState>
+                                    </Card>
+                                    :
+                                    templateTable?.map(({ name, image, template_id, user_template_id }, index) =>
+                                        <Card key={user_template_id}>
+                                            <div className='Polaris-MediaCard'>
+                                                <div className='Polaris-MediaCard__MediaContainer'>
+                                                    <img alt={`Template ${user_template_id}`} src={image} className='MediaCard-Img' />
+                                                </div>
+                                                <div className='Polaris-MediaCard__InfoContainer'>
+                                                    <div className='Polaris-Card__Section'>
+                                                        <div className="Polaris-MediaCard__Popover" ref={wrapperRef}>
 
-                                                            <ActionList
-                                                                actionRole="menuitem"
-                                                                items={[
-                                                                    {
-                                                                        id: user_template_id,
-                                                                        content: 'Rename',
-                                                                        onAction: () => handleRenameTemplate(user_template_id),
-                                                                    },
-                                                                    {
-                                                                        id: user_template_id,
-                                                                        content: 'Duplicate',
-                                                                        onAction: () => handleDuplicateTemplate(user_template_id)
-                                                                    },
-                                                                    {
-                                                                        id: user_template_id,
-                                                                        content: 'Delete',
-                                                                        onAction: () => handleDeleteTemplate(user_template_id)
-                                                                    },
+                                                            <Button plain size='slim' onClick={() => togglePopoverActive(user_template_id)}>
+                                                                <Icon source={HorizontalDotsMinor} color="base"></Icon>
+                                                            </Button>
+                                                            {popoverActive[user_template_id] &&
 
-                                                                ]}
-                                                            />
-                                                        }
+                                                                <ActionList
+                                                                    actionRole="menuitem"
+                                                                    items={[
+                                                                        {
+                                                                            id: user_template_id,
+                                                                            content: 'Rename',
+                                                                            onAction: () => handleRenameTemplate(user_template_id),
+                                                                        },
+                                                                        {
+                                                                            id: user_template_id,
+                                                                            content: 'Duplicate',
+                                                                            onAction: () => handleDuplicateTemplate(user_template_id)
+                                                                        },
+                                                                        {
+                                                                            id: user_template_id,
+                                                                            content: 'Delete',
+                                                                            onAction: () => handleDeleteTemplate(user_template_id)
+                                                                        },
+
+                                                                    ]}
+                                                                />
+                                                            }
+                                                        </div>
+
+                                                        <Stack vertical spacing='tight'>
+                                                            <div className="Polaris-MediaCard__Heading">
+                                                                <h2 className="Polaris-Text--root Polaris-Text--headingMd Polaris-Text--semibold">{name}</h2>
+                                                            </div>
+
+                                                            <p>Here is the current Template that you've choosen. You can customize it every time you want.</p>
+
+                                                            <div className='Polaris-MediaCard__ActionContainer'>
+                                                                <ButtonGroup>
+                                                                    <span>
+                                                                        <Button primary onClick={() => handleSelectProducts(user_template_id)}>Select Product</Button>
+                                                                        {showProducts[user_template_id] &&
+                                                                            <div className='Polaris-MediaCard-Table' ref={productsRef}>
+                                                                                <Card>
+                                                                                    <ResourceList
+                                                                                        resourceName={{ singular: 'product', plural: 'products' }}
+                                                                                        items={products}
+                                                                                        renderItem={(item) => {
+                                                                                            const { id, image, name } = item;
+                                                                                            const media = <Avatar size="small" shape="square" name={name} source={image} />;
+                                                                                            return (
+                                                                                                <ResourceItem
+                                                                                                    id={id}
+                                                                                                    media={media}
+                                                                                                    accessibilityLabel={`View details for ${name}`}
+                                                                                                >
+                                                                                                    <Text variant="bodyMd" fontWeight="bold" as="h3">
+                                                                                                        {name}
+                                                                                                    </Text>
+
+                                                                                                </ResourceItem>
+                                                                                            );
+                                                                                        }}
+                                                                                        selectedItems={selectedItems}
+                                                                                        onSelectionChange={setSelectedItems}
+                                                                                        selectable
+                                                                                    />
+                                                                                    <span className='Products-Confirm-Btn'>
+                                                                                        <Button primary onClick={() => handleSubmitProduct(user_template_id)}> Confirm</Button>
+                                                                                    </span>
+                                                                                </Card>
+                                                                            </div>
+                                                                        }
+                                                                    </span>
+
+                                                                    <Button onClick={() => handleChangeTemplate(user_template_id)}>Change Template</Button>
+
+                                                                    <Link url='/admin/apps/usVsThem/Templates/page1' onClick={() => handleCustomizeTemplate(user_template_id)} >
+                                                                        <Button>Customize Template</Button>
+
+                                                                    </Link>
+                                                                    <Button plain onClick={() => handlePreviewTemplate(user_template_id)}>Preview</Button>
+                                                                </ButtonGroup>
+                                                            </div>
+                                                        </Stack>
                                                     </div>
-
-                                                    <Stack vertical spacing='tight'>
-                                                        <div className="Polaris-MediaCard__Heading">
-                                                            <h2 className="Polaris-Text--root Polaris-Text--headingMd Polaris-Text--semibold">{name}</h2>
-                                                        </div>
-
-                                                        <p>Here is the current Template that you've choosen. You can customize it every time you want.</p>
-
-                                                        <div className='Polaris-MediaCard__ActionContainer'>
-                                                            <ButtonGroup>
-
-                                                                <Button primary onClick={() => handleSelectProducts(user_template_id)}>Select Product</Button>
-                                                                <Button onClick={() => handleChangeTemplate(user_template_id)}>Change Template</Button>
-                                                                {/*<Link url='/admin/apps/usVsThem/Templates' >*/}
-                                                                {/*    <Button onClick={() => handleCustomizeTemplate(user_template_id)}>Customize Template</Button>*/}
-
-                                                                {/*</Link>*/}
-                                                                <Link url='/admin/apps/usVsThem/Templates/page1' onClick={() => handleCustomizeTemplate(user_template_id)} >
-                                                                    <Button>Customize Template</Button>
-
-                                                                </Link>
-                                                                <Button plain onClick={() => handlePreviewTemplate(user_template_id)}>Preview</Button>
-                                                            </ButtonGroup>
-                                                        </div>
-                                                    </Stack>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </Card>
-                                )
-                            }
+                                        </Card>
+                                    )
+                                }
 
-                        </Layout.Section>
+                            </Layout.Section>
 
-                    </Layout>
-                    {toastRename}
-                    {toastDelete}
-                    {toastDuplicate}
-                </Page>}
+                        </Layout>
+                        {toastRename}
+                        {toastDelete}
+                        {toastDuplicate}
+                    </Page>}
             </Frame>
         </div>
     );

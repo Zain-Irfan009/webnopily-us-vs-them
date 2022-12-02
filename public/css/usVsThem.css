@@ -18,10 +18,8 @@
     --template-table4-rows-light-color: #D2E8F4;
 }
 
-.Dashboard .Polaris-Page{
-    margin-bottom: 3rem;
 
-}
+
 .Templates-Page {
     position: relative;
     height: 100%;
@@ -67,6 +65,10 @@
 }
 
 /* ----------------------UsVsThem Dashboard--------------------------- */
+
+.Dashboard .Polaris-Page {
+    margin-bottom: 3rem !important;
+}
 
 .Templates-Page .Polaris-Layout .Polaris-Layout__Section {
     min-width: 75%;
@@ -184,11 +186,9 @@
     position: absolute;
     right: -60px;
     top: 16px;
-
     margin-top: 1rem;
     transition: opacity var(--p-duration-100) var(--p-ease), transform var(--p-duration-100) var(--p-ease);
     z-index: 999;
-
     max-width: calc(100vw - var(--p-space-8));
     margin: 0.3125rem var(--p-space-2) var(--p-space-4);
     box-shadow: var(--p-shadow-popover);
@@ -196,11 +196,101 @@
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     will-change: left, top;
-
     overflow: hidden;
     background-color: var(--p-surface);
     outline: var(--p-border-width-1) solid transparent;
 }
+
+.Dashboard .Polaris-MediaCard-Table {
+    position: absolute;
+    min-width: 300px;
+    max-width: 400px;
+    z-index: 99;
+    max-height: 350px;
+    overflow-y: auto;
+    /* right: -150px;
+    top: 30px;
+    left: -15px; */
+}
+
+.Dashboard .Polaris-MediaCard-Table .Polaris-ResourceItem__Container .Polaris-ResourceItem__Content {
+    margin: auto 0;
+    flex: none;
+}
+
+.Dashboard .Polaris-MediaCard-Table .Polaris-ResourceItem__Container .Polaris-Avatar__Image {
+    object-fit: contain;
+}
+
+.Dashboard .Polaris-MediaCard-Table .Polaris-ResourceList__HeaderWrapper .Polaris-CheckableButton {
+    border: none;
+    box-shadow: none;
+}
+
+.Dashboard .Polaris-MediaCard-Table .Polaris-ResourceList__HeaderWrapper .Polaris-CheckableButton:hover {
+    background-color: var(--p-surface);
+}
+
+.Dashboard .Polaris-MediaCard-Table .Polaris-ResourceItem--selected {
+    background-color: var(--p-surface);
+}
+
+
+.Dashboard .Polaris-MediaCard-Table .Polaris-ResourceItem__ListItem .Polaris-ResourceItem__Container .Polaris-Text--root {
+    color: #000;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.Dashboard .Polaris-MediaCard-Table .Polaris-ResourceList__HeaderOuterWrapper .Polaris-CheckableButton__Label::before {
+    position: absolute;
+    content: 'Products';
+    color: #000;
+    top: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    left: 35%;
+}
+
+.Dashboard .Polaris-MediaCard-Table.Polaris-ResourceList__HeaderTitleWrapper::before {
+    position: absolute;
+    content: 'Product';
+    color: black;
+    right: 50%;
+    font-size: 14px;
+    top: 10px;
+}
+
+.Dashboard .Polaris-MediaCard-Table .Polaris-ResourceList__HeaderOuterWrapper .Polaris-BulkActions__ButtonGroupWrapper .Polaris-Button__Content {
+    min-width: 12px;
+}
+
+.Dashboard .Polaris-MediaCard-Table .Polaris-ResourceList__HeaderOuterWrapper .Polaris-BulkActions__ButtonGroupWrapper .Polaris-Button__Content::before {
+    position: absolute;
+    content: 'Cancel';
+    color: #000;
+    width: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    right: 4px;
+}
+
+.Dashboard .Polaris-MediaCard-Table .Polaris-ResourceList__SelectButtonWrapper {
+    fill: var(--p-icon);
+}
+
+.Dashboard .Polaris-MediaCard-Table .Polaris-ResourceList .Polaris-ResourceItem__ListItem:last-child {
+    border-bottom: var(--p-border-divider);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.Dashboard .Polaris-MediaCard-Table .Products-Confirm-Btn {
+    display: flex;
+    justify-content: center;
+    padding: 12px 0;
+}
+
 
 
 
