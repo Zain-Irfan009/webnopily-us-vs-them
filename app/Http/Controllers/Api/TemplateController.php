@@ -202,19 +202,24 @@ class TemplateController extends ApiController
         }
 
         public function CurrentTemplate(Request $request){
+
             $shop=Session::where('shop',$request->shop_name)->first();
             $user_templates=UserTemplate::where('shop_id',$shop->id)->get();
+
 
             $result = [];
             if($user_templates->count()>0)
             {
                 foreach ($user_templates as $user_template)
                 {
+                    $template=Template::find($user_template->template_id);
+
                     $data = [
                         'shop_name'=>$shop->shop,
                         'template_id'=> $user_template->template_id,
                         'user_template_id'=> $user_template->id,
                         'name'=> $user_template->template_name,
+                        'image'=>$template->image
                     ];
                     $result[] = $data;
                 }
