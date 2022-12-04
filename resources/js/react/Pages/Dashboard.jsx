@@ -2,7 +2,7 @@ import {
     Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List, Link, Modal, MediaCard,
     Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, TextField, Loading
 } from '@shopify/polaris';
-import { HorizontalDotsMinor } from '@shopify/polaris-icons';
+import { CancelSmallMinor } from '@shopify/polaris-icons';
 import createApp from '@shopify/app-bridge/development';
 import { Redirect } from '@shopify/app-bridge/actions';
 import React, { useState, useEffect, useRef } from 'react';
@@ -123,14 +123,14 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
 
     const handleDuplicateTemplate = (id) => {
         console.log(`duplicate clicked ${id}`);
-       
+
         setDuplicatetoastActive(!duplicatetoastActive)
 
     }
 
     const handleDeleteTemplate = (id) => {
         console.log(`delete clicked ${id}`);
-        
+
         setDeletetoastActive(!deletetoastActive)
 
     }
@@ -156,6 +156,8 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
 
     const handleSelectProducts = async (id) => {
         console.log(`select products clicked ${id}`);
+        setProducts([])
+        setSelectedItems([])
 
         let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
         const response = await axios
@@ -305,184 +307,89 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
                                     </Card>
                                     :
                                     templateTable?.map(({ name, image, template_id, user_template_id }, index) =>
-                                    <>
-                                        <Card key={user_template_id}>
-                                            <div className='Polaris-MediaCard'>
-                                                <div className='Polaris-MediaCard__MediaContainer'>
-                                                    <img alt={`Template ${user_template_id}`} src={image} className='MediaCard-Img' />
-                                                </div>
-                                                <div className='Polaris-MediaCard__InfoContainer'>
-                                                    <div className='Polaris-Card__Section'>
-                                                        <div className="Polaris-MediaCard__Popover" ref={wrapperRef}>
+                                        <MediaCard
+                                            key={user_template_id}
+                                            title={name}
+                                            description={
+                                                <span className='MediaCard-Description'>
+                                                    Here is the current Template that you've choosen. You can customize it every time you want.
+                                                    <ButtonGroup id='MediaCard-BtnGroup'>
+                                                        <span>
+                                                            <Button primary onClick={() => handleSelectProducts(user_template_id)}
+                                                                id='MediaCard-Btn'>Select Product</Button>
+                                                            {showProducts[user_template_id] &&
+                                                                <span className='Polaris-MediaCard-Table'>
+                                                                    <Card>
+                                                                        {/* <span className='MediaCard-Products-Cancel-Btn'>
+                                                                            <Button size='slim' onClick={() => setShowProducts(false)} >
+                                                                                <Icon source={CancelSmallMinor}></Icon>
+                                                                            </Button>
+                                                                        </span> */}
+                                                                        <ResourceList
+                                                                            resourceName={{ singular: 'product', plural: 'products' }}
+                                                                            items={products}
+                                                                            renderItem={(item) => {
+                                                                                const { id, image, name } = item;
+                                                                                const media = <Avatar size="small" shape="square" name={name} source={image} />;
+                                                                                return (
+                                                                                    <ResourceItem
+                                                                                        id={id}
+                                                                                        media={media}
+                                                                                        accessibilityLabel={`View details for ${name}`}
+                                                                                    >
+                                                                                        <Text variant="bodyMd" fontWeight="bold" as="h3">
+                                                                                            {name}
+                                                                                        </Text>
 
-                                                            <Button plain size='slim' onClick={() => togglePopoverActive(user_template_id)}>
-                                                                <Icon source={HorizontalDotsMinor} color="base"></Icon>
-                                                            </Button>
-                                                            {popoverActive[user_template_id] &&
-
-                                                                <ActionList
-                                                                    actionRole="menuitem"
-                                                                    items={[
-                                                                        {
-                                                                            id: user_template_id,
-                                                                            content: 'Rename',
-                                                                            onAction: () => handleRenameModal(user_template_id, name)
-                                                                        },
-                                                                        {
-                                                                            id: user_template_id,
-                                                                            content: 'Duplicate',
-                                                                            onAction: () => handleDuplicateTemplate(user_template_id)
-                                                                        },
-                                                                        {
-                                                                            id: user_template_id,
-                                                                            content: 'Delete',
-                                                                            onAction: () => handleDeleteTemplate(user_template_id)
-                                                                        },
-
-                                                                    ]}
-                                                                />
+                                                                                    </ResourceItem>
+                                                                                );
+                                                                            }}
+                                                                            selectedItems={selectedItems}
+                                                                            onSelectionChange={setSelectedItems}
+                                                                            selectable
+                                                                        />
+                                                                        <span className='MediaCard-Products-Confirm-Btn'>
+                                                                            <Button primary onClick={() => handleSubmitProduct(user_template_id)}> Confirm</Button>
+                                                                        </span>
+                                                                    </Card>
+                                                                </span>
                                                             }
-                                                        </div>
+                                                        </span>
+                                                        <Button onClick={() => handleChangeTemplate(user_template_id)}>Change Template</Button>
 
-                                                        <Stack vertical spacing='tight'>
-                                                            <div className="Polaris-MediaCard__Heading">
-                                                                <h2 className="Polaris-Text--root Polaris-Text--headingMd Polaris-Text--semibold">{name}</h2>
-                                                            </div>
+                                                        <Link url='/admin/apps/usVsThem/Templates/page1' onClick={() => handleCustomizeTemplate(user_template_id)} >
+                                                            <Button>Customize Template</Button>
 
-                                                            <p>Here is the current Template that you've choosen. You can customize it every time you want.</p>
+                                                        </Link>
+                                                        <Button plain onClick={() => handlePreviewTemplate(user_template_id)}>Preview</Button>
+                                                    </ButtonGroup>
+                                                </span>
+                                            }
 
-                                                            <div className='Polaris-MediaCard__ActionContainer'>
-                                                                <ButtonGroup>
-                                                                    <span>
-                                                                        <Button primary onClick={() => handleSelectProducts(user_template_id)}>Select Product</Button>
-                                                                        {showProducts[user_template_id] &&
-                                                                            <div className='Polaris-MediaCard-Table' ref={productsRef}>
-                                                                                <Card>
-                                                                                    <ResourceList
-                                                                                        resourceName={{ singular: 'product', plural: 'products' }}
-                                                                                        items={products}
-                                                                                        renderItem={(item) => {
-                                                                                            const { id, image, name } = item;
-                                                                                            const media = <Avatar size="small" shape="square" name={name} source={image} />;
-                                                                                            return (
-                                                                                                <ResourceItem
-                                                                                                    id={id}
-                                                                                                    media={media}
-                                                                                                    accessibilityLabel={`View details for ${name}`}
-                                                                                                >
-                                                                                                    <Text variant="bodyMd" fontWeight="bold" as="h3">
-                                                                                                        {name}
-                                                                                                    </Text>
-
-                                                                                                </ResourceItem>
-                                                                                            );
-                                                                                        }}
-                                                                                        selectedItems={selectedItems}
-                                                                                        onSelectionChange={setSelectedItems}
-                                                                                        selectable
-                                                                                    />
-                                                                                    <span className='Products-Confirm-Btn'>
-                                                                                        <Button primary onClick={() => handleSubmitProduct(user_template_id)}> Confirm</Button>
-                                                                                    </span>
-                                                                                </Card>
-                                                                            </div>
-                                                                        }
-                                                                    </span>
-
-                                                                    <Button onClick={() => handleChangeTemplate(user_template_id)}>Change Template</Button>
-
-                                                                    <Link url='/admin/apps/usVsThem/Templates/page1' onClick={() => handleCustomizeTemplate(user_template_id)} >
-                                                                        <Button>Customize Template</Button>
-
-                                                                    </Link>
-                                                                    <Button plain onClick={() => handlePreviewTemplate(user_template_id)}>Preview</Button>
-                                                                </ButtonGroup>
-                                                            </div>
-                                                        </Stack>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </Card>
-
-                                            <MediaCard
-                                                key={user_template_id}
-                                                title={name}
-                                                description={
-                                                    <span className='MediaCard-Description'>
-                                                        Here is the current Template that you've choosen. You can customize it every time you want.
-                                                        <ButtonGroup id='MediaCard-BtnGroup'>
-                                                            <span>
-                                                                <Button primary onClick={() => handleSelectProducts(user_template_id)}
-                                                                    id='MediaCard-Btn'>Select Product</Button>
-                                                                {showProducts[user_template_id] &&
-                                                                    <span className='Polaris-MediaCard-Table'>
-                                                                        <Card>
-                                                                            <ResourceList
-                                                                                resourceName={{ singular: 'product', plural: 'products' }}
-                                                                                items={products}
-                                                                                renderItem={(item) => {
-                                                                                    const { id, image, name } = item;
-                                                                                    const media = <Avatar size="small" shape="square" name={name} source={image} />;
-                                                                                    return (
-                                                                                        <ResourceItem
-                                                                                            id={id}
-                                                                                            media={media}
-                                                                                            accessibilityLabel={`View details for ${name}`}
-                                                                                        >
-                                                                                            <Text variant="bodyMd" fontWeight="bold" as="h3">
-                                                                                                {name}
-                                                                                            </Text>
-
-                                                                                        </ResourceItem>
-                                                                                    );
-                                                                                }}
-                                                                                selectedItems={selectedItems}
-                                                                                onSelectionChange={setSelectedItems}
-                                                                                selectable
-                                                                            />
-                                                                            <span className='Products-Confirm-Btn'>
-                                                                                <Button primary onClick={() => handleSubmitProduct(user_template_id)}> Confirm</Button>
-                                                                            </span>
-                                                                        </Card>
-                                                                    </span>
-                                                                }
-                                                            </span>
-                                                            <Button onClick={() => handleChangeTemplate(user_template_id)}>Change Template</Button>
-
-                                                            <Link url='/admin/apps/usVsThem/Templates/page1' onClick={() => handleCustomizeTemplate(user_template_id)} >
-                                                                <Button>Customize Template</Button>
-
-                                                            </Link>
-                                                            <Button plain onClick={() => handlePreviewTemplate(user_template_id)}>Preview</Button>
-                                                        </ButtonGroup>
-                                                    </span>
+                                            popoverActions={[
+                                                {
+                                                    id: user_template_id,
+                                                    content: 'Rename',
+                                                    onAction: () => handleRenameModal(user_template_id, name)
+                                                },
+                                                {
+                                                    id: user_template_id,
+                                                    content: 'Duplicate',
+                                                    onAction: () => handleDuplicateTemplate(user_template_id)
+                                                },
+                                                {
+                                                    id: user_template_id,
+                                                    content: 'Delete',
+                                                    onAction: () => handleDeleteTemplate(user_template_id)
                                                 }
-
-                                                popoverActions={[
-                                                    {
-                                                        id: user_template_id,
-                                                        content: 'Rename',
-                                                        onAction: () => handleRenameModal(user_template_id, name)
-                                                    },
-                                                    {
-                                                        id: user_template_id,
-                                                        content: 'Duplicate',
-                                                        onAction: () => handleDuplicateTemplate(user_template_id)
-                                                    },
-                                                    {
-                                                        id: user_template_id,
-                                                        content: 'Delete',
-                                                        onAction: () => handleDeleteTemplate(user_template_id)
-                                                    }
-                                                ]}
-                                            >
-                                                <img
-                                                    alt="table"
-                                                    className='MediaCard-Img'
-                                                    src={image}
-                                                />
-                                            </MediaCard>
-                                        </>
+                                            ]}
+                                        >
+                                            <img
+                                                alt="table"
+                                                className='MediaCard-Img'
+                                                src={image}
+                                            />
+                                        </MediaCard>
                                     )
                                 }
 

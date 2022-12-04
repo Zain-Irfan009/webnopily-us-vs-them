@@ -149,6 +149,10 @@
 }
 
 
+.Dashboard .MediaCard-Products-handle {
+    position: relative;
+}
+
 .Dashboard .Polaris-MediaCard-Table {
     position: absolute;
     min-width: 300px;
@@ -156,9 +160,8 @@
     z-index: 99;
     max-height: 350px;
     overflow-y: auto;
-    /* right: -150px;
-    top: 30px;
-    left: -15px; */
+    left: 0;
+    top: 36px;
 }
 
 .Dashboard .Polaris-MediaCard-Table .Polaris-ResourceItem__Container .Polaris-ResourceItem__Content {
@@ -233,10 +236,23 @@
     border-bottom-right-radius: 0;
 }
 
-.Dashboard .Polaris-MediaCard-Table .Products-Confirm-Btn {
+.Dashboard .Polaris-MediaCard-Table .MediaCard-Products-Confirm-Btn {
     display: flex;
     justify-content: center;
     padding: 12px 0;
+}
+
+.Dashboard .Polaris-MediaCard-Table .MediaCard-Products-Cancel-Btn {
+    position: absolute;
+    z-index: 999;
+    right: 13px;
+    top: 13px;
+}
+
+.Dashboard .Polaris-MediaCard-Table .MediaCard-Products-Cancel-Btn .Polaris-Button {
+    padding: 2px 4px;
+    min-width: 0;
+    min-height: 0;
 }
 
 
