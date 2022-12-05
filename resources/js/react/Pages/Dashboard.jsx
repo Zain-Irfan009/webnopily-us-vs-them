@@ -188,10 +188,12 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
             })
             .catch(error =>
                 alert('Error: ', error));
+    }
 
+    useEffect(() => {
         console.log(products);
         console.log(showProducts);
-    }
+    }, [showProducts, products ]);
 
     const handleSubmitProduct = async (id) => {
         console.log(`submit products ${id} `);
