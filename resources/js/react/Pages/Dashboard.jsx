@@ -211,7 +211,6 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
         setProducts([])
         setSelectedItems([])
 
-
         const response = await axios
             .get(
                 `http://us-vs-them.test/api/products?user_template_id=${id}&shop_name=${host}`
