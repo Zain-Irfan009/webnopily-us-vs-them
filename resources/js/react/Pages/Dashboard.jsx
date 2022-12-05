@@ -191,6 +191,7 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
     }
 
     useEffect(() => {
+        
         console.log(products);
         console.log(showProducts);
     }, [showProducts, products ]);
