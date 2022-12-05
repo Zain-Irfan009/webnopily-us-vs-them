@@ -320,17 +320,17 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
                                                 <span className='MediaCard-Description'>
                                                     Here is the current Template that you've choosen. You can customize it every time you want.
                                                     <ButtonGroup id='MediaCard-BtnGroup'>
-                                                        <span>
+                                                        <span className='MediaCard-Products-handle'>
                                                             <Button primary onClick={() => handleSelectProducts(user_template_id)}
                                                                 id='MediaCard-Btn'>Select Product</Button>
                                                             {showProducts[user_template_id] &&
                                                                 <span className='Polaris-MediaCard-Table'>
                                                                     <Card>
-                                                                        {/* <span className='MediaCard-Products-Cancel-Btn'>
+                                                                        <span className='MediaCard-Products-Cancel-Btn'>
                                                                             <Button size='slim' onClick={() => setShowProducts(false)} >
                                                                                 <Icon source={CancelSmallMinor}></Icon>
                                                                             </Button>
-                                                                        </span> */}
+                                                                        </span>
                                                                         <ResourceList
                                                                             resourceName={{ singular: 'product', plural: 'products' }}
                                                                             items={products}
