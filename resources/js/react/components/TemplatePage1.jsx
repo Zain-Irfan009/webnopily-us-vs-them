@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Page, Card, MediaCard } from '@shopify/polaris';
+import { AppContext } from '../Context'
 
-export function TemplatePage1({ setActivePage }) {
+// export function TemplatePage1({ setActivePage }) {
+export function TemplatePage1() {
+    const { setActivePage } = useContext(AppContext);
+
+    
+
     return (
         <div className='Template-Page1'>
             <Page title="Welcome to Us vs Them" fullWidth>
@@ -22,20 +28,20 @@ export function TemplatePage1({ setActivePage }) {
                     }}
                     description={`Choose the template that best suits your needs. You will then be able to
                             fully customize it.`}
-                    popoverActions={[
-                        {
-                            content: 'Rename',
-                            onAction: () => { }
-                        },
-                        {
-                            content: 'Duplicate',
-                            onAction: () => { }
-                        },
-                        {
-                            content: 'Delete',
-                            onAction: () => { }
-                        }
-                    ]}
+                    // popoverActions={[
+                    //     {
+                    //         content: 'Rename',
+                    //         onAction: () => { }
+                    //     },
+                    //     {
+                    //         content: 'Duplicate',
+                    //         onAction: () => { }
+                    //     },
+                    //     {
+                    //         content: 'Delete',
+                    //         onAction: () => { }
+                    //     }
+                    // ]}
                 >
                     <img
                         alt="table1"

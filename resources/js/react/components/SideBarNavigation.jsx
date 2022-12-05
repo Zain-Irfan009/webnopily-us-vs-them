@@ -1,7 +1,10 @@
-import { Layout, Pagination, Button, Navigation, Link,  } from '@shopify/polaris';
-import React, { useState, useCallback } from 'react';
+import { Pagination, Button, Navigation, Link, } from '@shopify/polaris';
+import React, { useContext } from 'react';
+import { AppContext } from '../Context'
 
-export function SideBarNavigation({ activePage, setActivePage, setLocationChange }) {
+// export function SideBarNavigation({ activePage, setActivePage, setLocationChange }) {
+export function SideBarNavigation() {
+    const { activePage, setActivePage } = useContext(AppContext);
 
     const handlePagination = (val) => {
         if (val === 'prev' && activePage > 1) {
@@ -13,7 +16,7 @@ export function SideBarNavigation({ activePage, setActivePage, setLocationChange
     }
 
     const handleLocationChange = () => {
-        setLocationChange('/admin/apps/UsVsThem')
+        // setLocationChange('/admin/apps/UsVsThem')
     }
 
     return (
@@ -32,6 +35,7 @@ export function SideBarNavigation({ activePage, setActivePage, setLocationChange
                             {
                                 label: 'Select your template',
                                 selected: activePage === 2,
+                                disabled: activePage >= 2 ? false : true,
                                 onClick: () => {
                                     setActivePage(2)
                                 }
@@ -39,6 +43,7 @@ export function SideBarNavigation({ activePage, setActivePage, setLocationChange
                             {
                                 label: 'Customize your widget',
                                 selected: activePage === 3,
+                                disabled: activePage >= 3 ? false : true,
                                 onClick: () => {
                                     setActivePage(3)
                                 }
@@ -46,6 +51,7 @@ export function SideBarNavigation({ activePage, setActivePage, setLocationChange
                             {
                                 label: 'Publish it',
                                 selected: activePage === 4,
+                                disabled: activePage === 4 ? false : true,
                                 onClick: () => {
                                     setActivePage(4)
                                 }

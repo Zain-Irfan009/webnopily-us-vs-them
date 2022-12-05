@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Page, Layout, Card } from '@shopify/polaris';
 import { Table1, Table2, Table3, Table4 } from './index'
+import axios from "axios";
+import { AppContext } from '../Context'
 
 const theme1Pc = [
   {
@@ -303,7 +305,28 @@ const themeHeadingsMobile =
   ]
 
 
-export function TemplatePage2({ handleCustomizeTable }) {
+// export function TemplatePage2({ handleSelectTemplate }) {
+export function TemplatePage2() {
+  const { setActivePage, setUserTemplateId, setSelectedTemplate, host } = useContext(AppContext);
+
+
+  const handleSelectTemplate = async (templateId) => {
+
+    const response = await axios
+      .post(
+        `http://us-vs-them.test/api/step-1?template_id=${templateId}&shop_name=${host}`
+      )
+      .then(res => {
+        console.log(res.data.result);
+
+        // setSelectedTemplate(res.data.result.template_id)
+        setSelectedTemplate(templateId)
+        setUserTemplateId(res.data.result.user_template_id)
+        setActivePage(3)
+      })
+      .catch(error =>
+        alert('Error: ', error));
+  }
 
   return (
     <div className='Template-Page2'>
@@ -321,23 +344,23 @@ export function TemplatePage2({ handleCustomizeTable }) {
           </Layout.Section>
 
           <Layout.Section oneHalf >
-            <Table1 themePc={theme1Pc} themeMobile={theme1Mobile} btnShow={true} handleCustomizeTable={handleCustomizeTable} />
+            <Table1 themePc={theme1Pc} themeMobile={theme1Mobile} btnShow={true} handleSelectTemplate={handleSelectTemplate} />
           </Layout.Section>
 
 
           <Layout.Section oneHalf>
-            <Table2 themePc={theme2Pc} themeMobile={theme2Mobile} btnShow={true} handleCustomizeTable={handleCustomizeTable}
+            <Table2 themePc={theme2Pc} themeMobile={theme2Mobile} btnShow={true} handleSelectTemplate={handleSelectTemplate}
               themeHeadingsMobile={themeHeadingsMobile} themeHeadingsPc={themeHeadingsPc} />
           </Layout.Section>
 
 
           <Layout.Section oneHalf>
-            <Table3 themePc={theme3Pc} themeMobile={theme3Mobile} btnShow={true} handleCustomizeTable={handleCustomizeTable} />
+            <Table3 themePc={theme3Pc} themeMobile={theme3Mobile} btnShow={true} handleSelectTemplate={handleSelectTemplate} />
           </Layout.Section>
 
 
           <Layout.Section oneHalf>
-            <Table4 themePc={theme4Pc} themeMobile={theme4Mobile} btnShow={true} handleCustomizeTable={handleCustomizeTable} />
+            <Table4 themePc={theme4Pc} themeMobile={theme4Mobile} btnShow={true} handleSelectTemplate={handleSelectTemplate} />
           </Layout.Section>
 
         </Layout>

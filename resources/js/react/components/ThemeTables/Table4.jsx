@@ -4,7 +4,7 @@ import {
     MobileMajor, DesktopMajor, CircleTickMinor, CircleCancelMinor, CircleTickMajor, CircleCancelMajor
 } from '@shopify/polaris-icons';
 
-export function Table4({ themePc, themeMobile, btnShow, handleCustomizeTable }) {
+export function Table4({ themePc, themeMobile, btnShow, handleSelectTemplate }) {
     const [screen, setScreen] = useState(true)
     const handleScreenSelection = () => {
         setScreen(!screen)
@@ -121,7 +121,7 @@ export function Table4({ themePc, themeMobile, btnShow, handleCustomizeTable }) 
                         <div className='Screen-Selection-Btn'>
                             {
                                 btnShow &&
-                                <Button primary onClick={() => handleCustomizeTable(4)}>Select</Button>
+                                <Button primary onClick={() => handleSelectTemplate(4)}>Select</Button>
                             }
                         </div>
                     </Stack>

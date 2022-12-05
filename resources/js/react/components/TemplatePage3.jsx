@@ -1,8 +1,9 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import { Page, Layout, Text, Card, Select, Icon, Stack, TextField, Loading, Button } from '@shopify/polaris';
+import React, { useState, useCallback, useEffect, useContext } from 'react'
+import { Page, Layout, Text, Card, Select, Icon, Stack, TextField, Loading, PageActions } from '@shopify/polaris';
 import { CircleTickMajor, CircleCancelMajor } from '@shopify/polaris-icons';
 import { Table1, Table2, Table3, Table4, SideBarNavigation } from './index';
 import axios from "axios";
+import { AppContext } from '../Context'
 
 const themeHeadingsPc =
   [
@@ -14,7 +15,9 @@ const themeHeadingsPc =
     { title: 'Competitor 4' },
   ]
 
-export function TemplatePage3({ activePage, setActivePage, setLocationChange, selectedTemplate, userTemplateId }) {
+// export function TemplatePage3({ activePage, setActivePage, setLocationChange, selectedTemplate, userTemplateId }) {
+export function TemplatePage3() {
+  const { activePage, setActivePage, selectedTemplate, userTemplateId, host } = useContext(AppContext);
 
   const [templateName, setTemplateName] = useState('My Template');
   const [yourBrand, setYourBrand] = useState('Your brand');
@@ -124,7 +127,7 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
       setThemeInputTable4(theme4)
     }
   }, [advantagesCount])
-  
+
   const handleAllValues = e => {
     setAllValues({ ...allValues, [e.target.name - 1]: e.target.value });
     themeInputTable1[e.target.name - 1].name = e.target.value;
@@ -184,7 +187,7 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
 
 
   const submitData = async () => {
-    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+
 
     let data = {
       brand: yourBrand,
@@ -210,6 +213,7 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
     try {
       const response = await axios.post('http://us-vs-them.test/api/step-2', data)
       console.log(response);
+      setActivePage(4)
     } catch (error) {
       alert('Error: ', error);
     }
@@ -635,11 +639,20 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
               </div>
 
             </Card>
+
+            <div className='Template-Save-Actions'>
+              <PageActions
+                primaryAction={{
+                  content: 'Save Template',
+                  onAction: submitData
+                }}
+              />
+            </div>
           </Layout.Section>
 
 
           <Layout.Section secondary>
-            <SideBarNavigation activePage={activePage} setActivePage={setActivePage} setLocationChange={setLocationChange} />
+            <SideBarNavigation />
 
             <div className='Advantages-Tables-Preview'>
               {(() => {
@@ -661,7 +674,7 @@ export function TemplatePage3({ activePage, setActivePage, setLocationChange, se
 
             </div>
 
-            <Button onClick={submitData}>Submit</Button>
+
           </Layout.Section>
         </Layout>
       </Page>

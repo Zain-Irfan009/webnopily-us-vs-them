@@ -1,25 +1,25 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import {Redirect} from "@shopify/app-bridge/actions";
-import {authenticatedFetch} from "@shopify/app-bridge-utils"
-import {ApolloClient, HttpLink, InMemoryCache} from '@apollo/client';
-import {ApolloProvider} from '@apollo/client/react';
-import {AppProvider} from "@shopify/polaris";
+import { Redirect } from "@shopify/app-bridge/actions";
+import { authenticatedFetch } from "@shopify/app-bridge-utils"
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/react';
+import { AppProvider } from "@shopify/polaris";
 import translations from "@shopify/polaris/locales/en.json";
 // import '@shopify/polaris/dist/styles.css';
 import "@shopify/polaris/build/esm/styles.css";
-import PageLayout from "./components/PageLayout";
-import {Provider, useAppBridge} from '@shopify/app-bridge-react';
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import { Provider, useAppBridge } from '@shopify/app-bridge-react';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ClientRouter from "./components/ClientRouter";
 import AppNavigation from "./components/AppNavigation";
+import { AppContext } from './Context'
 
 
 import '../../../public/css/index.css';
 import '../../../public/css/theme.css';
 import '../../../public/css/usVsThem.css';
 
-import { Dashboard, Templates, Settings, Locations,TemplatePage1 } from './Pages/index'
+import { Dashboard, Templates, Settings, Locations, TemplatePage1 } from './Pages/index'
 
 
 function userLoggedInFetch(app) {
@@ -40,7 +40,7 @@ function userLoggedInFetch(app) {
     };
 }
 
-function AppBridgeApolloProvider({children}) {
+function AppBridgeApolloProvider({ children }) {
     const app = useAppBridge();
     const client = new ApolloClient({
         link: new HttpLink({
@@ -59,25 +59,42 @@ function AppBridgeApolloProvider({children}) {
 }
 
 
-function App({shop, host, apiKey}) {
-    const config = {apiKey: apiKey, shopOrigin: shop, host: host, forceRedirect: true};
+function App({ shop, host, apiKey }) {
+    const config = { apiKey: apiKey, shopOrigin: shop, host: host, forceRedirect: true };
+    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
     const [activePage, setActivePage] = useState(1)
+    const [selectedTemplate, setSelectedTemplate] = useState()
+    const [templateUserId, setTemplateUserId] = useState()
+
+    useEffect(() => {
+        console.log('activePage: ', activePage);
+        console.log('selectedTemplate: ', selectedTemplate);
+        console.log('templateUserId: ', templateUserId);
+    }, [activePage, selectedTemplate, templateUserId])
+    
 
     return (
         <BrowserRouter>
             <Provider config={config}>
-                <ClientRouter/>
+                <ClientRouter />
                 <AppProvider i18n={translations}>
                     <AppBridgeApolloProvider>
-                        <AppNavigation/>
-
+                        <AppNavigation />
+                        <AppContext.Provider
+                            value={{
+                                activePage, setActivePage, selectedTemplate, setSelectedTemplate,
+                                templateUserId, setTemplateUserId, config, host
+                            }}>
                             <Switch>
-                                <Route exact path="/" component={() => (<Dashboard config={config} setActivePage={setActivePage} />)}/>
-                                <Route path="/templates/page1" component={TemplatePage1} />
-                                <Route path="/templates" component={ () => (<Templates activePage={activePage} setActivePage={setActivePage}  />)} />
+                                {/* <Route exact path="/" component={() => (<Dashboard config={config} setActivePage={setActivePage} />)} />
+                                <Route path="/templates" component={() => (<Templates activePage={activePage} setActivePage={setActivePage} />)} /> */}
+
+                                <Route exact path="/" component={Dashboard} />
+                                <Route path="/templates" component={Templates} />
                                 <Route path="/locations" component={Locations} />
                                 <Route path="/settings" component={Settings} />
                             </Switch>
+                        </AppContext.Provider>
                     </AppBridgeApolloProvider>
                 </AppProvider>
             </Provider>
@@ -89,5 +106,5 @@ export default App;
 
 let appElement = document.getElementById('app');
 if (appElement) {
-    ReactDOM.render(<App {...(appElement.dataset)}/>, appElement);
+    ReactDOM.render(<App {...(appElement.dataset)} />, appElement);
 }

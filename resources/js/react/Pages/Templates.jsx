@@ -1,35 +1,20 @@
 import { Layout, Frame, Loading } from '@shopify/polaris';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import {
   TemplatePage1, TemplatePage2, TemplatePage3, TemplatePage4, SideBarNavigation
 } from '../components';
 import axios from "axios";
+import { AppContext } from '../Context'
 
-export function Templates({ setLocationChange,activePage, setActivePage }) {
-
+// export function Templates({ setLocationChange,activePage, setActivePage }) {
+export function Templates() {
+  const { activePage } = useContext(AppContext);
   // const [activePage, setActivePage] = useState(1)
-  const [selectedTemplate, setSelectedTemplate] = useState(1)
-  const [userTemplateId, setUserTemplateId] = useState()
+  // const [selectedTemplate, setSelectedTemplate] = useState(1)
+  // const [userTemplateId, setUserTemplateId] = useState()
+
   const [loading, setLoading] = useState(true)
-
-
-  const handleCustomizeTable = async (id) => {
-    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
-
-    const response = await axios
-      .post(
-        `http://us-vs-them.test/api/step-1?template_id=${id}&shop_name=${host}`
-      )
-      .then(res => {
-        console.log(res.data.result);
-        setActivePage(3)
-        setSelectedTemplate(res.data.result.template_id)
-        setUserTemplateId(res.data.result.user_template_id)
-      })
-      .catch(error =>
-        alert('Error: ', error));
-  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -41,22 +26,36 @@ export function Templates({ setLocationChange,activePage, setActivePage }) {
   return (
     <div className='Navigation-Frame'>
       <Frame>
-        {loading ? <Loading/> :
+        {/* {loading ? <Loading /> : */}
         <div className={`Templates-Page`}>
           <Layout>
             <Layout.Section >
 
+              {/* {(() => {
+                  switch (activePage) {
+                    case 2:
+                      return <TemplatePage2 handleCustomizeTable={handleCustomizeTable} />
+                    case 3:
+                      return <TemplatePage3 activePage={activePage} setActivePage={setActivePage} setLocationChange={setLocationChange}
+                        selectedTemplate={selectedTemplate} userTemplateId={userTemplateId} />
+                    case 4:
+                      return <TemplatePage4 selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
+                    default:
+                      return <TemplatePage1 setActivePage={setActivePage} />
+                  }
+
+                })()} */}
+
               {(() => {
                 switch (activePage) {
                   case 2:
-                    return <TemplatePage2 handleCustomizeTable={handleCustomizeTable} />
+                    return <TemplatePage2 />
                   case 3:
-                    return <TemplatePage3 activePage={activePage} setActivePage={setActivePage} setLocationChange={setLocationChange}
-                      selectedTemplate={selectedTemplate} userTemplateId={userTemplateId} />
+                    return <TemplatePage3 />
                   case 4:
-                    return <TemplatePage4 selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate} />
+                    return <TemplatePage4 />
                   default:
-                    return <TemplatePage1 setActivePage={setActivePage} />
+                    return <TemplatePage1 />
                 }
 
               })()}
@@ -66,12 +65,12 @@ export function Templates({ setLocationChange,activePage, setActivePage }) {
             {
               activePage != 3 &&
               <Layout.Section secondary>
-                <SideBarNavigation activePage={activePage} setActivePage={setActivePage} setLocationChange={setLocationChange} />
+                <SideBarNavigation />
               </Layout.Section>
             }
 
           </Layout>
-        </div>}
+        </div>
       </Frame>
     </div>
   );

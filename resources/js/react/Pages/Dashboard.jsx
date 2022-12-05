@@ -1,30 +1,34 @@
 import {
     Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List, Link, Modal, MediaCard,
-    Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, TextField, Loading,Frame
+    Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, TextField, Loading, Frame
 } from '@shopify/polaris';
 import { CancelSmallMinor } from '@shopify/polaris-icons';
 import createApp from '@shopify/app-bridge/development';
 import { Redirect } from '@shopify/app-bridge/actions';
-import React, { useState, useEffect, useRef,useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
 import axios from "axios";
+import { AppContext } from '../Context'
 
 
-export function Dashboard({ setLocationChange, config, setActivePage }) {
+// export function Dashboard({ setLocationChange, config, setActivePage }) {
+export function Dashboard() {
+    const { setActivePage, setTemplateUserId, config, host } = useContext(AppContext);
+
     const app = createApp(config);
     const [appEnable, setAppEnable] = useState(false)
-    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
 
     const [products, setProducts] = useState([])
     const [showProducts, setShowProducts] = useState(false)
     const [selectedItems, setSelectedItems] = useState([]);
     const [templateRenameValue, setTemplateRenameValue] = useState()
     const [templateRenameUserId, setTemplateRenameUserId] = useState()
+    const [toggleReload, setToggleReload] = useState(true);
 
     const [renameModalActive, setRenameModalActive] = useState(false);
     const [renameToastActive, setRenameToastActive] = useState(false);
     const [deletetoastActive, setDeletetoastActive] = useState(false);
     const [duplicatetoastActive, setDuplicatetoastActive] = useState(false);
-    const [toggleReload,setToggleReload]=useState(true);
+    
 
     const [templateTable, setTemplateTable] = useState([]);
     const [loading, setLoading] = useState(true)
@@ -57,7 +61,7 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
     }
 
     const handleLocationChange = () => {
-        setLocationChange('/admin/apps/usVsThem/Templates')
+        // setLocationChange('/admin/apps/usVsThem/Templates')
     }
 
     const handleRenameModal = (id, name) => {
@@ -115,12 +119,12 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
     useOutsideAlerter(productsRef, 2);
 
 
-    const handleRenameTemplate = async()   => {
+    const handleRenameTemplate = async () => {
         console.log(`rename clicked ${templateRenameUserId}`);
 
         let data = {
             user_template_id: templateRenameUserId,
-            template_name:templateRenameValue,
+            template_name: templateRenameValue,
             shop_name: host,
         };
         try {
@@ -137,7 +141,7 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
         }
     }
 
-    const handleDuplicateTemplate =async (id) => {
+    const handleDuplicateTemplate = async (id) => {
         console.log(`duplicate clicked ${id}`);
 
         let data = {
@@ -183,6 +187,9 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
 
     const handleCustomizeTemplate = (id) => {
         console.log(`customize template clicked ${id}`);
+        setTemplateUserId(id)
+        setActivePage(3)
+
         // setActivePage(3);
         // handleLocationChange();
         // const redirect = Redirect.create(app);
@@ -193,6 +200,11 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
 
     const handleChangeTemplate = (id) => {
         console.log(`change template clicked ${id}`);
+
+        setTemplateUserId(id)
+        setActivePage(2)
+        // const redirect = Redirect.create(app);
+        // redirect.dispatch(Redirect.Action.APP, `/templates/page1` );
 
     }
 
@@ -238,7 +250,7 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
 
         let data = {
             user_template_id: id,
-            product_ids:selectedItems,
+            product_ids: selectedItems,
             shop_name: host,
         };
         try {
