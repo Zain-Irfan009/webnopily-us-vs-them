@@ -215,6 +215,7 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
             .get(
                 `http://us-vs-them.test/api/products?user_template_id=${id}&shop_name=${host}`
             )
+
             .then(res => {
                 console.log(res);
                 setProducts(res.data.result)
