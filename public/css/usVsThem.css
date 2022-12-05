@@ -155,7 +155,7 @@
 
 .Dashboard .Polaris-MediaCard-Table {
     position: absolute;
-    min-width: 300px;
+    min-width: 330px;
     max-width: 400px;
     z-index: 99;
     max-height: 350px;

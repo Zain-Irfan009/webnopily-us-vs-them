@@ -277,10 +277,10 @@ class TemplateController extends ApiController
 
         }
 
-        public function RenameTemplate(Request $request,$id){
+        public function RenameTemplate(Request $request){
 
             $shop=Session::where('shop',$request->shop_name)->first();
-            $rename_user_template=UserTemplate::where('id',$id)->where('shop_id',$shop->id)->first();
+            $rename_user_template=UserTemplate::where('id',$request->user_template_id)->where('shop_id',$shop->id)->first();
             if($rename_user_template){
 
                 $rename_user_template->template_name=$request->template_name;
@@ -304,9 +304,9 @@ class TemplateController extends ApiController
             }
         }
 
-        public function DuplicateTemplate($id){
+        public function DuplicateTemplate(Request $request){
 
-            $duplicate_user_template=UserTemplate::find($id);
+            $duplicate_user_template=UserTemplate::find($request->user_template_id);
             $random_number=mt_rand(20,90);
             if($duplicate_user_template)
             {
@@ -356,9 +356,11 @@ class TemplateController extends ApiController
             }
         }
 
-        public function DeleteTemplate($id){
-           Advantage::where('user_template_id',$id)->delete();
-           UserTemplate::where('id',$id)->delete();
+        public function DeleteTemplate(Request $request){
+
+           Advantage::where('user_template_id',$request->user_template_id)->delete();
+           UserTemplate::where('id',$request->user_template_id)->delete();
+           UserTemplateProduct::where('id',$request->user_template_id)->delete();
             $user_templates=UserTemplate::all();
             $result = [];
             if($user_templates->count()>0)

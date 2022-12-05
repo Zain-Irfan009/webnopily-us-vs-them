@@ -21,9 +21,9 @@ Route::post('step-1',[App\Http\Controllers\Api\TemplateController::class,'Step1T
 Route::post('step-2',[App\Http\Controllers\Api\TemplateController::class,'Step2Template']);
 Route::get('current-templates',[App\Http\Controllers\Api\TemplateController::class,'CurrentTemplate']);
 Route::get('template-view/{id}',[App\Http\Controllers\Api\TemplateController::class,'TemplateView']);
-Route::post('rename-template/{id}',[App\Http\Controllers\Api\TemplateController::class,'RenameTemplate']);
-Route::get('duplicate-template/{id}',[App\Http\Controllers\Api\TemplateController::class,'DuplicateTemplate']);
-Route::get('delete-template/{id}',[App\Http\Controllers\Api\TemplateController::class,'DeleteTemplate']);
+Route::post('rename-template',[App\Http\Controllers\Api\TemplateController::class,'RenameTemplate']);
+Route::post('duplicate-template',[App\Http\Controllers\Api\TemplateController::class,'DuplicateTemplate']);
+Route::post('delete-template',[App\Http\Controllers\Api\TemplateController::class,'DeleteTemplate']);
 Route::get('products',[App\Http\Controllers\Api\TemplateController::class,'Products']);
 Route::post('selected-products',[App\Http\Controllers\Api\TemplateController::class,'SelectedProducts']);
 

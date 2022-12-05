@@ -12,6 +12,7 @@ import axios from "axios";
 export function Dashboard({ setLocationChange, config, setActivePage }) {
     const app = createApp(config);
     const [appEnable, setAppEnable] = useState(false)
+    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
 
     const [products, setProducts] = useState([])
     const [showProducts, setShowProducts] = useState(false)
@@ -23,13 +24,14 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
     const [renameToastActive, setRenameToastActive] = useState(false);
     const [deletetoastActive, setDeletetoastActive] = useState(false);
     const [duplicatetoastActive, setDuplicatetoastActive] = useState(false);
+    const [toggleReload,setToggleReload]=useState(true);
 
     const [templateTable, setTemplateTable] = useState([]);
     const [loading, setLoading] = useState(true)
 
 
     const getData = async () => {
-        let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+
         const response = await axios
             .get(
                 `http://us-vs-them.test/api/current-templates?shop_name=${host}`
@@ -47,7 +49,7 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
 
     useEffect(() => {
         getData();
-    }, []);
+    }, [toggleReload]);
 
     const handleAppEnable = () => {
         console.log('enabled click');
@@ -113,25 +115,71 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
     useOutsideAlerter(productsRef, 2);
 
 
-    const handleRenameTemplate = (id) => {
-        console.log(`rename clicked ${id}`);
+    const handleRenameTemplate = async()   => {
+        console.log(`rename clicked ${templateRenameUserId}`);
 
-        setRenameModalActive(false)
-        setRenameToastActive(!renameToastActive)
+        let data = {
+            user_template_id: templateRenameUserId,
+            template_name:templateRenameValue,
+            shop_name: host,
+        };
+        try {
+            const response = await axios.post('http://us-vs-them.test/api/rename-template', data)
+            console.log(response);
+            setRenameModalActive(false)
+            setRenameToastActive(!renameToastActive)
+            setToggleReload(!toggleReload)
+        } catch (error) {
+            setRenameModalActive(false)
+            setRenameToastActive(!renameToastActive)
+            setTemplateRenameUserId()
+            alert('Error: ', error);
+        }
+
+
 
     }
 
-    const handleDuplicateTemplate = (id) => {
+    const handleDuplicateTemplate =async (id) => {
         console.log(`duplicate clicked ${id}`);
 
-        setDuplicatetoastActive(!duplicatetoastActive)
+        let data = {
+            user_template_id: id,
+            shop_name: host,
+        };
+        try {
+            const response = await axios.post('http://us-vs-them.test/api/duplicate-template', data)
+            console.log(response);
+            setDuplicatetoastActive(!duplicatetoastActive)
+            setToggleReload(!toggleReload)
+
+        } catch (error) {
+
+            alert('Error: ', error);
+        }
+
+
 
     }
 
-    const handleDeleteTemplate = (id) => {
+    const handleDeleteTemplate = async (id) => {
         console.log(`delete clicked ${id}`);
 
-        setDeletetoastActive(!deletetoastActive)
+        let data = {
+            user_template_id: id,
+            shop_name: host,
+        };
+        try {
+            const response = await axios.post('http://us-vs-them.test/api/delete-template', data)
+            console.log(response);
+            setDeletetoastActive(!deletetoastActive)
+            setToggleReload(!toggleReload)
+
+        } catch (error) {
+
+            alert('Error: ', error);
+        }
+
 
     }
 
@@ -156,10 +204,11 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
 
     const handleSelectProducts = async (id) => {
         console.log(`select products clicked ${id}`);
+        setShowProducts(false);
         setProducts([])
         setSelectedItems([])
 
-        let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+
         const response = await axios
             .get(
                 `http://us-vs-them.test/api/products?user_template_id=${id}&shop_name=${host}`
@@ -190,14 +239,26 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
                 alert('Error: ', error));
     }
 
-    useEffect(() => {
-
-        console.log(products);
-        console.log(showProducts);
-    }, [ products,showProducts]);
-
     const handleSubmitProduct = async (id) => {
         console.log(`submit products ${id} `);
+        console.log(selectedItems);
+
+
+
+        let data = {
+            user_template_id: id,
+            product_ids:selectedItems,
+            shop_name: host,
+        };
+        try {
+            const response = await axios.post('http://us-vs-them.test/api/selected-products', data)
+            console.log(response);
+            setShowProducts(false);
+        } catch (error) {
+            setShowProducts(false);
+            alert('Error: ', error);
+        }
+
     }
 
 
@@ -361,6 +422,7 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
                                                                 </span>
                                                             }
                                                         </span>
+
                                                         <Button onClick={() => handleChangeTemplate(user_template_id)}>Change Template</Button>
 
                                                         <Link url='/admin/apps/usVsThem/Templates/page1' onClick={() => handleCustomizeTemplate(user_template_id)} >
