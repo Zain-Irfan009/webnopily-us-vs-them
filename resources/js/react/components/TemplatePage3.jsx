@@ -17,9 +17,10 @@ const themeHeadingsPc =
 
 // export function TemplatePage3({ activePage, setActivePage, setLocationChange, selectedTemplate, userTemplateId }) {
 export function TemplatePage3() {
-  const { activePage, setActivePage, selectedTemplate, userTemplateId, host } = useContext(AppContext);
+  const { activePage, setActivePage, selectedTemplate, userTemplateId } = useContext(AppContext);
 
   const [templateName, setTemplateName] = useState('My Template');
+    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
   const [yourBrand, setYourBrand] = useState('Your brand');
   const [otherCompetitors, setOtherCompetitors] = useState('Other Competitors');
   const [advantagesCount, setAdvantagesCount] = useState('5');

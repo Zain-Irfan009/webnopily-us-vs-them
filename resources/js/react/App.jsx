@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Redirect } from "@shopify/app-bridge/actions";
 import { authenticatedFetch } from "@shopify/app-bridge-utils"
@@ -61,7 +61,8 @@ function AppBridgeApolloProvider({ children }) {
 
 function App({ shop, host, apiKey }) {
     const config = { apiKey: apiKey, shopOrigin: shop, host: host, forceRedirect: true };
-    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+
+
     const [activePage, setActivePage] = useState(1)
     const [selectedTemplate, setSelectedTemplate] = useState()
     const [templateUserId, setTemplateUserId] = useState()
@@ -71,7 +72,7 @@ function App({ shop, host, apiKey }) {
         console.log('selectedTemplate: ', selectedTemplate);
         console.log('templateUserId: ', templateUserId);
     }, [activePage, selectedTemplate, templateUserId])
-    
+
 
     return (
         <BrowserRouter>
@@ -83,7 +84,7 @@ function App({ shop, host, apiKey }) {
                         <AppContext.Provider
                             value={{
                                 activePage, setActivePage, selectedTemplate, setSelectedTemplate,
-                                templateUserId, setTemplateUserId, config, host
+                                templateUserId, setTemplateUserId, config
                             }}>
                             <Switch>
                                 {/* <Route exact path="/" component={() => (<Dashboard config={config} setActivePage={setActivePage} />)} />

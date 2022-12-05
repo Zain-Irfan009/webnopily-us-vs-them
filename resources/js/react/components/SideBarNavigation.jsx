@@ -71,7 +71,7 @@ export function SideBarNavigation() {
                     label={`Page ${activePage}`}
                     hasPrevious
                     onPrevious={() => { handlePagination('prev') }}
-                    hasNext
+                    // hasNext
                     onNext={() => { handlePagination('next') }}
                 />
             </div>

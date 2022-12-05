@@ -36,6 +36,7 @@ class TemplateController extends ApiController
             $shop=Session::where('shop',$request->shop_name)->first();
 
             $template=Template::find($request->template_id);
+            $random_number=mt_rand(20,90);
 
         if(isset($request->user_template_id)){
             $user_template=UserTemplate::where('id',$request->user_template_id)->where('shop_id',$shop->id)->first();
@@ -93,6 +94,19 @@ class TemplateController extends ApiController
             $user_template_products=UserTemplateProduct::where('shop_id',$shop->id)->whereNull('user_template_id')->get();
             $user_templates = new UserTemplate();
             $user_templates->template_id = $template->id;
+            $user_templates->template_name = 'My Template_'.$random_number;
+            $user_templates->brand = 'brand';
+            $user_templates->competitors = 'competitors';
+            $user_templates->background_color1 = '#ffffff';
+            $user_templates->background_color2 = '#ebecf0';
+            $user_templates->column1_color = '#626dff';
+            $user_templates->column2_color = '#8c94ff';
+            $user_templates->column3_color = '#a9afff';
+            $user_templates->brand_checkbox_color1 = '#474b8b';
+            $user_templates->brand_checkbox_color2 = '#7b7eac';
+            $user_templates->competitors_checkbox_color1 = '#474b8b';
+            $user_templates->competitors_checkbox_color2 = '#7b7eac';
+            $user_templates->advantages_count = 5;
             $user_templates->shop_id=$shop->id;
             $user_templates->save();
 
@@ -109,6 +123,7 @@ class TemplateController extends ApiController
                 'shop_name'=>$shop->shop
             ];
             $result = $data;
+
 
         }
         return $this->response($result, 200);

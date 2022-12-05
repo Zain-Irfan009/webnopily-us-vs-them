@@ -307,9 +307,9 @@ const themeHeadingsMobile =
 
 // export function TemplatePage2({ handleSelectTemplate }) {
 export function TemplatePage2() {
-  const { setActivePage, setUserTemplateId, setSelectedTemplate, host } = useContext(AppContext);
+  const { setActivePage, setTemplateUserId, setSelectedTemplate } = useContext(AppContext);
 
-
+    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
   const handleSelectTemplate = async (templateId) => {
 
     const response = await axios
@@ -317,12 +317,12 @@ export function TemplatePage2() {
         `http://us-vs-them.test/api/step-1?template_id=${templateId}&shop_name=${host}`
       )
       .then(res => {
-        console.log(res.data.result);
+        console.log(res.data.result.user_template_id);
 
         // setSelectedTemplate(res.data.result.template_id)
         setSelectedTemplate(templateId)
-        setUserTemplateId(res.data.result.user_template_id)
-        setActivePage(3)
+          setTemplateUserId(res.data.result.user_template_id)
+          setActivePage(3)
       })
       .catch(error =>
         alert('Error: ', error));
