@@ -1,11 +1,11 @@
 import {
     Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List, Link, Modal, MediaCard,
-    Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, TextField, Loading
+    Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, TextField, Loading,Frame
 } from '@shopify/polaris';
 import { CancelSmallMinor } from '@shopify/polaris-icons';
 import createApp from '@shopify/app-bridge/development';
 import { Redirect } from '@shopify/app-bridge/actions';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef,useCallback } from 'react';
 import axios from "axios";
 
 
@@ -191,10 +191,10 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
     }
 
     useEffect(() => {
-        
+
         console.log(products);
         console.log(showProducts);
-    }, [showProducts, products ]);
+    }, [ products,showProducts]);
 
     const handleSubmitProduct = async (id) => {
         console.log(`submit products ${id} `);
@@ -335,16 +335,16 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
                                                                             resourceName={{ singular: 'product', plural: 'products' }}
                                                                             items={products}
                                                                             renderItem={(item) => {
-                                                                                const { id, image, name } = item;
-                                                                                const media = <Avatar size="small" shape="square" name={name} source={image} />;
+                                                                                const { id, image, title } = item;
+                                                                                const media = <Avatar size="small" shape="square" name={title} source={image} />;
                                                                                 return (
                                                                                     <ResourceItem
                                                                                         id={id}
                                                                                         media={media}
-                                                                                        accessibilityLabel={`View details for ${name}`}
+                                                                                        accessibilityLabel={`View details for ${title}`}
                                                                                     >
                                                                                         <Text variant="bodyMd" fontWeight="bold" as="h3">
-                                                                                            {name}
+                                                                                            {title}
                                                                                         </Text>
 
                                                                                     </ResourceItem>
