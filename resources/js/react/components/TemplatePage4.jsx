@@ -1,10 +1,14 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import { Page, Layout, Card, MediaCard, Button, Link } from '@shopify/polaris';
+import React, { useContext } from 'react'
+import { Page, Layout, Card, MediaCard, Button } from '@shopify/polaris';
+import { AppContext } from '../Context'
 
-export function TemplatePage4({ setLocationChange }) {
-    const handleLocationChange = () => {
-        setLocationChange('/admin/apps/UsVsThem')
-    }
+// export function TemplatePage4({ setLocationChange }) {
+export function TemplatePage4() {
+
+    // const handleLocationChange = () => {
+    //     setLocationChange('/admin/apps/UsVsThem')
+    // }
+
     return (
         <div className='Template-Page4'>
             <Page fullWidth>
