@@ -188,6 +188,9 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
             })
             .catch(error =>
                 alert('Error: ', error));
+
+        console.log(products);
+        console.log(showProducts);
     }
 
     const handleSubmitProduct = async (id) => {
