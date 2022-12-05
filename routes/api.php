@@ -1,7 +1,17 @@
 <?php
-
+use App\Models\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
+use Shopify\Auth\OAuth;
+use Shopify\Auth\Session as AuthSession;
+use Shopify\Clients\HttpHeaders;
+use Shopify\Clients\Rest;
+use Shopify\Context;
+use Shopify\Utils;
+use Shopify\Webhooks\Registry;
+use Shopify\Webhooks\Topics;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +35,8 @@ Route::post('rename-template',[App\Http\Controllers\Api\TemplateController::clas
 Route::post('duplicate-template',[App\Http\Controllers\Api\TemplateController::class,'DuplicateTemplate']);
 Route::post('delete-template',[App\Http\Controllers\Api\TemplateController::class,'DeleteTemplate']);
 Route::get('products',[App\Http\Controllers\Api\TemplateController::class,'Products']);
-Route::post('selected-products',[App\Http\Controllers\Api\TemplateController::class,'SelectedProducts']);
+
+Route::post('selected-products',[\App\Http\Controllers\Api\TemplateController::class,'SelectedProducts']);
+
 
 

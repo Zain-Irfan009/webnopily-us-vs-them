@@ -1,0 +1,66 @@
+{% assign xc_settings = product.metafields.widget.products %}
+
+
+{% if xc_settings and xc_settings.template_id == 1 %}
+    <div class="page-section temp1-compare-section metafileds-comaparison lazyloaded">
+<table class="custom">
+    <thead>
+
+    <tr>
+        <th></th>
+      <th>{{ xc_settings.brand }}</th>
+      <th>{{ xc_settings.competitor }}</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for xc_settings_loop in  xc_settings.items %}
+
+    <tr>
+        <td>
+        {{ xc_settings_loop.advantage  }}
+        </td>
+
+      <td>
+        {% if  xc_settings_loop.brand == true %}
+
+        <span class="icon-check">Yes</span>
+        {% else %}
+        <span class="icon-cross">No</span>
+        {% endif %}
+      </td>
+      <td>
+           {% if  xc_settings_loop.competitor == true %}
+        <span class="icon-check">Yes</span>
+        {% else %}
+        <span class="icon-cross">No</span>
+        {% endif %}
+    </td>
+    </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tfoot>
+</table>
+
+</div>
+{% endif %}
+<script>
+
+console.log('dsd');
+</script>
+
+
+{% schema %}
+  {
+    "name": "Product Template",
+    "target": "section",
+    "stylesheet": "template.css",
+    "templates": ["product"]
+
+  }
+{% endschema %}

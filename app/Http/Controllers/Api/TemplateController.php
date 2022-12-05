@@ -382,7 +382,6 @@ class TemplateController extends ApiController
 
             $shop=Session::where('shop',$request->shop_name)->first();
 
-
             if(isset($request->user_template_id)) {
                 $user_template = UserTemplate::where('id', $request->user_template_id)->where('shop_id', $shop->id)->first();
 
@@ -430,24 +429,123 @@ class TemplateController extends ApiController
 
         public function SelectedProducts(Request $request)
         {
+
             $shop=Session::where('shop',$request->shop_name)->first();
+            $client = new Rest($shop->shop, $shop->access_token);
+
             if(isset($request->user_template_id)) {
                 $user_template = UserTemplate::where('id', $request->user_template_id)->where('shop_id', $shop->id)->first();
                 if ($user_template) {
+
+                    $advantages=Advantage::where('user_template_id',$request->user_template_id)->get();
+
+                    $items_array=[];
+                    foreach ($advantages as $index=> $value){
+
+
+                        if($value->brand ==1){
+                            $brand=true;
+                        }else{
+                            $brand=false;
+                        }
+                        if($value->competitors ==1){
+                            $competitor=true;
+                        }else{
+                            $competitor=false;
+                        }
+                        $item=[
+                            'advantage'=>$value->advantage,
+                            'brand'=>$brand,
+                            'competitor'=>$competitor,
+                        ];
+                        array_push($items_array,$item);
+
+                    }
+
+
                     if (isset($request->product_ids)) {
                         UserTemplateProduct::where('user_template_id',$user_template->id)->where('shop_id', $shop->id)->delete();
+
                         foreach ($request->product_ids as $product_id) {
+                            $product=Product::where('shopify_id',$product_id)->first();
                             $user_template_product = new UserTemplateProduct();
                             $user_template_product->user_template_id = $user_template->id;
                             $user_template_product->shopify_product_id = $product_id;
                             $user_template_product->shop_id = $shop->id;
                             $user_template_product->save();
+
+                            $value = [
+                                "template_id" => $user_template->template_id,
+                                "user_template_id"=>$user_template->id,
+                                "brand"=>$user_template->brand,
+                                "competitor"=>$user_template->competitors,
+                                "background_color1"=>$user_template->background_color1,
+                                "background_color2"=>$user_template->background_color2,
+                                "column1_color"=>$user_template->column1_color,
+                                "column2_color"=>$user_template->column2_color,
+                                "column3_color"=>$user_template->column3_color,
+                                "brand_checkbox_color1"=>$user_template->brand_checkbox_color1,
+                                "brand_checkbox_color2"=>$user_template->brand_checkbox_color2,
+                                "competitors_checkbox_color1"=>$user_template->competitors_checkbox_color1,
+                                "competitors_checkbox_color2"=>$user_template->competitors_checkbox_color2,
+                                'items'=>$items_array
+                            ];
+
+
+                            $product_metafield = $client->put( '/products/' . $product->shopify_id . '.json', [
+                                'product' => [
+                                    "metafields" =>
+                                        array(
+                                            0 =>
+                                                array(
+                                                    "key" => 'products',
+                                                    "value" => json_encode($value),
+                                                    "type" => "json_string",
+                                                    "namespace" => "widget",
+                                                ),
+                                        ),
+                                ]
+                            ]);
+
+
+                            if($product_metafield->getDecodedBody()['errors']['key']) {
+
+                                $res = $client->get( '/products/' . $product->shopify_id . '/metafields.json');
+                                $res = $res->getDecodedBody();
+
+                                foreach ($res['metafields'] as $deliverydate) {
+
+                                    if ($deliverydate['key'] =='products') {
+
+                                        $product_metafield = $client->put( '/metafields/'.$deliverydate['id'].'.json', [
+
+                                            "metafield" =>
+
+                                                array(
+                                                    "type" => "json_string",
+                                                    "value" =>json_encode($value),
+                                                ),
+                                        ]);
+
+
+                                    }
+
+
+                                }
+                            }
+
+
+
                         }
                         $data = [
                             'user_template_id' => $user_template->id,
                             'product_ids' => $request->product_ids
                         ];
+
                         $result[] = $data;
+
+
+
                         return $this->response($result, 200);
                     }
                 }

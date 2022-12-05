@@ -24,7 +24,7 @@ export function Templates({ setLocationChange,activePage, setActivePage }) {
       .then(res => {
         console.log(res.data.result);
         setActivePage(3)
-        setSelectedTemplate(res.data.result.template_id)
+        setSelectedTemplate(id)
         setUserTemplateId(res.data.result.user_template_id)
       })
       .catch(error =>

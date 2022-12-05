@@ -13,6 +13,7 @@ import {Provider, useAppBridge} from '@shopify/app-bridge-react';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import ClientRouter from "./components/ClientRouter";
 import AppNavigation from "./components/AppNavigation";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 
 import '../../../public/css/index.css';
@@ -62,6 +63,7 @@ function AppBridgeApolloProvider({children}) {
 function App({shop, host, apiKey}) {
     const config = {apiKey: apiKey, shopOrigin: shop, host: host, forceRedirect: true};
     const [activePage, setActivePage] = useState(1)
+    const queryClient = new QueryClient();
 
     return (
         <BrowserRouter>
@@ -69,6 +71,7 @@ function App({shop, host, apiKey}) {
                 <ClientRouter/>
                 <AppProvider i18n={translations}>
                     <AppBridgeApolloProvider>
+                        <QueryClientProvider client={queryClient}>
                         <AppNavigation/>
 
                             <Switch>
@@ -78,6 +81,7 @@ function App({shop, host, apiKey}) {
                                 <Route path="/locations" component={Locations} />
                                 <Route path="/settings" component={Settings} />
                             </Switch>
+                        </QueryClientProvider>
                     </AppBridgeApolloProvider>
                 </AppProvider>
             </Provider>

@@ -6,10 +6,13 @@ import { CancelSmallMinor } from '@shopify/polaris-icons';
 import createApp from '@shopify/app-bridge/development';
 import { Redirect } from '@shopify/app-bridge/actions';
 import React, { useState, useEffect, useRef,useCallback } from 'react';
+import {useAppQuery} from "../components/hooks/index";
 import axios from "axios";
 
 
 export function Dashboard({ setLocationChange, config, setActivePage }) {
+
+
     const app = createApp(config);
     const [appEnable, setAppEnable] = useState(false)
     let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');

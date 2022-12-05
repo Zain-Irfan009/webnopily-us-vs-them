@@ -111,16 +111,21 @@ Route::post('/graphql', function (Request $request) {
 })->middleware('shopify.auth:online');
 
 Route::get('/rest-example', function (Request $request) {
+
     /** @var AuthSession */
     $session = $request->get('shopifySession'); // Provided by the shopify.auth middleware, guaranteed to be active
 
     $client = new Rest($session->getShop(), $session->getAccessToken());
     $result = $client->get('products', [], ['limit' => 5]);
 
+
     return response($result->getDecodedBody());
 })->middleware('shopify.auth:online');
+
+
 Route::get('sync-products',[App\Http\Controllers\ProductController::class,'SyncProdcuts'])->middleware('shopify.auth:online');
 
+//Route::get('selected-products',[\App\Http\Controllers\Api\TemplateController::class,'SelectedProducts'])->middleware('shopify.auth:online');
 Route::post('/webhooks', function (Request $request) {
     try {
         $topic = $request->header(HttpHeaders::X_SHOPIFY_TOPIC, '');
