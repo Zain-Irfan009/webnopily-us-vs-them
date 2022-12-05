@@ -135,9 +135,6 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
             setTemplateRenameUserId()
             alert('Error: ', error);
         }
-
-
-
     }
 
     const handleDuplicateTemplate =async (id) => {
@@ -157,9 +154,6 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
 
             alert('Error: ', error);
         }
-
-
-
     }
 
     const handleDeleteTemplate = async (id) => {
@@ -208,7 +202,6 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
         setProducts([])
         setSelectedItems([])
 
-
         const response = await axios
             .get(
                 `http://us-vs-them.test/api/products?user_template_id=${id}&shop_name=${host}`
@@ -242,8 +235,6 @@ export function Dashboard({ setLocationChange, config, setActivePage }) {
     const handleSubmitProduct = async (id) => {
         console.log(`submit products ${id} `);
         console.log(selectedItems);
-
-
 
         let data = {
             user_template_id: id,
