@@ -178,6 +178,7 @@ class TemplateController extends ApiController
                     $advantage->save();
 
                     if($request->brands[$index] ==true){
+
                         $brand=true;
                     }else{
                         $brand=false;
@@ -194,6 +195,7 @@ class TemplateController extends ApiController
                     ];
                     array_push($items_array,$item);
                 }
+
                 $result = [];
                 $data = [
                     'shop_name'=>$shop->shop,
