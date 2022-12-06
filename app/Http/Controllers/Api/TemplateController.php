@@ -110,6 +110,17 @@ class TemplateController extends ApiController
             $user_templates->shop_id=$shop->id;
             $user_templates->save();
 
+
+            for ($i = 1; $i < 6; $i++) {
+             $advantages=new Advantage();
+                $advantages->advantage='Advantage'.$i;
+                $advantages->brand=1;
+                $advantages->competitors=0;
+                $advantages->user_template_id=$user_templates->id;
+                $advantages->shop_id=$shop->id;
+                $advantages->save();
+
+                }
             foreach ($user_template_products as $user_template_product){
                 $user_template_product->user_template_id=$user_templates->id;
                 $user_template_product->save();
@@ -130,22 +141,12 @@ class TemplateController extends ApiController
         }
 
         public function Step2Template(Request $request){
-//dd($request->template_id);
-//dd($request->all());
+
             $template=Template::find($request->template_id);
 
             $shop=Session::where('shop',$request->shop_name)->first();
-
             if($template){
-//                if(isset($request->user_template_id) || $request->user_template_id!=null){
-//                    $user_template=UserTemplate::where('id',$request->user_template_id)->where('shop_id',$shop->id)->first();
-//                    Advantage::where('user_template_id',$request->user_template_id)->where('shop_id',$shop->id)->delete();
-//                }else {
-
-//                    $user_template = new UserTemplate();
-//                }
-                    Advantage::where('user_template_id',$request->user_template_id)->where('shop_id',$shop->id)->delete();
-
+             Advantage::where('user_template_id',$request->user_template_id)->where('shop_id',$shop->id)->delete();
 
                 $user_template=UserTemplate::where('id',$request->user_template_id)->where('shop_id',$shop->id)->first();
                 $user_template->template_name=$request->template_name;
@@ -161,6 +162,7 @@ class TemplateController extends ApiController
                 $user_template->competitors_checkbox_color1=$request->competitors_checkbox_color1;
                 $user_template->competitors_checkbox_color2=$request->competitors_checkbox_color2;
                 $user_template->template_id=$request->template_id;
+                $user_template->advantages_count=$request->advantages_count;
                 $user_template->save();
 
                 $items_array=[];
@@ -579,6 +581,86 @@ class TemplateController extends ApiController
                     $result[] = $data;
                     return $this->response($result, 200);
                 }
+            }
+        }
+
+        public function TemplateData(Request $request){
+
+            $user_template=UserTemplate::find($request->user_template_id);
+            if($user_template){
+
+                $advantages=Advantage::where('user_template_id',$request->user_template_id)->get();
+                $advantages_get=Advantage::where('user_template_id',$request->user_template_id)->pluck('advantage')->toArray();
+                $brands_get=Advantage::where('user_template_id',$request->user_template_id)->pluck('brand')->toArray();
+                $competitors_get=Advantage::where('user_template_id',$request->user_template_id)->pluck('competitors')->toArray();
+                $brands_array=[];
+                foreach ($brands_get as $brand_ge){
+                    if($brand_ge==1){
+                        $brands=true;
+                    }
+                    else{
+                        $brands=false;
+                    }
+                    array_push($brands_array,$brands);
+                }
+
+                $competitors_array=[];
+                foreach ($competitors_get as $competitor_ge){
+                    if($competitor_ge==1){
+                        $competitors=true;
+                    }
+                    else{
+                        $competitors=false;
+                    }
+                    array_push($competitors_array,$competitors);
+                }
+
+
+                $items_array=[];
+                foreach ($advantages as $index=> $value){
+
+                    if($value->brand ==1){
+                        $brand=true;
+                    }else{
+                        $brand=false;
+                    }
+                    if($value->competitors ==1){
+                        $competitor=true;
+                    }else{
+                        $competitor=false;
+                    }
+                    $item=[
+                        'advantage'=>$value->advantage,
+                        'brand'=>$brand,
+                        'competitor'=>$competitor,
+                    ];
+                    array_push($items_array,$item);
+
+                }
+
+                $result = [];
+                $data = [
+                    'template_name'=>$user_template->template_name,
+                    'brand'=> $user_template->brand,
+                    'competitor'=> $user_template->competitors,
+                    'background_color1'=>$user_template->background_color1,
+                    'background_color2'=>$user_template->background_color2,
+                    'column1_color'=>$user_template->column1_color,
+                    'column2_color'=>$user_template->column2_color,
+                    'column3_color'=>$user_template->column3_color,
+                    'advantages_count'=>$user_template->advantages_count,
+                    'brand_checkbox_color1'=>$user_template->brand_checkbox_color1,
+                    'brand_checkbox_color2'=>$user_template->brand_checkbox_color2,
+                    'competitors_checkbox_color1'=>$user_template->competitors_checkbox_color1,
+                    'competitors_checkbox_color2'=>$user_template->competitors_checkbox_color2,
+                    'template_id'=>$user_template->template_id,
+                    'advantages'=>$advantages_get,
+                    'brands'=>$brands_array,
+                    'competitors'=>$competitors_array,
+                    'items'=>$items_array,
+                ];
+                $result = $data;
+                return $this->response($result, 200);
             }
         }
 }

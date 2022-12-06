@@ -17,10 +17,26 @@ const themeHeadingsPc =
 
 
 export function TemplatePage3() {
-  const { activePage, setActivePage, selectedTemplate, userTemplateId } = useContext(AppContext);
+  const { activePage, setActivePage, selectedTemplate, templateUserId } = useContext(AppContext);
+    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+  const getData=async () =>{
+      const response = await axios
+          .get(
+              `http://us-vs-them.test/api/template-data?user_template_id=${templateUserId}&shop_name=${host}`
+          )
+          .then(res => {
+              console.log('rable data',res);
+
+          })
+          .catch(error =>
+              alert('Error: ', error));
+  }
+    useEffect(() => {
+
+      getData();
+    },[]);
 
   const [templateName, setTemplateName] = useState('My Template');
-    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
   const [yourBrand, setYourBrand] = useState('Your brand');
   const [otherCompetitors, setOtherCompetitors] = useState('Other Competitors');
   const [advantagesCount, setAdvantagesCount] = useState('5');
@@ -198,7 +214,7 @@ export function TemplatePage3() {
       competitors: competitorValue,
       template_id: selectedTemplate,
       template_name: templateName,
-      user_template_id: userTemplateId,
+      user_template_id: templateUserId,
       background_color1: colorValues.background1,
       background_color2: colorValues.background2,
       column1_color: colorValues.advantageColumn1,
@@ -208,6 +224,7 @@ export function TemplatePage3() {
       brand_checkbox_color2: colorValues.brandCross,
       competitors_checkbox_color1: colorValues.competitorCheck,
       competitors_checkbox_color2: colorValues.competitorCross,
+        advantages_count:advantagesCount,
       shop_name: host,
     };
 

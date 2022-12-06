@@ -35,7 +35,7 @@ Route::post('rename-template',[App\Http\Controllers\Api\TemplateController::clas
 Route::post('duplicate-template',[App\Http\Controllers\Api\TemplateController::class,'DuplicateTemplate']);
 Route::post('delete-template',[App\Http\Controllers\Api\TemplateController::class,'DeleteTemplate']);
 Route::get('products',[App\Http\Controllers\Api\TemplateController::class,'Products']);
-
+Route::get('template-data',[App\Http\Controllers\Api\TemplateController::class,'TemplateData']);
 Route::post('selected-products',[\App\Http\Controllers\Api\TemplateController::class,'SelectedProducts']);
 
 
