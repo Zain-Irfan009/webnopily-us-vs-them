@@ -15,7 +15,7 @@ const themeHeadingsPc =
     { title: 'Competitor 4' },
   ]
 
-// export function TemplatePage3({ activePage, setActivePage, setLocationChange, selectedTemplate, userTemplateId }) {
+
 export function TemplatePage3() {
   const { activePage, setActivePage, selectedTemplate, userTemplateId } = useContext(AppContext);
 

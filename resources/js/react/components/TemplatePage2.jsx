@@ -305,11 +305,11 @@ const themeHeadingsMobile =
   ]
 
 
-// export function TemplatePage2({ handleSelectTemplate }) {
+
 export function TemplatePage2() {
   const { setActivePage, setTemplateUserId, setSelectedTemplate } = useContext(AppContext);
 
-    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+  let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
   const handleSelectTemplate = async (templateId) => {
 
     const response = await axios
@@ -318,11 +318,9 @@ export function TemplatePage2() {
       )
       .then(res => {
         console.log(res.data.result.user_template_id);
-
-        // setSelectedTemplate(res.data.result.template_id)
         setSelectedTemplate(templateId)
-          setTemplateUserId(res.data.result.user_template_id)
-          setActivePage(3)
+        setTemplateUserId(res.data.result.user_template_id)
+        setActivePage(3)
       })
       .catch(error =>
         alert('Error: ', error));

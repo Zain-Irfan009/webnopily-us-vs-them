@@ -2,7 +2,6 @@ import { Pagination, Button, Navigation, Link, } from '@shopify/polaris';
 import React, { useContext } from 'react';
 import { AppContext } from '../Context'
 
-// export function SideBarNavigation({ activePage, setActivePage, setLocationChange }) {
 export function SideBarNavigation() {
     const { activePage, setActivePage } = useContext(AppContext);
 
@@ -72,7 +71,7 @@ export function SideBarNavigation() {
                     hasPrevious
                     onPrevious={() => { handlePagination('prev') }}
                     // hasNext
-                    onNext={() => { handlePagination('next') }}
+                    // onNext={() => { handlePagination('next') }}
                 />
             </div>
         </>

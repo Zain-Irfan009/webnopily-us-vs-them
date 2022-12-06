@@ -6,7 +6,6 @@ import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client/react';
 import { AppProvider } from "@shopify/polaris";
 import translations from "@shopify/polaris/locales/en.json";
-// import '@shopify/polaris/dist/styles.css';
 import "@shopify/polaris/build/esm/styles.css";
 import { Provider, useAppBridge } from '@shopify/app-bridge-react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -87,9 +86,6 @@ function App({ shop, host, apiKey }) {
                                 templateUserId, setTemplateUserId, config
                             }}>
                             <Switch>
-                                {/* <Route exact path="/" component={() => (<Dashboard config={config} setActivePage={setActivePage} />)} />
-                                <Route path="/templates" component={() => (<Templates activePage={activePage} setActivePage={setActivePage} />)} /> */}
-
                                 <Route exact path="/" component={Dashboard} />
                                 <Route path="/templates" component={Templates} />
                                 <Route path="/locations" component={Locations} />

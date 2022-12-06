@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Page, Layout, Card, MediaCard, Button } from '@shopify/polaris';
 import { AppContext } from '../Context'
 
-// export function TemplatePage4({ setLocationChange }) {
+
 export function TemplatePage4() {
 
     // const handleLocationChange = () => {
