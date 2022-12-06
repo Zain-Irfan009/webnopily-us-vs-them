@@ -18,47 +18,19 @@ const themeHeadingsPc =
 
 export function TemplatePage3() {
   const { activePage, setActivePage, selectedTemplate, templateUserId } = useContext(AppContext);
-    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
-  const getData=async () =>{
-      const response = await axios
-          .get(
-              `http://us-vs-them.test/api/template-data?user_template_id=${templateUserId}&shop_name=${host}`
-          )
-          .then(res => {
-              // console.log('rable data',res);
-              // console.log(res.data.result.colors);
+  let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
 
-          })
-          .catch(error =>
-              alert('Error: ', error));
-  }
-    useEffect(() => {
-
-      getData();
-    },[]);
-
-  const [templateName, setTemplateName] = useState('My Template');
-  const [yourBrand, setYourBrand] = useState('Your brand');
-  const [otherCompetitors, setOtherCompetitors] = useState('Other Competitors');
-  const [advantagesCount, setAdvantagesCount] = useState('5');
+  const [templateName, setTemplateName] = useState();
+  const [yourBrand, setYourBrand] = useState();
+  const [otherCompetitors, setOtherCompetitors] = useState();
+  const [advantagesCount, setAdvantagesCount] = useState();
   const [customAdvantagesCount, setCustomAdvantagesCount] = useState();
   const [loading, setLoading] = useState(false)
 
   const [allValues, setAllValues] = useState([]);
   const [brandValue, setBrandValue] = useState([]);
   const [competitorValue, setCompetitorValue] = useState([]);
-  const [colorValues, setColorValues] = useState({
-    background1: '#ffffff',
-    background2: '#ebecf0',
-    advantageColumn1: '#626dff',
-    advantageColumn2: '#8c94ff',
-    advantageColumn3: '#a9afff',
-    brandCheck: '#474b8b',
-    brandCross: '#7b7eac',
-    competitorCheck: '#474b8b',
-    competitorCross: '#7b7eac'
-  })
-
+  const [colorValues, setColorValues] = useState([])
 
   const [themeInputTable1, setThemeInputTable1] = useState([]);
   const [themeInputTable2, setThemeInputTable2] = useState([]);
@@ -73,78 +45,146 @@ export function TemplatePage3() {
   const handleAdvantagesCount = useCallback((value) => setAdvantagesCount(value), []);
   const handleCustomAdvantagesCount = useCallback((value) => setCustomAdvantagesCount(value), []);
 
+  const getData = async () => {
+    const response = await axios
+      .get(
+        `http://us-vs-them.test/api/template-data?user_template_id=${templateUserId}&shop_name=${host}`
+      )
+      .then(res => {
+        console.log('table data', res.data.result);
+        setTemplateName(res.data.result.template_name)
+        setYourBrand(res.data.result.brand)
+        setOtherCompetitors(res.data.result.competitor)
+        setAdvantagesCount(res.data.result.advantages_count)
+        setAllValues(res.data.result.advantages)
+        setBrandValue(res.data.result.brands)
+        setCompetitorValue(res.data.result.competitors)
+        setColorValues(res.data.result.colors)
+      })
+      .catch(error =>
+        alert('Error: ', error));
+  }
 
   useEffect(() => {
-    if (!loading) {
-      setLoading(true);
+
+    getData();
+  }, []);
+
+  const submitData = async () => {
+    let data = {
+      brand: yourBrand,
+      competitor: otherCompetitors,
+      advantages: allValues,
+      brands: brandValue,
+      competitors: competitorValue,
+      template_id: selectedTemplate,
+      template_name: templateName,
+      user_template_id: templateUserId,
+      background_color1: colorValues.background1,
+      background_color2: colorValues.background2,
+      column1_color: colorValues.advantageColumn1,
+      column2_color: colorValues.advantageColumn2,
+      column3_color: colorValues.advantageColumn3,
+      brand_checkbox_color1: colorValues.brandCheck,
+      brand_checkbox_color2: colorValues.brandCross,
+      competitors_checkbox_color1: colorValues.competitorCheck,
+      competitors_checkbox_color2: colorValues.competitorCross,
+      advantages_count: advantagesCount,
+      shop_name: host,
+    };
+
+    try {
+      const response = await axios.post('http://us-vs-them.test/api/step-2', data)
+      console.log(response);
+      setActivePage(4)
+    } catch (error) {
+      alert('Error: ', error);
     }
-    setTimeout(() => {
-      setLoading(false);
-    }, 300);
-    {
-      let theme1 = [];
-      let theme2Pc = [];
-      let theme3 = [];
-      let theme3Mobile = [];
-      let theme4 = [];
-      let advantagesValues = {};
-      let brandValues = {};
-      let competitorValues = {};
-      [...Array(Number(advantagesCount))].map((item, index) => (
-        advantagesValues = ({ ...advantagesValues, [index]: `Advantage ${index + 1}` }),
-        brandValues = ({ ...brandValues, [index]: true }),
-        competitorValues = ({ ...competitorValues, [index]: false }),
-        theme1.push(
-          {
-            name: `Advantage ${index + 1}`,
-            yourBrand: true,
-            competitor: false,
-          },
-        ),
-        theme2Pc.push(
-          {
-            name: `Advantage ${index + 1}`,
-            yourBrand: true,
-            competitor1: false,
-            competitor2: false,
-            competitor3: false,
-            competitor4: false,
-          },
-        ),
-        theme3.push(
-          {
-            name: `Advantage ${index + 1}`,
-            yourBrand: 'true',
-            competitor1: 'false',
-            competitor2: 'false',
-            competitor3: 'false',
-          },
-        ),
-        theme3Mobile.push(
-          {
-            name: `Advantage ${index + 1}`,
-            yourBrand: 'true',
-            competitor: 'false',
-          },
-        ),
-        theme4.push(
-          {
-            name: 'advantage 1',
-            yourBrand: 'true',
-            others: 'false',
-          },
-        )
-      ))
-      setAllValues(advantagesValues)
-      setBrandValue(brandValues)
-      setCompetitorValue(competitorValues)
-      setThemeInputTable1(theme1)
-      setThemeInputTable2(theme2Pc)
-      setThemeInputTable3(theme3)
-      setThemeInputTable3Mobile(theme3Mobile)
-      setThemeInputTable4(theme4)
-    }
-  }, [advantagesCount])
+  }
+
+  useEffect(() => {
+    console.log('templateName: ', templateName);
+    console.log('yourBrand: ', yourBrand);
+    console.log('otherCompetitors: ', otherCompetitors);
+    console.log('advantagesCount: ', advantagesCount);
+    console.log('allValues: ', allValues);
+    console.log('brandValue: ', brandValue);
+    console.log('competitorValue: ', competitorValue);
+    console.log('colorValues: ', colorValues);
+  }, [templateName, yourBrand, otherCompetitors, advantagesCount, allValues, brandValue, competitorValue, colorValues])
+
+
+  // useEffect(() => {
+  //   if (!loading) {
+  //     setLoading(true);
+  //   }
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 300);
+  //   {
+  //     let theme1 = [];
+  //     let theme2Pc = [];
+  //     let theme3 = [];
+  //     let theme3Mobile = [];
+  //     let theme4 = [];
+  //     let advantagesValues = {};
+  //     let brandValues = {};
+  //     let competitorValues = {};
+  //     [...Array(Number(advantagesCount))].map((item, index) => (
+  //       advantagesValues = ({ ...advantagesValues, [index]: `Advantage ${index + 1}` }),
+  //       brandValues = ({ ...brandValues, [index]: true }),
+  //       competitorValues = ({ ...competitorValues, [index]: false }),
+  //       theme1.push(
+  //         {
+  //           name: `Advantage ${index + 1}`,
+  //           yourBrand: true,
+  //           competitor: false,
+  //         },
+  //       ),
+  //       theme2Pc.push(
+  //         {
+  //           name: `Advantage ${index + 1}`,
+  //           yourBrand: true,
+  //           competitor1: false,
+  //           competitor2: false,
+  //           competitor3: false,
+  //           competitor4: false,
+  //         },
+  //       ),
+  //       theme3.push(
+  //         {
+  //           name: `Advantage ${index + 1}`,
+  //           yourBrand: 'true',
+  //           competitor1: 'false',
+  //           competitor2: 'false',
+  //           competitor3: 'false',
+  //         },
+  //       ),
+  //       theme3Mobile.push(
+  //         {
+  //           name: `Advantage ${index + 1}`,
+  //           yourBrand: 'true',
+  //           competitor: 'false',
+  //         },
+  //       ),
+  //       theme4.push(
+  //         {
+  //           name: 'advantage 1',
+  //           yourBrand: 'true',
+  //           others: 'false',
+  //         },
+  //       )
+  //     ))
+  //     setAllValues(advantagesValues)
+  //     setBrandValue(brandValues)
+  //     setCompetitorValue(competitorValues)
+  //     setThemeInputTable1(theme1)
+  //     setThemeInputTable2(theme2Pc)
+  //     setThemeInputTable3(theme3)
+  //     setThemeInputTable3Mobile(theme3Mobile)
+  //     setThemeInputTable4(theme4)
+  //   }
+  // }, [advantagesCount])
 
   const handleAllValues = e => {
     setAllValues({ ...allValues, [e.target.name - 1]: e.target.value });
@@ -154,6 +194,7 @@ export function TemplatePage3() {
     themeInputTable3Mobile[e.target.name - 1].name = e.target.value;
     themeInputTable4[e.target.name - 1].name = e.target.value;
   }
+
   const handleBrandValue = e => {
     themeInputTable3[e.target.name].yourBrand = e.target.value;
     themeInputTable4[e.target.name].yourBrand = e.target.value;
@@ -172,6 +213,7 @@ export function TemplatePage3() {
       themeInputTable1[e.target.name].yourBrand = e.target.value;
     }
   }
+
   const handleCompetitorValue = e => {
     themeInputTable3[e.target.name].competitor1 = e.target.value;
     themeInputTable3[e.target.name].competitor2 = e.target.value;
@@ -198,45 +240,12 @@ export function TemplatePage3() {
       themeInputTable1[e.target.name].competitor = e.target.value;
     }
   }
+
   const handleColorValues = e => {
     setColorValues({ ...colorValues, [e.target.name]: e.target.value });
   }
 
 
-
-  const submitData = async () => {
-
-
-    let data = {
-      brand: yourBrand,
-      competitor: otherCompetitors,
-      advantages: allValues,
-      brands: brandValue,
-      competitors: competitorValue,
-      template_id: selectedTemplate,
-      template_name: templateName,
-      user_template_id: templateUserId,
-      background_color1: colorValues.background1,
-      background_color2: colorValues.background2,
-      column1_color: colorValues.advantageColumn1,
-      column2_color: colorValues.advantageColumn2,
-      column3_color: colorValues.advantageColumn3,
-      brand_checkbox_color1: colorValues.brandCheck,
-      brand_checkbox_color2: colorValues.brandCross,
-      competitors_checkbox_color1: colorValues.competitorCheck,
-      competitors_checkbox_color2: colorValues.competitorCross,
-        advantages_count:advantagesCount,
-      shop_name: host,
-    };
-
-    try {
-      const response = await axios.post('http://us-vs-them.test/api/step-2', data)
-      console.log(response);
-      setActivePage(4)
-    } catch (error) {
-      alert('Error: ', error);
-    }
-  }
 
   return (
     <div className='Template-Page3'>
