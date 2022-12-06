@@ -639,20 +639,27 @@ class TemplateController extends ApiController
                 }
 
                 $result = [];
-                $data = [
-                    'template_name'=>$user_template->template_name,
-                    'brand'=> $user_template->brand,
-                    'competitor'=> $user_template->competitors,
+
+                $colors_array=[];
+
+                $color_data=[
                     'background_color1'=>$user_template->background_color1,
                     'background_color2'=>$user_template->background_color2,
                     'column1_color'=>$user_template->column1_color,
                     'column2_color'=>$user_template->column2_color,
                     'column3_color'=>$user_template->column3_color,
-                    'advantages_count'=>$user_template->advantages_count,
                     'brand_checkbox_color1'=>$user_template->brand_checkbox_color1,
                     'brand_checkbox_color2'=>$user_template->brand_checkbox_color2,
                     'competitors_checkbox_color1'=>$user_template->competitors_checkbox_color1,
                     'competitors_checkbox_color2'=>$user_template->competitors_checkbox_color2,
+                    ];
+                array_push($colors_array,$color_data);
+                $data = [
+                    'template_name'=>$user_template->template_name,
+                    'brand'=> $user_template->brand,
+                    'competitor'=> $user_template->competitors,
+                    'colors'=>$colors_array,
+                    'advantages_count'=>$user_template->advantages_count,
                     'template_id'=>$user_template->template_id,
                     'advantages'=>$advantages_get,
                     'brands'=>$brands_array,

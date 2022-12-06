@@ -25,7 +25,8 @@ export function TemplatePage3() {
               `http://us-vs-them.test/api/template-data?user_template_id=${templateUserId}&shop_name=${host}`
           )
           .then(res => {
-              console.log('rable data',res);
+              // console.log('rable data',res);
+              // console.log(res.data.result.colors);
 
           })
           .catch(error =>
