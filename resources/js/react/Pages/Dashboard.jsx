@@ -41,7 +41,7 @@ export function Dashboard() {
 
         const response = await axios
             .get(
-                `http://us-vs-them.test/api/current-templates?shop_name=${host}`
+                `https://phpstack-362288-3089196.cloudwaysapps.com/api/current-templates?shop_name=${host}`
             )
             .then(res => {
                 console.log(res);
