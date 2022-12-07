@@ -26,7 +26,8 @@ use Shopify\Webhooks\Topics;
 
 Route::get('/', function () {
     return "Hello API";
-});Route::get('select-template',[App\Http\Controllers\Api\TemplateController::class,'SelectTemplate']);
+});
+Route::get('select-template',[App\Http\Controllers\Api\TemplateController::class,'SelectTemplate']);
 Route::post('step-1',[App\Http\Controllers\Api\TemplateController::class,'Step1Template']);
 Route::post('step-2',[App\Http\Controllers\Api\TemplateController::class,'Step2Template']);
 Route::get('current-templates',[App\Http\Controllers\Api\TemplateController::class,'CurrentTemplate']);
@@ -39,4 +40,5 @@ Route::get('template-data',[App\Http\Controllers\Api\TemplateController::class,'
 Route::post('selected-products',[\App\Http\Controllers\Api\TemplateController::class,'SelectedProducts']);
 
 
+Route::get('test',[App\Http\Controllers\Api\TemplateController::class,'testing']);
 

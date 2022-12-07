@@ -449,6 +449,7 @@ class TemplateController extends ApiController
         $shop = Session::where('shop', $request->shop_name)->first();
         $client = new Rest($shop->shop, $shop->access_token);
 
+
         if (isset($request->user_template_id)) {
             $user_template = UserTemplate::where('id', $request->user_template_id)->where('shop_id', $shop->id)->first();
             if ($user_template) {
@@ -478,9 +479,10 @@ class TemplateController extends ApiController
 
                 }
 
+                UserTemplateProduct::where('user_template_id', $user_template->id)->where('shop_id', $shop->id)->delete();
 
-                if (count($request->product_ids) > 0 ) {
-                    UserTemplateProduct::where('user_template_id', $user_template->id)->where('shop_id', $shop->id)->delete();
+                if (count($request->product_ids) > 0) {
+
 
                     foreach ($request->product_ids as $product_id) {
 
@@ -555,8 +557,25 @@ class TemplateController extends ApiController
                             }
                         }
 
-
                     }
+                }
+                if(count($request->unSelected_ids) > 0){
+                foreach ($request->unSelected_ids as $unSelected_id) {
+
+                    $res_for_delete = $client->get('/products/' . $unSelected_id . '/metafields.json');
+                    $res_for_delete = $res_for_delete->getDecodedBody();
+
+                  if($res_for_delete['metafields']){
+                      foreach ($res_for_delete['metafields'] as $delete_meta) {
+                          if ($delete_meta['key'] == 'products') {
+
+                              $delete = $client->delete('/metafields/' . $delete_meta['id'] . '.json');
+                          }
+                      }
+                  }
+                }
+
+
                     $data = [
                         'user_template_id' => $user_template->id,
                         'product_ids' => $request->product_ids
@@ -567,20 +586,20 @@ class TemplateController extends ApiController
 
                     return $this->response($result, 200);
                 }
-            }
-        } else {
-            if (isset($request->product_ids)) {
-                foreach ($request->product_ids as $product_id) {
-                    $user_template_product = new UserTemplateProduct();
-                    $user_template_product->shopify_product_id = $product_id;
-                    $user_template_product->shop_id = $shop->id;
-                    $user_template_product->save();
+            } else {
+                if (isset($request->product_ids)) {
+                    foreach ($request->product_ids as $product_id) {
+                        $user_template_product = new UserTemplateProduct();
+                        $user_template_product->shopify_product_id = $product_id;
+                        $user_template_product->shop_id = $shop->id;
+                        $user_template_product->save();
+                    }
+                    $data = [
+                        'product_ids' => $request->product_ids
+                    ];
+                    $result[] = $data;
+                    return $this->response($result, 200);
                 }
-                $data = [
-                    'product_ids' => $request->product_ids
-                ];
-                $result[] = $data;
-                return $this->response($result, 200);
             }
         }
     }
@@ -668,6 +687,28 @@ class TemplateController extends ApiController
             ];
             $result = $data;
             return $this->response($result, 200);
+        }
+    }
+
+
+    public function testing()
+    {
+
+        $shop = Session::where('shop', 'zain-store-tlx.myshopify.com')->first();
+        $client = new Rest($shop->shop, $shop->access_token);
+        $products = Product::all();
+        foreach ($products as $product) {
+            $res = $client->get('/products/' . $product->shopify_id . '/metafields.json');
+            $res = $res->getDecodedBody();
+
+            foreach ($res['metafields'] as $deliverydate) {
+
+
+                if ($deliverydate['key'] == 'products') {
+
+                    $delete = $client->delete( '/metafields/' . $deliverydate['id'] . '.json');
+                }
+            }
         }
     }
 }

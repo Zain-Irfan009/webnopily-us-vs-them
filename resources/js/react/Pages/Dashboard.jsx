@@ -5,14 +5,10 @@ import {
 import { CancelSmallMinor } from '@shopify/polaris-icons';
 import createApp from '@shopify/app-bridge/development';
 import { Redirect } from '@shopify/app-bridge/actions';
-
 import { useAppQuery } from "../components/hooks/index";
-
 import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
-
 import axios from "axios";
 import { AppContext } from '../Context'
-
 
 
 export function Dashboard() {
@@ -252,7 +248,6 @@ export function Dashboard() {
 
     const handleSubmitProduct = async (id) => {
         console.log(`submit products ${id} `);
-
         let unSelected = []
         var arr = products.filter(function (item) {
             return selectedItems.indexOf(item.id) === -1;
@@ -260,7 +255,6 @@ export function Dashboard() {
         arr?.map((item) => {
             unSelected.push(item.id)
         })
-
         let data = {
             user_template_id: id,
             product_ids: selectedItems,
@@ -275,7 +269,6 @@ export function Dashboard() {
             setShowProducts(false);
             alert('Error: ', error);
         }
-
     }
 
 
