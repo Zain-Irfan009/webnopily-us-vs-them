@@ -479,7 +479,7 @@ class TemplateController extends ApiController
                 }
 
 
-                if (isset($request->product_ids)) {
+                if (count($request->product_ids) > 0 ) {
                     UserTemplateProduct::where('user_template_id', $user_template->id)->where('shop_id', $shop->id)->delete();
 
                     foreach ($request->product_ids as $product_id) {

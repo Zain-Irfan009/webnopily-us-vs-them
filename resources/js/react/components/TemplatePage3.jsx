@@ -23,7 +23,7 @@ export function TemplatePage3() {
   const [templateName, setTemplateName] = useState();
   const [yourBrand, setYourBrand] = useState();
   const [otherCompetitors, setOtherCompetitors] = useState();
-  const [advantagesCount, setAdvantagesCount] = useState();
+  const [advantagesCount, setAdvantagesCount] = useState(1);
   const [customAdvantagesCount, setCustomAdvantagesCount] = useState();
   const [loading, setLoading] = useState(true)
 
@@ -60,12 +60,12 @@ export function TemplatePage3() {
         setBrandValue(res.data.result.brands)
         setCompetitorValue(res.data.result.competitors)
         setColorValues(res.data.result.colors[0])
-        setThemeInputTable1(res.data.result.items)
-        setThemeInputTable2(res.data.result.items)
-        setThemeInputTable3(res.data.result.items)
-        setThemeInputTable4(res.data.result.items)
-        setThemeInputTable3Mobile(res.data.result.items)
-        setFixedAdvantages(res.data.result.items)
+        // setThemeInputTable1(res.data.result.items)
+        // setThemeInputTable2(res.data.result.items)
+        // setThemeInputTable3(res.data.result.items)
+        // setThemeInputTable4(res.data.result.items)
+        // setThemeInputTable3Mobile(res.data.result.items)
+        // setFixedAdvantages(res.data.result.items)
         setTimeout(() => {
           setLoading(false);
         }, 1000);
@@ -248,205 +248,212 @@ export function TemplatePage3() {
   return (
     <div className='Template-Page3'>
       <Page fullWidth>
-        {/* {loading ? <Loading /> : */}
-          <Layout>
-            <Layout.Section>
-              <Card sectioned>
-                <h5>Customize your template style</h5>
-                <p> Edit the colors, the texts and the fields of the app.</p>
-              </Card>
+          {loading ? <Loading/> :
+              <Layout>
+                  <Layout.Section>
+                      <Card sectioned>
+                          <h5>Customize your template style</h5>
+                          <p> Edit the colors, the texts and the fields of the app.</p>
+                      </Card>
 
-              <Card
-                sectioned
-                title='Top fields'
-                actions={[
-                  {
-                    content: 'Preview',
-                    onAction: () => {
-                    },
-                  }
-                ]}>
-                <TextField
-                  label="Template Name"
-                  value={templateName}
-                  onChange={handleTemplateName}
-                  autoComplete="off"
-                />
-                <br />
+                      <Card
+                          sectioned
+                          title='Top fields'
+                          actions={[
+                              {
+                                  content: 'Preview',
+                                  onAction: () => {
+                                  },
+                              }
+                          ]}>
+                          <TextField
+                              label="Template Name"
+                              value={templateName}
+                              onChange={handleTemplateName}
+                              autoComplete="off"
+                          />
+                          <br/>
 
-                <TextField
-                  label="Brand"
-                  value={yourBrand}
-                  onChange={handleBrandName}
-                  autoComplete="off"
-                />
-                <br />
+                          <TextField
+                              label="Brand"
+                              value={yourBrand}
+                              onChange={handleBrandName}
+                              autoComplete="off"
+                          />
+                          <br/>
 
-                <TextField
-                  label="Competitors"
-                  value={otherCompetitors}
-                  onChange={handleOtherCompetitors}
-                  autoComplete="off"
-                />
-              </Card>
+                          <TextField
+                              label="Competitors"
+                              value={otherCompetitors}
+                              onChange={handleOtherCompetitors}
+                              autoComplete="off"
+                          />
+                      </Card>
 
-              <Card
-                sectioned
-                title='Advantages'
-                actions={[
-                  {
-                    content: 'Preview',
-                    onAction: () => {
-                    },
-                  }
-                ]}>
+                      <Card
+                          sectioned
+                          title='Advantages'
+                          actions={[
+                              {
+                                  content: 'Preview',
+                                  onAction: () => {
+                                  },
+                              }
+                          ]}>
 
-                <div className='Advantages-Layout'>
-                  <Layout>
-                    <Layout.Section oneHalf>
-                      <TextField
-                        label="Number of advantages"
-                        value={advantagesCount}
-                        onChange={handleAdvantagesCount}
-                        autoComplete="off"
-                      />
-                    </Layout.Section>
+                          <div className='Advantages-Layout'>
+                              <Layout>
+                                  <Layout.Section oneHalf>
+                                      <TextField
+                                          label="Number of advantages"
+                                          value={advantagesCount}
+                                          onChange={handleAdvantagesCount}
+                                          autoComplete="off"
+                                      />
+                                  </Layout.Section>
 
-                    <Layout.Section oneHalf></Layout.Section>
-                  </Layout>
+                                  <Layout.Section oneHalf></Layout.Section>
+                              </Layout>
 
 
-                  <div className='Advantages-Content-Section'>
-                    {[...Array(Number(advantagesCount))]?.map((item, index) => (
-                      <Layout key={index + 1}>
-                        <Layout.Section >
-                          <div className='Advantages-Inputs-Section'>
-                            <div className='Advantage-Input-Field'>
-                              <div className="Polaris-Labelled__LabelWrapper">
-                                <div className="Polaris-Label">
-                                  <label id={index + 1} htmlFor={index + 1} className="Polaris-Label__Text">
-                                    <span className="Polaris-Text--root Polaris-Text--bodyMd Polaris-Text--regular">Advantage {index + 1}</span>
+                              <div className='Advantages-Content-Section'>
+                                  {[...Array(Number(advantagesCount))].map((item, index) => (
+                                      <Layout key={index + 1}>
+                                          <Layout.Section>
+                                              <div className='Advantages-Inputs-Section'>
+                                                  <div className='Advantage-Input-Field'>
+                                                      <div className="Polaris-Labelled__LabelWrapper">
+                                                          <div className="Polaris-Label">
+                                                              <label id={index + 1} htmlFor={index + 1}
+                                                                     className="Polaris-Label__Text">
+                                                                  <span
+                                                                      className="Polaris-Text--root Polaris-Text--bodyMd Polaris-Text--regular">Advantage {index + 1}</span>
+                                                              </label>
+                                                          </div>
+                                                      </div>
+                                                      <div className="Polaris-Connected">
+                                                          <div
+                                                              className="Polaris-Connected__Item Polaris-Connected__Item--primary">
+                                                              <div
+                                                                  className="Polaris-TextField Polaris-TextField--hasValue">
+                                                                  <input type="text"
+                                                                         className="Polaris-TextField__Input"
+                                                                         id={index + 1}
+                                                                         autoComplete="off"
+                                                                      // defaultValue={`Advantage ${index + 1}`}
+                                                                         value={allValues[index]}
+                                                                         name={index + 1}
+                                                                         onChange={handleAllValues}
+                                                                  />
+                                                                  <div className="Polaris-TextField__Backdrop"></div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </Layout.Section>
+
+                                          <Layout.Section secondary>
+                                              <div className='Advantages-Brands-Section'>
+                                                  <Stack>
+                                                      <Stack vertical>
+                                                          <h2>
+                                                              Your Brand
+                                                          </h2>
+                                                          <Stack>
+                                  <span className='Advantages-Input-True-Icon'>
+                                    <label
+                                        className={`${brandValue[index] === true || brandValue[index] === 'true' ? 'Selected' : ''}`}>
+                                      <input type="radio"
+                                             id={index}
+                                             name={index}
+                                             value={true}
+                                             onChange={handleBrandValue}
+                                      />
+                                      <Icon source={CircleTickMajor}></Icon>
+                                    </label>
+                                  </span>
+
+                                                              <span className='Advantages-Input-False-Icon'>
+                                    <label
+                                        className={`${brandValue[index] === false || brandValue[index] === 'false' ? 'Selected' : ''}`}>
+                                      <input type="radio"
+                                             id={index}
+                                             name={index}
+                                             value={false}
+                                             onChange={handleBrandValue}
+                                      />
+                                      <Icon source={CircleCancelMajor}>
+                                      </Icon>
+                                    </label>
+                                  </span>
+                                                          </Stack>
+                                                      </Stack>
+
+                                                      <Stack vertical>
+                                                          <h2>
+                                                              Competitors
+                                                          </h2>
+                                                          <Stack>
+                                  <span className='Advantages-Input-True-Icon'>
+                                    <label
+                                        className={`${competitorValue[index] === true || competitorValue[index] === 'true' ? 'Selected' : ''}`}>
+                                      <input type="radio" id={index} name={index} value={true}
+                                             onChange={handleCompetitorValue}/>
+                                      <Icon source={CircleTickMajor}></Icon>
+                                    </label>
+                                  </span>
+
+                                                              <span className='Advantages-Input-False-Icon'>
+                                    <label
+                                        className={`${competitorValue[index] === false || competitorValue[index] === 'false' ? 'Selected' : ''}`}>
+                                      <input type="radio" id={index} name={index} value={false}
+                                             onChange={handleCompetitorValue}/>
+                                      <Icon source={CircleCancelMajor}>
+                                      </Icon>
+                                    </label>
+                                  </span>
+                                                          </Stack>
+                                                      </Stack>
+
+                                                  </Stack>
+                                              </div>
+                                          </Layout.Section>
+                                      </Layout>
+                                  ))}
+                              </div>
+
+                          </div>
+                      </Card>
+
+
+                      <Card
+                          sectioned
+                          title='Styling'
+                          actions={[
+                              {
+                                  content: 'Preview',
+                                  onAction: () => {
+                                  },
+                              }
+                          ]}>
+                          <Text variant="headingMd" as="h5" fontWeight='semibold'>
+                              Colors
+                          </Text>
+
+                          <div className='Color-Inputs MarginZero'>
+                              <Stack>
+                                  <label
+                                      className={`${colorValues?.background_color1 === '#ffffff' || colorValues?.background_color1 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                                      style={{backgroundColor: colorValues?.background_color1}}>
+                                      <input type="color"
+                                             value={colorValues?.background_color1}
+                                             name='background_color1'
+                                             onChange={handleColorValues}
+                                      />
                                   </label>
-                                </div>
-                              </div>
-                              <div className="Polaris-Connected">
-                                <div className="Polaris-Connected__Item Polaris-Connected__Item--primary">
-                                  <div className="Polaris-TextField Polaris-TextField--hasValue">
-                                    <input type="text"
-                                      className="Polaris-TextField__Input"
-                                      id={index + 1}
-                                      autoComplete="off"
-                                      // defaultValue={`Advantage ${index + 1}`}
-                                      value={allValues[index]}
-                                      name={index + 1}
-                                      onChange={handleAllValues}
-                                    />
-                                    <div className="Polaris-TextField__Backdrop"></div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </Layout.Section>
 
-                        <Layout.Section secondary >
-                          <div className='Advantages-Brands-Section'>
-                            <Stack>
-                              <Stack vertical>
-                                <h2>
-                                  Your Brand
-                                </h2>
-                                <Stack>
-                                  <span className='Advantages-Input-True-Icon'>
-                                    <label
-                                      className={`${brandValue[index] === true || brandValue[index] === 'true' ? 'Selected' : ''}`}>
-                                      <input type="radio"
-                                        id={index}
-                                        name={index}
-                                        value={true}
-                                        onChange={handleBrandValue}
-                                      />
-                                      <Icon source={CircleTickMajor}></Icon>
-                                    </label>
-                                  </span>
-
-                                  <span className='Advantages-Input-False-Icon'>
-                                    <label
-                                      className={`${brandValue[index] === false || brandValue[index] === 'false' ? 'Selected' : ''}`}>
-                                      <input type="radio"
-                                        id={index}
-                                        name={index}
-                                        value={false}
-                                        onChange={handleBrandValue}
-                                      />
-                                      <Icon source={CircleCancelMajor}>
-                                      </Icon>
-                                    </label>
-                                  </span>
-                                </Stack>
-                              </Stack>
-
-                              <Stack vertical>
-                                <h2>
-                                  Competitors
-                                </h2>
-                                <Stack>
-                                  <span className='Advantages-Input-True-Icon'>
-                                    <label
-                                      className={`${competitorValue[index] === true || competitorValue[index] === 'true' ? 'Selected' : ''}`}>
-                                      <input type="radio" id={index} name={index} value={true} onChange={handleCompetitorValue} />
-                                      <Icon source={CircleTickMajor}></Icon>
-                                    </label>
-                                  </span>
-
-                                  <span className='Advantages-Input-False-Icon'>
-                                    <label
-                                      className={`${competitorValue[index] === false || competitorValue[index] === 'false' ? 'Selected' : ''}`}>
-                                      <input type="radio" id={index} name={index} value={false} onChange={handleCompetitorValue} />
-                                      <Icon source={CircleCancelMajor}>
-                                      </Icon>
-                                    </label>
-                                  </span>
-                                </Stack>
-                              </Stack>
-
-                            </Stack>
-                          </div>
-                        </Layout.Section>
-                      </Layout>
-                    ))}
-                  </div>
-
-                </div>
-              </Card>
-
-
-              <Card
-                sectioned
-                title='Styling'
-                actions={[
-                  {
-                    content: 'Preview',
-                    onAction: () => { },
-                  }
-                ]}>
-                <Text variant="headingMd" as="h5" fontWeight='semibold'>
-                  Colors
-                </Text>
-
-                <div className='Color-Inputs MarginZero'>
-                  <Stack>
-                    <label
-                      className={`${colorValues?.background_color1 === '#ffffff' || colorValues?.background_color1 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
-                      style={{ backgroundColor: colorValues?.background_color1 }}>
-                      <input type="color"
-                        value={colorValues?.background_color1}
-                        name='background_color1'
-                        onChange={handleColorValues}
-                      />
-                    </label>
-
-                    <span className='Color-Property'>
+                                  <span className='Color-Property'>
                       <Stack vertical>
                         <Text variant="headingSm" as="h6" fontWeight="semibold">
                           Background 1
@@ -456,20 +463,20 @@ export function TemplatePage3() {
                         </Text>
                       </Stack>
                     </span>
-                  </Stack>
+                              </Stack>
 
-                  <Stack>
-                    <label
-                      className={`${colorValues?.background_color2 === '#ffffff' || colorValues?.background_color2 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
-                      style={{ backgroundColor: colorValues?.background_color2 }}>
-                      <input type="color"
-                        value={colorValues?.background_color2}
-                        name='background_color2'
-                        onChange={handleColorValues}
-                      />
-                    </label>
+                              <Stack>
+                                  <label
+                                      className={`${colorValues?.background_color2 === '#ffffff' || colorValues?.background_color2 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                                      style={{backgroundColor: colorValues?.background_color2}}>
+                                      <input type="color"
+                                             value={colorValues?.background_color2}
+                                             name='background_color2'
+                                             onChange={handleColorValues}
+                                      />
+                                  </label>
 
-                    <span className='Color-Property'>
+                                  <span className='Color-Property'>
                       <Stack vertical>
                         <Text variant="headingSm" as="h6" fontWeight="semibold">
                           Background 2
@@ -479,25 +486,25 @@ export function TemplatePage3() {
                         </Text>
                       </Stack>
                     </span>
-                  </Stack>
-                </div>
+                              </Stack>
+                          </div>
 
-                <div className='Color-Inputs'>
-                  <Text variant="bodyMd" as="p" color="subdued">
-                    Advantages colors
-                  </Text>
-                  <Stack>
-                    <label
-                      className={`${colorValues?.column1_color === '#ffffff' || colorValues?.column1_color === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
-                      style={{ backgroundColor: colorValues?.column1_color }}>
-                      <input type="color"
-                        value={colorValues?.column1_color}
-                        name='column1_color'
-                        onChange={handleColorValues}
-                      />
-                    </label>
+                          <div className='Color-Inputs'>
+                              <Text variant="bodyMd" as="p" color="subdued">
+                                  Advantages colors
+                              </Text>
+                              <Stack>
+                                  <label
+                                      className={`${colorValues?.column1_color === '#ffffff' || colorValues?.column1_color === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                                      style={{backgroundColor: colorValues?.column1_color}}>
+                                      <input type="color"
+                                             value={colorValues?.column1_color}
+                                             name='column1_color'
+                                             onChange={handleColorValues}
+                                      />
+                                  </label>
 
-                    <span className='Color-Property'>
+                                  <span className='Color-Property'>
                       <Stack vertical>
                         <Text variant="headingSm" as="h6" fontWeight="semibold">
                           Advantages column 1
@@ -507,20 +514,20 @@ export function TemplatePage3() {
                         </Text>
                       </Stack>
                     </span>
-                  </Stack>
+                              </Stack>
 
-                  <Stack>
-                    <label
-                      className={`${colorValues?.column2_color === '#ffffff' || colorValues?.column2_color === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
-                      style={{ backgroundColor: colorValues?.column2_color }}>
-                      <input type="color"
-                        value={colorValues?.column2_color}
-                        name='column2_color'
-                        onChange={handleColorValues}
-                      />
-                    </label>
+                              <Stack>
+                                  <label
+                                      className={`${colorValues?.column2_color === '#ffffff' || colorValues?.column2_color === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                                      style={{backgroundColor: colorValues?.column2_color}}>
+                                      <input type="color"
+                                             value={colorValues?.column2_color}
+                                             name='column2_color'
+                                             onChange={handleColorValues}
+                                      />
+                                  </label>
 
-                    <span className='Color-Property'>
+                                  <span className='Color-Property'>
                       <Stack vertical>
                         <Text variant="headingSm" as="h6" fontWeight="semibold">
                           Advantages column 2
@@ -530,20 +537,20 @@ export function TemplatePage3() {
                         </Text>
                       </Stack>
                     </span>
-                  </Stack>
+                              </Stack>
 
-                  <Stack>
-                    <label
-                      className={`${colorValues?.column3_color === '#ffffff' || colorValues?.column3_color === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
-                      style={{ backgroundColor: colorValues?.column3_color }}>
-                      <input type="color"
-                        value={colorValues?.column3_color}
-                        name='column3_color'
-                        onChange={handleColorValues}
-                      />
-                    </label>
+                              <Stack>
+                                  <label
+                                      className={`${colorValues?.column3_color === '#ffffff' || colorValues?.column3_color === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                                      style={{backgroundColor: colorValues?.column3_color}}>
+                                      <input type="color"
+                                             value={colorValues?.column3_color}
+                                             name='column3_color'
+                                             onChange={handleColorValues}
+                                      />
+                                  </label>
 
-                    <span className='Color-Property'>
+                                  <span className='Color-Property'>
                       <Stack vertical>
                         <Text variant="headingSm" as="h6" fontWeight="semibold">
                           Advantages column 3
@@ -553,25 +560,25 @@ export function TemplatePage3() {
                         </Text>
                       </Stack>
                     </span>
-                  </Stack>
-                </div>
+                              </Stack>
+                          </div>
 
-                <div className='Color-Inputs'>
-                  <Text variant="bodyMd" as="p" color="subdued">
-                    Check and cross colors (your brand)
-                  </Text>
-                  <Stack>
-                    <label
-                      className={`${colorValues?.brand_checkbox_color1 === '#ffffff' || colorValues?.brand_checkbox_color1 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
-                      style={{ backgroundColor: colorValues?.brand_checkbox_color1 }}>
-                      <input type="color"
-                        value={colorValues?.brand_checkbox_color1}
-                        name='brand_checkbox_color1'
-                        onChange={handleColorValues}
-                      />
-                    </label>
+                          <div className='Color-Inputs'>
+                              <Text variant="bodyMd" as="p" color="subdued">
+                                  Check and cross colors (your brand)
+                              </Text>
+                              <Stack>
+                                  <label
+                                      className={`${colorValues?.brand_checkbox_color1 === '#ffffff' || colorValues?.brand_checkbox_color1 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                                      style={{backgroundColor: colorValues?.brand_checkbox_color1}}>
+                                      <input type="color"
+                                             value={colorValues?.brand_checkbox_color1}
+                                             name='brand_checkbox_color1'
+                                             onChange={handleColorValues}
+                                      />
+                                  </label>
 
-                    <span className='Color-Property'>
+                                  <span className='Color-Property'>
                       <Stack vertical>
                         <Text variant="headingSm" as="h6" fontWeight="semibold">
                           Check color
@@ -581,20 +588,20 @@ export function TemplatePage3() {
                         </Text>
                       </Stack>
                     </span>
-                  </Stack>
+                              </Stack>
 
-                  <Stack>
-                    <label
-                      className={`${colorValues?.brand_checkbox_color2 === '#ffffff' || colorValues?.brand_checkbox_color2 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
-                      style={{ backgroundColor: colorValues?.brand_checkbox_color2 }}>
-                      <input type="color"
-                        value={colorValues?.brand_checkbox_color2}
-                        name='brand_checkbox_color2'
-                        onChange={handleColorValues}
-                      />
-                    </label>
+                              <Stack>
+                                  <label
+                                      className={`${colorValues?.brand_checkbox_color2 === '#ffffff' || colorValues?.brand_checkbox_color2 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                                      style={{backgroundColor: colorValues?.brand_checkbox_color2}}>
+                                      <input type="color"
+                                             value={colorValues?.brand_checkbox_color2}
+                                             name='brand_checkbox_color2'
+                                             onChange={handleColorValues}
+                                      />
+                                  </label>
 
-                    <span className='Color-Property'>
+                                  <span className='Color-Property'>
                       <Stack vertical>
                         <Text variant="headingSm" as="h6" fontWeight="semibold">
                           Cross Color
@@ -604,25 +611,25 @@ export function TemplatePage3() {
                         </Text>
                       </Stack>
                     </span>
-                  </Stack>
-                </div>
+                              </Stack>
+                          </div>
 
-                <div className='Color-Inputs'>
-                  <Text variant="bodyMd" as="p" color="subdued">
-                    Check and cross colors (competitors)
-                  </Text>
-                  <Stack>
-                    <label
-                      className={`${colorValues?.competitors_checkbox_color1 === '#ffffff' || colorValues?.competitors_checkbox_color1 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
-                      style={{ backgroundColor: colorValues?.competitors_checkbox_color1 }}>
-                      <input type="color"
-                        value={colorValues?.competitors_checkbox_color1}
-                        name='competitors_checkbox_color1'
-                        onChange={handleColorValues}
-                      />
-                    </label>
+                          <div className='Color-Inputs'>
+                              <Text variant="bodyMd" as="p" color="subdued">
+                                  Check and cross colors (competitors)
+                              </Text>
+                              <Stack>
+                                  <label
+                                      className={`${colorValues?.competitors_checkbox_color1 === '#ffffff' || colorValues?.competitors_checkbox_color1 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                                      style={{backgroundColor: colorValues?.competitors_checkbox_color1}}>
+                                      <input type="color"
+                                             value={colorValues?.competitors_checkbox_color1}
+                                             name='competitors_checkbox_color1'
+                                             onChange={handleColorValues}
+                                      />
+                                  </label>
 
-                    <span className='Color-Property'>
+                                  <span className='Color-Property'>
                       <Stack vertical>
                         <Text variant="headingSm" as="h6" fontWeight="semibold">
                           Check color
@@ -632,20 +639,20 @@ export function TemplatePage3() {
                         </Text>
                       </Stack>
                     </span>
-                  </Stack>
+                              </Stack>
 
-                  <Stack>
-                    <label
-                      className={`${colorValues?.competitors_checkbox_color2 === '#ffffff' || colorValues?.competitors_checkbox_color2 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
-                      style={{ backgroundColor: colorValues?.competitors_checkbox_color2 }}>
-                      <input type="color"
-                        value={colorValues?.competitors_checkbox_color2}
-                        name='competitors_checkbox_color2'
-                        onChange={handleColorValues}
-                      />
-                    </label>
+                              <Stack>
+                                  <label
+                                      className={`${colorValues?.competitors_checkbox_color2 === '#ffffff' || colorValues?.competitors_checkbox_color2 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                                      style={{backgroundColor: colorValues?.competitors_checkbox_color2}}>
+                                      <input type="color"
+                                             value={colorValues?.competitors_checkbox_color2}
+                                             name='competitors_checkbox_color2'
+                                             onChange={handleColorValues}
+                                      />
+                                  </label>
 
-                    <span className='Color-Property'>
+                                  <span className='Color-Property'>
                       <Stack vertical>
                         <Text variant="headingSm" as="h6" fontWeight="semibold">
                           Cross Color
@@ -655,50 +662,50 @@ export function TemplatePage3() {
                         </Text>
                       </Stack>
                     </span>
-                  </Stack>
-                </div>
+                              </Stack>
+                          </div>
 
-              </Card>
+                      </Card>
 
-              <div className='Template-Save-Actions'>
-                <PageActions
-                  primaryAction={{
-                    content: 'Save Template',
-                    onAction: submitData
-                  }}
-                />
-              </div>
-            </Layout.Section>
-
-
-            <Layout.Section secondary>
-              <SideBarNavigation />
-
-              <div className='Advantages-Tables-Preview'>
-                {(() => {
-                  switch (selectedTemplate) {
-                    case 1:
-                      return <Table1 themePc={themeInputTable1} themeMobile={themeInputTable1} />
-                    case 2:
-                      return <Table2 themePc={themeInputTable2} themeMobile={themeInputTable2}
-                        themeHeadingsMobile={themeHeadingsPc}
-                        themeHeadingsPc={themeHeadingsPc} />
-                    case 3:
-                      return <Table3 themePc={themeInputTable3} themeMobile={themeInputTable3Mobile} />
-                    case 4:
-                      return <Table4 themePc={themeInputTable4} themeMobile={themeInputTable4} />
-                    default:
-                      break
-                  }
-
-                })()}
-
-              </div>
+                      <div className='Template-Save-Actions'>
+                          <PageActions
+                              primaryAction={{
+                                  content: 'Save Template',
+                                  onAction: submitData
+                              }}
+                          />
+                      </div>
+                  </Layout.Section>
 
 
-            </Layout.Section>
-          </Layout>
-       
+                  <Layout.Section secondary>
+                      <SideBarNavigation/>
+
+                      {/*<div className='Advantages-Tables-Preview'>*/}
+                      {/*  {(() => {*/}
+                      {/*    switch (selectedTemplate) {*/}
+                      {/*      case 1:*/}
+                      {/*        return <Table1 themePc={themeInputTable1} themeMobile={themeInputTable1} />*/}
+                      {/*      case 2:*/}
+                      {/*        return <Table2 themePc={themeInputTable2} themeMobile={themeInputTable2}*/}
+                      {/*          themeHeadingsMobile={themeHeadingsPc}*/}
+                      {/*          themeHeadingsPc={themeHeadingsPc} />*/}
+                      {/*      case 3:*/}
+                      {/*        return <Table3 themePc={themeInputTable3} themeMobile={themeInputTable3Mobile} />*/}
+                      {/*      case 4:*/}
+                      {/*        return <Table4 themePc={themeInputTable4} themeMobile={themeInputTable4} />*/}
+                      {/*      default:*/}
+                      {/*        break*/}
+                      {/*    }*/}
+
+                      {/*  })()}*/}
+
+                      {/*</div>*/}
+
+
+                  </Layout.Section>
+              </Layout>
+          }
       </Page>
     </div>
   )
