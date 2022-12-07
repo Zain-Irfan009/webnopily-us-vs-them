@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useContext } from 'react'
 import { Page, Layout, Text, Card, Select, Icon, Stack, TextField, Loading, PageActions } from '@shopify/polaris';
 import { CircleTickMajor, CircleCancelMajor } from '@shopify/polaris-icons';
-import { Table1, Table2, Table3, Table4, SideBarNavigation } from './index';
+import { Table11, Table1, Table2, Table3, Table4, SideBarNavigation } from './index';
 import axios from "axios";
 import { AppContext } from '../Context'
 
@@ -30,6 +30,7 @@ export function TemplatePage3() {
   const [fixedAdvantages, setFixedAdvantages] = useState();
   const [fixedBrand, setFixedBrand] = useState();
   const [fixedCompetitor, setCompetitor] = useState();
+  const [fixedTable, setFixedTable] = useState();
 
   const [allValues, setAllValues] = useState([]);
   const [brandValue, setBrandValue] = useState([]);
@@ -74,6 +75,7 @@ export function TemplatePage3() {
         setFixedAdvantages(res.data.result.advantages)
         setFixedBrand(res.data.result.brands)
         setCompetitor(res.data.result.competitors)
+        setFixedTable(res.data.result.items)
 
         setTimeout(() => {
           setLoading(false);
@@ -90,7 +92,7 @@ export function TemplatePage3() {
 
   const handleAllValues = e => {
     setAllValues({ ...allValues, [e.target.name - 1]: e.target.value });
-    // themeInputTable1[e.target.name - 1].name = e.target.value;
+    themeInputTable1[e.target.name - 1].advantage = e.target.value;
     // themeInputTable2[e.target.name - 1].name = e.target.value;
     // themeInputTable3[e.target.name - 1].name = e.target.value;
     // themeInputTable3Mobile[e.target.name - 1].name = e.target.value;
@@ -105,16 +107,16 @@ export function TemplatePage3() {
 
     if (e.target.value === 'true') {
       setBrandValue({ ...brandValue, [e.target.name]: true });
-      // themeInputTable1[e.target.name].yourBrand = true;
+      themeInputTable1[e.target.name].brand = true;
       // themeInputTable2[e.target.name].yourBrand = true;
     }
     else if (e.target.value === 'false') {
       setBrandValue({ ...brandValue, [e.target.name]: false });
-      // themeInputTable1[e.target.name].yourBrand = false;
+      themeInputTable1[e.target.name].brand = false;
       // themeInputTable2[e.target.name].yourBrand = false;
     }
     else {
-      // themeInputTable1[e.target.name].yourBrand = e.target.value;
+      themeInputTable1[e.target.name].brand = e.target.value;
     }
 
   }
@@ -129,7 +131,7 @@ export function TemplatePage3() {
 
     if (e.target.value === 'true') {
       setCompetitorValue({ ...competitorValue, [e.target.name]: true });
-      // themeInputTable1[e.target.name].competitor = true;
+      themeInputTable1[e.target.name].competitor = true;
       // themeInputTable2[e.target.name].competitor1 = true;
       // themeInputTable2[e.target.name].competitor2 = true;
       // themeInputTable2[e.target.name].competitor3 = true;
@@ -137,14 +139,14 @@ export function TemplatePage3() {
     }
     else if (e.target.value === 'false') {
       setCompetitorValue({ ...competitorValue, [e.target.name]: false });
-      // themeInputTable1[e.target.name].competitor = false;
+      themeInputTable1[e.target.name].competitor = false;
       // themeInputTable2[e.target.name].competitor1 = false;
       // themeInputTable2[e.target.name].competitor2 = false;
       // themeInputTable2[e.target.name].competitor3 = false;
       // themeInputTable2[e.target.name].competitor4 = false;
     }
     else {
-      // themeInputTable1[e.target.name].competitor = e.target.value;
+      themeInputTable1[e.target.name].competitor = e.target.value;
     }
 
   }
@@ -153,10 +155,11 @@ export function TemplatePage3() {
     setColorValues({ ...colorValues, [e.target.name]: e.target.value });
   }
 
-  const changeAdvantage = () => {
+  const changeAdvantageValues = () => {
     let advantagesValues = {};
     let brandValues = {};
     let competitorValues = {};
+    let theme1 = [];
 
     [...Array(Number(advantagesCount))].map((item, index) => {
 
@@ -164,23 +167,35 @@ export function TemplatePage3() {
         advantagesValues = ({ ...advantagesValues, [index]: fixedAdvantages[index] })
         brandValues = ({ ...brandValues, [index]: fixedBrand[index] })
         competitorValues = ({ ...competitorValues, [index]: fixedCompetitor[index] })
+        theme1.push({
+          advantage: fixedTable[index].advantage,
+          brand: fixedTable[index].brand,
+          competitor: fixedTable[index].competitor,
+        })
       }
       else {
         advantagesValues = ({ ...advantagesValues, [index]: `Advantage ${index + 1}` })
         brandValues = ({ ...brandValues, [index]: true })
         competitorValues = ({ ...competitorValues, [index]: false })
+        theme1.push({
+          advantage: `Advantage ${index + 1}`,
+          brand: true,
+          competitor: false,
+        })
       }
     })
+    console.log(theme1);
     setAllValues(advantagesValues)
     setBrandValue(brandValues)
     setCompetitorValue(competitorValues)
+    setThemeInputTable1(theme1)
     setAdvantageToggle(false)
   }
 
   useEffect(() => {
     {
       advantageToggle &&
-        changeAdvantage()
+        changeAdvantageValues()
     }
   }, [advantageToggle])
 
@@ -655,26 +670,26 @@ export function TemplatePage3() {
             <Layout.Section secondary>
               <SideBarNavigation />
 
-              {/*<div className='Advantages-Tables-Preview'>*/}
-              {/*  {(() => {*/}
-              {/*    switch (selectedTemplate) {*/}
-              {/*      case 1:*/}
-              {/*        return <Table1 themePc={themeInputTable1} themeMobile={themeInputTable1} />*/}
-              {/*      case 2:*/}
-              {/*        return <Table2 themePc={themeInputTable2} themeMobile={themeInputTable2}*/}
-              {/*          themeHeadingsMobile={themeHeadingsPc}*/}
-              {/*          themeHeadingsPc={themeHeadingsPc} />*/}
-              {/*      case 3:*/}
-              {/*        return <Table3 themePc={themeInputTable3} themeMobile={themeInputTable3Mobile} />*/}
-              {/*      case 4:*/}
-              {/*        return <Table4 themePc={themeInputTable4} themeMobile={themeInputTable4} />*/}
-              {/*      default:*/}
-              {/*        break*/}
-              {/*    }*/}
+              <div className='Advantages-Tables-Preview'>
+                {(() => {
+                  switch (selectedTemplate) {
+                    case 1:
+                      return <Table11 themePc={themeInputTable1} themeMobile={themeInputTable1} />
+                    case 2:
+                      return <Table2 themePc={themeInputTable2} themeMobile={themeInputTable2}
+                        themeHeadingsMobile={themeHeadingsPc}
+                        themeHeadingsPc={themeHeadingsPc} />
+                    case 3:
+                      return <Table3 themePc={themeInputTable3} themeMobile={themeInputTable3Mobile} />
+                    case 4:
+                      return <Table4 themePc={themeInputTable4} themeMobile={themeInputTable4} />
+                    default:
+                      break
+                  }
 
-              {/*  })()}*/}
+                })()}
 
-              {/*</div>*/}
+              </div>
 
 
             </Layout.Section>
