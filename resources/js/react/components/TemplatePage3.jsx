@@ -163,27 +163,38 @@ export function TemplatePage3() {
 
     [...Array(Number(advantagesCount))].map((item, index) => {
 
-      if (index < fixedAdvantages.length) {
-        advantagesValues = ({ ...advantagesValues, [index]: fixedAdvantages[index] })
-        brandValues = ({ ...brandValues, [index]: fixedBrand[index] })
-        competitorValues = ({ ...competitorValues, [index]: fixedCompetitor[index] })
-        theme1.push({
-          advantage: fixedTable[index].advantage,
-          brand: fixedTable[index].brand,
-          competitor: fixedTable[index].competitor,
-        })
-      }
-      else {
-        advantagesValues = ({ ...advantagesValues, [index]: `Advantage ${index + 1}` })
-        brandValues = ({ ...brandValues, [index]: true })
-        competitorValues = ({ ...competitorValues, [index]: false })
-        theme1.push({
-          advantage: `Advantage ${index + 1}`,
-          brand: true,
-          competitor: false,
-        })
-      }
+      // if (index < fixedAdvantages.length) {
+      //   advantagesValues = ({ ...advantagesValues, [index]: fixedAdvantages[index] })
+      //   brandValues = ({ ...brandValues, [index]: fixedBrand[index] })
+      //   competitorValues = ({ ...competitorValues, [index]: fixedCompetitor[index] })
+      //   theme1.push({
+      //     advantage: fixedTable[index].advantage,
+      //     brand: fixedTable[index].brand,
+      //     competitor: fixedTable[index].competitor,
+      //   })
+      // }
+      // else {
+      //   advantagesValues = ({ ...advantagesValues, [index]: `Advantage ${index + 1}` })
+      //   brandValues = ({ ...brandValues, [index]: true })
+      //   competitorValues = ({ ...competitorValues, [index]: false })
+      //   theme1.push({
+      //     advantage: `Advantage ${index + 1}`,
+      //     brand: true,
+      //     competitor: false,
+      //   })
+      // }
+
+      advantagesValues = ({ ...advantagesValues, [index]: `Advantage ${index + 1}` })
+      brandValues = ({ ...brandValues, [index]: true })
+      competitorValues = ({ ...competitorValues, [index]: false })
+      theme1.push({
+        advantage: `Advantage ${index + 1}`,
+        brand: true,
+        competitor: false,
+      })
+
     })
+
     console.log(theme1);
     setAllValues(advantagesValues)
     setBrandValue(brandValues)
