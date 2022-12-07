@@ -198,10 +198,51 @@
     </tbody>
 </table></div>
 
+  {% elsif xc_settings and xc_settings.template_id == 4 %}
+  {{ 'template4.css' | asset_url | stylesheet_tag }}
+
+  <div class="stickyTableColumns-scroll" style="overflow-y: auto;">
+    <table class="choose-table" style="margin: 0 auto;max-width: 600px;">
+        <thead>
+        <tr>
+           <th>Advantages</th>
+            <th>{{ xc_settings.brand }}</th>
+            <th>{{ xc_settings.competitor }}</th>
+
+        </tr>
+        </thead>
+        <tbody>
+          {% for xc_settings_loop in  xc_settings.items %}
+        <tr>
+
+            <td>
+                {{ xc_settings_loop.advantage  }}
+            <td>
+                      {% if  xc_settings_loop.brand == true %}
+
+
+            <i class="fa fa-check-circle check_brand "></i>
+              {% else %}
+            <i class="fa  fa-times-circle cross_brand "></i>
+          {% endif %}
+            </td>
+            <td>
+               {% if  xc_settings_loop.competitor == true %}
+             <i class="fa fa-check-circle check_brand "></i>
+        {% else %}
+            <i class="fa  fa-times-circle cross_brand "></i>
+        {% endif %}
+
+            </td>
+        </tr>
+          {% endfor %}
+
+        </tbody>
+    </table></div>
 {% endif %}
 <script>
 
-console.log('wednesday');
+console.log('wednesday afternoon');
 </script>
 
 
