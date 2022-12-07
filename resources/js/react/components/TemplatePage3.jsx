@@ -317,7 +317,7 @@ export function TemplatePage3() {
 
 
                   <div className='Advantages-Content-Section'>
-                    {[...Array(Number(advantagesCount))].map((item, index) => (
+                    {[...Array(Number(advantagesCount))]?.map((item, index) => (
                       <Layout key={index + 1}>
                         <Layout.Section >
                           <div className='Advantages-Inputs-Section'>
