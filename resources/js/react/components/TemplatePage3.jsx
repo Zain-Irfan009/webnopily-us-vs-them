@@ -67,7 +67,7 @@ export function TemplatePage3() {
         setBrandValue(res.data.result.brands)
         setCompetitorValue(res.data.result.competitors)
         setColorValues(res.data.result.colors[0])
-        // setThemeInputTable1(res.data.result.items)
+        setThemeInputTable1(res.data.result.items)
         // setThemeInputTable2(res.data.result.items)
         // setThemeInputTable3(res.data.result.items)
         // setThemeInputTable4(res.data.result.items)
