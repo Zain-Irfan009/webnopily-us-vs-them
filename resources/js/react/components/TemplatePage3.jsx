@@ -90,57 +90,63 @@ export function TemplatePage3() {
 
   const handleAllValues = e => {
     setAllValues({ ...allValues, [e.target.name - 1]: e.target.value });
-    themeInputTable1[e.target.name - 1].name = e.target.value;
-    themeInputTable2[e.target.name - 1].name = e.target.value;
-    themeInputTable3[e.target.name - 1].name = e.target.value;
-    themeInputTable3Mobile[e.target.name - 1].name = e.target.value;
-    themeInputTable4[e.target.name - 1].name = e.target.value;
+    // themeInputTable1[e.target.name - 1].name = e.target.value;
+    // themeInputTable2[e.target.name - 1].name = e.target.value;
+    // themeInputTable3[e.target.name - 1].name = e.target.value;
+    // themeInputTable3Mobile[e.target.name - 1].name = e.target.value;
+    // themeInputTable4[e.target.name - 1].name = e.target.value;
   }
 
   const handleBrandValue = e => {
-    themeInputTable3[e.target.name].yourBrand = e.target.value;
-    themeInputTable4[e.target.name].yourBrand = e.target.value;
-    themeInputTable3Mobile[e.target.name].yourBrand = e.target.value;
+
+    // themeInputTable3[e.target.name].yourBrand = e.target.value;
+    // themeInputTable4[e.target.name].yourBrand = e.target.value;
+    // themeInputTable3Mobile[e.target.name].yourBrand = e.target.value;
+
     if (e.target.value === 'true') {
       setBrandValue({ ...brandValue, [e.target.name]: true });
-      themeInputTable1[e.target.name].yourBrand = true;
-      themeInputTable2[e.target.name].yourBrand = true;
+      // themeInputTable1[e.target.name].yourBrand = true;
+      // themeInputTable2[e.target.name].yourBrand = true;
     }
     else if (e.target.value === 'false') {
       setBrandValue({ ...brandValue, [e.target.name]: false });
-      themeInputTable1[e.target.name].yourBrand = false;
-      themeInputTable2[e.target.name].yourBrand = false;
+      // themeInputTable1[e.target.name].yourBrand = false;
+      // themeInputTable2[e.target.name].yourBrand = false;
     }
     else {
-      themeInputTable1[e.target.name].yourBrand = e.target.value;
+      // themeInputTable1[e.target.name].yourBrand = e.target.value;
     }
+
   }
 
   const handleCompetitorValue = e => {
-    themeInputTable3[e.target.name].competitor1 = e.target.value;
-    themeInputTable3[e.target.name].competitor2 = e.target.value;
-    themeInputTable3[e.target.name].competitor3 = e.target.value;
-    themeInputTable3Mobile[e.target.name].competitor = e.target.value;
-    themeInputTable4[e.target.name].others = e.target.value;
+
+    // themeInputTable3[e.target.name].competitor1 = e.target.value;
+    // themeInputTable3[e.target.name].competitor2 = e.target.value;
+    // themeInputTable3[e.target.name].competitor3 = e.target.value;
+    // themeInputTable3Mobile[e.target.name].competitor = e.target.value;
+    // themeInputTable4[e.target.name].others = e.target.value;
+
     if (e.target.value === 'true') {
       setCompetitorValue({ ...competitorValue, [e.target.name]: true });
-      themeInputTable1[e.target.name].competitor = true;
-      themeInputTable2[e.target.name].competitor1 = true;
-      themeInputTable2[e.target.name].competitor2 = true;
-      themeInputTable2[e.target.name].competitor3 = true;
-      themeInputTable2[e.target.name].competitor4 = true;
+      // themeInputTable1[e.target.name].competitor = true;
+      // themeInputTable2[e.target.name].competitor1 = true;
+      // themeInputTable2[e.target.name].competitor2 = true;
+      // themeInputTable2[e.target.name].competitor3 = true;
+      // themeInputTable2[e.target.name].competitor4 = true;
     }
     else if (e.target.value === 'false') {
       setCompetitorValue({ ...competitorValue, [e.target.name]: false });
-      themeInputTable1[e.target.name].competitor = false;
-      themeInputTable2[e.target.name].competitor1 = false;
-      themeInputTable2[e.target.name].competitor2 = false;
-      themeInputTable2[e.target.name].competitor3 = false;
-      themeInputTable2[e.target.name].competitor4 = false;
+      // themeInputTable1[e.target.name].competitor = false;
+      // themeInputTable2[e.target.name].competitor1 = false;
+      // themeInputTable2[e.target.name].competitor2 = false;
+      // themeInputTable2[e.target.name].competitor3 = false;
+      // themeInputTable2[e.target.name].competitor4 = false;
     }
     else {
-      themeInputTable1[e.target.name].competitor = e.target.value;
+      // themeInputTable1[e.target.name].competitor = e.target.value;
     }
+
   }
 
   const handleColorValues = e => {
