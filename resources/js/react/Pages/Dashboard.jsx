@@ -1,6 +1,6 @@
 import {
     Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List, Link, Modal, MediaCard,
-    Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, TextField, Loading, Frame,EmptyState
+    Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, TextField, Loading, Frame, EmptyState
 } from '@shopify/polaris';
 import { CancelSmallMinor } from '@shopify/polaris-icons';
 import createApp from '@shopify/app-bridge/development';
@@ -252,11 +252,19 @@ export function Dashboard() {
 
     const handleSubmitProduct = async (id) => {
         console.log(`submit products ${id} `);
-        console.log(selectedItems);
+
+        let unSelected = []
+        var arr = products.filter(function (item) {
+            return selectedItems.indexOf(item.id) === -1;
+        });
+        arr?.map((item) => {
+            unSelected.push(item.id)
+        })
 
         let data = {
             user_template_id: id,
             product_ids: selectedItems,
+            unSelected_ids: unSelected,
             shop_name: host,
         };
         try {
