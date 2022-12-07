@@ -80,20 +80,6 @@ export function TemplatePage3() {
   }, []);
 
 
-  useEffect(() => {
-    // console.log('templateName: ', templateName);
-    // console.log('yourBrand: ', yourBrand);
-    // console.log('otherCompetitors: ', otherCompetitors);
-    // console.log('advantagesCount: ', advantagesCount);
-    // console.log('allValues: ', allValues);
-    // console.log('brandValue: ', brandValue);
-    // console.log('competitorValue: ', competitorValue);
-    console.log('colorValues: ', colorValues);
-    // console.log(colorValues[0]?.background_color1);
-  }, [colorValues])
-
-
-
   // useEffect(() => {
   //   if (!loading) {
   //     setLoading(true);
