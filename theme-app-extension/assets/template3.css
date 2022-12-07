@@ -1,0 +1,198 @@
+.choose-table,
+body {
+    table-layout: fixed;
+}
+.choose-table tbody tr th,
+.choose-table thead th {
+    padding: 10px 5px;
+    font-size: 12px;
+    font-weight: 700;
+}
+.btn,
+.choose-table thead th,
+.founded-counts__list__item-text,
+.person-block__title-2,
+.text-uppercase,
+.video-promo-block__link-text {
+    text-transform: uppercase;
+}
+.block-with-bg,
+.choose-table tbody td:nth-child(2),
+.section.section--alt {
+    background: #faf3f0;
+}
+.block-with-bg,
+.choose-table tbody td:nth-child(2),
+.section.section--alt {
+    background: #faf3f0;
+}
+
+.choose-table__img-box img,
+.contact-block__map-holder img {
+    transform: translate(-50%, -50%);
+    height: auto;
+    width: auto;
+    top: 50%;
+}
+
+.choose-table {
+    font-size: 14px;
+}
+.choose-table {
+    border-collapse: collapse;
+    width: 100%;
+    line-height: 1.28;
+}
+.choose-table thead th:first-child {
+    width: 80px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.choose-table tbody tr th {
+    width: 82px;
+    color: rgba(28, 28, 37, 0.5);
+    /*           text-align: right; */
+}
+.choose-table tbody td:nth-child(3n + 1):after,
+.choose-table tbody td:nth-child(odd):after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -3px;
+    right: 0;
+    height: 0px;
+    background: #faf3f0;
+}
+.choose-table td,
+.choose-table th {
+    position: relative;
+    padding: 22px 20px;
+    width: 130px;
+    height: 60px;
+    text-align: center;
+    vertical-align: middle;
+    /*           border: 5px solid #fff; */
+}
+
+.choose-table__price {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 700;
+    color: #777db0;
+}
+
+.choose-table-holder {
+    padding: 0 8%;
+}
+.choose-table thead th:first-child {
+    width: 100px;
+    padding: 10px;
+}
+.choose-table tbody td:nth-child(3n + 1):after,
+.choose-table tbody td:nth-child(odd):after {
+    top: 0;
+}
+.choose-table td,
+.choose-table th {
+    width: 21.25%;
+    min-width: 0;
+}
+.choose-table tbody tr th {
+    width: 100px;
+    padding: 10px;
+}
+.choose-table td,
+.choose-table th {
+    padding: 22px 5%;
+}
+
+.choose-table__img-box {
+    position: relative;
+    padding: 100% 0 0;
+    overflow: hidden;
+}
+.choose-table__img-box img {
+    position: absolute;
+    left: 50%;
+    max-width: 95%;
+}
+.choose-table td,
+.choose-table th {
+    padding: 23px 1% 21px;
+}
+
+.icon-check,
+.icon-cross {
+    width: 25px;
+    height: 25px;
+    overflow: hidden;
+    display: inline-block;
+    text-indent: -200px;
+    position: relative;
+}
+.icon-check::before {
+    border: 4px solid #ff5859;
+    border-width: 0 4px 4px 0;
+    width: 11px;
+    height: 18px;
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+.choose-table tbody td .icon-check::before {
+    background: url(//cdn.shopify.com/s/files/1/1582/3265/t/194/assets/check-w.png?v=5136325975738978373)
+    no-repeat;
+    transform: none;
+    border: none;
+    background-size: contain;
+    top: 1px;
+    left: 0px;
+    width: 23px;
+    height: 18px;
+}
+
+.choose-table tbody td .icon-check::before {
+    background: url(//cdn.shopify.com/s/files/1/1582/3265/t/194/assets/check-b.png?v=7178031900948324017)
+    no-repeat;
+    transform: none;
+    border: none;
+    background-size: contain;
+    top: 4px;
+    left: 0px;
+    width: 23px;
+    height: 18px;
+}
+
+.choose-table tbody td .icon-cross::before {
+    background: url(//cdn.shopify.com/s/files/1/1582/3265/t/194/assets/close-b.png?v=6863522715621631396)
+    no-repeat;
+    transform: none;
+    border: none;
+    background-size: contain;
+    top: 5px;
+    left: 4px;
+    width: 16px;
+    height: 19px;
+}
+.icon-cross::before {
+    width: 4px;
+    height: 17px;
+    background: #ff5859;
+    content: "";
+    position: absolute;
+    transform: translate(-50%, -30%) rotate(45deg);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+@media only screen and (max-width: 610px)  {
+
+    .choose-table tr th {
+        overflow: hidden;
+        word-break: break-word;
+    }
+
+}

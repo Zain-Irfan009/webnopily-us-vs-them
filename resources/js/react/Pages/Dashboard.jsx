@@ -1,6 +1,6 @@
 import {
     Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List, Link, Modal, MediaCard,
-    Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, TextField, Loading, Frame
+    Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, TextField, Loading, Frame,EmptyState
 } from '@shopify/polaris';
 import { CancelSmallMinor } from '@shopify/polaris-icons';
 import createApp from '@shopify/app-bridge/development';
@@ -41,7 +41,7 @@ export function Dashboard() {
 
         const response = await axios
             .get(
-                `https://phpstack-362288-3089196.cloudwaysapps.com/api/current-templates?shop_name=${host}`
+                `http://us-vs-them.test/api/current-templates?shop_name=${host}`
             )
             .then(res => {
                 console.log(res);

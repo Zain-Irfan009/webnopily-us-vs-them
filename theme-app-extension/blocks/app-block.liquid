@@ -1,8 +1,43 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% assign xc_settings = product.metafields.widget.products %}
 
+<style>
+.check_brand{
+  font-size:20px;
+  color:{{ xc_settings.brand_checkbox_color1 }};
+}
 
+  .cross_brand{
+  font-size:20px;
+  color:{{ xc_settings.brand_checkbox_color2 }};
+}
+      .check_competator{
+       font-size:20px;
+      color:{{ xc_settings.competitors_checkbox_color1 }};
+      }
+        .cross_competator{
+       font-size:20px;
+      color:{{ xc_settings.competitors_checkbox_color2 }};
+      }
+
+      .choose-table tbody tr:nth-child(odd) {
+            background-color: {{xc_settings.background_color1}};
+        }
+          .choose-table tbody tr {
+              background: {{xc_settings.background_color2}};
+        }
+
+     .page-section.temp1-compare-section table tbody tr:nth-child(odd) {
+        background:  {{xc_settings.background_color1}};
+    }
+          .page-section.temp1-compare-section table tbody tr:nth-child(even) {
+      background:  {{xc_settings.background_color2}};
+    }
+  </style>
 {% if xc_settings and xc_settings.template_id == 1 %}
-    <div class="page-section temp1-compare-section metafileds-comaparison lazyloaded">
+{{ 'template.css' | asset_url | stylesheet_tag }}
+
+  <div class="page-section temp1-compare-section metafileds-comaparison lazyloaded">
 <table class="custom">
     <thead>
 
@@ -23,20 +58,25 @@
       <td>
         {% if  xc_settings_loop.brand == true %}
 
-        <span class="icon-check">Yes</span>
+<!--         <span class="icon-check">Yes</span> -->
+          <i class="fa fa-check check_brand "></i>
         {% else %}
-        <span class="icon-cross">No</span>
+          <i class="fa fa-close cross_brand "></i>
         {% endif %}
       </td>
       <td>
            {% if  xc_settings_loop.competitor == true %}
-        <span class="icon-check">Yes</span>
+           <i class="fa fa-check check_competator "></i>
         {% else %}
-        <span class="icon-cross">No</span>
+          <i class="fa fa-close cross_competator "></i>
         {% endif %}
     </td>
     </tr>
       {% endfor %}
+
+
+
+
     </tbody>
     <tfoot>
     <tr>
@@ -46,12 +86,122 @@
     </tr>
     </tfoot>
 </table>
-
 </div>
+  {% elsif xc_settings and xc_settings.template_id == 2 %}
+  {{ 'template2.css' | asset_url | stylesheet_tag }}
+
+
+<div class="stickyTableColumns-scroll" style="overflow-y: auto;">
+    <table class="choose-table" style="margin: 0 auto;max-width: 800px;">
+        <thead>
+        <tr>
+            <th></th>
+          <th>{{ xc_settings.brand }}</th>
+          <th>{{ xc_settings.competitor }}</th>
+          <th>Competator 2</th>
+          <th>Competator 3</th>
+  </tr>
+        </thead>
+        <tbody>
+      {% for xc_settings_loop in  xc_settings.items %}
+        <tr>
+            <th>{{ xc_settings_loop.advantage  }} </th>
+            <td><span class="choose-table__price">
+          {% if  xc_settings_loop.brand == true %}
+          <i class="fa fa-check-circle check_brand "></i>
+                   {% else %}
+            <i class="fa  fa-times-circle cross_brand "></i>
+            {% endif %}
+        </span></td>
+
+              <td><span class="choose-table__price">
+          {% if  xc_settings_loop.competitor == true %}
+          <i class="fa fa-check-circle check_competator "></i>
+                   {% else %}
+            <i class="fa  fa-times-circle cross_competator "></i>
+            {% endif %}
+        </span></td>
+
+                        <td><span class="choose-table__price">
+          {% if  xc_settings_loop.competitor == true %}
+          <i class="fa fa-check-circle check_competator "></i>
+                   {% else %}
+            <i class="fa  fa-times-circle cross_competator "></i>
+            {% endif %}
+        </span></td>
+                      <td><span class="choose-table__price">
+          {% if  xc_settings_loop.competitor == true %}
+          <i class="fa fa-check-circle check_competator "></i>
+                   {% else %}
+            <i class="fa  fa-times-circle cross_competator "></i>
+            {% endif %}
+        </span></td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table></div>
+
+
+  {% elsif xc_settings and xc_settings.template_id == 3 %}
+  {{ 'template3.css' | asset_url | stylesheet_tag }}
+<div class="stickyTableColumns-scroll" style="overflow-y: auto;">
+    <table class="choose-table" style="margin: 0 auto;max-width: 80%;">
+    <thead>
+    <tr>
+        <th></th><th>{{ xc_settings.brand }}</th>
+    <th>{{ xc_settings.competitor }}</th>
+      <th>Competator 2</th>
+      <th>Competator 3</th></tr>
+    </thead>
+    <tbody>
+          {% for xc_settings_loop in  xc_settings.items %}
+    <tr>
+        <th>   {{ xc_settings_loop.advantage  }} </th>
+  <td>
+
+          {% if  xc_settings_loop.brand == true %}
+
+      <i class="fa fa-check check_brand "></i>
+        {% else %}
+       <i class="fa fa-close cross_brand "></i>
+        {% endif %}
+      </td>
+  </td>
+      <td>
+          {% if  xc_settings_loop.competitor == true %}
+       <i class="fa fa-check check_competator "></i>
+        {% else %}
+       <i class="fa fa-close cross_competator "></i>
+        {% endif %}
+
+      </td>
+
+      <td>
+        {% if  xc_settings_loop.competitor == true %}
+               <i class="fa fa-check check_competator "></i>
+        {% else %}
+                    <i class="fa fa-close cross_competator "></i>
+        {% endif %}
+
+      </td>
+      <td>
+          {% if  xc_settings_loop.competitor == true %}
+       <i class="fa fa-check check_competator "></i>
+        {% else %}
+   <i class="fa fa-close cross_competator "></i>
+        {% endif %}
+
+    </tr>
+      {%  endfor %}
+
+    </tbody>
+</table></div>
+
 {% endif %}
 <script>
 
-console.log('dsd');
+console.log('wednesday');
 </script>
 
 
@@ -59,7 +209,6 @@ console.log('dsd');
   {
     "name": "Product Template",
     "target": "section",
-    "stylesheet": "template.css",
     "templates": ["product"]
 
   }
