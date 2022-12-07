@@ -248,7 +248,7 @@ export function TemplatePage3() {
   return (
     <div className='Template-Page3'>
       <Page fullWidth>
-        {loading ? <Loading /> :
+        {/* {loading ? <Loading /> : */}
           <Layout>
             <Layout.Section>
               <Card sectioned>
@@ -698,7 +698,7 @@ export function TemplatePage3() {
 
             </Layout.Section>
           </Layout>
-        }
+       
       </Page>
     </div>
   )
