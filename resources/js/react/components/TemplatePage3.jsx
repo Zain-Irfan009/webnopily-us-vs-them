@@ -23,9 +23,13 @@ export function TemplatePage3() {
   const [templateName, setTemplateName] = useState();
   const [yourBrand, setYourBrand] = useState();
   const [otherCompetitors, setOtherCompetitors] = useState();
-  const [advantagesCount, setAdvantagesCount] = useState(1);
+  const [advantagesCount, setAdvantagesCount] = useState();
   const [customAdvantagesCount, setCustomAdvantagesCount] = useState();
   const [loading, setLoading] = useState(true)
+  const [advantageToggle, setAdvantageToggle] = useState(false)
+  const [fixedAdvantages, setFixedAdvantages] = useState();
+  const [fixedBrand, setFixedBrand] = useState();
+  const [fixedCompetitor, setCompetitor] = useState();
 
   const [allValues, setAllValues] = useState([]);
   const [brandValue, setBrandValue] = useState([]);
@@ -42,8 +46,10 @@ export function TemplatePage3() {
   const handleTemplateName = useCallback((value) => setTemplateName(value), []);
   const handleBrandName = useCallback((value) => setYourBrand(value), []);
   const handleOtherCompetitors = useCallback((value) => setOtherCompetitors(value), []);
-  const handleAdvantagesCount = useCallback((value) => setAdvantagesCount(value), []);
-  const handleCustomAdvantagesCount = useCallback((value) => setCustomAdvantagesCount(value), []);
+  const handleAdvantagesCount = useCallback((value) => {
+    setAdvantagesCount(value)
+    setAdvantageToggle(true)
+  });
 
   const getData = async () => {
     const response = await axios
@@ -65,7 +71,10 @@ export function TemplatePage3() {
         // setThemeInputTable3(res.data.result.items)
         // setThemeInputTable4(res.data.result.items)
         // setThemeInputTable3Mobile(res.data.result.items)
-        // setFixedAdvantages(res.data.result.items)
+        setFixedAdvantages(res.data.result.advantages)
+        setFixedBrand(res.data.result.brands)
+        setCompetitor(res.data.result.competitors)
+
         setTimeout(() => {
           setLoading(false);
         }, 500);
@@ -78,79 +87,6 @@ export function TemplatePage3() {
   useEffect(() => {
     getData();
   }, []);
-
-
-  // useEffect(() => {
-  //   if (!loading) {
-  //     setLoading(true);
-  //   }
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 300);
-  //   {
-  //     let theme1 = [];
-  //     let theme2Pc = [];
-  //     let theme3 = [];
-  //     let theme3Mobile = [];
-  //     let theme4 = [];
-  //     let advantagesValues = {};
-  //     let brandValues = {};
-  //     let competitorValues = {};
-  //     [...Array(Number(advantagesCount))].map((item, index) => (
-  //       advantagesValues = ({ ...advantagesValues, [index]: `Advantage ${index + 1}` }),
-  //       brandValues = ({ ...brandValues, [index]: true }),
-  //       competitorValues = ({ ...competitorValues, [index]: false }),
-  //       theme1.push(
-  //         {
-  //           name: `Advantage ${index + 1}`,
-  //           yourBrand: true,
-  //           competitor: false,
-  //         },
-  //       ),
-  //       theme2Pc.push(
-  //         {
-  //           name: `Advantage ${index + 1}`,
-  //           yourBrand: true,
-  //           competitor1: false,
-  //           competitor2: false,
-  //           competitor3: false,
-  //           competitor4: false,
-  //         },
-  //       ),
-  //       theme3.push(
-  //         {
-  //           name: `Advantage ${index + 1}`,
-  //           yourBrand: 'true',
-  //           competitor1: 'false',
-  //           competitor2: 'false',
-  //           competitor3: 'false',
-  //         },
-  //       ),
-  //       theme3Mobile.push(
-  //         {
-  //           name: `Advantage ${index + 1}`,
-  //           yourBrand: 'true',
-  //           competitor: 'false',
-  //         },
-  //       ),
-  //       theme4.push(
-  //         {
-  //           name: 'advantage 1',
-  //           yourBrand: 'true',
-  //           others: 'false',
-  //         },
-  //       )
-  //     ))
-  //     setAllValues(advantagesValues)
-  //     setBrandValue(brandValues)
-  //     setCompetitorValue(competitorValues)
-  //     setThemeInputTable1(theme1)
-  //     setThemeInputTable2(theme2Pc)
-  //     setThemeInputTable3(theme3)
-  //     setThemeInputTable3Mobile(theme3Mobile)
-  //     setThemeInputTable4(theme4)
-  //   }
-  // }, [advantagesCount])
 
   const handleAllValues = e => {
     setAllValues({ ...allValues, [e.target.name - 1]: e.target.value });
@@ -210,6 +146,38 @@ export function TemplatePage3() {
   const handleColorValues = e => {
     setColorValues({ ...colorValues, [e.target.name]: e.target.value });
   }
+
+  const changeAdvantage = () => {
+    let advantagesValues = {};
+    let brandValues = {};
+    let competitorValues = {};
+
+    [...Array(Number(advantagesCount))].map((item, index) => {
+
+      if (index < fixedAdvantages.length) {
+        advantagesValues = ({ ...advantagesValues, [index]: fixedAdvantages[index] })
+        brandValues = ({ ...brandValues, [index]: fixedBrand[index] })
+        competitorValues = ({ ...competitorValues, [index]: fixedCompetitor[index] })
+      }
+      else {
+        advantagesValues = ({ ...advantagesValues, [index]: `Advantage ${index + 1}` })
+        brandValues = ({ ...brandValues, [index]: true })
+        competitorValues = ({ ...competitorValues, [index]: false })
+      }
+    })
+    setAllValues(advantagesValues)
+    setBrandValue(brandValues)
+    setCompetitorValue(competitorValues)
+    setAdvantageToggle(false)
+  }
+
+  useEffect(() => {
+    {
+      advantageToggle &&
+        changeAdvantage()
+    }
+  }, [advantageToggle])
+
 
 
   const submitData = async () => {
