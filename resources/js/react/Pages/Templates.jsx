@@ -11,45 +11,46 @@ export function Templates() {
   const { activePage } = useContext(AppContext);
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  }, [activePage])
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 500);
+  // }, [activePage])
 
 
   return (
     <div className='Navigation-Frame'>
       <Frame>
-        {/* {loading ? <Loading /> : */}
-        <div className={`Templates-Page`}>
-          <Layout>
-            <Layout.Section >
-              {(() => {
-                switch (activePage) {
-                  case 2:
-                    return <TemplatePage2 />
-                  case 3:
-                    return <TemplatePage3 />
-                  case 4:
-                    return <TemplatePage4 />
-                  default:
-                    return <TemplatePage1 />
-                }
+          {/*{loading ? <Loading/> :*/}
+              <div className={`Templates-Page`}>
+                  <Layout>
+                      <Layout.Section>
+                          {(() => {
+                              switch (activePage) {
+                                  case 2:
+                                      return <TemplatePage2/>
+                                  case 3:
+                                      return <TemplatePage3/>
+                                  case 4:
+                                      return <TemplatePage4/>
+                                  default:
+                                      return <TemplatePage1/>
+                              }
 
-              })()}
+                          })()}
 
 
-            </Layout.Section>
-            {
-              activePage != 3 &&
-              <Layout.Section secondary>
-                <SideBarNavigation />
-              </Layout.Section>
-            }
+                      </Layout.Section>
+                      {
+                          activePage != 3 &&
+                          <Layout.Section secondary>
+                              <SideBarNavigation/>
+                          </Layout.Section>
+                      }
 
-          </Layout>
-        </div>
+                  </Layout>
+              </div>
+          // }
       </Frame>
     </div>
   );

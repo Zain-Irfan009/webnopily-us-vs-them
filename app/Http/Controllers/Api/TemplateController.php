@@ -94,8 +94,8 @@ class TemplateController extends ApiController
             $user_templates = new UserTemplate();
             $user_templates->template_id = $template->id;
             $user_templates->template_name = 'My Template_' . $random_number;
-            $user_templates->brand = 'brand';
-            $user_templates->competitors = 'competitors';
+            $user_templates->brand = 'Your Brand';
+            $user_templates->competitors = 'competitor';
             $user_templates->background_color1 = '#ffffff';
             $user_templates->background_color2 = '#ebecf0';
             $user_templates->column1_color = '#626dff';

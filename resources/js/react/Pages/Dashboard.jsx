@@ -1,5 +1,5 @@
 import {
-    Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List, Link, Modal, MediaCard,
+    Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List ,Link, Modal, MediaCard,
     Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, TextField, Loading, Frame, EmptyState
 } from '@shopify/polaris';
 import { CancelSmallMinor } from '@shopify/polaris-icons';
@@ -11,10 +11,14 @@ import axios from "axios";
 import { AppContext } from '../Context'
 
 
+
+
 export function Dashboard() {
-    const { setActivePage, setTemplateUserId, config } = useContext(AppContext);
+    const { setActivePage, setTemplateUserId, config,setSelectedTemplate } = useContext(AppContext);
     let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
     const app = createApp(config);
+    const redirect = Redirect.create(app);
+
     const [appEnable, setAppEnable] = useState(false)
 
     const [products, setProducts] = useState([])
@@ -60,7 +64,8 @@ export function Dashboard() {
     }
 
     const handleLocationChange = () => {
-        // setLocationChange('/admin/apps/usVsThem/Templates')
+        redirect.dispatch(Redirect.Action.APP, `/templates` );
+
     }
 
     const handleRenameModal = (id, name) => {
@@ -186,27 +191,26 @@ export function Dashboard() {
         console.log(`preview template clicked ${id}`);
     }
 
-    const handleCustomizeTemplate = (id) => {
+    const handleCustomizeTemplate = (id,temp_id) => {
         console.log(`customize template clicked ${id}`);
+        setSelectedTemplate(temp_id)
         setTemplateUserId(id)
         setActivePage(3)
 
-        // setActivePage(3);
-        // handleLocationChange();
-        // const redirect = Redirect.create(app);
-        // redirect.dispatch(Redirect.Action.APP, `/templates/page1` );
-        // setLocationChange('/admin/apps/usVsThem/Templates')
-
+        redirect.dispatch(Redirect.Action.APP, `/templates` );
     }
 
-    const handleChangeTemplate = (id) => {
-        console.log(`change template clicked ${id}`);
-
+    const handleChangeTemplate = (id,temp_id) => {
+        // console.log(`customize template clicked ${id}`);
+        setSelectedTemplate(temp_id)
         setTemplateUserId(id)
         setActivePage(2)
-        // const redirect = Redirect.create(app);
-        // redirect.dispatch(Redirect.Action.APP, `/templates/page1` );
 
+
+
+        redirect.dispatch(Redirect.Action.APP, {
+            path: `/templates`,
+        })
     }
 
     const handleSelectProducts = async (id) => {
@@ -370,10 +374,16 @@ export function Dashboard() {
                                                 create as many
                                                 as you want for each product.
                                             </p>
-                                            <Link url='/admin/apps/usVsThem/Templates'
-                                                onClick={handleLocationChange}>
-                                                <Button size="slim">Create a Table</Button>
-                                            </Link>
+                                            {/*<Link url='/admin/apps/usVsThem/Templates'>*/}
+                                            {/*    <Button size="slim">Create a Table</Button>*/}
+                                            {/*</Link>*/}
+
+                                            {/*<Link url='/admin/apps/usVsThem/Templates' onClick={handleLocationChange}>*/}
+                                            {/*    <Button size="slim">Create a Table</Button>*/}
+                                            {/*</Link>*/}
+
+                                                <Button size="slim" onClick={handleLocationChange}>Create a Table</Button>
+
                                         </Stack>
                                     </div>
                                 </Card>
@@ -448,13 +458,13 @@ export function Dashboard() {
                                                             }
                                                         </span>
 
-                                                        <Button onClick={() => handleChangeTemplate(user_template_id)}>Change Template</Button>
+                                                        <Button onClick={() => handleChangeTemplate(user_template_id,template_id)}>Change Template</Button>
 
-                                                        <Link url='/admin/apps/usVsThem/Templates/page1'
-                                                            onClick={() => handleCustomizeTemplate(user_template_id)}>
-                                                            <Button>Customize Template</Button>
 
-                                                        </Link>
+
+                                                            <Button onClick={() => handleCustomizeTemplate(user_template_id,template_id)}>Customize Template</Button>
+
+
                                                         <Button plain
                                                             onClick={() => handlePreviewTemplate(user_template_id)}>Preview</Button>
                                                     </ButtonGroup>
