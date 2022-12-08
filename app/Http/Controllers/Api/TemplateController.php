@@ -628,6 +628,7 @@ class TemplateController extends ApiController
 
             $items_array = [];
             $advantages_array=[];
+            $main_array=[];
             foreach ($advantages as $index => $value) {
                 if ($value->brand == 1) {
                     $brand = true;
@@ -646,7 +647,7 @@ class TemplateController extends ApiController
                 ];
                 array_push($items_array, $item);
                 $result_new=[];
-                $main_array=[];
+
                 $competators_data=Competator::where('advantage_id',$value->id)->get();
                 foreach ($competators_data as $data){
                     $data_competator=[
@@ -657,7 +658,6 @@ class TemplateController extends ApiController
                 }
 
                 $item_advantage=[
-                    'advantage'=>$value->advantage,
                     'competitors'=>$result_new
                 ];
             array_push($main_array,$item_advantage);
