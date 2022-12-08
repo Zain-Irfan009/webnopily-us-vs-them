@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCompetatorsTable extends Migration
+class AddIdToCompetatorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateCompetatorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('competators', function (Blueprint $table) {
-            $table->id();
-            $table->longText('competator_name');
-            $table->text('competator_status');
-            $table->timestamps();
+        Schema::table('competators', function (Blueprint $table) {
+            $table->bigInteger('advantage_id')->nullable();
         });
     }
 
@@ -28,6 +25,8 @@ class CreateCompetatorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('competators');
+        Schema::table('competators', function (Blueprint $table) {
+            //
+        });
     }
 }
