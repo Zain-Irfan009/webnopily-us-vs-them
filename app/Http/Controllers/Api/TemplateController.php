@@ -691,29 +691,99 @@ class TemplateController extends ApiController
     }
 
 
-    public function testing()
+    public function testing(Request $request)
     {
+//
+//        $shop = Session::where('shop', $request->shop_name)->first();
+//
+//        $client = new Rest($shop->shop, $shop->access_token);
+//        $res = $client->get( '/webhooks.json');
+//        $res = $res->getDecodedBody();
+//        dd($res);
+//
+//        $res = $client->get('/products/' . $product->shopify_id . '/metafields.json');
+//        $products = Product::all();
+//        foreach ($products as $product) {
+//            $res = $client->get('/products/' . $product->shopify_id . '/metafields.json');
+//            $res = $res->getDecodedBody();
+//
+//            foreach ($res['metafields'] as $deliverydate) {
+//
+//
+//                if ($deliverydate['key'] == 'products') {
+//
+//                    $delete = $client->delete( '/metafields/' . $deliverydate['id'] . '.json');
+//                }
+//            }
+//        }
 
-        $shop = Session::where('shop', 'zain-store-tlx.myshopify.com')->first();
-        $client = new Rest($shop->shop, $shop->access_token);
-        $res = $client->get( '/webhooks.json');
-        $res = $res->getDecodedBody();
-        dd($res);
+        $products=array (
+            'id' => 7649967341825,
+            'title' => 'Product Update1232',
+            'body_html' => '',
+            'vendor' => 'TLX-Abdullah',
+            'product_type' => '',
+            'created_at' => '2022-04-08T10:44:14+05:00',
+            'handle' => 'afasf-1',
+            'updated_at' => '2022-12-08T15:37:15+05:00',
+            'published_at' => '2022-04-08T10:44:14+05:00',
+            'template_suffix' => '',
+            'status' => 'active',
+            'published_scope' => 'web',
+            'tags' => '',
+            'admin_graphql_api_id' => 'gid://shopify/Product/7649967341825',
+            'variants' =>
+                array (
+                    0 =>
+                        array (
+                            'id' => 42705012818177,
+                            'product_id' => 7649967341825,
+                            'title' => 'Default Title',
+                            'price' => '0.00',
+                            'sku' => '',
+                            'position' => 1,
+                            'inventory_policy' => 'deny',
+                            'compare_at_price' => NULL,
+                            'fulfillment_service' => 'manual',
+                            'inventory_management' => NULL,
+                            'option1' => 'Default Title',
+                            'option2' => NULL,
+                            'option3' => NULL,
+                            'created_at' => '2022-04-08T10:44:14+05:00',
+                            'updated_at' => '2022-12-08T12:24:12+05:00',
+                            'taxable' => true,
+                            'barcode' => '',
+                            'grams' => 0,
+                            'image_id' => NULL,
+                            'weight' => 0.0,
+                            'weight_unit' => 'kg',
+                            'inventory_item_id' => 44800966754561,
+                            'inventory_quantity' => 0,
+                            'old_inventory_quantity' => 0,
+                            'requires_shipping' => true,
+                            'admin_graphql_api_id' => 'gid://shopify/ProductVariant/42705012818177',
+                        ),
+                ),
+            'options' =>
+                array (
+                    0 =>
+                        array (
+                            'id' => 9710485111041,
+                            'product_id' => 7649967341825,
+                            'name' => 'Title',
+                            'position' => 1,
+                            'values' =>
+                                array (
+                                    0 => 'Default Title',
+                                ),
+                        ),
+                ),
+            'images' =>
+                array (
+                ),
+            'image' => NULL,
+        );
+       dd($products);
 
-        $res = $client->get('/products/' . $product->shopify_id . '/metafields.json');
-        $products = Product::all();
-        foreach ($products as $product) {
-            $res = $client->get('/products/' . $product->shopify_id . '/metafields.json');
-            $res = $res->getDecodedBody();
-
-            foreach ($res['metafields'] as $deliverydate) {
-
-
-                if ($deliverydate['key'] == 'products') {
-
-                    $delete = $client->delete( '/metafields/' . $deliverydate['id'] . '.json');
-                }
-            }
-        }
     }
 }

@@ -4,30 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models\ProductVarient;
 use App\Models\Session;
 use Illuminate\Http\Request;
 use Shopify\Clients\Rest;
 
 class ProductController extends Controller
 {
-    public function SyncProdcuts(Request $request){
+    public function SyncProdcuts($shop_name){
 
-//        $session = $request->get('shopifySession');
-//        $shop = new Rest($session->getShop(), $session->getAccessToken());
+        $session = Session::where('shop',$shop_name)->first();
+        $shop = new Rest($session->shop, $session->access_token);
         $result = $shop->get('products', [], ['limit' => 250]);
         $products=$result->getDecodedBody();
 
         foreach ($products['products'] as $product) {
-            $product = json_decode(json_encode($product));
-            $this->createShopifyProducts($product, $session->getShop());
+
+            $this->createShopifyProducts($product,$session);
         }
         return response($result->getDecodedBody());
     }
 
     public function createShopifyProducts($product, $shop)
     {
-        $shop=Session::where('shop',$shop)->first();
+
+        $product= json_decode(json_encode($product));
+
         $p = Product::where('shopify_id', $product->id)->where('shop_id',$shop->id)->first();
+
         if ($p === null) {
             $p = new Product();
         }
@@ -87,4 +91,17 @@ class ProductController extends Controller
             }
         }
     }
+
+    public function DeleteProduct($product, $shop)
+    {
+        $product= json_decode(json_encode($product));
+        $dellproduct = Product::where('shopify_id', $product->id)->first();
+        $product_id = $product->id;
+        $productvarients = ProductVariant::where('shopify_product_id', $product_id)->get();
+        foreach ($productvarients as $varient) {
+            $varient->delete();
+        }
+        $dellproduct->delete();
+    }
+
 }

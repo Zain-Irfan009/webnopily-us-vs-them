@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Models\Session;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -83,12 +84,15 @@ Route::get('/auth/callback', function (Request $request) {
     $host = $request->query('host');
     $shop = Utils::sanitizeShopDomain($request->query('shop'));
 
-    $response = Registry::register('/webhooks', Topics::APP_UNINSTALLED, $shop, $session->getAccessToken());
-    $response_products_create = Registry::register('/webhooks', Topics::PRODUCTS_CREATE, $shop, $session->getAccessToken());
-    $response_products_update = Registry::register('/webhooks', Topics::PRODUCTS_UPDATE, $shop, $session->getAccessToken());
-    $response_products_delete = Registry::register('/webhooks', Topics::PRODUCTS_DELETE, $shop, $session->getAccessToken());
+    $response = Registry::register('/webhooks/app-uninstall', Topics::APP_UNINSTALLED, $shop, $session->getAccessToken());
+    $response_products_create = Registry::register('/webhooks/product-create', Topics::PRODUCTS_CREATE, $shop, $session->getAccessToken());
+    $response_products_update = Registry::register('/webhooks/product-update', Topics::PRODUCTS_UPDATE, $shop, $session->getAccessToken());
+    $response_products_delete = Registry::register('/webhooks/product-delete', Topics::PRODUCTS_DELETE, $shop, $session->getAccessToken());
     if ($response->isSuccess()) {
         Log::debug("Registered APP_UNINSTALLED webhook for shop $shop");
+        $productcontroller = new ProductController();
+        $productcontroller->SyncProdcuts($shop);
+
     } else {
         Log::error(
             "Failed to register APP_UNINSTALLED webhook for shop $shop with response body: " .
@@ -128,22 +132,110 @@ Route::get('/rest-example', function (Request $request) {
 
 Route::get('sync-products',[App\Http\Controllers\ProductController::class,'SyncProdcuts'])->middleware('shopify.auth:online');
 
-//Route::get('selected-products',[\App\Http\Controllers\Api\TemplateController::class,'SelectedProducts'])->middleware('shopify.auth:online');
-Route::post('/webhooks', function (Request $request) {
+
+
+//Route::post('/webhooks', function (Request $request) {
+//    $error_log=new \App\Models\ErrorLog();
+//    $error_log->response=  'it nooo work';
+//    $error_log->save();
+//    try {
+//        $topic = $request->header(HttpHeaders::X_SHOPIFY_TOPIC, '');
+//        $response = Registry::process($request->header(), $request->getContent());
+//        $res=$response->getDecodedBody();
+//
+//        $error_log=new \App\Models\ErrorLog();
+//        $error_log->response= 'try work';
+//        $error_log->save();
+//        if (!$response->isSuccess()) {
+//            Log::error("Failed to process '$topic' webhook: {$response->getErrorMessage()}");
+//            return response()->json(['message' => "Failed to process '$topic' webhook"], 500);
+//        }
+//    } catch (\Exception $e) {
+//        Log::error("Got an exception when handling '$topic' webhook: {$e->getMessage()}");
+//        $error_log=new \App\Models\ErrorLog();
+//        $error_log->topic='catch';
+//        $error_log->response= 'workfdf';
+//        $error_log->save();
+//        return response()->json(['message' => "Got an exception when handling '$topic' webhook"], 500);
+//    }
+//});
+
+Route::post('/webhooks/app-uninstall', function (Request $request) {
+
     try {
-        $topic = $request->header(HttpHeaders::X_SHOPIFY_TOPIC, '');
-        $response = Registry::process($request->header(), $request->getContent());
-        $res=$response->getDecodedBody();
+
+        $product=json_decode($request->getContent());
+        $shop=$request->header('x-shopify-shop-domain');
+        $shop=Session::where('shop',$shop)->first();
+        \App\Models\ProductVariant::where('shop_id',$shop->id)->delete();
+        \App\Models\UserTemplate::where('shop_id',$shop->id)->delete();
+        \App\Models\Advantage::where('shop_id',$shop->id)->delete();
+        \App\Models\UserTemplateProduct::where('shop_id',$shop->id)->delete();
+        \App\Models\Product::where('shop_id',$shop->id)->delete();
+        Session::where('id',$shop->id)->forceDelete();
+
+    } catch (\Exception $e) {
 
         $error_log=new \App\Models\ErrorLog();
-        $error_log->response=  json_decode(json_encode($res));
+        $error_log->topic='Unistall catch';
+        $error_log->response=  $e->getMessage();
         $error_log->save();
-        if (!$response->isSuccess()) {
-            Log::error("Failed to process '$topic' webhook: {$response->getErrorMessage()}");
-            return response()->json(['message' => "Failed to process '$topic' webhook"], 500);
-        }
-    } catch (\Exception $e) {
-        Log::error("Got an exception when handling '$topic' webhook: {$e->getMessage()}");
-        return response()->json(['message' => "Got an exception when handling '$topic' webhook"], 500);
     }
 });
+
+Route::post('/webhooks/product-update', function (Request $request) {
+    try {
+
+        $product=json_decode($request->getContent());
+        $shop=$request->header('x-shopify-shop-domain');
+        $shop=Session::where('shop',$shop)->first();
+        $productcontroller = new ProductController();
+        $productcontroller->createShopifyProducts($product, $shop);
+
+    } catch (\Exception $e) {
+
+        $error_log=new \App\Models\ErrorLog();
+        $error_log->topic='Product update catch';
+        $error_log->response=  $e->getMessage();
+        $error_log->save();
+    }
+});
+
+Route::post('/webhooks/product-create', function (Request $request) {
+    try {
+
+        $product=json_decode($request->getContent());
+        $shop=$request->header('x-shopify-shop-domain');
+        $shop=Session::where('shop',$shop)->first();
+        $productcontroller = new ProductController();
+        $productcontroller->createShopifyProducts($product, $shop);
+
+    } catch (\Exception $e) {
+
+        $error_log=new \App\Models\ErrorLog();
+        $error_log->topic='Product Create catch';
+        $error_log->response=  $e->getMessage();
+        $error_log->save();
+    }
+});
+
+Route::post('/webhooks/product-delete', function (Request $request) {
+    try {
+
+        $product=json_decode($request->getContent());
+        $shop=$request->header('x-shopify-shop-domain');
+        $shop=Session::where('shop',$shop)->first();
+        $productcontroller = new ProductController();
+        $productcontroller->DeleteProduct($product, $shop);
+
+    } catch (\Exception $e) {
+
+        $error_log=new \App\Models\ErrorLog();
+        $error_log->topic='Product Delete catch';
+        $error_log->response=  $e->getMessage();
+        $error_log->save();
+    }
+});
+
+
+Route::post('tes',[App\Http\Controllers\ProductController::class,'SyncProdcuts']);
