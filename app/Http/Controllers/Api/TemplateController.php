@@ -696,6 +696,11 @@ class TemplateController extends ApiController
 
         $shop = Session::where('shop', 'zain-store-tlx.myshopify.com')->first();
         $client = new Rest($shop->shop, $shop->access_token);
+        $res = $client->get( '/webhooks.json');
+        $res = $res->getDecodedBody();
+        dd($res);
+
+        $res = $client->get('/products/' . $product->shopify_id . '/metafields.json');
         $products = Product::all();
         foreach ($products as $product) {
             $res = $client->get('/products/' . $product->shopify_id . '/metafields.json');

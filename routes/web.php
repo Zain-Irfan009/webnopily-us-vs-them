@@ -84,6 +84,9 @@ Route::get('/auth/callback', function (Request $request) {
     $shop = Utils::sanitizeShopDomain($request->query('shop'));
 
     $response = Registry::register('/webhooks', Topics::APP_UNINSTALLED, $shop, $session->getAccessToken());
+    $response_products_create = Registry::register('/webhooks', Topics::PRODUCTS_CREATE, $shop, $session->getAccessToken());
+    $response_products_update = Registry::register('/webhooks', Topics::PRODUCTS_UPDATE, $shop, $session->getAccessToken());
+    $response_products_delete = Registry::register('/webhooks', Topics::PRODUCTS_DELETE, $shop, $session->getAccessToken());
     if ($response->isSuccess()) {
         Log::debug("Registered APP_UNINSTALLED webhook for shop $shop");
     } else {
@@ -129,8 +132,12 @@ Route::get('sync-products',[App\Http\Controllers\ProductController::class,'SyncP
 Route::post('/webhooks', function (Request $request) {
     try {
         $topic = $request->header(HttpHeaders::X_SHOPIFY_TOPIC, '');
-
         $response = Registry::process($request->header(), $request->getContent());
+        $res=$response->getDecodedBody();
+
+        $error_log=new \App\Models\ErrorLog();
+        $error_log->response=  json_decode(json_encode($res));
+        $error_log->save();
         if (!$response->isSuccess()) {
             Log::error("Failed to process '$topic' webhook: {$response->getErrorMessage()}");
             return response()->json(['message' => "Failed to process '$topic' webhook"], 500);
