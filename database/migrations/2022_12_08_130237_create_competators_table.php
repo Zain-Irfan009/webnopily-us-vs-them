@@ -16,7 +16,7 @@ class CreateCompetatorsTable extends Migration
         Schema::create('competators', function (Blueprint $table) {
             $table->id();
             $table->longText('competator_name');
-            $table->text('competotor_status');
+            $table->text('competator_status');
             $table->timestamps();
         });
     }

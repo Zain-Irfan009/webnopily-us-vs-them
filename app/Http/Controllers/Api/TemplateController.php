@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Advantage;
+use App\Models\Competator;
 use App\Models\Product;
 use App\Models\Session;
 use App\Models\Template;
@@ -98,12 +99,15 @@ class TemplateController extends ApiController
                 $advantages = new Advantage();
                 $advantages->advantage = 'Advantage' . $i;
                 $advantages->brand = 1;
-//                $advantages->competitors = 0;
                 $advantages->user_template_id = $user_templates->id;
                 $advantages->advantage_column_color='#000000';
                 $advantages->shop_id = $shop->id;
                 $advantages->save();
-
+                $new_competator=new Competator();
+                $new_competator->competator_name='Competitor 1';
+                $new_competator->competator_status=0;
+                $new_competator->advantage_id=$advantages->id;
+                $new_competator->save();
             }
             foreach ($user_template_products as $user_template_product) {
                 $user_template_product->user_template_id = $user_templates->id;
@@ -623,8 +627,8 @@ class TemplateController extends ApiController
 
 
             $items_array = [];
+            $advantages_array=[];
             foreach ($advantages as $index => $value) {
-
                 if ($value->brand == 1) {
                     $brand = true;
                 } else {
@@ -638,11 +642,25 @@ class TemplateController extends ApiController
                 $item = [
                     'advantage' => $value->advantage,
                     'brand' => $brand,
-                    'competitor' => $competitor,
                     'column_color'=>$value->advantage_column_color
                 ];
                 array_push($items_array, $item);
+                $result_new=[];
+                $main_array=[];
+                $competators_data=Competator::where('advantage_id',$value->id)->get();
+                foreach ($competators_data as $data){
+                    $data_competator=[
+                        'name'=>$data->competator_name,
+                        'status'=>$data->competator_status
+                    ];
+                    $result_new[] = $data_competator;
+                }
 
+                $item_advantage=[
+                    'advantage'=>$value->advantage,
+                    'competitors'=>$result_new
+                ];
+            array_push($main_array,$item_advantage);
             }
 
             $result = [];
@@ -667,9 +685,10 @@ class TemplateController extends ApiController
                 'template_id' => $user_template->template_id,
                 'advantages' => $advantages_get,
                 'brands' => $brands_array,
-                'competitors' => $competitors_array,
                 'column_colors'=>$advantages_color_get,
                 'items' => $items_array,
+                'com'=>$main_array
+
             ];
             $result = $data;
             return $this->response($result, 200);
