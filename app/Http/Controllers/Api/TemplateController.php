@@ -684,10 +684,10 @@ class TemplateController extends ApiController
                 'advantages_count' => $user_template->advantages_count,
                 'template_id' => $user_template->template_id,
                 'advantages' => $advantages_get,
-                'brands' => $brands_array,
+                'brand_value' => $brands_array,
                 'column_colors'=>$advantages_color_get,
                 'items' => $items_array,
-                'com'=>$main_array
+                'competitor_value'=>$main_array
 
             ];
             $result = $data;
