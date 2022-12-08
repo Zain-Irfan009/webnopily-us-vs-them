@@ -671,6 +671,7 @@ class TemplateController extends ApiController
                 'column_colors'=>$advantages_color_get,
                 'items' => $items_array,
             ];
+
             $result = $data;
             return $this->response($result, 200);
         }
