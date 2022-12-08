@@ -38,7 +38,7 @@ class TemplateController extends ApiController
         $template = Template::find($request->template_id);
         $random_number = mt_rand(20, 90);
 
-        if (isset($request->user_template_id)) {
+        if ($request->user_template_id!='undefined') {
             $user_template = UserTemplate::where('id', $request->user_template_id)->where('shop_id', $shop->id)->first();
             $user_template->template_id = $template->id;
             $user_template->shop_id = $shop->id;
@@ -68,25 +68,12 @@ class TemplateController extends ApiController
             }
             $result = [];
             $data = [
-                'shop_name' => $shop->shop,
-                'template_id' => $user_template->template_id,
+                'template_id' => $template->id,
                 'user_template_id' => $user_template->id,
-                'template_name' => $user_template->template_name,
-                'brand' => $user_template->brand,
-                'competitor' => $user_template->competitors,
-                'background_color1' => $user_template->background_color1,
-                'background_color2' => $user_template->background_color2,
-                'column1_color' => $user_template->column1_color,
-                'column2_color' => $user_template->column2_color,
-                'column3_color' => $user_template->column3_color,
-                'brand_checkbox_color1' => $user_template->brand_checkbox_color1,
-                'brand_checkbox_color2' => $user_template->brand_checkbox_color2,
-                'competitors_checkbox_color1' => $user_template->competitors_checkbox_color1,
-                'competitors_checkbox_color2' => $user_template->competitors_checkbox_color2,
-                'template_id' => $user_template->template_id,
-                'items' => $items_array
+                'shop_name' => $shop->shop
             ];
-            $result[] = $data;
+
+            $result = $data;
             return $this->response($result, 200);
 
         } else {
@@ -98,9 +85,6 @@ class TemplateController extends ApiController
             $user_templates->competitors = 'competitor';
             $user_templates->background_color1 = '#ffffff';
             $user_templates->background_color2 = '#ebecf0';
-            $user_templates->column1_color = '#626dff';
-            $user_templates->column2_color = '#8c94ff';
-            $user_templates->column3_color = '#a9afff';
             $user_templates->brand_checkbox_color1 = '#474b8b';
             $user_templates->brand_checkbox_color2 = '#7b7eac';
             $user_templates->competitors_checkbox_color1 = '#474b8b';
@@ -114,8 +98,9 @@ class TemplateController extends ApiController
                 $advantages = new Advantage();
                 $advantages->advantage = 'Advantage' . $i;
                 $advantages->brand = 1;
-                $advantages->competitors = 0;
+//                $advantages->competitors = 0;
                 $advantages->user_template_id = $user_templates->id;
+                $advantages->advantage_column_color='#000000';
                 $advantages->shop_id = $shop->id;
                 $advantages->save();
 
@@ -614,6 +599,8 @@ class TemplateController extends ApiController
             $advantages_get = Advantage::where('user_template_id', $request->user_template_id)->pluck('advantage')->toArray();
             $brands_get = Advantage::where('user_template_id', $request->user_template_id)->pluck('brand')->toArray();
             $competitors_get = Advantage::where('user_template_id', $request->user_template_id)->pluck('competitors')->toArray();
+            $advantages_color_get = Advantage::where('user_template_id', $request->user_template_id)->pluck('advantage_column_color')->toArray();
+
             $brands_array = [];
             foreach ($brands_get as $brand_ge) {
                 if ($brand_ge == 1) {
@@ -652,6 +639,7 @@ class TemplateController extends ApiController
                     'advantage' => $value->advantage,
                     'brand' => $brand,
                     'competitor' => $competitor,
+                    'column_color'=>$value->advantage_column_color
                 ];
                 array_push($items_array, $item);
 
@@ -664,9 +652,6 @@ class TemplateController extends ApiController
             $color_data = [
                 'background_color1' => $user_template->background_color1,
                 'background_color2' => $user_template->background_color2,
-                'column1_color' => $user_template->column1_color,
-                'column2_color' => $user_template->column2_color,
-                'column3_color' => $user_template->column3_color,
                 'brand_checkbox_color1' => $user_template->brand_checkbox_color1,
                 'brand_checkbox_color2' => $user_template->brand_checkbox_color2,
                 'competitors_checkbox_color1' => $user_template->competitors_checkbox_color1,
@@ -683,6 +668,7 @@ class TemplateController extends ApiController
                 'advantages' => $advantages_get,
                 'brands' => $brands_array,
                 'competitors' => $competitors_array,
+                'column_colors'=>$advantages_color_get,
                 'items' => $items_array,
             ];
             $result = $data;
@@ -717,73 +703,7 @@ class TemplateController extends ApiController
 //            }
 //        }
 
-        $products=array (
-            'id' => 7649967341825,
-            'title' => 'Product Update1232',
-            'body_html' => '',
-            'vendor' => 'TLX-Abdullah',
-            'product_type' => '',
-            'created_at' => '2022-04-08T10:44:14+05:00',
-            'handle' => 'afasf-1',
-            'updated_at' => '2022-12-08T15:37:15+05:00',
-            'published_at' => '2022-04-08T10:44:14+05:00',
-            'template_suffix' => '',
-            'status' => 'active',
-            'published_scope' => 'web',
-            'tags' => '',
-            'admin_graphql_api_id' => 'gid://shopify/Product/7649967341825',
-            'variants' =>
-                array (
-                    0 =>
-                        array (
-                            'id' => 42705012818177,
-                            'product_id' => 7649967341825,
-                            'title' => 'Default Title',
-                            'price' => '0.00',
-                            'sku' => '',
-                            'position' => 1,
-                            'inventory_policy' => 'deny',
-                            'compare_at_price' => NULL,
-                            'fulfillment_service' => 'manual',
-                            'inventory_management' => NULL,
-                            'option1' => 'Default Title',
-                            'option2' => NULL,
-                            'option3' => NULL,
-                            'created_at' => '2022-04-08T10:44:14+05:00',
-                            'updated_at' => '2022-12-08T12:24:12+05:00',
-                            'taxable' => true,
-                            'barcode' => '',
-                            'grams' => 0,
-                            'image_id' => NULL,
-                            'weight' => 0.0,
-                            'weight_unit' => 'kg',
-                            'inventory_item_id' => 44800966754561,
-                            'inventory_quantity' => 0,
-                            'old_inventory_quantity' => 0,
-                            'requires_shipping' => true,
-                            'admin_graphql_api_id' => 'gid://shopify/ProductVariant/42705012818177',
-                        ),
-                ),
-            'options' =>
-                array (
-                    0 =>
-                        array (
-                            'id' => 9710485111041,
-                            'product_id' => 7649967341825,
-                            'name' => 'Title',
-                            'position' => 1,
-                            'values' =>
-                                array (
-                                    0 => 'Default Title',
-                                ),
-                        ),
-                ),
-            'images' =>
-                array (
-                ),
-            'image' => NULL,
-        );
-       dd($products);
+
 
     }
 }

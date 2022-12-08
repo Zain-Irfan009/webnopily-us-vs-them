@@ -61,7 +61,6 @@ function AppBridgeApolloProvider({ children }) {
 function App({ shop, host, apiKey }) {
     const config = { apiKey: apiKey, shopOrigin: shop, host: host, forceRedirect: true };
 
-
     const [activePage, setActivePage] = useState(1)
     const [selectedTemplate, setSelectedTemplate] = useState()
     const [templateUserId, setTemplateUserId] = useState()
