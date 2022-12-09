@@ -41,7 +41,7 @@ export function Dashboard() {
 
         const response = await axios
             .get(
-                `http://us-vs-them.test/api/current-templates?shop_name=${host}`
+                `https://phpstack-362288-3089196.cloudwaysapps.com/api/current-templates?shop_name=${host}`
             )
             .then(res => {
                 console.log(res);
@@ -134,7 +134,7 @@ export function Dashboard() {
             shop_name: host,
         };
         try {
-            const response = await axios.post('http://us-vs-them.test/api/rename-template', data)
+            const response = await axios.post('https://phpstack-362288-3089196.cloudwaysapps.com/api/rename-template', data)
             console.log(response);
             setRenameModalActive(false)
             setRenameToastActive(!renameToastActive)
@@ -155,7 +155,7 @@ export function Dashboard() {
             shop_name: host,
         };
         try {
-            const response = await axios.post('http://us-vs-them.test/api/duplicate-template', data)
+            const response = await axios.post('https://phpstack-362288-3089196.cloudwaysapps.com/api/duplicate-template', data)
             console.log(response);
             setDuplicatetoastActive(!duplicatetoastActive)
             setToggleReload(!toggleReload)
@@ -174,7 +174,7 @@ export function Dashboard() {
             shop_name: host,
         };
         try {
-            const response = await axios.post('http://us-vs-them.test/api/delete-template', data)
+            const response = await axios.post('https://phpstack-362288-3089196.cloudwaysapps.com/api/delete-template', data)
             console.log(response);
             setDeletetoastActive(!deletetoastActive)
             setToggleReload(!toggleReload)
@@ -221,7 +221,7 @@ export function Dashboard() {
 
         const response = await axios
             .get(
-                `http://us-vs-them.test/api/products?user_template_id=${id}&shop_name=${host}`
+                `https://phpstack-362288-3089196.cloudwaysapps.com/api/products?user_template_id=${id}&shop_name=${host}`
             )
 
             .then(res => {
@@ -266,7 +266,7 @@ export function Dashboard() {
             shop_name: host,
         };
         try {
-            const response = await axios.post('http://us-vs-them.test/api/selected-products', data)
+            const response = await axios.post('https://phpstack-362288-3089196.cloudwaysapps.com/api/selected-products', data)
             console.log(response);
             setShowProducts(false);
         } catch (error) {

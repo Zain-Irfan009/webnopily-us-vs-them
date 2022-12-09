@@ -316,7 +316,7 @@ export function TemplatePage2() {
 
     const response = await axios
       .post(
-        `http://us-vs-them.test/api/step-1?template_id=${templateId}&user_template_id=${templateUserId}&shop_name=${host}`
+        `https://phpstack-362288-3089196.cloudwaysapps.com/api/step-1?template_id=${templateId}&user_template_id=${templateUserId}&shop_name=${host}`
       )
       .then(res => {
         console.log(res);

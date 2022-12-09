@@ -55,7 +55,7 @@ export function TemplatePage3() {
   const getData = async () => {
     const response = await axios
       .get(
-        `http://us-vs-them.test/api/template-data?user_template_id=${templateUserId}&shop_name=${host}`
+        `https://phpstack-362288-3089196.cloudwaysapps.com/api/template-data?user_template_id=${templateUserId}&shop_name=${host}`
       )
       .then(res => {
         console.log('table data', res.data.result);
@@ -236,7 +236,7 @@ export function TemplatePage3() {
     };
 
     try {
-      const response = await axios.post('http://us-vs-them.test/api/step-2', data)
+      const response = await axios.post('https://phpstack-362288-3089196.cloudwaysapps.com/api/step-2', data)
       console.log(response);
       setActivePage(4)
     } catch (error) {
