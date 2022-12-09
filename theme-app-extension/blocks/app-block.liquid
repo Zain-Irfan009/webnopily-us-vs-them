@@ -51,7 +51,7 @@
       {% for xc_settings_loop in  xc_settings.items %}
 
     <tr>
-        <td>
+        <td style="color:{{ xc_settings_loop.advantage_color_value  }} ">
         {{ xc_settings_loop.advantage  }}
         </td>
 
@@ -105,7 +105,7 @@
         <tbody>
       {% for xc_settings_loop in  xc_settings.items %}
         <tr>
-            <th>{{ xc_settings_loop.advantage  }} </th>
+            <th style="color:{{ xc_settings_loop.advantage_color_value  }} ">{{ xc_settings_loop.advantage  }} </th>
             <td><span class="choose-table__price">
           {% if  xc_settings_loop.brand == true %}
           <i class="fa fa-check-circle check_brand "></i>
@@ -157,7 +157,7 @@
     <tbody>
           {% for xc_settings_loop in  xc_settings.items %}
     <tr>
-        <th>   {{ xc_settings_loop.advantage  }} </th>
+        <th style="color:{{ xc_settings_loop.advantage_color_value  }} ">   {{ xc_settings_loop.advantage  }} </th>
   <td>
 
           {% if  xc_settings_loop.brand == true %}
@@ -215,7 +215,7 @@
           {% for xc_settings_loop in  xc_settings.items %}
         <tr>
 
-            <td>
+            <td style="color:{{ xc_settings_loop.advantage_color_value  }} ">
                 {{ xc_settings_loop.advantage  }}
             <td>
                       {% if  xc_settings_loop.brand == true %}
@@ -242,7 +242,7 @@
 {% endif %}
 <script>
 
-console.log('wednesday afternoon');
+console.log('friday');
 </script>
 
 

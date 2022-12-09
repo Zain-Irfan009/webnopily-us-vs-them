@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, {useContext, useState} from 'react'
 import { Page, Layout, Card } from '@shopify/polaris';
 import { Table1, Table2, Table3, Table4 } from './index'
 import axios from "axios";
@@ -310,23 +310,35 @@ export function TemplatePage2() {
   const { setActivePage,templateUserId, setTemplateUserId, setSelectedTemplate,url } = useContext(AppContext);
 
   let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+    const [btnloading, setBtnLoading] = useState(false)
+
   const handleSelectTemplate = async (templateId) => {
-  console.log('old',templateUserId,templateId)
 
-
+      // setBtnLoading((prev) => {
+      //     let toggleId;
+      //     if (prev[templateId]) {
+      //         toggleId = {[templateId]: false};
+      //     } else {
+      //         toggleId = {[templateId]: true};
+      //     }
+      //     return {...toggleId};
+      // });
     const response = await axios
       .post(
         `${url}/step-1?template_id=${templateId}&user_template_id=${templateUserId}&shop_name=${host}`
       )
       .then(res => {
         console.log(res);
+          setBtnLoading(false)
         setSelectedTemplate(templateId)
         setTemplateUserId(res.data.result.user_template_id)
         setActivePage(3)
       })
-      .catch(error =>
-        alert('Error: ', error));
- console.log('new',templateUserId)
+      .catch(error =>{
+        alert('Error: ', error)
+          setBtnLoading(false)
+      });
+
   }
 
   return (
@@ -345,23 +357,31 @@ export function TemplatePage2() {
           </Layout.Section>
 
           <Layout.Section oneHalf >
-            <Table1 themePc={theme1Pc} themeMobile={theme1Mobile} btnShow={true} handleSelectTemplate={handleSelectTemplate} />
+            <Table1 themePc={theme1Pc} themeMobile={theme1Mobile} btnShow={true}
+                    btnloading={btnloading}
+                    handleSelectTemplate={handleSelectTemplate} />
           </Layout.Section>
 
 
           <Layout.Section oneHalf>
-            <Table2 themePc={theme2Pc} themeMobile={theme2Mobile} btnShow={true} handleSelectTemplate={handleSelectTemplate}
+            <Table2 themePc={theme2Pc} themeMobile={theme2Mobile} btnShow={true}
+                    btnloading={btnloading}
+                    handleSelectTemplate={handleSelectTemplate}
               themeHeadingsMobile={themeHeadingsMobile} themeHeadingsPc={themeHeadingsPc} />
           </Layout.Section>
 
 
           <Layout.Section oneHalf>
-            <Table3 themePc={theme3Pc} themeMobile={theme3Mobile} btnShow={true} handleSelectTemplate={handleSelectTemplate} />
+            <Table3 themePc={theme3Pc} themeMobile={theme3Mobile} btnShow={true}
+                    btnloading={btnloading}
+                    handleSelectTemplate={handleSelectTemplate} />
           </Layout.Section>
 
 
           <Layout.Section oneHalf>
-            <Table4 themePc={theme4Pc} themeMobile={theme4Mobile} btnShow={true} handleSelectTemplate={handleSelectTemplate} />
+            <Table4 themePc={theme4Pc} themeMobile={theme4Mobile} btnShow={true}
+                    btnloading={btnloading}
+                    handleSelectTemplate={handleSelectTemplate} />
           </Layout.Section>
 
         </Layout>

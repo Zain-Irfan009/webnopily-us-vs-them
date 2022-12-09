@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Api\TemplateController;
 use App\Models\Session;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -238,3 +239,4 @@ Route::post('/webhooks/product-delete', function (Request $request) {
 
 
 Route::post('tes',[App\Http\Controllers\ProductController::class,'SyncProdcuts']);
+Route::get('test',[App\Http\Controllers\Api\TemplateController::class,'testing']);

@@ -19,7 +19,7 @@ const themeHeadingsPc =
 export function TemplatePage3() {
   const { activePage, setActivePage, selectedTemplate, templateUserId,url} = useContext(AppContext);
   let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
-
+    const [btnloading, setBtnLoading] = useState(false)
   const [templateName, setTemplateName] = useState();
   const [yourBrand, setYourBrand] = useState();
   const [otherCompetitors, setOtherCompetitors] = useState();

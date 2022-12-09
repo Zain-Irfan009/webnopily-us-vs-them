@@ -33,6 +33,8 @@ export function Dashboard() {
     const [duplicatetoastActive, setDuplicatetoastActive] = useState(false);
 
     const [loading, setLoading] = useState(true)
+    const [btnloading, setBtnLoading] = useState(false)
+
     const [templateTable, setTemplateTable] = useState([]);
 
 
@@ -245,14 +247,18 @@ export function Dashboard() {
                 });
 
             })
-            .catch(error =>
-                alert('Error: ', error));
-                    setSelectedItems()
-        setShowProducts(false)
+            .catch(error =>{
+                alert('Error: ', error);
+                setShowProducts(false);
+                setProducts([])
+                setSelectedItems([])
+            });
+
     }
 
     const handleSubmitProduct = async (id) => {
         console.log(`submit products ${id} `);
+        setBtnLoading(true)
         let unSelected = []
         var arr = products.filter(function (item) {
             return selectedItems.indexOf(item.id) === -1;
@@ -269,10 +275,12 @@ export function Dashboard() {
         try {
             const response = await axios.post(`${url}/selected-products`, data)
             console.log(response);
+            setBtnLoading(false)
             setShowProducts(false);
         } catch (error) {
-            setShowProducts(false);
             alert('Error: ', error);
+            setBtnLoading(false)
+            setShowProducts(false);
         }
     }
 
@@ -443,11 +451,17 @@ export function Dashboard() {
                                                                             onSelectionChange={setSelectedItems}
                                                                             selectable
                                                                         />
-                                                                        <span
-                                                                            className='MediaCard-Products-Confirm-Btn'>
-                                                                            <Button primary
-                                                                                    onClick={() => handleSubmitProduct(user_template_id)}> Confirm</Button>
-                                                                        </span>
+                                                                        {btnloading ?
+                                                                            <span className='MediaCard-Products-Confirm-Btn'>
+                                                                            <Button disabled loading>
+                                                                                Confirm
+                                                                            </Button>
+                                                                        </span> :
+                                                                        <span className='MediaCard-Products-Confirm-Btn'>
+                                                                            <Button primary onClick={() => handleSubmitProduct(user_template_id)}>
+                                                                                Confirm
+                                                                            </Button>
+                                                                        </span>}
                                                                     </Card>
                                                                 </span>
                                                             }

@@ -5,7 +5,7 @@ import {
 } from '@shopify/polaris-icons';
 
 
-export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMobile, btnShow, handleSelectTemplate }) {
+export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMobile, btnShow, handleSelectTemplate,btnloading }) {
     const [screen, setScreen] = useState(true)
     const handleScreenSelection = () => {
         setScreen(!screen)
@@ -132,8 +132,9 @@ export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMob
 
                         <div className='Screen-Selection-Btn'>
                             {
-                                btnShow &&
-                                <Button primary onClick={() => handleSelectTemplate(2)}>Select</Button>
+                                btnloading ?
+                                    <Button loading disabled>Select</Button> :
+                                    <Button primary onClick={() => handleSelectTemplate(2)}>Select</Button>
                             }
                         </div>
                     </Stack>

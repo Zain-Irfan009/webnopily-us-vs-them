@@ -33,9 +33,7 @@ class TemplateController extends ApiController
 
     public function Step1Template(Request $request)
     {
-
         $shop = Session::where('shop', $request->shop_name)->first();
-
         $template = Template::find($request->template_id);
         $random_number = mt_rand(20, 90);
 
@@ -99,7 +97,7 @@ class TemplateController extends ApiController
 
             for ($i = 1; $i < 6; $i++) {
                 $advantages = new Advantage();
-                $advantages->advantage = 'Advantage' . $i;
+                $advantages->advantage = 'Advantage '. $i;
                 $advantages->brand = 1;
                 $advantages->user_template_id = $user_templates->id;
                 $advantages->advantage_column_color='#000000';
@@ -180,12 +178,50 @@ class TemplateController extends ApiController
                 }
                 $item = [
                     'advantage' => $value,
+                    'advantage_color_value'=>$request->advantage_color_values[$index],
                     'brand' => $request->brand_values[$index],
                     'competitor' => $request->competitor_values[$index],
                 ];
                 array_push($items_array, $item);
             }
 
+            $user_template_products=UserTemplateProduct::where('user_template_id',$request->user_template_id)->get();
+            if(count($user_template_products) > 0){
+                $value = [
+                    "template_id" => $user_template->template_id,
+                    "user_template_id" => $user_template->id,
+                    "brand" => $user_template->brand,
+                    "competitor" => $user_template->competitors,
+                    "background_color1" => $user_template->background_color1,
+                    "background_color2" => $user_template->background_color2,
+                    "brand_checkbox_color1" => $user_template->brand_checkbox_color1,
+                    "brand_checkbox_color2" => $user_template->brand_checkbox_color2,
+                    "competitors_checkbox_color1" => $user_template->competitors_checkbox_color1,
+                    "competitors_checkbox_color2" => $user_template->competitors_checkbox_color2,
+                    'items' => $items_array
+                ];
+                foreach ($user_template_products as $user_template_product) {
+                    $client = new Rest($shop->shop, $shop->access_token);
+                    $res = $client->get('/products/' .$user_template_product->shopify_product_id . '/metafields.json');
+                    $res = $res->getDecodedBody();
+
+                    foreach ($res['metafields'] as $deliverydate) {
+
+                        if ($deliverydate['key'] == 'products') {
+
+                            $product_metafield = $client->put('/metafields/' . $deliverydate['id'] . '.json', [
+
+                                "metafield" =>
+
+                                    array(
+                                        "type" => "json_string",
+                                        "value" => json_encode($value),
+                                    ),
+                            ]);
+                        }
+                    }
+                }
+            }
             $result = [];
             $data = [
                 'shop_name' => $shop->shop,
@@ -361,10 +397,24 @@ class TemplateController extends ApiController
 
     public function DeleteTemplate(Request $request)
     {
+        $shop = Session::where('shop', $request->shop_name)->first();
+        $client = new Rest($shop->shop, $shop->access_token);
+        $user_template_products=UserTemplateProduct::where('user_template_id', $request->user_template_id)->get();
 
+        if(count($user_template_products) > 0) {
+            foreach ($user_template_products as $user_template_product) {
+                $res = $client->get('/products/' . $user_template_product->shopify_product_id . '/metafields.json');
+                $res = $res->getDecodedBody();
+                foreach ($res['metafields'] as $deliverydate) {
+                    if ($deliverydate['key'] == 'products') {
+                        $delete = $client->delete('/metafields/' . $deliverydate['id'] . '.json');
+                    }
+                }
+            }
+        }
         Advantage::where('user_template_id', $request->user_template_id)->delete();
         UserTemplate::where('id', $request->user_template_id)->delete();
-        UserTemplateProduct::where('id', $request->user_template_id)->delete();
+        UserTemplateProduct::where('user_template_id', $request->user_template_id)->delete();
         $user_templates = UserTemplate::all();
         $result = [];
         if ($user_templates->count() > 0) {
@@ -459,6 +509,7 @@ class TemplateController extends ApiController
                     }
                     $item = [
                         'advantage' => $value->advantage,
+                        'advantage_color_value'=>$value->advantage_column_color,
                         'brand' => $brand,
                         'competitor' => $competitor,
                     ];
@@ -488,9 +539,6 @@ class TemplateController extends ApiController
                             "competitor" => $user_template->competitors,
                             "background_color1" => $user_template->background_color1,
                             "background_color2" => $user_template->background_color2,
-                            "column1_color" => $user_template->column1_color,
-                            "column2_color" => $user_template->column2_color,
-                            "column3_color" => $user_template->column3_color,
                             "brand_checkbox_color1" => $user_template->brand_checkbox_color1,
                             "brand_checkbox_color2" => $user_template->brand_checkbox_color2,
                             "competitors_checkbox_color1" => $user_template->competitors_checkbox_color1,
@@ -522,10 +570,7 @@ class TemplateController extends ApiController
 
                             foreach ($res['metafields'] as $deliverydate) {
 
-
                                 if ($deliverydate['key'] == 'products') {
-//                                    $delete = $client->delete( '/metafields/' . $deliverydate['id'] . '.json');
-
 
                                     $product_metafield = $client->put('/metafields/' . $deliverydate['id'] . '.json', [
 
@@ -536,11 +581,7 @@ class TemplateController extends ApiController
                                                 "value" => json_encode($value),
                                             ),
                                     ]);
-
-
                                 }
-
-
                             }
                         }
 
@@ -702,29 +743,34 @@ class TemplateController extends ApiController
     public function testing(Request $request)
     {
 //
-//        $shop = Session::where('shop', $request->shop_name)->first();
+        $shop = Session::where('shop', $request->shop_name)->first();
+
+        $client = new Rest($shop->shop, $shop->access_token);
+
 //
-//        $client = new Rest($shop->shop, $shop->access_token);
+//        $result = $client->get('products', [], ['limit' => 5]);
+//        $result = $result->getDecodedBody();
+//        dd($result);
 //        $res = $client->get( '/webhooks.json');
 //        $res = $res->getDecodedBody();
 //        dd($res);
-//
-//        $res = $client->get('/products/' . $product->shopify_id . '/metafields.json');
-//        $products = Product::all();
-//        foreach ($products as $product) {
-//            $res = $client->get('/products/' . $product->shopify_id . '/metafields.json');
-//            $res = $res->getDecodedBody();
-//
-//            foreach ($res['metafields'] as $deliverydate) {
-//
-//
-//                if ($deliverydate['key'] == 'products') {
-//
-//                    $delete = $client->delete( '/metafields/' . $deliverydate['id'] . '.json');
-//                }
-//            }
-//        }
 
+//        $res = $client->get('/products/' . $product->shopify_id . '/metafields.json');
+        $products = Product::all();
+        foreach ($products as $product) {
+            $res = $client->get('/products/' . $product->shopify_id . '/metafields.json');
+            $res = $res->getDecodedBody();
+
+            foreach ($res['metafields'] as $deliverydate) {
+
+
+
+                if ($deliverydate['key'] == 'products') {
+
+                    $delete = $client->delete( '/metafields/' . $deliverydate['id'] . '.json');
+                }
+            }
+        }
 
 
     }
