@@ -17,7 +17,7 @@ const themeHeadingsPc =
 
 
 export function TemplatePage3() {
-  const { activePage, setActivePage, selectedTemplate, templateUserId } = useContext(AppContext);
+  const { activePage, setActivePage, selectedTemplate, templateUserId,url} = useContext(AppContext);
   let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
 
   const [templateName, setTemplateName] = useState();
@@ -36,6 +36,7 @@ export function TemplatePage3() {
   const [brandValue, setBrandValue] = useState([]);
   const [competitorValue, setCompetitorValue] = useState([]);
   const [colorValues, setColorValues] = useState([])
+  const [advantageColorValues, setAdvantageColorValues] = useState([])
 
   const [themeInputTable1, setThemeInputTable1] = useState([]);
   const [themeInputTable2, setThemeInputTable2] = useState([]);
@@ -55,7 +56,7 @@ export function TemplatePage3() {
   const getData = async () => {
     const response = await axios
       .get(
-        `https://phpstack-362288-3089196.cloudwaysapps.com/api/template-data?user_template_id=${templateUserId}&shop_name=${host}`
+        `${url}/template-data?user_template_id=${templateUserId}&shop_name=${host}`
       )
       .then(res => {
         console.log('table data', res.data.result);
@@ -64,17 +65,14 @@ export function TemplatePage3() {
         setOtherCompetitors(res.data.result.competitor)
         setAdvantagesCount(res.data.result.advantages_count)
         setAllValues(res.data.result.advantages)
-        setBrandValue(res.data.result.brands)
-        setCompetitorValue(res.data.result.competitors)
-        setColorValues(res.data.result.colors[0])
+        setBrandValue(res.data.result.brand_value)
+        setCompetitorValue(res.data.result.competitor_value)
+        setColorValues(res.data.result.primary_colors[0])
+        setAdvantageColorValues(res.data.result.advantage_color_values)
         setThemeInputTable1(res.data.result.items)
-        // setThemeInputTable2(res.data.result.items)
-        // setThemeInputTable3(res.data.result.items)
-        // setThemeInputTable4(res.data.result.items)
-        // setThemeInputTable3Mobile(res.data.result.items)
         setFixedAdvantages(res.data.result.advantages)
-        setFixedBrand(res.data.result.brands)
-        setCompetitor(res.data.result.competitors)
+        setFixedBrand(res.data.result.brand_value)
+        setCompetitor(res.data.result.competitor_value)
         setFixedTable(res.data.result.items)
 
         setTimeout(() => {
@@ -93,7 +91,7 @@ export function TemplatePage3() {
   const handleAllValues = e => {
     setAllValues({ ...allValues, [e.target.name - 1]: e.target.value });
     themeInputTable1[e.target.name - 1].advantage = e.target.value;
-    // themeInputTable2[e.target.name - 1].name = e.target.value;
+    // themeInputTable2[e.target.name - 1].name = e.target.value;c
     // themeInputTable3[e.target.name - 1].name = e.target.value;
     // themeInputTable3Mobile[e.target.name - 1].name = e.target.value;
     // themeInputTable4[e.target.name - 1].name = e.target.value;
@@ -155,10 +153,16 @@ export function TemplatePage3() {
     setColorValues({ ...colorValues, [e.target.name]: e.target.value });
   }
 
-  const changeAdvantageValues = () => {
+    const handleAdvantageColorValues = e => {
+        setAdvantageColorValues({ ...advantageColorValues, [e.target.name - 1]: e.target.value });
+    }
+
+
+    const changeAdvantageValues = () => {
     let advantagesValues = {};
     let brandValues = {};
     let competitorValues = {};
+    let advantageColorValue= {};
     let theme1 = [];
 
     [...Array(Number(advantagesCount))].map((item, index) => {
@@ -187,6 +191,7 @@ export function TemplatePage3() {
       advantagesValues = ({ ...advantagesValues, [index]: `Advantage ${index + 1}` })
       brandValues = ({ ...brandValues, [index]: true })
       competitorValues = ({ ...competitorValues, [index]: false })
+        advantageColorValue= ({ ...advantageColorValue, [index]: '#000000' })
       theme1.push({
         advantage: `Advantage ${index + 1}`,
         brand: true,
@@ -195,12 +200,13 @@ export function TemplatePage3() {
 
     })
 
-    console.log(theme1);
+
     setAllValues(advantagesValues)
     setBrandValue(brandValues)
     setCompetitorValue(competitorValues)
     setThemeInputTable1(theme1)
     setAdvantageToggle(false)
+        setAdvantageColorValues(advantageColorValue)
   }
 
   useEffect(() => {
@@ -210,33 +216,29 @@ export function TemplatePage3() {
     }
   }, [advantageToggle])
 
-
-
   const submitData = async () => {
     let data = {
       brand: yourBrand,
       competitor: otherCompetitors,
       advantages: allValues,
-      brands: brandValue,
-      competitors: competitorValue,
+      brand_values: brandValue,
+      competitor_values: competitorValue,
       template_id: selectedTemplate,
       template_name: templateName,
       user_template_id: templateUserId,
       background_color1: colorValues?.background_color1,
       background_color2: colorValues?.background_color2,
-      column1_color: colorValues?.column1_color,
-      column2_color: colorValues?.column2_color,
-      column3_color: colorValues?.column3_color,
       brand_checkbox_color1: colorValues?.brand_checkbox_color1,
       brand_checkbox_color2: colorValues?.brand_checkbox_color2,
       competitors_checkbox_color1: colorValues?.competitors_checkbox_color1,
       competitors_checkbox_color2: colorValues?.competitors_checkbox_color2,
+      advantage_color_values: advantageColorValues,
       advantages_count: advantagesCount,
       shop_name: host,
     };
 
     try {
-      const response = await axios.post('https://phpstack-362288-3089196.cloudwaysapps.com/api/step-2', data)
+      const response = await axios.post(`${url}/step-2`, data)
       console.log(response);
       setActivePage(4)
     } catch (error) {
@@ -316,112 +318,112 @@ export function TemplatePage3() {
                   </Layout>
 
 
-                  {/*<div className='Advantages-Content-Section'>*/}
-                  {/*  {[...Array(Number(advantagesCount))].map((item, index) => (*/}
-                  {/*    <Layout key={index + 1}>*/}
-                  {/*      <Layout.Section>*/}
-                  {/*        <div className='Advantages-Inputs-Section'>*/}
-                  {/*          <div className='Advantage-Input-Field'>*/}
-                  {/*            <div className="Polaris-Labelled__LabelWrapper">*/}
-                  {/*              <div className="Polaris-Label">*/}
-                  {/*                <label id={index + 1} htmlFor={index + 1}*/}
-                  {/*                  className="Polaris-Label__Text">*/}
-                  {/*                  <span*/}
-                  {/*                    className="Polaris-Text--root Polaris-Text--bodyMd Polaris-Text--regular">Advantage {index + 1}</span>*/}
-                  {/*                </label>*/}
-                  {/*              </div>*/}
-                  {/*            </div>*/}
-                  {/*            <div className="Polaris-Connected">*/}
-                  {/*              <div*/}
-                  {/*                className="Polaris-Connected__Item Polaris-Connected__Item--primary">*/}
-                  {/*                <div*/}
-                  {/*                  className="Polaris-TextField Polaris-TextField--hasValue">*/}
-                  {/*                  <input type="text"*/}
-                  {/*                    className="Polaris-TextField__Input"*/}
-                  {/*                    id={index + 1}*/}
-                  {/*                    autoComplete="off"*/}
-                  {/*                    // defaultValue={`Advantage ${index + 1}`}*/}
-                  {/*                    value={allValues[index]}*/}
-                  {/*                    name={index + 1}*/}
-                  {/*                    onChange={handleAllValues}*/}
-                  {/*                  />*/}
-                  {/*                  <div className="Polaris-TextField__Backdrop"></div>*/}
-                  {/*                </div>*/}
-                  {/*              </div>*/}
-                  {/*            </div>*/}
-                  {/*          </div>*/}
-                  {/*        </div>*/}
-                  {/*      </Layout.Section>*/}
+                  <div className='Advantages-Content-Section'>
+                    {[...Array(Number(advantagesCount))].map((item, index) => (
+                      <Layout key={index + 1}>
+                        <Layout.Section>
+                          <div className='Advantages-Inputs-Section'>
+                            <div className='Advantage-Input-Field'>
+                              <div className="Polaris-Labelled__LabelWrapper">
+                                <div className="Polaris-Label">
+                                  <label id={index + 1} htmlFor={index + 1}
+                                    className="Polaris-Label__Text">
+                                    <span
+                                      className="Polaris-Text--root Polaris-Text--bodyMd Polaris-Text--regular">Advantage {index + 1}</span>
+                                  </label>
+                                </div>
+                              </div>
+                              <div className="Polaris-Connected">
+                                <div
+                                  className="Polaris-Connected__Item Polaris-Connected__Item--primary">
+                                  <div
+                                    className="Polaris-TextField Polaris-TextField--hasValue">
+                                    <input type="text"
+                                      className="Polaris-TextField__Input"
+                                      id={index + 1}
+                                      autoComplete="off"
+                                      // defaultValue={`Advantage ${index + 1}`}
+                                      value={allValues[index]}
+                                      name={index + 1}
+                                      onChange={handleAllValues}
+                                    />
+                                    <div className="Polaris-TextField__Backdrop"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </Layout.Section>
 
-                  {/*      <Layout.Section secondary>*/}
-                  {/*        <div className='Advantages-Brands-Section'>*/}
-                  {/*          <Stack>*/}
-                  {/*            <Stack vertical>*/}
-                  {/*              <h2>*/}
-                  {/*                Your Brand*/}
-                  {/*              </h2>*/}
-                  {/*              <Stack>*/}
-                  {/*                <span className='Advantages-Input-True-Icon'>*/}
-                  {/*                  <label*/}
-                  {/*                    className={`${brandValue[index] === true || brandValue[index] === 'true' ? 'Selected' : ''}`}>*/}
-                  {/*                    <input type="radio"*/}
-                  {/*                      id={index}*/}
-                  {/*                      name={index}*/}
-                  {/*                      value={true}*/}
-                  {/*                      onChange={handleBrandValue}*/}
-                  {/*                    />*/}
-                  {/*                    <Icon source={CircleTickMajor}></Icon>*/}
-                  {/*                  </label>*/}
-                  {/*                </span>*/}
+                        <Layout.Section secondary>
+                          <div className='Advantages-Brands-Section'>
+                            <Stack>
+                              <Stack vertical>
+                                <h2>
+                                  Your Brand
+                                </h2>
+                                <Stack>
+                                  <span className='Advantages-Input-True-Icon'>
+                                    <label
+                                      className={`${brandValue[index] === true || brandValue[index] === 'true' ? 'Selected' : ''}`}>
+                                      <input type="radio"
+                                        id={index}
+                                        name={index}
+                                        value={true}
+                                        onChange={handleBrandValue}
+                                      />
+                                      <Icon source={CircleTickMajor}></Icon>
+                                    </label>
+                                  </span>
 
-                  {/*                <span className='Advantages-Input-False-Icon'>*/}
-                  {/*                  <label*/}
-                  {/*                    className={`${brandValue[index] === false || brandValue[index] === 'false' ? 'Selected' : ''}`}>*/}
-                  {/*                    <input type="radio"*/}
-                  {/*                      id={index}*/}
-                  {/*                      name={index}*/}
-                  {/*                      value={false}*/}
-                  {/*                      onChange={handleBrandValue}*/}
-                  {/*                    />*/}
-                  {/*                    <Icon source={CircleCancelMajor}>*/}
-                  {/*                    </Icon>*/}
-                  {/*                  </label>*/}
-                  {/*                </span>*/}
-                  {/*              </Stack>*/}
-                  {/*            </Stack>*/}
+                                  <span className='Advantages-Input-False-Icon'>
+                                    <label
+                                      className={`${brandValue[index] === false || brandValue[index] === 'false' ? 'Selected' : ''}`}>
+                                      <input type="radio"
+                                        id={index}
+                                        name={index}
+                                        value={false}
+                                        onChange={handleBrandValue}
+                                      />
+                                      <Icon source={CircleCancelMajor}>
+                                      </Icon>
+                                    </label>
+                                  </span>
+                                </Stack>
+                              </Stack>
 
-                  {/*            <Stack vertical>*/}
-                  {/*              <h2>*/}
-                  {/*                Competitors*/}
-                  {/*              </h2>*/}
-                  {/*              <Stack>*/}
-                  {/*                <span className='Advantages-Input-True-Icon'>*/}
-                  {/*                  <label*/}
-                  {/*                    className={`${competitorValue[index] === true || competitorValue[index] === 'true' ? 'Selected' : ''}`}>*/}
-                  {/*                    <input type="radio" id={index} name={index} value={true}*/}
-                  {/*                      onChange={handleCompetitorValue} />*/}
-                  {/*                    <Icon source={CircleTickMajor}></Icon>*/}
-                  {/*                  </label>*/}
-                  {/*                </span>*/}
+                              <Stack vertical>
+                                <h2>
+                                  Competitors
+                                </h2>
+                                <Stack>
+                                  <span className='Advantages-Input-True-Icon'>
+                                    <label
+                                      className={`${competitorValue[index] === true || competitorValue[index] === 'true' ? 'Selected' : ''}`}>
+                                      <input type="radio" id={index} name={index} value={true}
+                                        onChange={handleCompetitorValue} />
+                                      <Icon source={CircleTickMajor}></Icon>
+                                    </label>
+                                  </span>
 
-                  {/*                <span className='Advantages-Input-False-Icon'>*/}
-                  {/*                  <label*/}
-                  {/*                    className={`${competitorValue[index] === false || competitorValue[index] === 'false' ? 'Selected' : ''}`}>*/}
-                  {/*                    <input type="radio" id={index} name={index} value={false}*/}
-                  {/*                      onChange={handleCompetitorValue} />*/}
-                  {/*                    <Icon source={CircleCancelMajor}>*/}
-                  {/*                    </Icon>*/}
-                  {/*                  </label>*/}
-                  {/*                </span>*/}
-                  {/*              </Stack>*/}
-                  {/*            </Stack>*/}
+                                  <span className='Advantages-Input-False-Icon'>
+                                    <label
+                                      className={`${competitorValue[index] === false || competitorValue[index] === 'false' ? 'Selected' : ''}`}>
+                                      <input type="radio" id={index} name={index} value={false}
+                                        onChange={handleCompetitorValue} />
+                                      <Icon source={CircleCancelMajor}>
+                                      </Icon>
+                                    </label>
+                                  </span>
+                                </Stack>
+                              </Stack>
 
-                  {/*          </Stack>*/}
-                  {/*        </div>*/}
-                  {/*      </Layout.Section>*/}
-                  {/*    </Layout>*/}
-                  {/*  ))}*/}
-                  {/*</div>*/}
+                            </Stack>
+                          </div>
+                        </Layout.Section>
+                      </Layout>
+                    ))}
+                  </div>
 
                 </div>
               </Card>
@@ -489,79 +491,34 @@ export function TemplatePage3() {
                   </Stack>
                 </div>
 
-                <div className='Color-Inputs'>
-                  <Text variant="bodyMd" as="p" color="subdued">
-                    Advantages colors
-                  </Text>
-                  <Stack>
-                    <label
-                      className={`${colorValues?.column1_color === '#ffffff' || colorValues?.column1_color === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
-                      style={{ backgroundColor: colorValues?.column1_color }}>
-                      <input type="color"
-                        value={colorValues?.column1_color}
-                        name='column1_color'
-                        onChange={handleColorValues}
-                      />
-                    </label>
-
-                    <span className='Color-Property'>
-                      <Stack vertical>
-                        <Text variant="headingSm" as="h6" fontWeight="semibold">
-                          Advantages column 1
-                        </Text>
-                        <Text variant="headingXs" as="h6" fontWeight="medium">
-                          {colorValues?.column1_color}
-                        </Text>
-                      </Stack>
-                    </span>
-                  </Stack>
-
-                  <Stack>
-                    <label
-                      className={`${colorValues?.column2_color === '#ffffff' || colorValues?.column2_color === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
-                      style={{ backgroundColor: colorValues?.column2_color }}>
-                      <input type="color"
-                        value={colorValues?.column2_color}
-                        name='column2_color'
-                        onChange={handleColorValues}
-                      />
-                    </label>
-
-                    <span className='Color-Property'>
-                      <Stack vertical>
-                        <Text variant="headingSm" as="h6" fontWeight="semibold">
-                          Advantages column 2
-                        </Text>
-                        <Text variant="headingXs" as="h6" fontWeight="medium">
-                          {colorValues?.column2_color}
-                        </Text>
-                      </Stack>
-                    </span>
-                  </Stack>
-
-                  <Stack>
-                    <label
-                      className={`${colorValues?.column3_color === '#ffffff' || colorValues?.column3_color === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
-                      style={{ backgroundColor: colorValues?.column3_color }}>
-                      <input type="color"
-                        value={colorValues?.column3_color}
-                        name='column3_color'
-                        onChange={handleColorValues}
-                      />
-                    </label>
-
-                    <span className='Color-Property'>
-                      <Stack vertical>
-                        <Text variant="headingSm" as="h6" fontWeight="semibold">
-                          Advantages column 3
-                        </Text>
-                        <Text variant="headingXs" as="h6" fontWeight="medium">
-                          {colorValues?.column3_color}
-                        </Text>
-                      </Stack>
-                    </span>
-                  </Stack>
-                </div>
+                  <div className='Color-Inputs'>
+                      <Text variant="bodyMd" as="p" color="subdued">
+                          Advantages colors
+                      </Text>
+                      {[...Array(Number(advantagesCount))]?.map((item, index) => (
+                          <Stack>
+                              <label
+                                  className={`${advantageColorValues[index] === '#FFFFFF' || advantageColorValues[index] === '#EBECF0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                                  style={{ backgroundColor: advantageColorValues[index] }}>
+                                  <input type="color"
+                                         value={advantageColorValues[index]}
+                                         name={index +1}
+                                         onChange={handleAdvantageColorValues}
+                                  />
+                              </label>
+                              <span className='Color-Property'>
+                        <Stack vertical>
+                          <Text variant="headingSm" as="h6" fontWeight="semibold">
+                            {` Advantage column ${index + 1}`}
+                          </Text>
+                          <Text variant="headingXs" as="h6" fontWeight="medium">
+                            {advantageColorValues[index]}
+                          </Text>
+                        </Stack>
+                      </span>
+                          </Stack>
+                      ))}
+                  </div>
 
                 <div className='Color-Inputs'>
                   <Text variant="bodyMd" as="p" color="subdued">
@@ -685,7 +642,8 @@ export function TemplatePage3() {
                 {(() => {
                   switch (selectedTemplate) {
                     case 1:
-                      return <Table11 themePc={themeInputTable1} themeMobile={themeInputTable1} />
+                      return <Table11 themePc={themeInputTable1} themeMobile={themeInputTable1}
+                                      yourBrand={yourBrand}    otherCompetitors={otherCompetitors}/>
                     case 2:
                       return <Table2 themePc={themeInputTable2} themeMobile={themeInputTable2}
                         themeHeadingsMobile={themeHeadingsPc}

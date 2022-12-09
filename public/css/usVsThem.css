@@ -18,7 +18,9 @@
     --template-table4-rows-light-color: #D2E8F4;
 }
 
-
+.Template-SideBar .Polaris-Navigation .Polaris-Navigation__PrimaryNavigation {
+    overflow: hidden
+}
 
 .Templates-Page {
     position: relative;

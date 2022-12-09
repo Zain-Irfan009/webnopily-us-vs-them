@@ -307,7 +307,7 @@ const themeHeadingsMobile =
 
 
 export function TemplatePage2() {
-  const { setActivePage,templateUserId, setTemplateUserId, setSelectedTemplate } = useContext(AppContext);
+  const { setActivePage,templateUserId, setTemplateUserId, setSelectedTemplate,url } = useContext(AppContext);
 
   let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
   const handleSelectTemplate = async (templateId) => {
@@ -316,7 +316,7 @@ export function TemplatePage2() {
 
     const response = await axios
       .post(
-        `https://phpstack-362288-3089196.cloudwaysapps.com/api/step-1?template_id=${templateId}&user_template_id=${templateUserId}&shop_name=${host}`
+        `${url}/step-1?template_id=${templateId}&user_template_id=${templateUserId}&shop_name=${host}`
       )
       .then(res => {
         console.log(res);

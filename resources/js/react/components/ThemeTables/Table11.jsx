@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import { Card, IndexTable, Icon, Stack, Button } from '@shopify/polaris';
 import {
     TickMinor, CancelMinor, MobileMajor, DesktopMajor, CircleTickMajor, CircleCancelMajor
 } from '@shopify/polaris-icons';
 
-export function Table11({ themePc, themeMobile, btnShow, handleSelectTemplate }) {
+export function Table11({ themePc, themeMobile, btnShow, yourBrand, otherCompetitors}) {
     const [screen, setScreen] = useState(true)
     const handleScreenSelection = () => {
         setScreen(!screen)
@@ -73,21 +73,23 @@ export function Table11({ themePc, themeMobile, btnShow, handleSelectTemplate })
     const themeHeadingsPc =
         [
             { title: '' },
-            { title: 'Your Brand' },
-            { title: 'competitor' }
+            { title: `${yourBrand}` },
+            { title: `${otherCompetitors}` }
         ]
 
     const themeHeadingsMobile =
         [
             { title: '' },
-            { title: 'Your Brand' },
-            { title: 'Other Competitors' }
+            { title: `${yourBrand}` },
+            { title: `${otherCompetitors}` }
         ]
+
 
     return (
         <Card sectioned>
             <div className='Theme-Card-Content'>
                 <div className={`${screen ? 'Theme1-Pc-Table' : 'Theme1-Mobile-Table'} Theme-Table`}>
+
                     <IndexTable
                         resourceName={resourceName}
                         itemCount={screen ? themePc?.length : themeMobile?.length}

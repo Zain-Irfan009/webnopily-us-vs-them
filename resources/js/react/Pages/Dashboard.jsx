@@ -1,20 +1,19 @@
 import {
-    Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List ,Link, Modal, MediaCard,
+    Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List, Modal, MediaCard,
     Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, TextField, Loading, Frame, EmptyState
 } from '@shopify/polaris';
-import { CancelSmallMinor } from '@shopify/polaris-icons';
+import {CancelSmallMinor} from '@shopify/polaris-icons';
 import createApp from '@shopify/app-bridge/development';
-import { Redirect } from '@shopify/app-bridge/actions';
-import { useAppQuery } from "../components/hooks/index";
-import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
+import {Redirect} from '@shopify/app-bridge/actions';
+import {useAppQuery} from "../components/hooks/index";
+import React, {useState, useEffect, useRef, useCallback, useContext} from 'react';
 import axios from "axios";
-import { AppContext } from '../Context'
-
-
+import {AppContext} from '../Context'
+import {Link} from 'react-router-dom'
 
 
 export function Dashboard() {
-    const { setActivePage, setTemplateUserId, config,setSelectedTemplate } = useContext(AppContext);
+    const {setActivePage, setTemplateUserId, config, setSelectedTemplate,url} = useContext(AppContext);
     let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
     const app = createApp(config);
     const redirect = Redirect.create(app);
@@ -41,10 +40,10 @@ export function Dashboard() {
 
         const response = await axios
             .get(
-                `https://phpstack-362288-3089196.cloudwaysapps.com/api/current-templates?shop_name=${host}`
+                `${url}/current-templates?shop_name=${host}`
             )
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 setTemplateTable(res.data.result);
                 setTimeout(() => {
                     setLoading(false)
@@ -56,6 +55,7 @@ export function Dashboard() {
 
     useEffect(() => {
         getData();
+        console.log(config);
     }, [toggleReload]);
 
     const handleAppEnable = () => {
@@ -64,7 +64,7 @@ export function Dashboard() {
     }
 
     const handleLocationChange = () => {
-        redirect.dispatch(Redirect.Action.APP, `/templates` );
+        redirect.dispatch(Redirect.Action.APP, `/templates`);
 
     }
 
@@ -93,13 +93,13 @@ export function Dashboard() {
     }
 
     const toastRename = renameToastActive ? (
-        <Toast content="Template Rename Sucessfully" onDismiss={toggleToastActive} duration={1500} />
+        <Toast content="Template Rename Sucessfully" onDismiss={toggleToastActive} duration={1500}/>
     ) : null;
     const toastDelete = deletetoastActive ? (
-        <Toast content="Template Deleted Sucessfully" onDismiss={toggleToastActive} duration={1500} />
+        <Toast content="Template Deleted Sucessfully" onDismiss={toggleToastActive} duration={1500}/>
     ) : null;
     const toastDuplicate = duplicatetoastActive ? (
-        <Toast content="Template Duplicate Sucessfully" onDismiss={toggleToastActive} duration={1500} />
+        <Toast content="Template Duplicate Sucessfully" onDismiss={toggleToastActive} duration={1500}/>
     ) : null;
 
     function useOutsideAlerter(ref, id) {
@@ -134,14 +134,13 @@ export function Dashboard() {
             shop_name: host,
         };
         try {
-            const response = await axios.post('https://phpstack-362288-3089196.cloudwaysapps.com/api/rename-template', data)
+            const response = await axios.post(`${url}/rename-template`, data)
             console.log(response);
             setRenameModalActive(false)
             setRenameToastActive(!renameToastActive)
             setToggleReload(!toggleReload)
         } catch (error) {
             setRenameModalActive(false)
-            setRenameToastActive(!renameToastActive)
             setTemplateRenameUserId()
             alert('Error: ', error);
         }
@@ -155,7 +154,7 @@ export function Dashboard() {
             shop_name: host,
         };
         try {
-            const response = await axios.post('https://phpstack-362288-3089196.cloudwaysapps.com/api/duplicate-template', data)
+            const response = await axios.post(`${url}/duplicate-template`, data)
             console.log(response);
             setDuplicatetoastActive(!duplicatetoastActive)
             setToggleReload(!toggleReload)
@@ -174,7 +173,7 @@ export function Dashboard() {
             shop_name: host,
         };
         try {
-            const response = await axios.post('https://phpstack-362288-3089196.cloudwaysapps.com/api/delete-template', data)
+            const response = await axios.post(`${url}/delete-template`, data)
             console.log(response);
             setDeletetoastActive(!deletetoastActive)
             setToggleReload(!toggleReload)
@@ -191,26 +190,26 @@ export function Dashboard() {
         console.log(`preview template clicked ${id}`);
     }
 
-    const handleCustomizeTemplate = (id,temp_id) => {
+    const handleCustomizeTemplate = (id, temp_id) => {
         console.log(`customize template clicked ${id}`);
         setSelectedTemplate(temp_id)
         setTemplateUserId(id)
         setActivePage(3)
 
-        redirect.dispatch(Redirect.Action.APP, `/templates` );
+        // redirect.dispatch(Redirect.Action.APP, `/templates` );
     }
 
-    const handleChangeTemplate = (id,temp_id) => {
+    const handleChangeTemplate = (id, temp_id) => {
         // console.log(`customize template clicked ${id}`);
         setSelectedTemplate(temp_id)
         setTemplateUserId(id)
         setActivePage(2)
 
-
-
-        redirect.dispatch(Redirect.Action.APP, {
-            path: `/templates`,
-        })
+        //
+        //
+        // redirect.dispatch(Redirect.Action.APP, {
+        //     path: `/templates`,
+        // })
     }
 
     const handleSelectProducts = async (id) => {
@@ -221,7 +220,7 @@ export function Dashboard() {
 
         const response = await axios
             .get(
-                `https://phpstack-362288-3089196.cloudwaysapps.com/api/products?user_template_id=${id}&shop_name=${host}`
+                `${url}/products?user_template_id=${id}&shop_name=${host}`
             )
 
             .then(res => {
@@ -238,16 +237,18 @@ export function Dashboard() {
                 setShowProducts((prev) => {
                     let toggleId;
                     if (prev[id]) {
-                        toggleId = { [id]: false };
+                        toggleId = {[id]: false};
                     } else {
-                        toggleId = { [id]: true };
+                        toggleId = {[id]: true};
                     }
-                    return { ...toggleId };
+                    return {...toggleId};
                 });
 
             })
             .catch(error =>
                 alert('Error: ', error));
+                    setSelectedItems()
+        setShowProducts(false)
     }
 
     const handleSubmitProduct = async (id) => {
@@ -266,7 +267,7 @@ export function Dashboard() {
             shop_name: host,
         };
         try {
-            const response = await axios.post('https://phpstack-362288-3089196.cloudwaysapps.com/api/selected-products', data)
+            const response = await axios.post(`${url}/selected-products`, data)
             console.log(response);
             setShowProducts(false);
         } catch (error) {
@@ -307,7 +308,7 @@ export function Dashboard() {
                     </Modal>
                 }
 
-                {loading ? <Loading /> :
+                {loading ? <Loading/> :
                     <Page
                         title="Us vs Them"
                         titleMetadata={
@@ -374,16 +375,10 @@ export function Dashboard() {
                                                 create as many
                                                 as you want for each product.
                                             </p>
-                                            {/*<Link url='/admin/apps/usVsThem/Templates'>*/}
-                                            {/*    <Button size="slim">Create a Table</Button>*/}
-                                            {/*</Link>*/}
 
-                                            {/*<Link url='/admin/apps/usVsThem/Templates' onClick={handleLocationChange}>*/}
-                                            {/*    <Button size="slim">Create a Table</Button>*/}
-                                            {/*</Link>*/}
-
-                                                <Button size="slim" onClick={handleLocationChange}>Create a Table</Button>
-
+                                            <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
+                                            <Button size="slim" >Create a Table</Button>
+                                            </Link>
                                         </Stack>
                                     </div>
                                 </Card>
@@ -397,24 +392,24 @@ export function Dashboard() {
                                         </EmptyState>
                                     </Card>
                                     :
-                                    templateTable?.map(({ name, image, template_id, user_template_id }, index) =>
-                                        <MediaCard
-                                            key={user_template_id}
-                                            title={name}
-                                            description={
-                                                <span className='MediaCard-Description'>
+                                    templateTable?.map(({name, image, template_id, user_template_id}, index) =>
+                                            <MediaCard
+                                                key={user_template_id}
+                                                title={name}
+                                                description={
+                                                    <span className='MediaCard-Description'>
                                                     Here is the current Template that you've choosen. You can customize it every time you want.
                                                     <ButtonGroup id='MediaCard-BtnGroup'>
                                                         <span className='MediaCard-Products-handle'>
                                                             <Button primary
-                                                                onClick={() => handleSelectProducts(user_template_id)}
-                                                                id='MediaCard-Btn'>Select Product</Button>
+                                                                    onClick={() => handleSelectProducts(user_template_id)}
+                                                                    id='MediaCard-Btn'>Select Product</Button>
                                                             {showProducts[user_template_id] &&
                                                                 <span className='Polaris-MediaCard-Table'>
                                                                     <Card>
                                                                         <span className='MediaCard-Products-Cancel-Btn'>
                                                                             <Button size='slim'
-                                                                                onClick={() => setShowProducts(false)}>
+                                                                                    onClick={() => setShowProducts(false)}>
                                                                                 <Icon source={CancelSmallMinor}></Icon>
                                                                             </Button>
                                                                         </span>
@@ -425,11 +420,11 @@ export function Dashboard() {
                                                                             }}
                                                                             items={products}
                                                                             renderItem={(item) => {
-                                                                                const { id, image, title } = item;
+                                                                                const {id, image, title} = item;
                                                                                 const media = <Avatar size="small"
-                                                                                    shape="square"
-                                                                                    name={title}
-                                                                                    source={image} />;
+                                                                                                      shape="square"
+                                                                                                      name={title}
+                                                                                                      source={image}/>;
                                                                                 return (
                                                                                     <ResourceItem
                                                                                         id={id}
@@ -437,7 +432,7 @@ export function Dashboard() {
                                                                                         accessibilityLabel={`View details for ${title}`}
                                                                                     >
                                                                                         <Text variant="bodyMd"
-                                                                                            fontWeight="bold" as="h3">
+                                                                                              fontWeight="bold" as="h3">
                                                                                             {title}
                                                                                         </Text>
 
@@ -451,50 +446,58 @@ export function Dashboard() {
                                                                         <span
                                                                             className='MediaCard-Products-Confirm-Btn'>
                                                                             <Button primary
-                                                                                onClick={() => handleSubmitProduct(user_template_id)}> Confirm</Button>
+                                                                                    onClick={() => handleSubmitProduct(user_template_id)}> Confirm</Button>
                                                                         </span>
                                                                     </Card>
                                                                 </span>
                                                             }
                                                         </span>
 
-                                                        <Button onClick={() => handleChangeTemplate(user_template_id,template_id)}>Change Template</Button>
+
+                                  <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
+                                      <Button onClick={() => handleChangeTemplate(user_template_id, template_id)}>
+                                          Change Template
+                                      </Button>
+                                  </Link>
 
 
-
-                                                            <Button onClick={() => handleCustomizeTemplate(user_template_id,template_id)}>Customize Template</Button>
+                                                          <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
+                                                              <Button onClick={() => handleCustomizeTemplate(user_template_id, template_id)}>
+                                                                  Customize Template
+                                                              </Button>
+                                                          </Link>
 
 
                                                         <Button plain
-                                                            onClick={() => handlePreviewTemplate(user_template_id)}>Preview</Button>
+                                                                onClick={() => handlePreviewTemplate(user_template_id)}>Preview</Button>
                                                     </ButtonGroup>
                                                 </span>
-                                            }
-
-                                            popoverActions={[
-                                                {
-                                                    id: user_template_id,
-                                                    content: 'Rename',
-                                                    onAction: () => handleRenameModal(user_template_id, name)
-                                                },
-                                                {
-                                                    id: user_template_id,
-                                                    content: 'Duplicate',
-                                                    onAction: () => handleDuplicateTemplate(user_template_id)
-                                                },
-                                                {
-                                                    id: user_template_id,
-                                                    content: 'Delete',
-                                                    onAction: () => handleDeleteTemplate(user_template_id)
                                                 }
-                                            ]}
-                                        >
-                                            <img
-                                                alt="table"
-                                                className='MediaCard-Img'
-                                                src={image}
-                                            />
-                                        </MediaCard>
+
+                                                popoverActions={[
+                                                    {
+                                                        id: user_template_id,
+                                                        content: 'Rename',
+                                                        onAction: () => handleRenameModal(user_template_id, name)
+                                                    },
+                                                    {
+                                                        id: user_template_id,
+                                                        content: 'Duplicate',
+                                                        onAction: () => handleDuplicateTemplate(user_template_id)
+                                                    },
+                                                    {
+                                                        id: user_template_id,
+                                                        content: 'Delete',
+                                                        onAction: () => handleDeleteTemplate(user_template_id)
+                                                    }
+                                                ]}
+                                            >
+                                                <img
+                                                    alt="table"
+                                                    className='MediaCard-Img'
+                                                    src={image}
+                                                />
+                                            </MediaCard>
                                     )
                                 }
 

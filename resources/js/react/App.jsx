@@ -64,12 +64,19 @@ function App({ shop, host, apiKey }) {
     const [activePage, setActivePage] = useState(1)
     const [selectedTemplate, setSelectedTemplate] = useState()
     const [templateUserId, setTemplateUserId] = useState()
+    const url='https://us-vs-them.test/api'
+    // let url='https://phpstack-362288-3089196.cloudwaysapps.com/api';
 
     useEffect(() => {
         console.log('activePage: ', activePage);
         console.log('selectedTemplate: ', selectedTemplate);
         console.log('templateUserId: ', templateUserId);
     }, [activePage, selectedTemplate, templateUserId])
+
+    useEffect(() => {
+        console.warn('app refresh now');
+
+    }, [])
 
 
     return (
@@ -82,7 +89,7 @@ function App({ shop, host, apiKey }) {
                         <AppContext.Provider
                             value={{
                                 activePage, setActivePage, selectedTemplate, setSelectedTemplate,
-                                templateUserId, setTemplateUserId, config
+                                templateUserId, setTemplateUserId, config,url
                             }}>
                             <Switch>
                                 <Route exact path="/" component={Dashboard} />
