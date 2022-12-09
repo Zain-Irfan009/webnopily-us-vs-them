@@ -78,6 +78,8 @@ class TemplateController extends ApiController
             return $this->response($result, 200);
 
         } else {
+
+
             $user_template_products = UserTemplateProduct::where('shop_id', $shop->id)->whereNull('user_template_id')->get();
             $user_templates = new UserTemplate();
             $user_templates->template_id = $template->id;
@@ -100,14 +102,15 @@ class TemplateController extends ApiController
                 $advantages->advantage = 'Advantage' . $i;
                 $advantages->brand = 1;
                 $advantages->user_template_id = $user_templates->id;
-                $advantages->advantage_column_color='#000000';
+//                $advantages->advantage_column_color='#000000';
+                $advantages->competitors=0;
                 $advantages->shop_id = $shop->id;
                 $advantages->save();
-                $new_competator=new Competator();
-                $new_competator->competator_name='Competitor 1';
-                $new_competator->competator_status=0;
-                $new_competator->advantage_id=$advantages->id;
-                $new_competator->save();
+//                $new_competator=new Competator();
+//                $new_competator->competator_name='Competitor 1';
+//                $new_competator->competator_status=0;
+//                $new_competator->advantage_id=$advantages->id;
+//                $new_competator->save();
             }
             foreach ($user_template_products as $user_template_product) {
                 $user_template_product->user_template_id = $user_templates->id;
@@ -549,20 +552,20 @@ class TemplateController extends ApiController
                     }
                 }
                 if(count($request->unSelected_ids) > 0){
-                foreach ($request->unSelected_ids as $unSelected_id) {
+                    foreach ($request->unSelected_ids as $unSelected_id) {
 
-                    $res_for_delete = $client->get('/products/' . $unSelected_id . '/metafields.json');
-                    $res_for_delete = $res_for_delete->getDecodedBody();
+                        $res_for_delete = $client->get('/products/' . $unSelected_id . '/metafields.json');
+                        $res_for_delete = $res_for_delete->getDecodedBody();
 
-                  if($res_for_delete['metafields']){
-                      foreach ($res_for_delete['metafields'] as $delete_meta) {
-                          if ($delete_meta['key'] == 'products') {
+                        if($res_for_delete['metafields']){
+                            foreach ($res_for_delete['metafields'] as $delete_meta) {
+                                if ($delete_meta['key'] == 'products') {
 
-                              $delete = $client->delete('/metafields/' . $delete_meta['id'] . '.json');
-                          }
-                      }
-                  }
-                }
+                                    $delete = $client->delete('/metafields/' . $delete_meta['id'] . '.json');
+                                }
+                            }
+                        }
+                    }
 
 
                     $data = [
@@ -643,24 +646,25 @@ class TemplateController extends ApiController
                 $item = [
                     'advantage' => $value->advantage,
                     'brand' => $brand,
-                    'column_color'=>$value->advantage_column_color
+                    'competitors'=>$competitor,
+//                    'column_color'=>$value->advantage_column_color
                 ];
                 array_push($items_array, $item);
-                $result_new=[];
-
-                $competators_data=Competator::where('advantage_id',$value->id)->get();
-                foreach ($competators_data as $data){
-                    $data_competator=[
-                        'name'=>$data->competator_name,
-                        'status'=>$data->competator_status
-                    ];
-                    $result_new[] = $data_competator;
-                }
-
-                $item_advantage=[
-                    'competitors'=>$result_new
-                ];
-            array_push($main_array,$item_advantage);
+//                $result_new=[];
+//
+//                $competators_data=Competator::where('advantage_id',$value->id)->get();
+//                foreach ($competators_data as $data){
+//                    $data_competator=[
+//                        'name'=>$data->competator_name,
+//                        'status'=>$data->competator_status
+//                    ];
+//                    $result_new[] = $data_competator;
+//                }
+//
+//                $item_advantage=[
+//                    'competitors'=>$result_new
+//                ];
+//                array_push($main_array,$item_advantage);
             }
 
             $result = [];
@@ -685,9 +689,10 @@ class TemplateController extends ApiController
                 'template_id' => $user_template->template_id,
                 'advantages' => $advantages_get,
                 'brand_value' => $brands_array,
-                'column_colors'=>$advantages_color_get,
+                'competitors'=>$competitors_get,
+//                'column_colors'=>$advantages_color_get,
                 'items' => $items_array,
-                'competitor_value'=>$main_array
+//                'competitor_value'=>$main_array
 
             ];
 
