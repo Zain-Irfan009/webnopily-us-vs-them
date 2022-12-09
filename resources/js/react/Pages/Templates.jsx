@@ -11,17 +11,17 @@ export function Templates() {
   const { activePage } = useContext(AppContext);
   const [loading, setLoading] = useState(true)
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 500);
-  // }, [activePage])
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 0);
+  }, [activePage])
 
 
   return (
     <div className='Navigation-Frame'>
       <Frame>
-          {/*{loading ? <Loading/> :*/}
+          {loading ? <Loading/> :
               <div className={`Templates-Page`}>
                   <Layout>
                       <Layout.Section>
@@ -50,7 +50,7 @@ export function Templates() {
 
                   </Layout>
               </div>
-          // }
+           }
       </Frame>
     </div>
   );

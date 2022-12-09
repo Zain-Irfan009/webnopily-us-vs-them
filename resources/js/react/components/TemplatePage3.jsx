@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useContext } from 'react'
 import { Page, Layout, Text, Card, Select, Icon, Stack, TextField, Loading, PageActions } from '@shopify/polaris';
 import { CircleTickMajor, CircleCancelMajor } from '@shopify/polaris-icons';
-import { Table11, Table1, Table2, Table3, Table4, SideBarNavigation } from './index';
+import { Table11, Table22, Table33, Table44, SideBarNavigation } from './index';
 import axios from "axios";
 import { AppContext } from '../Context'
 
@@ -306,12 +306,29 @@ export function TemplatePage3() {
                 <div className='Advantages-Layout'>
                   <Layout>
                     <Layout.Section oneHalf>
-                      <TextField
-                        label="Number of advantages"
-                        value={advantagesCount}
-                        onChange={handleAdvantagesCount}
-                        autoComplete="off"
-                      />
+                      {/*<TextField*/}
+                      {/*  label="Number of advantages"*/}
+                      {/*  value={advantagesCount}*/}
+                      {/*  onChange={handleAdvantagesCount}*/}
+                      {/*  autoComplete="off"*/}
+                      {/*/>*/}
+                        <Select
+                            label="Number of advantages"
+                            options={ [
+                                {label: '1', value: '1'},
+                                {label: '2', value: '2'},
+                                {label: '3', value: '3'},
+                                {label: '4', value: '4'},
+                                {label: '5', value: '5'},
+                                {label: '6', value: '6'},
+                                {label: '7', value: '7'},
+                                {label: '8', value: '8'},
+                                {label: '9', value: '9'},
+                                {label: '10', value: '10'},
+                            ]}
+                            onChange={handleAdvantagesCount}
+                            value={advantagesCount}
+                        />
                     </Layout.Section>
 
                     <Layout.Section oneHalf></Layout.Section>
@@ -645,13 +662,14 @@ export function TemplatePage3() {
                       return <Table11 themePc={themeInputTable1} themeMobile={themeInputTable1}
                                       yourBrand={yourBrand}    otherCompetitors={otherCompetitors}/>
                     case 2:
-                      return <Table2 themePc={themeInputTable2} themeMobile={themeInputTable2}
-                        themeHeadingsMobile={themeHeadingsPc}
-                        themeHeadingsPc={themeHeadingsPc} />
+                      return <Table22 themePc={themeInputTable1} themeMobile={themeInputTable1}
+                                      yourBrand={yourBrand}    otherCompetitors={otherCompetitors} />
                     case 3:
-                      return <Table3 themePc={themeInputTable3} themeMobile={themeInputTable3Mobile} />
+                      return <Table33 themePc={themeInputTable1} themeMobile={themeInputTable1}
+                                      yourBrand={yourBrand}    otherCompetitors={otherCompetitors}/>
                     case 4:
-                      return <Table4 themePc={themeInputTable4} themeMobile={themeInputTable4} />
+                      return <Table44 themePc={themeInputTable1} themeMobile={themeInputTable1}
+                                      yourBrand={yourBrand}    otherCompetitors={otherCompetitors}/>
                     default:
                       break
                   }
