@@ -128,7 +128,6 @@ class ProductController extends Controller
         }
 
         return redirect("/?shop=$session->shop&host=$host");
-
     }
 
     public function UpdateCount(Request $request){
