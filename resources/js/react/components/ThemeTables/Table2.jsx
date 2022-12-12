@@ -5,7 +5,7 @@ import {
 } from '@shopify/polaris-icons';
 
 
-export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMobile, btnShow, handleSelectTemplate,btnloading }) {
+export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMobile, btnShow, handleSelectTemplate, btnloading }) {
     const [screen, setScreen] = useState(true)
     const handleScreenSelection = () => {
         setScreen(!screen)
@@ -18,7 +18,7 @@ export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMob
     };
 
     const themeRowsPc = themePc?.map(
-        ({ name, yourBrand, competitor1, competitor2, competitor3, competitor4 }, index) => (
+        ({ name, yourBrand, competitor1 }, index) => (
             <IndexTable.Row
                 id={index}
                 key={index}
@@ -39,31 +39,13 @@ export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMob
                         <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMinor}></Icon> </span>
                     }
                 </IndexTable.Cell>
-                <IndexTable.Cell>
-                    {competitor2 ?
-                        <span className='Circle-bg-True-Icon'> <Icon source={CircleTickMinor} ></Icon>  </span> :
-                        <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMinor}></Icon> </span>
-                    }
-                </IndexTable.Cell>
-                <IndexTable.Cell>
-                    {competitor3 ?
-                        <span className='Circle-bg-True-Icon'> <Icon source={CircleTickMinor} ></Icon>  </span> :
-                        <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMinor}></Icon> </span>
-                    }
-                </IndexTable.Cell>
-                <IndexTable.Cell>
-                    {competitor4 ?
-                        <span className='Circle-bg-True-Icon'> <Icon source={CircleTickMinor} ></Icon>  </span> :
-                        <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMinor}></Icon> </span>
-                    }
-                </IndexTable.Cell>
 
             </IndexTable.Row>
         ),
     );
 
     const themeRowsMobile = themeMobile?.map(
-        ({ name, advantage1, advantage2, advantage3, advantage4 }, index) => (
+        ({ name, advantage1, advantage2 }, index) => (
             <IndexTable.Row
                 id={index}
                 key={index}
@@ -80,18 +62,6 @@ export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMob
                 </IndexTable.Cell>
                 <IndexTable.Cell>
                     {advantage2 ?
-                        <span className='Circle-bg-True-Icon'> <Icon source={CircleTickMajor} ></Icon>  </span> :
-                        <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMajor}></Icon> </span>
-                    }
-                </IndexTable.Cell>
-                <IndexTable.Cell>
-                    {advantage3 ?
-                        <span className='Circle-bg-True-Icon'> <Icon source={CircleTickMajor} ></Icon>  </span> :
-                        <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMajor}></Icon> </span>
-                    }
-                </IndexTable.Cell>
-                <IndexTable.Cell>
-                    {advantage4 ?
                         <span className='Circle-bg-True-Icon'> <Icon source={CircleTickMajor} ></Icon>  </span> :
                         <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMajor}></Icon> </span>
                     }

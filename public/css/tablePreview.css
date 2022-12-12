@@ -1,0 +1,288 @@
+.temp1-compare-section {
+    background: #f1f1f1 !important;
+    box-shadow: 0 0 0.3125rem rgba(23, 24, 24, 0.05),
+        0 0.0625rem 0.125rem rgba(0, 0, 0, 0.15);
+    color: #fff;
+    padding: 20px;
+    max-width: 98%;
+    overflow: auto;
+}
+
+.temp1-compare-section table {
+    border: 0;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow-x: auto;
+    background: transparent;
+}
+
+.temp1-compare-section table th {
+    font-weight: 500;
+    padding: 8px 16px !important;
+    color: #282828;
+    letter-spacing: 1px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: Poppins, sans-serif;
+}
+
+.temp1-compare-section table tbody tr:first-of-type td:first-of-type {
+    border-top-left-radius: 20px;
+}
+
+.temp1-compare-section table tbody tr:last-of-type td:first-of-type {
+    border-bottom-left-radius: 20px;
+}
+
+.temp1-compare-section table tbody tr:last-of-type td:last-of-type {
+    border-bottom-right-radius: 20px;
+}
+
+.temp1-compare-section table td:first-child,
+.temp1-compare-section table th:first-child {
+    text-align: left;
+    font-size: 13px;
+    color: #282828;
+    line-height: 24px;
+    font-weight: 500;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+}
+
+.temp1-compare-section table td:nth-child(2),
+.temp1-compare-section table th:nth-child(2) {
+    background: #ff5859;
+    color: #fff;
+}
+
+.temp1-compare-section table th:nth-child(2) {
+    border-top-right-radius: 40px;
+    border-top-left-radius: 40px;
+}
+
+.temp1-compare-section table th:nth-child(2),
+.temp1-compare-section table th:nth-child(3) {
+    width: 250px;
+}
+
+.temp1-compare-section table tbody tr:nth-child(odd) {
+    background: #fff;
+}
+
+.temp1-compare-section table td,
+.temp1-compare-section table th {
+    border: 0;
+    text-align: center;
+    padding: 4px 16px;
+    background: transparent;
+}
+
+
+.temp1-compare-section table td:nth-child(2),
+.temp1-compare-section table th:nth-child(2) {
+    background: #ff5859;
+    color: #fff;
+}
+
+.temp1-compare-section table td:nth-child(2) {
+    font-size: 0;
+}
+
+.temp1-compare-section table tbody tr td:nth-child(2) {
+    font-size: 14px;
+    color: #fff;
+    line-height: 16px;
+}
+
+.temp1-compare-section table tbody tr:nth-child(odd) td:nth-child(2) {
+    background: #ff3849;
+}
+
+.temp1-compare-section table tbody tr td:nth-child(3) {
+    font-size: 14px;
+    color: #282828;
+    line-height: 16px;
+}
+
+.temp1-compare-section table tbody tr:first-of-type td:last-of-type {
+    border-top-right-radius: 20px;
+}
+
+.temp1-compare-section table tbody tr:nth-child(even) {
+    background: #e8e8e8;
+}
+
+.temp1-compare-section table tbody tr:nth-child(even) td:nth-child(2) {
+    background: #ff6668;
+}
+
+.temp1-compare-section table tfoot tr td:nth-child(2) {
+    border-bottom-right-radius: 40px;
+    border-bottom-left-radius: 40px;
+    padding: 25px 20px 10px 20px;
+}
+
+.icon-check,
+.icon-cross {
+    width: 25px;
+    height: 25px;
+    overflow: hidden;
+    display: inline-block;
+    text-indent: -200px;
+    position: relative;
+}
+
+.icon-check::before {
+    border: 4px solid #ff5859;
+    border-width: 0 4px 4px 0;
+    width: 11px;
+    height: 18px;
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.icon-cross::before {
+    width: 4px;
+    height: 17px;
+    background: #ff5859;
+    content: "";
+    position: absolute;
+    transform: translate(-50%, -30%) rotate(45deg);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+.temp1-compare-section table tbody td:nth-child(2) .icon-check::before {
+    background: url(//cdn.shopify.com/s/files/1/1582/3265/t/194/assets/check-w.png?v=5136325975738978373) no-repeat;
+    transform: none;
+    border: none;
+    background-size: contain;
+    top: 1px;
+    left: 0px;
+    width: 23px;
+    height: 18px;
+}
+
+.temp1-compare-section table tbody td:nth-child(3) .icon-check::before {
+    background: url(//cdn.shopify.com/s/files/1/1582/3265/t/194/assets/check-b.png?v=7178031900948324017) no-repeat;
+    transform: none;
+    border: none;
+    background-size: contain;
+    top: 4px;
+    left: 0px;
+    width: 23px;
+    height: 18px;
+}
+
+.temp1-compare-section table tbody td:nth-child(3) .icon-cross::before {
+    background: url(//cdn.shopify.com/s/files/1/1582/3265/t/194/assets/close-b.png?v=6863522715621631396) no-repeat;
+    transform: none;
+    border: none;
+    background-size: contain;
+    top: 5px;
+    left: 4px;
+    width: 16px;
+    height: 19px;
+}
+
+@media only screen and (max-width: 991px) {
+    .temp1-compare-section>.page-width {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .temp1-compare-section table {
+        font-size: 0.8rem;
+    }
+
+    .temp1-compare-section table td:first-child,
+    .temp1-compare-section table th:first-child {
+        padding-left: 0.5rem;
+    }
+
+    .temp1-compare-section table th:nth-child(2),
+    .temp1-compare-section table th:nth-child(3) {
+        width: 36px;
+        padding: 5px;
+    }
+
+    .temp1-compare-section table td,
+    .temp1-compare-section table th {
+        padding: 7px 10px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .temp1-compare-section {
+        padding: 37px 0 52px;
+    }
+
+    .temp1-compare-section h2 .section-title,
+    .temp1-compare-section .section-title.h2 {
+        font-size: 28px;
+        line-height: 31.45px;
+    }
+
+    .temp1-compare-section h2 .section-title strong,
+    .temp1-compare-section .section-title.h2 strong {
+        display: block;
+    }
+
+    .temp1-compare-section table td:first-child,
+    .temp1-compare-section table th:first-child {
+        font-size: 12px;
+        padding-left: 18px;
+    }
+
+    .temp1-compare-section table th:nth-child(2),
+    .temp1-compare-section table th:nth-child(3) {
+        font-size: 10px;
+        line-height: 12px;
+        padding: 13px 6px 2px !important;
+    }
+
+    .temp1-compare-section table tbody tr td:nth-child(2) {
+        font-size: 12px;
+        line-height: 14px;
+    }
+
+    .temp1-compare-section table tbody td:nth-child(2) .icon-check::before {
+        top: 3px;
+        left: 2px;
+        width: 21px;
+        height: 18px;
+    }
+
+    .temp1-compare-section table tbody tr td:nth-child(3) {
+        font-size: 12px;
+        line-height: 14px;
+    }
+
+    .page-section .cta2-section {
+        padding: 43px 0 46px;
+    }
+
+    .page-section .cta2-section h2,
+    .page-section .cta2-section .h2 {
+        margin-bottom: 31px;
+        line-height: 32px;
+        font-size: 24px;
+    }
+
+    .page-section .cta2-section .cta2-button {
+        font-size: 16px;
+        padding: 13px 35px;
+    }
+}
+
+.temp1-compare-section table {
+    border-spacing: 0;
+}
+
+
+/* ------------------------------------------------------------------- */
+

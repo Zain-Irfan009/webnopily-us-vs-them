@@ -313,10 +313,6 @@
     opacity: 1;
 }
 
-.Theme-Card-Content {
-    position: relative;
-}
-
 .Theme-Table {
     min-height: 370px;
     position: relative;
@@ -936,9 +932,15 @@
 }
 
 
+.Theme-Card-Content {
+    position: relative;
+}
 
-
-
+.Advantages-Tables-Preview .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableCell:first-child,
+.Advantages-Tables-Preview .Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableHeading--second.Polaris-IndexTable__TableHeading--unselectable {
+    position: relative;
+    filter: none;
+}
 
 
 

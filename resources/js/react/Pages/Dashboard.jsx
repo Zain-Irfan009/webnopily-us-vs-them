@@ -2,18 +2,18 @@ import {
     Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List, Modal, MediaCard,
     Toast, ActionList, Icon, Text, Avatar, ResourceList, ResourceItem, TextField, Loading, Frame, EmptyState
 } from '@shopify/polaris';
-import {CancelSmallMinor} from '@shopify/polaris-icons';
+import { CancelSmallMinor } from '@shopify/polaris-icons';
 import createApp from '@shopify/app-bridge/development';
-import {Redirect} from '@shopify/app-bridge/actions';
-import {useAppQuery} from "../components/hooks/index";
-import React, {useState, useEffect, useRef, useCallback, useContext} from 'react';
+import { Redirect } from '@shopify/app-bridge/actions';
+import { useAppQuery } from "../components/hooks/index";
+import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
 import axios from "axios";
-import {AppContext} from '../Context'
-import {Link} from 'react-router-dom'
+import { AppContext } from '../Context'
+import { Link } from 'react-router-dom'
 
 
 export function Dashboard() {
-    const {setActivePage, setTemplateUserId, config, setSelectedTemplate,url} = useContext(AppContext);
+    const { setActivePage, setTemplateUserId, config, setSelectedTemplate, url } = useContext(AppContext);
     let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
     const app = createApp(config);
     const redirect = Redirect.create(app);
@@ -95,13 +95,13 @@ export function Dashboard() {
     }
 
     const toastRename = renameToastActive ? (
-        <Toast content="Template Rename Sucessfully" onDismiss={toggleToastActive} duration={1500}/>
+        <Toast content="Template Rename Sucessfully" onDismiss={toggleToastActive} duration={1500} />
     ) : null;
     const toastDelete = deletetoastActive ? (
-        <Toast content="Template Deleted Sucessfully" onDismiss={toggleToastActive} duration={1500}/>
+        <Toast content="Template Deleted Sucessfully" onDismiss={toggleToastActive} duration={1500} />
     ) : null;
     const toastDuplicate = duplicatetoastActive ? (
-        <Toast content="Template Duplicate Sucessfully" onDismiss={toggleToastActive} duration={1500}/>
+        <Toast content="Template Duplicate Sucessfully" onDismiss={toggleToastActive} duration={1500} />
     ) : null;
 
     function useOutsideAlerter(ref, id) {
@@ -239,15 +239,15 @@ export function Dashboard() {
                 setShowProducts((prev) => {
                     let toggleId;
                     if (prev[id]) {
-                        toggleId = {[id]: false};
+                        toggleId = { [id]: false };
                     } else {
-                        toggleId = {[id]: true};
+                        toggleId = { [id]: true };
                     }
-                    return {...toggleId};
+                    return { ...toggleId };
                 });
 
             })
-            .catch(error =>{
+            .catch(error => {
                 alert('Error: ', error);
                 setShowProducts(false);
                 setProducts([])
@@ -316,7 +316,7 @@ export function Dashboard() {
                     </Modal>
                 }
 
-                {loading ? <Loading/> :
+                {loading ? <Loading /> :
                     <Page
                         title="Us vs Them"
                         fullWidth
@@ -386,7 +386,7 @@ export function Dashboard() {
                                             </p>
 
                                             <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
-                                            <Button size="slim" >Create a Table</Button>
+                                                <Button size="slim" >Create a Table</Button>
                                             </Link>
                                         </Stack>
                                     </div>
@@ -401,24 +401,24 @@ export function Dashboard() {
                                         </EmptyState>
                                     </Card>
                                     :
-                                    templateTable?.map(({name, image, template_id, user_template_id}, index) =>
-                                            <MediaCard
-                                                key={user_template_id}
-                                                title={name}
-                                                description={
-                                                    <span className='MediaCard-Description'>
+                                    templateTable?.map(({ name, image, template_id, user_template_id }, index) =>
+                                        <MediaCard
+                                            key={user_template_id}
+                                            title={name}
+                                            description={
+                                                <span className='MediaCard-Description'>
                                                     Here is the current Template that you've choosen. You can customize it every time you want.
                                                     <ButtonGroup id='MediaCard-BtnGroup'>
                                                         <span className='MediaCard-Products-handle'>
                                                             <Button primary
-                                                                    onClick={() => handleSelectProducts(user_template_id)}
-                                                                    id='MediaCard-Btn'>Select Product</Button>
+                                                                onClick={() => handleSelectProducts(user_template_id)}
+                                                                id='MediaCard-Btn'>Select Product</Button>
                                                             {showProducts[user_template_id] &&
                                                                 <span className='Polaris-MediaCard-Table'>
                                                                     <Card>
                                                                         <span className='MediaCard-Products-Cancel-Btn'>
                                                                             <Button size='slim'
-                                                                                    onClick={() => setShowProducts(false)}>
+                                                                                onClick={() => setShowProducts(false)}>
                                                                                 <Icon source={CancelSmallMinor}></Icon>
                                                                             </Button>
                                                                         </span>
@@ -429,11 +429,11 @@ export function Dashboard() {
                                                                             }}
                                                                             items={products}
                                                                             renderItem={(item) => {
-                                                                                const {id, image, title} = item;
+                                                                                const { id, image, title } = item;
                                                                                 const media = <Avatar size="small"
-                                                                                                      shape="square"
-                                                                                                      name={title}
-                                                                                                      source={image}/>;
+                                                                                    shape="square"
+                                                                                    name={title}
+                                                                                    source={image} />;
                                                                                 return (
                                                                                     <ResourceItem
                                                                                         id={id}
@@ -441,7 +441,7 @@ export function Dashboard() {
                                                                                         accessibilityLabel={`View details for ${title}`}
                                                                                     >
                                                                                         <Text variant="bodyMd"
-                                                                                              fontWeight="bold" as="h3">
+                                                                                            fontWeight="bold" as="h3">
                                                                                             {title}
                                                                                         </Text>
 
@@ -454,65 +454,64 @@ export function Dashboard() {
                                                                         />
                                                                         {btnloading ?
                                                                             <span className='MediaCard-Products-Confirm-Btn'>
-                                                                            <Button disabled loading>
-                                                                                Confirm
-                                                                            </Button>
-                                                                        </span> :
-                                                                        <span className='MediaCard-Products-Confirm-Btn'>
-                                                                            <Button primary onClick={() => handleSubmitProduct(user_template_id)}>
-                                                                                Confirm
-                                                                            </Button>
-                                                                        </span>}
+                                                                                <Button disabled loading>
+                                                                                    Confirm
+                                                                                </Button>
+                                                                            </span> :
+                                                                            <span className='MediaCard-Products-Confirm-Btn'>
+                                                                                <Button primary onClick={() => handleSubmitProduct(user_template_id)}>
+                                                                                    Confirm
+                                                                                </Button>
+                                                                            </span>}
                                                                     </Card>
                                                                 </span>
                                                             }
                                                         </span>
 
 
-                                  <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
-                                      <Button onClick={() => handleChangeTemplate(user_template_id, template_id)}>
-                                          Change Template
-                                      </Button>
-                                  </Link>
+                                                        <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
+                                                            <Button onClick={() => handleChangeTemplate(user_template_id, template_id)}>
+                                                                Change Template
+                                                            </Button>
+                                                        </Link>
 
 
-                                                          <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
-                                                              <Button onClick={() => handleCustomizeTemplate(user_template_id, template_id)}>
-                                                                  Customize Template
-                                                              </Button>
-                                                          </Link>
+                                                        <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
+                                                            <Button onClick={() => handleCustomizeTemplate(user_template_id, template_id)}>
+                                                                Customize Template
+                                                            </Button>
+                                                        </Link>
 
 
-                                                        <Button plain
-                                                                onClick={() => handlePreviewTemplate(user_template_id)}>Preview</Button>
+                                                        {/* <Button plain onClick={() => handlePreviewTemplate(user_template_id)}>Preview</Button> */}
                                                     </ButtonGroup>
                                                 </span>
-                                                }
+                                            }
 
-                                                popoverActions={[
-                                                    {
-                                                        id: user_template_id,
-                                                        content: 'Rename',
-                                                        onAction: () => handleRenameModal(user_template_id, name)
-                                                    },
-                                                    {
-                                                        id: user_template_id,
-                                                        content: 'Duplicate',
-                                                        onAction: () => handleDuplicateTemplate(user_template_id)
-                                                    },
-                                                    {
-                                                        id: user_template_id,
-                                                        content: 'Delete',
-                                                        onAction: () => handleDeleteTemplate(user_template_id)
-                                                    }
-                                                ]}
-                                            >
-                                                <img
-                                                    alt="table"
-                                                    className='MediaCard-Img'
-                                                    src={image}
-                                                />
-                                            </MediaCard>
+                                            popoverActions={[
+                                                {
+                                                    id: user_template_id,
+                                                    content: 'Rename',
+                                                    onAction: () => handleRenameModal(user_template_id, name)
+                                                },
+                                                {
+                                                    id: user_template_id,
+                                                    content: 'Duplicate',
+                                                    onAction: () => handleDuplicateTemplate(user_template_id)
+                                                },
+                                                {
+                                                    id: user_template_id,
+                                                    content: 'Delete',
+                                                    onAction: () => handleDeleteTemplate(user_template_id)
+                                                }
+                                            ]}
+                                        >
+                                            <img
+                                                alt="table"
+                                                className='MediaCard-Img'
+                                                src={image}
+                                            />
+                                        </MediaCard>
                                     )
                                 }
 
