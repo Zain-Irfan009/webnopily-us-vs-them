@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Advantage;
+use App\Models\Charge;
 use App\Models\Competator;
 use App\Models\CompetitorName;
+use App\Models\Plan;
 use App\Models\Product;
 use App\Models\Session;
 use App\Models\Template;
@@ -919,14 +921,50 @@ class TemplateController extends ApiController
 //                }
 //            }
 //        }
+//
 
-        $result = $client->get('/metafields/' .$shop->metafield_id. '.json');
-        $result = $result->getDecodedBody();
-        if($result['metafield']) {
-            $shop_metafield = $client->delete('/metafields/' . $shop->metafield_id . '.json');
-                $shop->metafield_id=null;
-                $shop->save();
-        }
+
+        $plan=Plan::first();
+        $shop_url="http://us-vs-them.test/check-charge";
+        $productdata = [
+            "recurring_application_charge" => [
+                "name" => $plan->name,
+                "price" => $plan->price,
+                "return_url" => $shop_url,
+                "trial_days" => 7,
+                "test"=> true,
+                "terms"=>"1$ each 10,000 visitors",
+                "capped_amount"=> 100,
+
+            ]
+        ];
+
+        $response = $client->post( '/recurring_application_charges.json', $productdata);
+        $response=$response->getDecodedBody();
+        $response= json_decode(json_encode($response));
+        $response=$response->recurring_application_charge;
+
+
+        $charge=new Charge();
+        $charge->name=$response->name;
+        $charge->charge_id=$response->id;
+        $charge->status=$response->status;
+        $charge->price=$response->price;
+        $charge->capped_amount=$response->capped_amount;
+        $charge->balance_used=$response->balance_used;
+        $charge->risk_level=$response->risk_level;
+        $charge->balance_remaining=$response->balance_remaining;
+        $charge->trial_days=$response->trial_days;
+        $charge->billing_on=$response->billing_on;
+        $charge->api_client_id=$response->api_client_id;
+        $charge->trial_ends_on=$response->trial_ends_on;
+        $charge->test=$response->test;
+        $charge->activated_on=$response->activated_on;
+        $charge->cancelled_on=$response->cancelled_on;
+        $charge->shop_id=$shop->id;
+        $charge->save();
+dd($response);
+        return redirect('https://zain-store-tlx.myshopify.com/admin/charges/18407849985/26570817727/RecurringApplicationCharge/confirm_recurring_application_charge?signature=BAh7BzoHaWRsKwi%2FgL4vBgA6EmF1dG9fYWN0aXZhdGVU--1675fd03bf7521abaa15586f7eb86e15f885e5f5');
     }
 
 
@@ -961,4 +999,54 @@ class TemplateController extends ApiController
 
         }
     }
-}
+
+
+    public function PlanCreate($shop,$host)
+    {
+
+        $shop = Session::where('shop', $shop)->first();
+
+        $client = new Rest($shop->shop, $shop->access_token);
+        $plan = Plan::first();
+        $shop_url = env('app_url') . "check-charge?host=$host";
+        $productdata = [
+            "recurring_application_charge" => [
+                "name" => $plan->name,
+                "price" => $plan->price,
+                "return_url" => $shop_url,
+                "trial_days" => 7,
+                "test" => true,
+                "terms" => "1$ each 10,000 visitors",
+                "capped_amount" => 100,
+
+            ]
+        ];
+
+        $response = $client->post('/recurring_application_charges.json', $productdata);
+        $response = $response->getDecodedBody();
+        $response = json_decode(json_encode($response));
+        $response = $response->recurring_application_charge;
+
+
+        $charge = new Charge();
+        $charge->name = $response->name;
+        $charge->charge_id = $response->id;
+        $charge->status = $response->status;
+        $charge->price = $response->price;
+        $charge->capped_amount = $response->capped_amount;
+        $charge->balance_used = $response->balance_used;
+        $charge->risk_level = $response->risk_level;
+        $charge->balance_remaining = $response->balance_remaining;
+        $charge->trial_days = $response->trial_days;
+        $charge->billing_on = $response->billing_on;
+        $charge->api_client_id = $response->api_client_id;
+        $charge->trial_ends_on = $response->trial_ends_on;
+        $charge->test = $response->test;
+        $charge->activated_on = $response->activated_on;
+        $charge->cancelled_on = $response->cancelled_on;
+        $charge->shop_id = $shop->id;
+        $charge->save();
+
+        return ($response->confirmation_url);
+    }
+    }

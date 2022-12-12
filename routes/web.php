@@ -34,10 +34,20 @@ Route::fallback(function (Request $request) {
     $appInstalled = Session::where('shop', $shop)->exists();
     if ($appInstalled) {
 //        dd(Context::$API_KEY,$shop,$host);
+
+        $template_controller=new TemplateController();
+        $session=Session::where('shop',$request->query('shop'))->first();
+        $charge=\App\Models\Charge::where('shop_id',$session->id)->latest()->first();
+        $url=null;
+        if($charge==null ||$charge->status!='active') {
+           $url= $template_controller->PlanCreate($request->query('shop'),$host);
+
+        }
         return view('react', [
             'shop' => $shop,
             'host' => $host,
-            'apiKey' => Context::$API_KEY
+            'apiKey' => Context::$API_KEY,
+            'url'=>$url
         ]);
     }
     return redirect("/login?shop=$shop");
@@ -73,6 +83,9 @@ Route::get('/login', function (Request $request) {
 
     return redirect($installUrl);
 });
+
+Route::get('check-charge',[App\Http\Controllers\ProductController::class,'CheckCharge']);
+Route::get('update-count',[App\Http\Controllers\ProductController::class,'UpdateCount']);
 
 Route::get('/auth/callback', function (Request $request) {
     $session = OAuth::callback(

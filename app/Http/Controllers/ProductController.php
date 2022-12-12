@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Charge;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ProductVarient;
@@ -104,4 +105,36 @@ class ProductController extends Controller
         $dellproduct->delete();
     }
 
+    public function CheckCharge(Request $request){
+
+        $session = Session::where('shop','zain-store-tlx.myshopify.com')->first();
+        $host=$request->host;
+        $client = new Rest($session->shop, $session->access_token);
+
+        $response = $client->get( '/recurring_application_charges/'.$request->charge_id.'json');
+        $response=$response->getDecodedBody();
+        $response= json_decode(json_encode($response));
+        $response=$response->recurring_application_charge;
+
+        if($response->status=='active'){
+            $charge=Charge::where('charge_id',$response->id)->first();
+
+            $charge->status='active';
+            $charge->billing_on=$response->billing_on;
+            $charge->activated_on=$response->activated_on;
+            $charge->cancelled_on=$response->cancelled_on;
+            $charge->trial_ends_on=$response->trial_ends_on;
+            $charge->save();
+        }
+
+        return redirect("/?shop=$session->shop&host=$host");
+
+    }
+
+    public function UpdateCount(Request $request){
+
+        $shop=Session::where('shop',$request->shop)->first();
+        $shop->count=$shop->count+1;
+        $shop->save();
+    }
 }

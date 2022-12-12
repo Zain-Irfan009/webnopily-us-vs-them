@@ -34,6 +34,9 @@
       background:  {{xc_settings.background_color2}};
     }
   </style>
+
+
+  {%  if shop.metafields.usvsthem.setting==1 %}
 {% if xc_settings and xc_settings.template_id == 1 %}
 {{ 'template.css' | asset_url | stylesheet_tag }}
 
@@ -44,7 +47,9 @@
     <tr>
         <th></th>
       <th>{{ xc_settings.brand }}</th>
-      <th>{{ xc_settings.competitor }}</th>
+      {% for xc_settings_comp_loop in  xc_settings.competitors_name %}
+      <th>{{ xc_settings_comp_loop }}</th>
+        {% endfor %}
     </tr>
     </thead>
     <tbody>
@@ -58,19 +63,22 @@
       <td>
         {% if  xc_settings_loop.brand == true %}
 
-<!--         <span class="icon-check">Yes</span> -->
           <i class="fa fa-check check_brand "></i>
         {% else %}
           <i class="fa fa-close cross_brand "></i>
         {% endif %}
       </td>
-      <td>
-           {% if  xc_settings_loop.competitor == true %}
+
+         {% for xc_settings_nested_loop in  xc_settings_loop.competitor %}
+
+          <td>
+           {% if  xc_settings_nested_loop == true %}
            <i class="fa fa-check check_competator "></i>
         {% else %}
           <i class="fa fa-close cross_competator "></i>
         {% endif %}
     </td>
+           {% endfor %}
     </tr>
       {% endfor %}
 
@@ -87,6 +95,8 @@
     </tfoot>
 </table>
 </div>
+
+
   {% elsif xc_settings and xc_settings.template_id == 2 %}
   {{ 'template2.css' | asset_url | stylesheet_tag }}
 
@@ -97,9 +107,11 @@
         <tr>
             <th></th>
           <th>{{ xc_settings.brand }}</th>
-          <th>{{ xc_settings.competitor }}</th>
-          <th>Competator 2</th>
-          <th>Competator 3</th>
+        {% for xc_settings_comp_loop in  xc_settings.competitors_name %}
+      <th>{{ xc_settings_comp_loop }}</th>
+        {% endfor %}
+
+
   </tr>
         </thead>
         <tbody>
@@ -114,28 +126,17 @@
             {% endif %}
         </span></td>
 
-              <td><span class="choose-table__price">
-          {% if  xc_settings_loop.competitor == true %}
-          <i class="fa fa-check-circle check_competator "></i>
-                   {% else %}
-            <i class="fa  fa-times-circle cross_competator "></i>
-            {% endif %}
+          {% for xc_settings_nested_loop in  xc_settings_loop.competitor %}
+          <td>
+          <span class="choose-table__price">
+           {% if  xc_settings_nested_loop == true %}
+           <i class="fa fa-check-circle check_competator "></i>
+        {% else %}
+          <i class="fa  fa-times-circle cross_competator "></i>
+        {% endif %}
         </span></td>
+           {% endfor %}
 
-                        <td><span class="choose-table__price">
-          {% if  xc_settings_loop.competitor == true %}
-          <i class="fa fa-check-circle check_competator "></i>
-                   {% else %}
-            <i class="fa  fa-times-circle cross_competator "></i>
-            {% endif %}
-        </span></td>
-                      <td><span class="choose-table__price">
-          {% if  xc_settings_loop.competitor == true %}
-          <i class="fa fa-check-circle check_competator "></i>
-                   {% else %}
-            <i class="fa  fa-times-circle cross_competator "></i>
-            {% endif %}
-        </span></td>
         </tr>
         {% endfor %}
 
@@ -150,9 +151,9 @@
     <thead>
     <tr>
         <th></th><th>{{ xc_settings.brand }}</th>
-    <th>{{ xc_settings.competitor }}</th>
-      <th>Competator 2</th>
-      <th>Competator 3</th></tr>
+       {% for xc_settings_comp_loop in  xc_settings.competitors_name %}
+      <th>{{ xc_settings_comp_loop }}</th>
+        {% endfor %}
     </thead>
     <tbody>
           {% for xc_settings_loop in  xc_settings.items %}
@@ -167,30 +168,17 @@
        <i class="fa fa-close cross_brand "></i>
         {% endif %}
       </td>
-  </td>
-      <td>
-          {% if  xc_settings_loop.competitor == true %}
-       <i class="fa fa-check check_competator "></i>
-        {% else %}
-       <i class="fa fa-close cross_competator "></i>
-        {% endif %}
+        {% for xc_settings_nested_loop in  xc_settings_loop.competitor %}
+          <td>
 
-      </td>
-
-      <td>
-        {% if  xc_settings_loop.competitor == true %}
-               <i class="fa fa-check check_competator "></i>
+           {% if  xc_settings_nested_loop == true %}
+            <i class="fa fa-check check_competator "></i>
         {% else %}
-                    <i class="fa fa-close cross_competator "></i>
+             <i class="fa fa-close cross_competator "></i>
         {% endif %}
+        </td>
+           {% endfor %}
 
-      </td>
-      <td>
-          {% if  xc_settings_loop.competitor == true %}
-       <i class="fa fa-check check_competator "></i>
-        {% else %}
-   <i class="fa fa-close cross_competator "></i>
-        {% endif %}
 
     </tr>
       {%  endfor %}
@@ -207,7 +195,9 @@
         <tr>
            <th>Advantages</th>
             <th>{{ xc_settings.brand }}</th>
-            <th>{{ xc_settings.competitor }}</th>
+        {% for xc_settings_comp_loop in  xc_settings.competitors_name %}
+      <th>{{ xc_settings_comp_loop }}</th>
+        {% endfor %}
 
         </tr>
         </thead>
@@ -226,23 +216,29 @@
             <i class="fa  fa-times-circle cross_brand "></i>
           {% endif %}
             </td>
-            <td>
-               {% if  xc_settings_loop.competitor == true %}
-             <i class="fa fa-check-circle check_brand "></i>
-        {% else %}
-            <i class="fa  fa-times-circle cross_brand "></i>
-        {% endif %}
 
-            </td>
+          {% for xc_settings_nested_loop in  xc_settings_loop.competitor %}
+          <td>
+
+           {% if  xc_settings_nested_loop == true %}
+    <i class="fa fa-check-circle check_brand "></i>
+        {% else %}
+        <i class="fa  fa-times-circle cross_brand "></i>
+        {% endif %}
+       </td>
+           {% endfor %}
+
         </tr>
           {% endfor %}
 
         </tbody>
     </table></div>
 {% endif %}
+{% endif %}
+
 <script>
 
-console.log('friday');
+console.log('monday');
 </script>
 
 
