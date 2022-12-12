@@ -132,7 +132,6 @@ class ProductController extends Controller
     }
 
     public function UpdateCount(Request $request){
-
         $shop=Session::where('shop',$request->shop)->first();
         $shop->count=$shop->count+1;
         $shop->save();
