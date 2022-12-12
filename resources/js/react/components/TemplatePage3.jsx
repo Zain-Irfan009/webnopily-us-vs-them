@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useContext } from 'react'
 import { Page, Layout, Text, Card, Select, Icon, Stack, TextField, Loading, PageActions } from '@shopify/polaris';
 import { CircleTickMajor, CircleCancelMajor } from '@shopify/polaris-icons';
-import { Table11, Table22, Table33, Table44, SideBarNavigation } from './index';
+import { Table111, SideBarNavigation } from './index';
 import axios from "axios";
 import { AppContext } from '../Context'
 
@@ -747,28 +747,58 @@ export function TemplatePage3() {
             <Layout.Section secondary>
               <SideBarNavigation />
 
-              {/*<div className='Advantages-Tables-Preview'>*/}
-              {/*  {(() => {*/}
-              {/*    switch (selectedTemplate) {*/}
-              {/*      case 1:*/}
-              {/*        return <Table11 themePc={themeInputTable1} themeMobile={themeInputTable1}*/}
-              {/*                        yourBrand={yourBrand}    otherCompetitors={otherCompetitors}/>*/}
-              {/*      case 2:*/}
-              {/*        return <Table22 themePc={themeInputTable1} themeMobile={themeInputTable1}*/}
-              {/*                        yourBrand={yourBrand}    otherCompetitors={otherCompetitors} />*/}
-              {/*      case 3:*/}
-              {/*        return <Table33 themePc={themeInputTable1} themeMobile={themeInputTable1}*/}
-              {/*                        yourBrand={yourBrand}    otherCompetitors={otherCompetitors}/>*/}
-              {/*      case 4:*/}
-              {/*        return <Table44 themePc={themeInputTable1} themeMobile={themeInputTable1}*/}
-              {/*                        yourBrand={yourBrand}    otherCompetitors={otherCompetitors}/>*/}
-              {/*      default:*/}
-              {/*        break*/}
-              {/*    }*/}
 
-              {/*  })()}*/}
+              <div className='Advantages-Tables-Preview'>
+                {(() => {
+                  switch (selectedTemplate) {
+                    case 1:
+                      return (
+                        <div className='temp1-compare-section'>
+                          <Table111 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
+                            advantageLoading={advantageLoading} allValues={allValues}
+                            yourBrand={yourBrand} competitorName={competitorName}
+                            brandValue={brandValue} competitorValue={competitorValue}
+                            colorValues={colorValues} advantageColorValues={advantageColorValues} />
+                        </div>
+                      )
 
-              {/*</div>*/}
+                    case 2:
+                      return (
+                        <div className='temp1-compare-section'>
+                          <Table111 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
+                            advantageLoading={advantageLoading} allValues={allValues}
+                            yourBrand={yourBrand} competitorName={competitorName}
+                            brandValue={brandValue} competitorValue={competitorValue}
+                            colorValues={colorValues} advantageColorValues={advantageColorValues} />
+                        </div>
+                      )
+                    case 3:
+                      return (
+                        <div className='temp1-compare-section'>
+                          <Table111 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
+                            advantageLoading={advantageLoading} allValues={allValues}
+                            yourBrand={yourBrand} competitorName={competitorName}
+                            brandValue={brandValue} competitorValue={competitorValue}
+                            colorValues={colorValues} advantageColorValues={advantageColorValues} />
+                        </div>
+                      )
+                    case 4:
+                      return (
+                        <div className='temp1-compare-section'>
+                          <Table111 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
+                            advantageLoading={advantageLoading} allValues={allValues}
+                            yourBrand={yourBrand} competitorName={competitorName}
+                            brandValue={brandValue} competitorValue={competitorValue}
+                            colorValues={colorValues} advantageColorValues={advantageColorValues} />
+                        </div>
+                      )
+                    default:
+                      break
+                  }
+
+                })()}
+
+              </div>
 
 
             </Layout.Section>

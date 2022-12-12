@@ -17,6 +17,7 @@ import { AppContext } from './Context'
 import '../../../public/css/index.css';
 import '../../../public/css/theme.css';
 import '../../../public/css/usVsThem.css';
+import '../../../public/css/tablePreview.css'
 
 import { Dashboard, Templates, Settings, Locations, TemplatePage1 } from './Pages/index'
 
