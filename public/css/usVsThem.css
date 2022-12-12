@@ -22,6 +22,10 @@
     overflow: hidden
 }
 
+
+
+
+
 .Templates-Page {
     position: relative;
     height: 100%;
@@ -76,21 +80,19 @@
     min-width: 75%;
 }
 
-/* .Dashboard .Polaris-Layout:first-child .Polaris-Layout__Section,
-.Templates-Page3 .Polaris-Layout .Polaris-Layout__Section {
-    min-width: 70%;
-} */
-
 .Dashboard .Polaris-Layout .Polaris-Layout__Section--secondary,
 .Templates-Page .Polaris-Layout .Polaris-Layout__Section--secondary {
     min-width: 0;
     margin-left: 0;
 }
 
-.Dashboard .Polaris-Layout .Polaris-Layout__Section--oneHalf,
-.Templates-Page .Polaris-Layout .Polaris-Layout__Section--oneHalf {
+.Dashboard .Polaris-Layout .Polaris-Layout__Section--oneHalf {
     flex: 1 1 23rem;
     margin-top: 2rem;
+}
+
+.Templates-Page .Polaris-Layout .Polaris-Layout__Section--oneHalf {
+    flex: 1 1 23rem;
 }
 
 .Dashboard .Polaris-Page {
@@ -150,14 +152,17 @@
     color: var(--p-text);
 }
 
-
 .Dashboard .MediaCard-Products-handle {
     position: relative;
 }
 
+.Dashboard .MediaCard-Products-handle .Polaris-Card .Polaris-ResourceList__ResourceListWrapper {
+    min-height: 250px;
+}
+
 .Dashboard .Polaris-MediaCard-Table {
     position: absolute;
-    min-width: 330px;
+    min-width: 300px;
     max-width: 400px;
     z-index: 99;
     max-height: 350px;
@@ -195,38 +200,6 @@
     font-size: 14px;
 }
 
-/*.Dashboard .Polaris-MediaCard-Table .Polaris-ResourceList__HeaderOuterWrapper .Polaris-CheckableButton__Label::before {*/
-/*    position: absolute;*/
-/*    content: 'Products';*/
-/*    color: #000;*/
-/*    top: 10px;*/
-/*    font-size: 15px;*/
-/*    font-weight: 500;*/
-/*    left: 35%;*/
-/*}*/
-
-/*.Dashboard .Polaris-MediaCard-Table.Polaris-ResourceList__HeaderTitleWrapper::before {*/
-/*    position: absolute;*/
-/*    content: 'Product';*/
-/*    color: black;*/
-/*    right: 50%;*/
-/*    font-size: 14px;*/
-/*    top: 10px;*/
-/*}*/
-
-/*.Dashboard .Polaris-MediaCard-Table .Polaris-ResourceList__HeaderOuterWrapper .Polaris-BulkActions__ButtonGroupWrapper .Polaris-Button__Content {*/
-/*    min-width: 12px;*/
-/*}*/
-
-/*.Dashboard .Polaris-MediaCard-Table .Polaris-ResourceList__HeaderOuterWrapper .Polaris-BulkActions__ButtonGroupWrapper .Polaris-Button__Content::before {*/
-/*    position: absolute;*/
-/*    content: 'Cancel';*/
-/*    color: #000;*/
-/*    width: 20px;*/
-/*    font-size: 12px;*/
-/*    font-weight: 500;*/
-/*    right: 4px;*/
-/*}*/
 
 .Dashboard .Polaris-MediaCard-Table .Polaris-ResourceList__SelectButtonWrapper {
     fill: var(--p-icon);
@@ -786,15 +759,21 @@
 
 .Template-Page3 .Polaris-Layout__Section:first-child {
     padding-right: var(--p-space-6);
-    min-width: 70%;
+    min-width: 65%;
 }
 
 .Template-Page3 .Advantages-Content-Section .Polaris-Layout {
     margin-top: 0;
 }
 
+.Templates-Page3 .Polaris-Layout .Polaris-Layout__Section--oneHalf {
+    flex: 1 1 23rem;
+}
+
 .Template-Page3 .Advantages-Content-Section .Polaris-Layout__Section:first-child {
     min-width: 51%;
+    max-width: 22%;
+    flex: 1 1 0rem;
 }
 
 @media (max-width: 767px) {
@@ -823,8 +802,15 @@
     min-width: 0;
 }
 
+.Template-Page3 .Advantages-Brands-Section .Polaris-Stack {
+    justify-content: space-evenly;
+}
+
 .Template-Page3 .Advantages-Brands-Section .Polaris-Stack .Polaris-Stack__Item {
-    min-width: calc(50% - var(--pc-stack-spacing));
+    /* min-width: calc(50% - var(--pc-stack-spacing)); */
+    /* display: flex; */
+    /* justify-content: flex-start; */
+    /* width: 100%; */
 }
 
 .Template-Page3 .Advantages-Brands-Section .Polaris-Stack--vertical .Polaris-Stack__Item h2 {
@@ -936,16 +922,18 @@
     text-transform: uppercase;
 }
 
-
-
 .Template-Page3 .Template-Save-Actions {
     margin-top: var(--p-space-4);
 }
 
 
+.Template-Page3 .Advantages-Tables-Preview .Polaris-IndexTable__StickyTableHeader--isSticky {
+    visibility: hidden;
+}
 
-
-
+.Template-Page3 .Advantages-Layout .Polaris-Layout__Section--oneHalf {
+    min-width: 0 !important;
+}
 
 
 

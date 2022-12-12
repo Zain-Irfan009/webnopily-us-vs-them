@@ -1,10 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Page, Card, MediaCard } from '@shopify/polaris';
 import { AppContext } from '../Context'
 
 
 export function TemplatePage1() {
-    const { setActivePage } = useContext(AppContext);
+    const { setActivePage, setTemplateUserId, setSelectedTemplate } = useContext(AppContext);
+
+    useEffect(() => {
+        setSelectedTemplate()
+        setTemplateUserId()
+    }, [])
+
 
     return (
         <div className='Template-Page1'>
