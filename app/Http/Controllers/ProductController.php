@@ -135,5 +135,6 @@ class ProductController extends Controller
         $shop->count=$shop->count+1;
         $shop->save();
 
+
     }
 }
