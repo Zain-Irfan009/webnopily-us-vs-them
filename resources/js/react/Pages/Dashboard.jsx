@@ -319,6 +319,7 @@ export function Dashboard() {
                 {loading ? <Loading/> :
                     <Page
                         title="Us vs Them"
+                        fullWidth
                         titleMetadata={
                             <>
                                 <Badge status="success">Active</Badge>

@@ -33,6 +33,7 @@ export function TemplatePage3() {
   const [fixedBrand, setFixedBrand] = useState();
   const [fixedCompetitor, setCompetitor] = useState();
   const [fixedTable, setFixedTable] = useState();
+    const [advantageLoading, setAdvantageLoading] = useState(false)
 
   const [allValues, setAllValues] = useState([]);
   const [competitorName, setCompetitorName] = useState([]);
@@ -134,6 +135,7 @@ export function TemplatePage3() {
     let competitor_values = (competitorValue)
     competitor_values[index][index2] = value;
     setCompetitorValue(competitor_values)
+      console.log(competitor_values)
     setCompetitorValueToggle(!competitorValueToggle)
   }
 
@@ -514,8 +516,7 @@ export function TemplatePage3() {
                                     <Stack>
                                       <span className='Advantages-Input-True-Icon'>
                                         <label
-                                          className={`${competitorValue[index][index2] === true ||
-                                            competitorValue[index][index2] === 'true' ? 'Selected' : ''}`}
+                                          className={`${competitorValue[index] && competitorValue[index][index2] === true  ? 'Selected' : ''}`}
                                         >
                                           <input type="radio"
                                             // id={[index][index2]}
@@ -528,10 +529,9 @@ export function TemplatePage3() {
 
                                       <span className='Advantages-Input-False-Icon'>
                                         <label
-                                          className={`${competitorValue[index][index2] === false ||
-                                            competitorValue[index][index2] === 'false' ? 'Selected' : ''}`}
+                                          className={`${ competitorValue[index] && competitorValue[index][index2] === false ? 'Selected' : ''}`}
                                         >
-                                          <input type="radio"
+                                          <input type="radio"competitorValue
                                             // id={[index][index2]}
                                             // name={[index][index2]}
                                             value={false}
