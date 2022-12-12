@@ -17,25 +17,24 @@ const themeHeadingsPc =
 
 
 export function TemplatePage3() {
-  const { activePage, setActivePage, selectedTemplate, templateUserId,url} = useContext(AppContext);
+  const { activePage, setActivePage, selectedTemplate, templateUserId, url } = useContext(AppContext);
   let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
-    const [btnloading, setBtnLoading] = useState(false)
+  const [btnloading, setBtnLoading] = useState(false)
   const [templateName, setTemplateName] = useState();
   const [yourBrand, setYourBrand] = useState();
-  // const [otherCompetitors, setOtherCompetitors] = useState();
   const [advantagesCount, setAdvantagesCount] = useState();
   const [competitorsCount, setCompetitorsCount] = useState();
   const [customAdvantagesCount, setCustomAdvantagesCount] = useState();
   const [loading, setLoading] = useState(true)
   const [advantageToggle, setAdvantageToggle] = useState(false)
-    const [competitorToggle, setCompetitorToggle] = useState(false)
+  const [competitorToggle, setCompetitorToggle] = useState(false)
   const [fixedAdvantages, setFixedAdvantages] = useState();
   const [fixedBrand, setFixedBrand] = useState();
   const [fixedCompetitor, setCompetitor] = useState();
   const [fixedTable, setFixedTable] = useState();
 
   const [allValues, setAllValues] = useState([]);
-    const [competitorName, setCompetitorName] = useState([]);
+  const [competitorName, setCompetitorName] = useState([]);
   const [brandValue, setBrandValue] = useState([]);
   const [competitorValue, setCompetitorValue] = useState([]);
   const [colorValues, setColorValues] = useState([])
@@ -54,15 +53,15 @@ export function TemplatePage3() {
     setAdvantagesCount(value)
     setAdvantageToggle(true)
   });
-    const handleCompetitorsCount = useCallback((value) => {
-        setCompetitorsCount(value)
-        setCompetitorToggle(true)
-    });
+  const handleCompetitorsCount = useCallback((value) => {
+    setCompetitorsCount(value)
+    setCompetitorToggle(true)
+  });
 
-    useEffect(() => {
-        console.log('advan',advantagesCount)
-        console.log(competitorsCount)
-    }, [competitorsCount, advantagesCount]);
+  useEffect(() => {
+    console.log('advan', advantagesCount)
+    console.log(competitorsCount)
+  }, [competitorsCount, advantagesCount]);
 
   const getData = async () => {
     const response = await axios
@@ -73,12 +72,11 @@ export function TemplatePage3() {
         console.log('table data', res.data.result);
         setTemplateName(res.data.result.template_name)
         setYourBrand(res.data.result.brand)
-        // setOtherCompetitors(res.data.result.competitor)
-          setCompetitorsCount(res.data.result.competators_count)
+        setCompetitorsCount(res.data.result.competators_count)
         setAdvantagesCount(res.data.result.advantages_count)
 
         setAllValues(res.data.result.advantages)
-          setCompetitorName(res.data.result.competitors_name)
+        setCompetitorName(res.data.result.competitors_name)
         setBrandValue(res.data.result.brand_value)
         setCompetitorValue(res.data.result.competitor_value)
         setColorValues(res.data.result.primary_colors[0])
@@ -107,10 +105,9 @@ export function TemplatePage3() {
     themeInputTable1[e.target.name - 1].advantage = e.target.value;
   }
 
-    const handleCompetitorName = e => {
-        setCompetitorName({ ...competitorName, [e.target.name - 1]: e.target.value });
-        // themeInputTable1[e.target.name - 1].advantage = e.target.value;
-    }
+  const handleCompetitorName = e => {
+    setCompetitorName({ ...competitorName, [e.target.name - 1]: e.target.value });
+  }
 
 
   const handleBrandValue = e => {
@@ -122,7 +119,7 @@ export function TemplatePage3() {
     else if (e.target.value === 'false') {
       setBrandValue({ ...brandValue, [e.target.name]: false });
       themeInputTable1[e.target.name].brand = false;
- ;
+      ;
     }
     else {
       themeInputTable1[e.target.name].brand = e.target.value;
@@ -131,8 +128,6 @@ export function TemplatePage3() {
   }
 
   const handleCompetitorValue = e => {
-
-
 
     if (e.target.value === 'true') {
       setCompetitorValue({ ...competitorValue, [e.target.name]: true });
@@ -153,15 +148,15 @@ export function TemplatePage3() {
     setColorValues({ ...colorValues, [e.target.name]: e.target.value });
   }
 
-    const handleAdvantageColorValues = e => {
-        setAdvantageColorValues({ ...advantageColorValues, [e.target.name - 1]: e.target.value });
-    }
+  const handleAdvantageColorValues = e => {
+    setAdvantageColorValues({ ...advantageColorValues, [e.target.name - 1]: e.target.value });
+  }
 
-    const changeAdvantageValues = () => {
+  const changeAdvantageValues = () => {
     let advantagesValues = {};
     let brandValues = {};
     let competitorValues = {};
-    let advantageColorValue= {};
+    let advantageColorValue = {};
     let theme1 = [];
 
     [...Array(Number(advantagesCount))].map((item, index) => {
@@ -190,7 +185,7 @@ export function TemplatePage3() {
       advantagesValues = ({ ...advantagesValues, [index]: `Advantage ${index + 1}` })
       brandValues = ({ ...brandValues, [index]: true })
       competitorValues = ({ ...competitorValues, [index]: false })
-        advantageColorValue= ({ ...advantageColorValue, [index]: '#000000' })
+      advantageColorValue = ({ ...advantageColorValue, [index]: '#000000' })
       theme1.push({
         advantage: `Advantage ${index + 1}`,
         brand: true,
@@ -205,7 +200,7 @@ export function TemplatePage3() {
     setCompetitorValue(competitorValues)
     setThemeInputTable1(theme1)
     setAdvantageToggle(false)
-        setAdvantageColorValues(advantageColorValue)
+    setAdvantageColorValues(advantageColorValue)
   }
 
   useEffect(() => {
@@ -215,52 +210,51 @@ export function TemplatePage3() {
     }
   }, [advantageToggle])
 
-    const changeCompetitorName = () => {
-        setCompetitorName([])
-        let competitorsName = {};
+  const changeCompetitorName = () => {
+    setCompetitorName([])
+    let competitorsName = {};
 
-        [...Array(Number(competitorsCount))].map((item, index) => {
+    [...Array(Number(competitorsCount))].map((item, index) => {
 
-            competitorsName = ({ ...competitorsName, [index]: `Competitor ${index + 1}` })
+      competitorsName = ({ ...competitorsName, [index]: `Competitor ${index + 1}` })
 
-        })
-        setCompetitorName(competitorsName)
-        setCompetitorToggle(false)
+    })
+    setCompetitorName(competitorsName)
+    setCompetitorToggle(false)
 
+  }
+
+  useEffect(() => {
+    {
+      competitorToggle &&
+        changeCompetitorName()
     }
 
-    useEffect(() => {
-        {
-            competitorToggle &&
-            changeCompetitorName()
-        }
+  }, [competitorToggle])
 
-    }, [competitorToggle])
-
-    // const changeCompetitorValues = () => {
-    //     let competitorValue = {};
-    //
-    //     [...Array(Number(competitorsCount))].map((item, index) => {
-    //
-    //         competitorValue = ({ ...competitorValue, [index]: `Competitor ${index + 1}` })
-    //
-    //     })
-    //
-    //     setCompetitorValue(competitorValue)
-    //
-    // }
-    //
-    // useEffect(() => {
-    //     {
-    //         competitorToggle &&
-    //         changeCompetitorValues()
-    //     }
-    // }, [competitorToggle])
+  // const changeCompetitorValues = () => {
+  //     let competitorValue = {};
+  //
+  //     [...Array(Number(competitorsCount))].map((item, index) => {
+  //
+  //         competitorValue = ({ ...competitorValue, [index]: `Competitor ${index + 1}` })
+  //
+  //     })
+  //
+  //     setCompetitorValue(competitorValue)
+  //
+  // }
+  //
+  // useEffect(() => {
+  //     {
+  //         competitorToggle &&
+  //         changeCompetitorValues()
+  //     }
+  // }, [competitorToggle])
 
   const submitData = async () => {
     let data = {
       brand: yourBrand,
-      // competitor: otherCompetitors,
       advantages: allValues,
       brand_values: brandValue,
       // competitor_values: competitorValue,
@@ -275,8 +269,8 @@ export function TemplatePage3() {
       competitors_checkbox_color2: colorValues?.competitors_checkbox_color2,
       advantage_color_values: advantageColorValues,
       advantages_count: advantagesCount,
-        competitors_name:competitorName,
-        competitor_value:competitorValue,
+      competitors_name: competitorName,
+      competitor_value: competitorValue,
       shop_name: host,
     };
 
@@ -327,59 +321,59 @@ export function TemplatePage3() {
                 />
                 <br />
 
-                  <Select
-                      label="Number of Competitors"
-                      options={ [
-                          {label: '1', value: '1'},
-                          {label: '2', value: '2'},
-                          {label: '3', value: '3'},
-                          {label: '4', value: '4'},
-                          {label: '5', value: '5'},
-                      ]}
+                <Select
+                  label="Number of Competitors"
+                  options={[
+                    { label: '1', value: '1' },
+                    { label: '2', value: '2' },
+                    { label: '3', value: '3' },
+                    { label: '4', value: '4' },
+                    { label: '5', value: '5' },
+                  ]}
 
-                      onChange={handleCompetitorsCount}
-                      value={competitorsCount}
-                  />
-                  <br />
+                  onChange={handleCompetitorsCount}
+                  value={competitorsCount}
+                />
+                <br />
 
-                  <div className='Advantages-Content-Section'>
-                      {[...Array(Number(competitorsCount))].map((item, index) => (
+                <div className='Advantages-Content-Section'>
+                  {[...Array(Number(competitorsCount))].map((item, index) => (
 
-                        <div className='Advantages-Inputs-Section' key={index}>
-                                      <div className='Advantage-Input-Field'>
-                                          <div className="Polaris-Labelled__LabelWrapper">
-                                              <div className="Polaris-Label">
-                                                  <label id={index + 1} htmlFor={index + 1}
-                                                         className="Polaris-Label__Text">
-                                    <span
-                                        className="Polaris-Text--root Polaris-Text--bodyMd Polaris-Text--regular">Competitor {index + 1}</span>
-                                                  </label>
-                                              </div>
-                                          </div>
-                                          <div className="Polaris-Connected">
-                                              <div
-                                                  className="Polaris-Connected__Item Polaris-Connected__Item--primary">
-                                                  <div
-                                                      className="Polaris-TextField Polaris-TextField--hasValue">
-                                                      <input type="text"
-                                                             className="Polaris-TextField__Input"
-                                                             id={index + 1}
-                                                             autoComplete="off"
-                                                             value={competitorName[index]}
-                                                             name={index + 1}
-                                                             onChange={handleCompetitorName}
-                                                      />
-                                                      <div className="Polaris-TextField__Backdrop"></div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-                            <br />
-                                  </div>
+                    <div className='Advantages-Inputs-Section' key={index}>
+                      <div className='Advantage-Input-Field'>
+                        <div className="Polaris-Labelled__LabelWrapper">
+                          <div className="Polaris-Label">
+                            <label id={index + 1} htmlFor={index + 1}
+                              className="Polaris-Label__Text">
+                              <span
+                                className="Polaris-Text--root Polaris-Text--bodyMd Polaris-Text--regular">Competitor {index + 1}</span>
+                            </label>
+                          </div>
+                        </div>
+                        <div className="Polaris-Connected">
+                          <div
+                            className="Polaris-Connected__Item Polaris-Connected__Item--primary">
+                            <div
+                              className="Polaris-TextField Polaris-TextField--hasValue">
+                              <input type="text"
+                                className="Polaris-TextField__Input"
+                                id={index + 1}
+                                autoComplete="off"
+                                value={competitorName[index]}
+                                name={index + 1}
+                                onChange={handleCompetitorName}
+                              />
+                              <div className="Polaris-TextField__Backdrop"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <br />
+                    </div>
 
 
-                      ))}
-                  </div>
+                  ))}
+                </div>
               </Card>
 
               <Card
@@ -397,23 +391,23 @@ export function TemplatePage3() {
                   <Layout>
                     <Layout.Section oneHalf>
 
-                        <Select
-                            label="Number of advantages"
-                            options={ [
-                                {label: '1', value: '1'},
-                                {label: '2', value: '2'},
-                                {label: '3', value: '3'},
-                                {label: '4', value: '4'},
-                                {label: '5', value: '5'},
-                                {label: '6', value: '6'},
-                                {label: '7', value: '7'},
-                                {label: '8', value: '8'},
-                                {label: '9', value: '9'},
-                                {label: '10', value: '10'},
-                            ]}
-                            onChange={handleAdvantagesCount}
-                            value={advantagesCount}
-                        />
+                      <Select
+                        label="Number of advantages"
+                        options={[
+                          { label: '1', value: '1' },
+                          { label: '2', value: '2' },
+                          { label: '3', value: '3' },
+                          { label: '4', value: '4' },
+                          { label: '5', value: '5' },
+                          { label: '6', value: '6' },
+                          { label: '7', value: '7' },
+                          { label: '8', value: '8' },
+                          { label: '9', value: '9' },
+                          { label: '10', value: '10' },
+                        ]}
+                        onChange={handleAdvantagesCount}
+                        value={advantagesCount}
+                      />
                     </Layout.Section>
 
                     <Layout.Section oneHalf></Layout.Section>
@@ -444,7 +438,6 @@ export function TemplatePage3() {
                                       className="Polaris-TextField__Input"
                                       id={index + 1}
                                       autoComplete="off"
-                                      // defaultValue={`Advantage ${index + 1}`}
                                       value={allValues[index]}
                                       name={index + 1}
                                       onChange={handleAllValues}
@@ -593,22 +586,22 @@ export function TemplatePage3() {
                   </Stack>
                 </div>
 
-                  <div className='Color-Inputs'>
-                      <Text variant="bodyMd" as="p" color="subdued">
-                          Advantages colors
-                      </Text>
-                      {[...Array(Number(advantagesCount))]?.map((item, index) => (
-                          <Stack>
-                              <label
-                                  className={`${advantageColorValues[index] === '#FFFFFF' || advantageColorValues[index] === '#EBECF0' ? 'Color-Circle-Border' : ''} Color-Circle`}
-                                  style={{ backgroundColor: advantageColorValues[index] }}>
-                                  <input type="color"
-                                         value={advantageColorValues[index]}
-                                         name={index +1}
-                                         onChange={handleAdvantageColorValues}
-                                  />
-                              </label>
-                              <span className='Color-Property'>
+                <div className='Color-Inputs'>
+                  <Text variant="bodyMd" as="p" color="subdued">
+                    Advantages colors
+                  </Text>
+                  {[...Array(Number(advantagesCount))]?.map((item, index) => (
+                    <Stack>
+                      <label
+                        className={`${advantageColorValues[index] === '#FFFFFF' || advantageColorValues[index] === '#EBECF0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                        style={{ backgroundColor: advantageColorValues[index] }}>
+                        <input type="color"
+                          value={advantageColorValues[index]}
+                          name={index + 1}
+                          onChange={handleAdvantageColorValues}
+                        />
+                      </label>
+                      <span className='Color-Property'>
                         <Stack vertical>
                           <Text variant="headingSm" as="h6" fontWeight="semibold">
                             {` Advantage column ${index + 1}`}
@@ -618,9 +611,9 @@ export function TemplatePage3() {
                           </Text>
                         </Stack>
                       </span>
-                          </Stack>
-                      ))}
-                  </div>
+                    </Stack>
+                  ))}
+                </div>
 
                 <div className='Color-Inputs'>
                   <Text variant="bodyMd" as="p" color="subdued">
