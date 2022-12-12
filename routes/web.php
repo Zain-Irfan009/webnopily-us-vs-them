@@ -167,11 +167,17 @@ Route::post('/webhooks/app-uninstall', function (Request $request) {
         $product=json_decode($request->getContent());
         $shop=$request->header('x-shopify-shop-domain');
         $shop=Session::where('shop',$shop)->first();
+        $client = new Rest($shop->shop, $shop->access_token);
         \App\Models\ProductVariant::where('shop_id',$shop->id)->delete();
         \App\Models\UserTemplate::where('shop_id',$shop->id)->delete();
         \App\Models\Advantage::where('shop_id',$shop->id)->delete();
         \App\Models\UserTemplateProduct::where('shop_id',$shop->id)->delete();
         \App\Models\Product::where('shop_id',$shop->id)->delete();
+        $result = $client->get('/metafields/' .$shop->metafield_id. '.json');
+        $result = $result->getDecodedBody();
+        if($result['metafield']) {
+            $shop_metafield = $client->delete('/metafields/' . $shop->metafield_id . '.json');
+        }
         Session::where('id',$shop->id)->forceDelete();
 
     } catch (\Exception $e) {

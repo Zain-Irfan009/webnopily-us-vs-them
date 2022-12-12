@@ -59,9 +59,10 @@ export function TemplatePage3() {
   });
 
   useEffect(() => {
-    console.log('advan', advantagesCount)
-    console.log(competitorsCount)
-  }, [competitorsCount, advantagesCount]);
+    // console.log('advan', advantagesCount)
+    // console.log(competitorsCount)
+    console.log(competitorValue)
+  }, [competitorsCount, advantagesCount,competitorValue]);
 
   const getData = async () => {
     const response = await axios
@@ -253,9 +254,27 @@ export function TemplatePage3() {
   // }, [competitorToggle])
 
   const submitData = async () => {
+      let newArray=[];
+      let newArray2=[];
+      let newArray3=[];
+
+
+      [...Array(Number(advantagesCount))].map((item, index1) => (
+          newArray2.push(allValues[index1]),
+          [...Array(Number(competitorsCount))].map((item1, index2) => (
+              newArray3.push(competitorValue[index1][index2])
+      )),
+          newArray2.push(newArray3),
+          newArray.push(newArray2),
+          newArray2=[],
+          newArray3=[]
+
+      ))
+
+      console.log(newArray)
     let data = {
       brand: yourBrand,
-      advantages: allValues,
+      advantages: newArray,
       brand_values: brandValue,
       // competitor_values: competitorValue,
       template_id: selectedTemplate,

@@ -39,6 +39,10 @@ Route::get('products',[App\Http\Controllers\Api\TemplateController::class,'Produ
 Route::get('template-data',[App\Http\Controllers\Api\TemplateController::class,'TemplateData']);
 Route::post('selected-products',[\App\Http\Controllers\Api\TemplateController::class,'SelectedProducts']);
 
+Route::post('enable-app',[\App\Http\Controllers\Api\TemplateController::class,'EnableDisableApp']);
 
-Route::get('test',[App\Http\Controllers\Api\TemplateController::class,'testing']);
+
+
+
+Route::post('test',[App\Http\Controllers\Api\TemplateController::class,'testing']);
 

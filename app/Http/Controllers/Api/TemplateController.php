@@ -34,6 +34,7 @@ class TemplateController extends ApiController
 
     public function Step1Template(Request $request)
     {
+
         $shop = Session::where('shop', $request->shop_name)->first();
         $template = Template::find($request->template_id);
         $random_number = mt_rand(20, 90);
@@ -47,7 +48,22 @@ class TemplateController extends ApiController
             $items_array = [];
 
             $advantages = Advantage::where('user_template_id', $request->user_template_id)->where('shop_id', $shop->id)->get();
+            $competitor_names=CompetitorName::where('user_template_id', $request->user_template_id)->pluck('name')->toArray();
+
             foreach ($advantages as $index => $value) {
+
+                $competators_data=Competator::where('advantage_id',$value->id)->get();
+                $result_new=array();
+                foreach ($competators_data as $data){
+                    if($data->competator_status==0){
+                        $competator_status=false;
+                    }
+                    else{
+                        $competator_status=true;
+                    }
+
+                    array_push($result_new,$competator_status);
+                }
 
                 if ($value->brand == 'true') {
                     $brand = true;
@@ -61,8 +77,9 @@ class TemplateController extends ApiController
                 }
                 $item = [
                     'advantage' => $value->advantage,
+                    'advantage_color_value'=>$value->advantage_column_color,
                     'brand' => $brand,
-                    'competitor' => $competitor,
+                    'competitor' => $result_new,
                 ];
                 array_push($items_array, $item);
             }
@@ -74,6 +91,47 @@ class TemplateController extends ApiController
             ];
 
             $result = $data;
+
+            $user_template_products=UserTemplateProduct::where('user_template_id',$user_template->id)->get();
+
+            if(count($user_template_products) > 0) {
+                $value = [
+                    "template_id" => $user_template->template_id,
+                    "user_template_id" => $user_template->id,
+                    "brand" => $user_template->brand,
+                    "competitor" => $user_template->competitors,
+                    "background_color1" => $user_template->background_color1,
+                    "background_color2" => $user_template->background_color2,
+                    "brand_checkbox_color1" => $user_template->brand_checkbox_color1,
+                    "brand_checkbox_color2" => $user_template->brand_checkbox_color2,
+                    "competitors_checkbox_color1" => $user_template->competitors_checkbox_color1,
+                    "competitors_checkbox_color2" => $user_template->competitors_checkbox_color2,
+                    'competitors_name'=>$competitor_names,
+                    'items' => $items_array
+                ];
+
+                foreach ($user_template_products as $user_template_product) {
+                    $client = new Rest($shop->shop, $shop->access_token);
+                    $res = $client->get('/products/' .$user_template_product->shopify_product_id . '/metafields.json');
+                    $res = $res->getDecodedBody();
+
+                    foreach ($res['metafields'] as $deliverydate) {
+
+                        if ($deliverydate['key'] == 'products') {
+
+                            $product_metafield = $client->put('/metafields/' . $deliverydate['id'] . '.json', [
+
+                                "metafield" =>
+
+                                    array(
+                                        "type" => "json_string",
+                                        "value" => json_encode($value),
+                                    ),
+                            ]);
+                        }
+                    }
+                }
+            }
             return $this->response($result, 200);
 
         } else {
@@ -109,6 +167,7 @@ class TemplateController extends ApiController
                 $new_competator->competator_status=0;
                 $new_competator->advantage_id=$advantages->id;
                 $new_competator->shop_id = $shop->id;
+                $new_competator->user_template_id = $user_templates->id;
                 $new_competator->save();
             }
 
@@ -138,17 +197,19 @@ class TemplateController extends ApiController
 
     public function Step2Template(Request $request)
     {
+        foreach ($request->advantages as $index => $value) {
+
+
+        }
 
         $template = Template::find($request->template_id);
 
         $shop = Session::where('shop', $request->shop_name)->first();
         if ($template) {
 
-          $get_advantages= Advantage::where('user_template_id', $request->user_template_id)->where('shop_id', $shop->id)->get();
-          foreach ($get_advantages as $get_advantage){
-              Competator::where('advantage_id', $get_advantage->id)->where('shop_id', $shop->id)->delete();
-          }
             Advantage::where('user_template_id', $request->user_template_id)->where('shop_id', $shop->id)->delete();
+            Competator::where('user_template_id', $request->user_template_id)->where('shop_id', $shop->id)->delete();
+
             CompetitorName::where('user_template_id', $request->user_template_id)->where('shop_id', $shop->id)->delete();
 
             $user_template = UserTemplate::where('id', $request->user_template_id)->where('shop_id', $shop->id)->first();
@@ -170,13 +231,20 @@ class TemplateController extends ApiController
             foreach ($request->advantages as $index => $value) {
 
                 $advantage = new Advantage();
-                $advantage->advantage = $value;
+                $advantage->advantage = $value[0];
                 $advantage->brand = $request->brand_values[$index];
-//                $advantage->competitors = $request->competitor_values[$index];
                 $advantage->advantage_column_color = $request->advantage_color_values[$index];
                 $advantage->user_template_id = $user_template->id;
                 $advantage->shop_id = $shop->id;
                 $advantage->save();
+                foreach ($value[1] as $compet){
+                    $new_competator=new Competator();
+                    $new_competator->competator_status=$compet;
+                    $new_competator->advantage_id=$advantage->id;
+                    $new_competator->shop_id = $shop->id;
+                    $new_competator->user_template_id = $user_template->id;
+                    $new_competator->save();
+                }
 
 
                 if ($request->brand_values[$index] == true) {
@@ -190,10 +258,24 @@ class TemplateController extends ApiController
 //                } else {
 //                    $competitor = false;
 //                }
+
+                $competators_data=Competator::where('advantage_id',$advantage->id)->get();
+                $result_new=array();
+                foreach ($competators_data as $data){
+                    if($data->competator_status==0){
+                        $competator_status=false;
+                    }
+                    else{
+                        $competator_status=true;
+                    }
+
+                    array_push($result_new,$competator_status);
+                }
                 $item = [
                     'advantage' => $value,
                     'advantage_color_value'=>$request->advantage_color_values[$index],
                     'brand' => $request->brand_values[$index],
+                    'competitor' => $result_new,
 //                    'competitor' => $request->competitor_values[$index],
                 ];
                 array_push($items_array, $item);
@@ -218,6 +300,7 @@ class TemplateController extends ApiController
                     $competitor_name->shop_id = $shop->id;
                     $competitor_name->save();
                 }
+            $competitor_names=CompetitorName::where('user_template_id', $user_template->id)->pluck('name')->toArray();
 
 
             $user_template_products=UserTemplateProduct::where('user_template_id',$request->user_template_id)->get();
@@ -233,6 +316,7 @@ class TemplateController extends ApiController
                     "brand_checkbox_color2" => $user_template->brand_checkbox_color2,
                     "competitors_checkbox_color1" => $user_template->competitors_checkbox_color1,
                     "competitors_checkbox_color2" => $user_template->competitors_checkbox_color2,
+                    'competitors_name'=>$competitor_names,
                     'items' => $items_array
                 ];
                 foreach ($user_template_products as $user_template_product) {
@@ -527,9 +611,21 @@ class TemplateController extends ApiController
             if ($user_template) {
 
                 $advantages = Advantage::where('user_template_id', $request->user_template_id)->get();
-
+                $competitor_names=CompetitorName::where('user_template_id', $request->user_template_id)->pluck('name')->toArray();
                 $items_array = [];
                 foreach ($advantages as $index => $value) {
+                    $competators_data=Competator::where('advantage_id',$value->id)->get();
+                    $result_new=array();
+                    foreach ($competators_data as $data){
+                        if($data->competator_status==0){
+                            $competator_status=false;
+                        }
+                        else{
+                            $competator_status=true;
+                        }
+
+                        array_push($result_new,$competator_status);
+                    }
 
 
                     if ($value->brand == 1) {
@@ -546,7 +642,7 @@ class TemplateController extends ApiController
                         'advantage' => $value->advantage,
                         'advantage_color_value'=>$value->advantage_column_color,
                         'brand' => $brand,
-                        'competitor' => $competitor,
+                        'competitor' => $result_new,
                     ];
                     array_push($items_array, $item);
 
@@ -578,6 +674,7 @@ class TemplateController extends ApiController
                             "brand_checkbox_color2" => $user_template->brand_checkbox_color2,
                             "competitors_checkbox_color1" => $user_template->competitors_checkbox_color1,
                             "competitors_checkbox_color2" => $user_template->competitors_checkbox_color2,
+                            'competitors_name'=>$competitor_names,
                             'items' => $items_array
                         ];
 
@@ -734,11 +831,17 @@ class TemplateController extends ApiController
 
                 $result_new=array();
                 foreach ($competators_data as $data){
+                            if($data->competator_status==0){
+                                $competator_status=false;
+                            }
+                            else{
+                                $competator_status=true;
+                            }
 //                    $data_competator=[
 //                        'status'=>$data->competator_status
 //                    ];
 
-                    array_push($result_new,$data->competator_status);
+                    array_push($result_new,$competator_status);
                 }
 
 
@@ -787,7 +890,8 @@ class TemplateController extends ApiController
     public function testing(Request $request)
     {
 //
-        $shop = Session::where('shop', $request->shop_name)->first();
+
+        $shop = Session::where('shop',$request->shop_name)->first();
 
         $client = new Rest($shop->shop, $shop->access_token);
 
@@ -800,22 +904,61 @@ class TemplateController extends ApiController
 //        dd($res);
 
 //        $res = $client->get('/products/' . $product->shopify_id . '/metafields.json');
-        $products = Product::all();
-        foreach ($products as $product) {
-            $res = $client->get('/products/' . $product->shopify_id . '/metafields.json');
-            $res = $res->getDecodedBody();
+//        $products = Product::all();
+//        foreach ($products as $product) {
+//            $res = $client->get('/products/' . $product->shopify_id . '/metafields.json');
+//            $res = $res->getDecodedBody();
+//
+//            foreach ($res['metafields'] as $deliverydate) {
+//
+//
+//
+//                if ($deliverydate['key'] == 'products') {
+//
+//                    $delete = $client->delete( '/metafields/' . $deliverydate['id'] . '.json');
+//                }
+//            }
+//        }
 
-            foreach ($res['metafields'] as $deliverydate) {
-
-
-
-                if ($deliverydate['key'] == 'products') {
-
-                    $delete = $client->delete( '/metafields/' . $deliverydate['id'] . '.json');
-                }
-            }
+        $result = $client->get('/metafields/' .$shop->metafield_id. '.json');
+        $result = $result->getDecodedBody();
+        if($result['metafield']) {
+            $shop_metafield = $client->delete('/metafields/' . $shop->metafield_id . '.json');
+                $shop->metafield_id=null;
+                $shop->save();
         }
+    }
 
 
+    public function EnableDisableApp(Request $request){
+
+        $shop = Session::where('shop', $request->shop_name)->first();
+        $app_status=$request->status;
+        $client = new Rest($shop->shop, $shop->access_token);
+
+        if($shop->metafield_id==null) {
+            $shop_metafield = $client->post('/metafields.json', [
+                "metafield" => array(
+                    "key" => 'setting',
+                    "value" => $app_status,
+                    "type" => "number_integer",
+                    "namespace" => "usvsthem"
+                )
+            ]);
+            $res = $shop_metafield->getDecodedBody();
+
+            $shop->metafield_id=$res['metafield']['id'];
+            $shop->save();
+
+        }
+        else{
+            $shop_metafield = $client->put( '/metafields/' . $shop->metafield_id . '.json', [
+                "metafield" => [
+                    "value" => $app_status
+                ]
+            ]);
+
+
+        }
     }
 }
