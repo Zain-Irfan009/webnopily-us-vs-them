@@ -17,7 +17,7 @@ export function Table3({ themePc, themeMobile, btnShow, handleSelectTemplate,btn
     };
 
     const themeRowsPc = themePc?.map(
-        ({ name, yourBrand, competitor1, competitor2, competitor3 }, index) => (
+        ({ name, yourBrand, competitor1 }, index) => (
             <IndexTable.Row
                 id={index}
                 key={index}
@@ -46,30 +46,6 @@ export function Table3({ themePc, themeMobile, btnShow, handleSelectTemplate,btn
                             competitor1
                     }
                 </IndexTable.Cell>
-
-                <IndexTable.Cell>
-                    {competitor2 === 'true' ?
-                        <span className='Circle-bg-False-Icon'> <Icon source={CircleTickMinor} ></Icon>  </span>
-                        :
-                        competitor2 === 'false' ?
-                            <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMinor}></Icon> </span>
-                            :
-                            competitor2
-                    }
-                </IndexTable.Cell>
-
-                <IndexTable.Cell>
-                    {competitor3 === 'true' ?
-                        <span className='Circle-bg-True-Icon'> <Icon source={CircleTickMinor} ></Icon>  </span>
-                        :
-                        competitor3 === 'false' ?
-                            <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMinor}></Icon> </span>
-                            :
-                            competitor3
-                    }
-                </IndexTable.Cell>
-
-
             </IndexTable.Row>
         ),
     );
@@ -112,9 +88,7 @@ export function Table3({ themePc, themeMobile, btnShow, handleSelectTemplate,btn
     const themeHeadingsPc = [
         { title: '' },
         { title: 'Your Brand' },
-        { title: 'Competitor 1' },
-        { title: 'Competitor 2' },
-        { title: 'Competitor 3' },
+        { title: 'Competitor ' },
     ]
 
     const themeHeadingsMobile = [

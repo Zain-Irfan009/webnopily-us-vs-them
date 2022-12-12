@@ -5,16 +5,6 @@ import { Table11, Table22, Table33, Table44, SideBarNavigation } from './index';
 import axios from "axios";
 import { AppContext } from '../Context'
 
-const themeHeadingsPc =
-  [
-    { title: '' },
-    { title: 'Your Brand' },
-    { title: 'Competitor 1' },
-    { title: 'Competitor 2' },
-    { title: 'Competitor 3' },
-    { title: 'Competitor 4' },
-  ]
-
 
 export function TemplatePage3() {
   const { activePage, setActivePage, selectedTemplate, templateUserId, url } = useContext(AppContext);
@@ -61,8 +51,6 @@ export function TemplatePage3() {
   }, []);
 
   useEffect(() => {
-    // console.log('advan', advantagesCount)
-    // console.log(competitorsCount)
     console.log(competitorValue)
   }, [competitorsCount, advantagesCount, competitorValue]);
 
@@ -519,8 +507,6 @@ export function TemplatePage3() {
                                           className={`${competitorValue[index] && competitorValue[index][index2] === true  ? 'Selected' : ''}`}
                                         >
                                           <input type="radio"
-                                            // id={[index][index2]}
-                                            // name={[index][index2]}
                                             value={true}
                                             onChange={() => handleCompetitorValue(index, index2, true)} />
                                           <Icon source={CircleTickMajor}></Icon>
@@ -532,8 +518,6 @@ export function TemplatePage3() {
                                           className={`${ competitorValue[index] && competitorValue[index][index2] === false ? 'Selected' : ''}`}
                                         >
                                           <input type="radio"competitorValue
-                                            // id={[index][index2]}
-                                            // name={[index][index2]}
                                             value={false}
                                             onChange={() => handleCompetitorValue(index, index2, false)} />
                                           <Icon source={CircleCancelMajor}>
