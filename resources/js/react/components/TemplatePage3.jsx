@@ -22,17 +22,20 @@ export function TemplatePage3() {
     const [btnloading, setBtnLoading] = useState(false)
   const [templateName, setTemplateName] = useState();
   const [yourBrand, setYourBrand] = useState();
-  const [otherCompetitors, setOtherCompetitors] = useState();
+  // const [otherCompetitors, setOtherCompetitors] = useState();
   const [advantagesCount, setAdvantagesCount] = useState();
+  const [competitorsCount, setCompetitorsCount] = useState();
   const [customAdvantagesCount, setCustomAdvantagesCount] = useState();
   const [loading, setLoading] = useState(true)
   const [advantageToggle, setAdvantageToggle] = useState(false)
+    const [competitorToggle, setCompetitorToggle] = useState(false)
   const [fixedAdvantages, setFixedAdvantages] = useState();
   const [fixedBrand, setFixedBrand] = useState();
   const [fixedCompetitor, setCompetitor] = useState();
   const [fixedTable, setFixedTable] = useState();
 
   const [allValues, setAllValues] = useState([]);
+    const [competitorName, setCompetitorName] = useState([]);
   const [brandValue, setBrandValue] = useState([]);
   const [competitorValue, setCompetitorValue] = useState([]);
   const [colorValues, setColorValues] = useState([])
@@ -47,11 +50,19 @@ export function TemplatePage3() {
 
   const handleTemplateName = useCallback((value) => setTemplateName(value), []);
   const handleBrandName = useCallback((value) => setYourBrand(value), []);
-  const handleOtherCompetitors = useCallback((value) => setOtherCompetitors(value), []);
   const handleAdvantagesCount = useCallback((value) => {
     setAdvantagesCount(value)
     setAdvantageToggle(true)
   });
+    const handleCompetitorsCount = useCallback((value) => {
+        setCompetitorsCount(value)
+        setCompetitorToggle(true)
+    });
+
+    useEffect(() => {
+        console.log('advan',advantagesCount)
+        console.log(competitorsCount)
+    }, [competitorsCount, advantagesCount]);
 
   const getData = async () => {
     const response = await axios
@@ -62,9 +73,12 @@ export function TemplatePage3() {
         console.log('table data', res.data.result);
         setTemplateName(res.data.result.template_name)
         setYourBrand(res.data.result.brand)
-        setOtherCompetitors(res.data.result.competitor)
+        // setOtherCompetitors(res.data.result.competitor)
+          setCompetitorsCount(res.data.result.competators_count)
         setAdvantagesCount(res.data.result.advantages_count)
+
         setAllValues(res.data.result.advantages)
+          setCompetitorName(res.data.result.competitors_name)
         setBrandValue(res.data.result.brand_value)
         setCompetitorValue(res.data.result.competitor_value)
         setColorValues(res.data.result.primary_colors[0])
@@ -91,27 +105,24 @@ export function TemplatePage3() {
   const handleAllValues = e => {
     setAllValues({ ...allValues, [e.target.name - 1]: e.target.value });
     themeInputTable1[e.target.name - 1].advantage = e.target.value;
-    // themeInputTable2[e.target.name - 1].name = e.target.value;c
-    // themeInputTable3[e.target.name - 1].name = e.target.value;
-    // themeInputTable3Mobile[e.target.name - 1].name = e.target.value;
-    // themeInputTable4[e.target.name - 1].name = e.target.value;
   }
 
-  const handleBrandValue = e => {
+    const handleCompetitorName = e => {
+        setCompetitorName({ ...competitorName, [e.target.name - 1]: e.target.value });
+        // themeInputTable1[e.target.name - 1].advantage = e.target.value;
+    }
 
-    // themeInputTable3[e.target.name].yourBrand = e.target.value;
-    // themeInputTable4[e.target.name].yourBrand = e.target.value;
-    // themeInputTable3Mobile[e.target.name].yourBrand = e.target.value;
+
+  const handleBrandValue = e => {
 
     if (e.target.value === 'true') {
       setBrandValue({ ...brandValue, [e.target.name]: true });
       themeInputTable1[e.target.name].brand = true;
-      // themeInputTable2[e.target.name].yourBrand = true;
     }
     else if (e.target.value === 'false') {
       setBrandValue({ ...brandValue, [e.target.name]: false });
       themeInputTable1[e.target.name].brand = false;
-      // themeInputTable2[e.target.name].yourBrand = false;
+ ;
     }
     else {
       themeInputTable1[e.target.name].brand = e.target.value;
@@ -121,27 +132,16 @@ export function TemplatePage3() {
 
   const handleCompetitorValue = e => {
 
-    // themeInputTable3[e.target.name].competitor1 = e.target.value;
-    // themeInputTable3[e.target.name].competitor2 = e.target.value;
-    // themeInputTable3[e.target.name].competitor3 = e.target.value;
-    // themeInputTable3Mobile[e.target.name].competitor = e.target.value;
-    // themeInputTable4[e.target.name].others = e.target.value;
+
 
     if (e.target.value === 'true') {
       setCompetitorValue({ ...competitorValue, [e.target.name]: true });
       themeInputTable1[e.target.name].competitor = true;
-      // themeInputTable2[e.target.name].competitor1 = true;
-      // themeInputTable2[e.target.name].competitor2 = true;
-      // themeInputTable2[e.target.name].competitor3 = true;
-      // themeInputTable2[e.target.name].competitor4 = true;
+
     }
     else if (e.target.value === 'false') {
       setCompetitorValue({ ...competitorValue, [e.target.name]: false });
       themeInputTable1[e.target.name].competitor = false;
-      // themeInputTable2[e.target.name].competitor1 = false;
-      // themeInputTable2[e.target.name].competitor2 = false;
-      // themeInputTable2[e.target.name].competitor3 = false;
-      // themeInputTable2[e.target.name].competitor4 = false;
     }
     else {
       themeInputTable1[e.target.name].competitor = e.target.value;
@@ -156,7 +156,6 @@ export function TemplatePage3() {
     const handleAdvantageColorValues = e => {
         setAdvantageColorValues({ ...advantageColorValues, [e.target.name - 1]: e.target.value });
     }
-
 
     const changeAdvantageValues = () => {
     let advantagesValues = {};
@@ -216,13 +215,55 @@ export function TemplatePage3() {
     }
   }, [advantageToggle])
 
+    const changeCompetitorName = () => {
+        setCompetitorName([])
+        let competitorsName = {};
+
+        [...Array(Number(competitorsCount))].map((item, index) => {
+
+            competitorsName = ({ ...competitorsName, [index]: `Competitor ${index + 1}` })
+
+        })
+        setCompetitorName(competitorsName)
+        setCompetitorToggle(false)
+
+    }
+
+    useEffect(() => {
+        {
+            competitorToggle &&
+            changeCompetitorName()
+        }
+
+    }, [competitorToggle])
+
+    // const changeCompetitorValues = () => {
+    //     let competitorValue = {};
+    //
+    //     [...Array(Number(competitorsCount))].map((item, index) => {
+    //
+    //         competitorValue = ({ ...competitorValue, [index]: `Competitor ${index + 1}` })
+    //
+    //     })
+    //
+    //     setCompetitorValue(competitorValue)
+    //
+    // }
+    //
+    // useEffect(() => {
+    //     {
+    //         competitorToggle &&
+    //         changeCompetitorValues()
+    //     }
+    // }, [competitorToggle])
+
   const submitData = async () => {
     let data = {
       brand: yourBrand,
-      competitor: otherCompetitors,
+      // competitor: otherCompetitors,
       advantages: allValues,
       brand_values: brandValue,
-      competitor_values: competitorValue,
+      // competitor_values: competitorValue,
       template_id: selectedTemplate,
       template_name: templateName,
       user_template_id: templateUserId,
@@ -234,6 +275,8 @@ export function TemplatePage3() {
       competitors_checkbox_color2: colorValues?.competitors_checkbox_color2,
       advantage_color_values: advantageColorValues,
       advantages_count: advantagesCount,
+        competitors_name:competitorName,
+        competitor_value:competitorValue,
       shop_name: host,
     };
 
@@ -277,19 +320,66 @@ export function TemplatePage3() {
                 <br />
 
                 <TextField
-                  label="Brand"
+                  label="Your Brand"
                   value={yourBrand}
                   onChange={handleBrandName}
                   autoComplete="off"
                 />
                 <br />
 
-                <TextField
-                  label="Competitors"
-                  value={otherCompetitors}
-                  onChange={handleOtherCompetitors}
-                  autoComplete="off"
-                />
+                  <Select
+                      label="Number of Competitors"
+                      options={ [
+                          {label: '1', value: '1'},
+                          {label: '2', value: '2'},
+                          {label: '3', value: '3'},
+                          {label: '4', value: '4'},
+                          {label: '5', value: '5'},
+                      ]}
+
+                      onChange={handleCompetitorsCount}
+                      value={competitorsCount}
+                  />
+                  <br />
+
+                  <div className='Advantages-Content-Section'>
+                      {[...Array(Number(competitorsCount))].map((item, index) => (
+
+                        <div className='Advantages-Inputs-Section' key={index}>
+                                      <div className='Advantage-Input-Field'>
+                                          <div className="Polaris-Labelled__LabelWrapper">
+                                              <div className="Polaris-Label">
+                                                  <label id={index + 1} htmlFor={index + 1}
+                                                         className="Polaris-Label__Text">
+                                    <span
+                                        className="Polaris-Text--root Polaris-Text--bodyMd Polaris-Text--regular">Competitor {index + 1}</span>
+                                                  </label>
+                                              </div>
+                                          </div>
+                                          <div className="Polaris-Connected">
+                                              <div
+                                                  className="Polaris-Connected__Item Polaris-Connected__Item--primary">
+                                                  <div
+                                                      className="Polaris-TextField Polaris-TextField--hasValue">
+                                                      <input type="text"
+                                                             className="Polaris-TextField__Input"
+                                                             id={index + 1}
+                                                             autoComplete="off"
+                                                             value={competitorName[index]}
+                                                             name={index + 1}
+                                                             onChange={handleCompetitorName}
+                                                      />
+                                                      <div className="Polaris-TextField__Backdrop"></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                            <br />
+                                  </div>
+
+
+                      ))}
+                  </div>
               </Card>
 
               <Card
@@ -306,12 +396,7 @@ export function TemplatePage3() {
                 <div className='Advantages-Layout'>
                   <Layout>
                     <Layout.Section oneHalf>
-                      {/*<TextField*/}
-                      {/*  label="Number of advantages"*/}
-                      {/*  value={advantagesCount}*/}
-                      {/*  onChange={handleAdvantagesCount}*/}
-                      {/*  autoComplete="off"*/}
-                      {/*/>*/}
+
                         <Select
                             label="Number of advantages"
                             options={ [
@@ -655,28 +740,28 @@ export function TemplatePage3() {
             <Layout.Section secondary>
               <SideBarNavigation />
 
-              <div className='Advantages-Tables-Preview'>
-                {(() => {
-                  switch (selectedTemplate) {
-                    case 1:
-                      return <Table11 themePc={themeInputTable1} themeMobile={themeInputTable1}
-                                      yourBrand={yourBrand}    otherCompetitors={otherCompetitors}/>
-                    case 2:
-                      return <Table22 themePc={themeInputTable1} themeMobile={themeInputTable1}
-                                      yourBrand={yourBrand}    otherCompetitors={otherCompetitors} />
-                    case 3:
-                      return <Table33 themePc={themeInputTable1} themeMobile={themeInputTable1}
-                                      yourBrand={yourBrand}    otherCompetitors={otherCompetitors}/>
-                    case 4:
-                      return <Table44 themePc={themeInputTable1} themeMobile={themeInputTable1}
-                                      yourBrand={yourBrand}    otherCompetitors={otherCompetitors}/>
-                    default:
-                      break
-                  }
+              {/*<div className='Advantages-Tables-Preview'>*/}
+              {/*  {(() => {*/}
+              {/*    switch (selectedTemplate) {*/}
+              {/*      case 1:*/}
+              {/*        return <Table11 themePc={themeInputTable1} themeMobile={themeInputTable1}*/}
+              {/*                        yourBrand={yourBrand}    otherCompetitors={otherCompetitors}/>*/}
+              {/*      case 2:*/}
+              {/*        return <Table22 themePc={themeInputTable1} themeMobile={themeInputTable1}*/}
+              {/*                        yourBrand={yourBrand}    otherCompetitors={otherCompetitors} />*/}
+              {/*      case 3:*/}
+              {/*        return <Table33 themePc={themeInputTable1} themeMobile={themeInputTable1}*/}
+              {/*                        yourBrand={yourBrand}    otherCompetitors={otherCompetitors}/>*/}
+              {/*      case 4:*/}
+              {/*        return <Table44 themePc={themeInputTable1} themeMobile={themeInputTable1}*/}
+              {/*                        yourBrand={yourBrand}    otherCompetitors={otherCompetitors}/>*/}
+              {/*      default:*/}
+              {/*        break*/}
+              {/*    }*/}
 
-                })()}
+              {/*  })()}*/}
 
-              </div>
+              {/*</div>*/}
 
 
             </Layout.Section>
