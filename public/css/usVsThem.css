@@ -75,11 +75,6 @@
     margin-bottom: 1rem;
 }
 
-.Dashboard .Progress-Expiry{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 .Dashboard .ProgressBar-Value {
     margin-top: 0.5rem;
     position: relative;

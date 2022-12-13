@@ -25,6 +25,7 @@ export function Dashboard() {
     const [planExpiry, setPlanExpiry] = useState()
     const [planTrialDays, setPlanTrialDays] = useState()
     const [planUsageLimit, setPlanUsageLimit] = useState()
+    const [planExpireBanner, setPlanExpireBanner] = useState(true)
 
     const [products, setProducts] = useState([])
     const [productsModal, setProductsModal] = useState(false)
@@ -86,12 +87,6 @@ export function Dashboard() {
     useEffect(() => {
         getData();
     }, [toggleReload]);
-
-
-
-    useEffect(() => {
-        console.log(planName, planCount, planExpiry, planTrialDays, planUsageLimit)
-    }, [planName, planCount, planExpiry, planTrialDays, planExpiry,planUsageLimit]);
 
 
     const handleAppEnable = () => {
@@ -485,25 +480,23 @@ export function Dashboard() {
                                     </div>
                                 }
 
+                                    {planExpireBanner &&
+                                        planTrialDays > 0 &&
+                                        <Banner
+                                            title="Plan Expiry"
+                                            status="info"
+                                            onDismiss={() => setPlanExpireBanner(!planExpireBanner)}>
+
+                                            <p>{`Your Plan will Expire in ${planTrialDays} at ${planExpiry}`}</p>
+                                        </Banner>
+                                    }
+
 
                                 <div className='ProgressBar-Section'>
                                     <Card sectioned>
-                                       <div className='Progress-Expiry'>
-                                          <span>
-                                               <Text variant="headingLg" as="h5">
-                                               {planName}
-                                           </Text>
-                                          </span>
-                                           <span>
-                                               <Text variant="headingSm" as="h6">
-                                               {`Remaining Trial Days: ${planTrialDays}`  }
-                                           </Text>
-                                               <Text variant="headingSm" as="h6">
-                                               {`Trial Expiry Date: ${planExpiry}`}
-                                           </Text>
-                                           </span>
-                                       </div>
-
+                                        <Text variant="headingLg" as="h5">
+                                            {planName}
+                                        </Text>
                                         <Text variant="bodyMd" as="p">
                                             {`Get Upto ${planUsageLimit} monthly views`}
                                         </Text>
