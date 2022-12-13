@@ -71,11 +71,11 @@
 }
 
 /* ----------------------UsVsThem Dashboard--------------------------- */
-.Dashboard .Polaris-Banner--statusInfo{
+.Dashboard .Polaris-Banner--statusInfo {
     margin-bottom: 1rem;
 }
 
-.Dashboard .Polaris-Banner--statusInfo button{
+.Dashboard .Polaris-Banner--statusInfo button {
     background: transparent;
 }
 
@@ -273,6 +273,10 @@
     margin-top: 12px;
 }
 
+.Dashboard .MediaCard-Description .Polaris-ButtonGroup .Polaris-Button {
+    min-width: 123px;
+}
+
 .Dashboard .Polaris-MediaCard__Heading .Polaris-Text--root {
     text-transform: capitalize;
 }
@@ -401,6 +405,10 @@
 .Screen-Selection .Polaris-Stack .Screen-Selection-Btn {
     display: flex;
     justify-content: flex-end;
+}
+
+.Screen-Selection .Polaris-Stack .Screen-Selection-Btn button {
+    min-width: 70px;
 }
 
 .Screen-Selection .Polaris-Stack .Screen-Selection-Icons {

@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom'
 
 
 export function Dashboard() {
-    const { setActivePage, setTemplateUserId, config, selectedTemplate, setSelectedTemplate, url } = useContext(AppContext);
+    const { setActivePage, templateUserId, setTemplateUserId, config, selectedTemplate, setSelectedTemplate, url } = useContext(AppContext);
     let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
     const app = createApp(config);
     const redirect = Redirect.create(app);
@@ -88,15 +88,9 @@ export function Dashboard() {
         getData();
     }, [toggleReload]);
 
-
-    const handleAppEnable = () => {
-        console.log('enabled click');
-        setAppEnable(!appEnable)
-    }
-
-    const handleLocationChange = () => {
-        redirect.dispatch(Redirect.Action.APP, `/templates`);
-
+    const handleProductsModal = () =>{
+        setProductsModal(false)
+        setTemplateUserId()
     }
 
     const handleRenameModal = (id, name) => {
@@ -263,7 +257,7 @@ export function Dashboard() {
                         arr.push(item.id)
                     }
                 })
-                setSelectedTemplate(id)
+                setTemplateUserId(id)
                 setSelectedItems(arr)
                 setBtnLoading(false)
                 setProductsModal(true)
@@ -280,7 +274,7 @@ export function Dashboard() {
     }
 
     const handleSubmitProduct = async () => {
-        console.log(`submit products ${selectedTemplate} `);
+        console.log(`submit products ${templateUserId} `);
         setBtnLoading(true)
         let unSelected = []
         var arr = products.filter(function (item) {
@@ -290,7 +284,7 @@ export function Dashboard() {
             unSelected.push(item.id)
         })
         let data = {
-            user_template_id: selectedTemplate,
+            user_template_id: templateUserId,
             product_ids: selectedItems,
             unSelected_ids: unSelected,
             shop_name: host,
@@ -300,11 +294,11 @@ export function Dashboard() {
             console.log(response);
             setBtnLoading(false)
             setProductsModal(false);
-            setSelectedTemplate()
+            setTemplateUserId()
         } catch (error) {
             alert('Error', error);
             setBtnLoading(false)
-            setSelectedTemplate()
+            setTemplateUserId()
             setProductsModal(false);
         }
     }
@@ -345,7 +339,7 @@ export function Dashboard() {
                     products?.length ?
                     <Modal
                         open={productsModal}
-                        onClose={() => setProductsModal(false)}
+                        onClose={handleProductsModal}
                         title="Select Products"
                         primaryAction={{
                             content: 'Save',
@@ -355,7 +349,7 @@ export function Dashboard() {
                         secondaryActions={[
                             {
                                 content: 'Cancel',
-                                onAction: () => setProductsModal(false),
+                                onAction: handleProductsModal,
                             },
                         ]}
                     >
