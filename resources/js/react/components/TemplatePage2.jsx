@@ -352,31 +352,35 @@ export function TemplatePage2() {
           </Layout.Section>
 
           <Layout.Section oneHalf >
-            <Table1 themePc={theme1Pc} themeMobile={theme1Mobile} btnShow={true}
+            {/* <Table1 themePc={theme1Pc} themeMobile={theme1Mobile} btnShow={true}
               btnloading={btnloading}
-              handleSelectTemplate={handleSelectTemplate} />
+              handleSelectTemplate={handleSelectTemplate} /> */}
+            <Table1 handleSelectTemplate={handleSelectTemplate} btnloading={btnloading} />
           </Layout.Section>
 
 
           <Layout.Section oneHalf>
-            <Table2 themePc={theme2Pc} themeMobile={theme2Mobile} btnShow={true}
+            {/* <Table2 themePc={theme2Pc} themeMobile={theme2Mobile} btnShow={true}
               btnloading={btnloading}
               handleSelectTemplate={handleSelectTemplate}
-              themeHeadingsMobile={themeHeadingsMobile} themeHeadingsPc={themeHeadingsPc} />
+              themeHeadingsMobile={themeHeadingsMobile} themeHeadingsPc={themeHeadingsPc} /> */}
+            <Table2 handleSelectTemplate={handleSelectTemplate} btnloading={btnloading} />
           </Layout.Section>
 
 
           <Layout.Section oneHalf>
-            <Table3 themePc={theme3Pc} themeMobile={theme3Mobile} btnShow={true}
+            {/* <Table3 themePc={theme3Pc} themeMobile={theme3Mobile} btnShow={true}
               btnloading={btnloading}
-              handleSelectTemplate={handleSelectTemplate} />
+              handleSelectTemplate={handleSelectTemplate} /> */}
+            <Table3 handleSelectTemplate={handleSelectTemplate} btnloading={btnloading} />
           </Layout.Section>
 
 
           <Layout.Section oneHalf>
-            <Table4 themePc={theme4Pc} themeMobile={theme4Mobile} btnShow={true}
+            {/* <Table4 themePc={theme4Pc} themeMobile={theme4Mobile} btnShow={true}
               btnloading={btnloading}
-              handleSelectTemplate={handleSelectTemplate} />
+              handleSelectTemplate={handleSelectTemplate} /> */}
+            <Table4 handleSelectTemplate={handleSelectTemplate} btnloading={btnloading} />
           </Layout.Section>
 
         </Layout>

@@ -74,7 +74,7 @@ export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMob
     return (
         <Card sectioned>
             <div className='Theme-Card-Content'>
-                <div className={`${screen ? 'Theme2-Pc-Table' : 'Theme2-Mobile-Table'} Theme-Table`}>
+                {/* <div className={`${screen ? 'Theme2-Pc-Table' : 'Theme2-Mobile-Table'} Theme-Table`}>
                     <IndexTable
                         resourceName={resourceName}
                         itemCount={screen ? themePc?.length : themeMobile?.length}
@@ -83,7 +83,9 @@ export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMob
                     >
                         {screen ? themeRowsPc : btnShow ? themeRowsMobile : themeRowsPc}
                     </IndexTable>
-                </div>
+                </div> */}
+
+                
 
                 <div className='Screen-Selection'>
                     <Stack>

@@ -3,6 +3,8 @@ import { Card, IndexTable, Icon, Stack, Button } from '@shopify/polaris';
 import {
     TickMinor, CancelMinor, MobileMajor, DesktopMajor, CircleTickMajor, CircleCancelMajor
 } from '@shopify/polaris-icons';
+import table1desktop from '../../../../assets/table1desktop.jpg'
+import table1mobile from '../../../../assets/table1mobile.jpg'
 
 export function Table1({ themePc, themeMobile, btnShow, handleSelectTemplate, btnloading }) {
     const [screen, setScreen] = useState(true)
@@ -87,7 +89,7 @@ export function Table1({ themePc, themeMobile, btnShow, handleSelectTemplate, bt
     return (
         <Card sectioned>
             <div className='Theme-Card-Content'>
-                <div className={`${screen ? 'Theme1-Pc-Table' : 'Theme1-Mobile-Table'} Theme-Table`}>
+                {/* <div className={`${screen ? 'Theme1-Pc-Table' : 'Theme1-Mobile-Table'} Theme-Table`}>
                     <IndexTable
                         resourceName={resourceName}
                         itemCount={screen ? themePc?.length : themeMobile?.length}
@@ -101,6 +103,14 @@ export function Table1({ themePc, themeMobile, btnShow, handleSelectTemplate, bt
                             <IndexTable.Cell>;</IndexTable.Cell>
                         </IndexTable.Row>
                     </IndexTable>
+                </div> */}
+                
+                <div className='Tables-Image-Section'>
+                    {screen ?
+                        <img src={table1desktop} alt="desktop table" /> :
+                        <img src={table1mobile} alt="mobile table" />
+                    }
+
                 </div>
 
                 <div className='Screen-Selection'>
