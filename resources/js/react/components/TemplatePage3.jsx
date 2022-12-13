@@ -23,7 +23,7 @@ export function TemplatePage3() {
   const [fixedBrand, setFixedBrand] = useState();
   const [fixedCompetitor, setCompetitor] = useState();
   const [fixedTable, setFixedTable] = useState();
-    const [advantageLoading, setAdvantageLoading] = useState(false)
+  const [advantageLoading, setAdvantageLoading] = useState(false)
 
   const [allValues, setAllValues] = useState([]);
   const [competitorName, setCompetitorName] = useState([]);
@@ -31,6 +31,7 @@ export function TemplatePage3() {
   const [competitorValue, setCompetitorValue] = useState([]);
   const [colorValues, setColorValues] = useState([])
   const [advantageColorValues, setAdvantageColorValues] = useState([])
+  const [successToast, setSuccessToast] = useState(false);
 
   const [themeInputTable1, setThemeInputTable1] = useState([]);
   const [themeInputTable2, setThemeInputTable2] = useState([]);
@@ -91,6 +92,14 @@ export function TemplatePage3() {
     getData();
   }, []);
 
+  const toggleToastActive = () => {
+    setSuccessToast(false);
+  }
+
+  const toastSuccess = successToast ? (
+    <Toast content="Template Saved" onDismiss={toggleToastActive} duration={1500} />
+  ) : null;
+
   const handleAllValues = e => {
     setAllValues({ ...allValues, [e.target.name - 1]: e.target.value });
     themeInputTable1[e.target.name - 1].advantage = e.target.value;
@@ -123,7 +132,7 @@ export function TemplatePage3() {
     let competitor_values = (competitorValue)
     competitor_values[index][index2] = value;
     setCompetitorValue(competitor_values)
-      console.log(competitor_values)
+    console.log(competitor_values)
     setCompetitorValueToggle(!competitorValueToggle)
   }
 
@@ -286,7 +295,7 @@ export function TemplatePage3() {
     try {
       const response = await axios.post(`${url}/step-2`, data)
       console.log(response);
-      setActivePage(4)
+      setSuccessToast(true)
     } catch (error) {
       alert('Error: ', error);
     }
@@ -307,7 +316,7 @@ export function TemplatePage3() {
               <Card
                 sectioned
                 title='Top fields'
-                >
+              >
                 <TextField
                   label="Template Name"
                   value={templateName}
@@ -493,7 +502,7 @@ export function TemplatePage3() {
                                     <Stack>
                                       <span className='Advantages-Input-True-Icon'>
                                         <label
-                                          className={`${competitorValue[index] && competitorValue[index][index2] === true  ? 'Selected' : ''}`}
+                                          className={`${competitorValue[index] && competitorValue[index][index2] === true ? 'Selected' : ''}`}
                                         >
                                           <input type="radio"
                                             value={true}
@@ -504,9 +513,9 @@ export function TemplatePage3() {
 
                                       <span className='Advantages-Input-False-Icon'>
                                         <label
-                                          className={`${ competitorValue[index] && competitorValue[index][index2] === false ? 'Selected' : ''}`}
+                                          className={`${competitorValue[index] && competitorValue[index][index2] === false ? 'Selected' : ''}`}
                                         >
-                                          <input type="radio"competitorValue
+                                          <input type="radio" competitorValue
                                             value={false}
                                             onChange={() => handleCompetitorValue(index, index2, false)} />
                                           <Icon source={CircleCancelMajor}>
@@ -530,7 +539,7 @@ export function TemplatePage3() {
               <Card
                 sectioned
                 title='Styling'
-                >
+              >
                 <Text variant="headingMd" as="h5" fontWeight='semibold'>
                   Colors
                 </Text>
@@ -601,7 +610,7 @@ export function TemplatePage3() {
                       <span className='Color-Property'>
                         <Stack vertical>
                           <Text variant="headingSm" as="h6" fontWeight="semibold">
-                            {` Advantage column ${index + 1}`}
+                            {` Advantage ${index + 1}`}
                           </Text>
                           <Text variant="headingXs" as="h6" fontWeight="medium">
                             {advantageColorValues[index]}
@@ -787,6 +796,7 @@ export function TemplatePage3() {
             </Layout.Section>
           </Layout>
         }
+        {toastSuccess}
       </Page>
     </div>
   )

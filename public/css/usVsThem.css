@@ -75,28 +75,8 @@
     margin-bottom: 1rem;
 }
 
-
-@media (min-width: 768px) {
-    .Dashboard .ProgressBar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .Dashboard .ProgressBar button {
-        margin-left: 1.5rem;
-    }
-}
-
-@media (max-width: 767px) {
-    .Dashboard .ProgressBar button {
-        display: flex;
-        margin: 0 auto;
-        margin-top: 1.5rem;
-    }
-}
-
 .Dashboard .ProgressBar-Value {
+    margin-top: 0.5rem;
     position: relative;
     width: 100%;
 }
@@ -116,6 +96,9 @@
     right: 0;
 }
 
+.Dashboard .ProgressBar-Section .Polaris-Card__Section h5 {
+    margin-bottom: 0;
+}
 
 
 .Dashboard .Polaris-Page {

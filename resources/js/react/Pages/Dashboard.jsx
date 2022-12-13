@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom'
 
 
 export function Dashboard() {
-    const { setActivePage, setTemplateUserId, config, setSelectedTemplate, url } = useContext(AppContext);
+    const { setActivePage, setTemplateUserId, config, selectedTemplate, setSelectedTemplate, url } = useContext(AppContext);
     let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
     const app = createApp(config);
     const redirect = Redirect.create(app);
@@ -23,7 +23,7 @@ export function Dashboard() {
     const [progressBarValue, setProgressBarValue] = useState(70)
 
     const [products, setProducts] = useState([])
-    const [showProducts, setShowProducts] = useState(false)
+    const [productsModal, setProductsModal] = useState(false)
     const [selectedItems, setSelectedItems] = useState([]);
     const [templateRenameValue, setTemplateRenameValue] = useState()
     const [templateRenameUserId, setTemplateRenameUserId] = useState()
@@ -54,7 +54,7 @@ export function Dashboard() {
                 }, 0);
             })
             .catch(error =>
-                alert('Error: ', error));
+                alert('Error', error));
     }
 
     useEffect(() => {
@@ -106,27 +106,27 @@ export function Dashboard() {
         <Toast content="Template Duplicate Sucessfully" onDismiss={toggleToastActive} duration={1500} />
     ) : null;
 
-    function useOutsideAlerter(ref, id) {
-        useEffect(() => {
+    // function useOutsideAlerter(ref, id) {
+    //     useEffect(() => {
 
-            function handleClickOutside(event) {
-                if (ref.current && !ref.current.contains(event.target)) {
-                    if (id === 2) {
-                        setShowProducts(false)
-                        setSelectedItems([])
-                    }
-                }
-            }
+    //         function handleClickOutside(event) {
+    //             if (ref.current && !ref.current.contains(event.target)) {
+    //                 if (id === 2) {
+    //                     setProductsModal(false)
+    //                     setSelectedItems([])
+    //                 }
+    //             }
+    //         }
 
-            document.addEventListener("mousedown", handleClickOutside);
-            return () => {
-                document.removeEventListener("mousedown", handleClickOutside);
-            };
-        }, [ref]);
-    }
+    //         document.addEventListener("mousedown", handleClickOutside);
+    //         return () => {
+    //             document.removeEventListener("mousedown", handleClickOutside);
+    //         };
+    //     }, [ref]);
+    // }
 
-    const productsRef = useRef(null);
-    useOutsideAlerter(productsRef, 2);
+    // const productsRef = useRef(null);
+    // useOutsideAlerter(productsRef, 2);
 
 
     const handleRenameTemplate = async () => {
@@ -146,7 +146,7 @@ export function Dashboard() {
         } catch (error) {
             setRenameModalActive(false)
             setTemplateRenameUserId()
-            alert('Error: ', error);
+            alert('Error', error);
         }
     }
 
@@ -165,7 +165,7 @@ export function Dashboard() {
 
         } catch (error) {
 
-            alert('Error: ', error);
+            alert('Error', error);
         }
     }
 
@@ -184,7 +184,7 @@ export function Dashboard() {
 
         } catch (error) {
 
-            alert('Error: ', error);
+            alert('Error', error);
         }
 
 
@@ -199,8 +199,6 @@ export function Dashboard() {
         setSelectedTemplate(temp_id)
         setTemplateUserId(id)
         setActivePage(3)
-
-        // redirect.dispatch(Redirect.Action.APP, `/templates` );
     }
 
     const handleChangeTemplate = (id, temp_id) => {
@@ -209,8 +207,7 @@ export function Dashboard() {
         setTemplateUserId(id)
         setActivePage(2)
 
-        //
-        //
+        
         // redirect.dispatch(Redirect.Action.APP, {
         //     path: `/templates`,
         // })
@@ -218,7 +215,6 @@ export function Dashboard() {
 
     const handleSelectProducts = async (id) => {
         console.log(`select products clicked ${id}`);
-        setShowProducts(false);
         setProducts([])
         setSelectedItems([])
 
@@ -236,40 +232,43 @@ export function Dashboard() {
                         arr.push(item.id)
                     }
                 })
+                setSelectedTemplate(id)
                 setSelectedItems(arr)
 
-                setShowProducts((prev) => {
-                    let toggleId;
-                    if (prev[id]) {
-                        toggleId = { [id]: false };
-                    } else {
-                        toggleId = { [id]: true };
-                    }
-                    return { ...toggleId };
-                });
+                // setProductsModal((prev) => {
+                //     let toggleId;
+                //     if (prev[id]) {
+                //         toggleId = { [id]: false };
+                //     } else {
+                //         toggleId = { [id]: true };
+                //     }
+                //     return { ...toggleId };
+                // });
+
+                setProductsModal(true)
 
             })
             .catch(error => {
-                alert('Error: ', error);
-                setShowProducts(false);
+                alert('Error', error);
+                setProductsModal(false);
                 setProducts([])
                 setSelectedItems([])
             });
 
     }
 
-    const handleSubmitProduct = async (id) => {
-        console.log(`submit products ${id} `);
+    const handleSubmitProduct = async () => {
+        console.log(`submit products ${selectedTemplate} `);
         setBtnLoading(true)
         let unSelected = []
         var arr = products.filter(function (item) {
-            return selectedItems.indexOf(item.id) === -1;
+            return selectedItems.indexOf(item.selectedTemplate) === -1;
         });
         arr?.map((item) => {
-            unSelected.push(item.id)
+            unSelected.push(item.selectedTemplate)
         })
         let data = {
-            user_template_id: id,
+            user_template_id: selectedTemplate,
             product_ids: selectedItems,
             unSelected_ids: unSelected,
             shop_name: host,
@@ -278,11 +277,13 @@ export function Dashboard() {
             const response = await axios.post(`${url}/selected-products`, data)
             console.log(response);
             setBtnLoading(false)
-            setShowProducts(false);
+            setProductsModal(false);
+            setSelectedTemplate()
         } catch (error) {
-            alert('Error: ', error);
+            alert('Error', error);
             setBtnLoading(false)
-            setShowProducts(false);
+            setSelectedTemplate()
+            setProductsModal(false);
         }
     }
 
@@ -314,6 +315,60 @@ export function Dashboard() {
                                 error={isTemplateNameInvalid && "template name can't be empty"}
                                 autoComplete="off"
                             />
+                        </Modal.Section>
+                    </Modal>
+                }
+
+                {productsModal &&
+                    <Modal
+                        open={productsModal}
+                        onClose={() => setProductsModal(false)}
+                        title="Select Products"
+                        primaryAction={{
+                            content: 'Save',
+                            disabled: btnloading ? true : false,
+                            onAction:  handleSubmitProduct,
+                        }}
+                        secondaryActions={[
+                            {
+                                content: 'Cancel',
+                                onAction: () => setProductsModal(false),
+                            },
+                        ]}
+                    >
+                        <Modal.Section>
+                            <span className='Polaris-MediaCard-Table'>
+                                    <ResourceList
+                                        resourceName={{
+                                            singular: 'product',
+                                            plural: 'products'
+                                        }}
+                                        items={products}
+                                        renderItem={(item) => {
+                                            const { id, image, title } = item;
+                                            const media = <Avatar size="small"
+                                                shape="square"
+                                                name={title}
+                                                source={image} />;
+                                            return (
+                                                <ResourceItem
+                                                    id={id}
+                                                    media={media}
+                                                    accessibilityLabel={`View details for ${title}`}
+                                                >
+                                                    <Text variant="bodyMd"
+                                                        fontWeight="bold" as="h3">
+                                                        {title}
+                                                    </Text>
+
+                                                </ResourceItem>
+                                            );
+                                        }}
+                                        selectedItems={selectedItems}
+                                        onSelectionChange={setSelectedItems}
+                                        selectable
+                                    />
+                            </span>
                         </Modal.Section>
                     </Modal>
                 }
@@ -388,10 +443,9 @@ export function Dashboard() {
                                             <div className='ProgressBar-Value'>
                                                 <ProgressBar progress={progressBarValue} color="primary" />
                                                 <p className='Initial'>0</p>
-                                                <p style={{ left: `${progressBarValue - 1}%` }}>70</p>
+                                                <p style={{ left: `${progressBarValue - 1}%` }}>{progressBarValue}</p>
                                                 <p className='Final'>100</p>
                                             </div>
-                                            <Button primary>Upgrade</Button>
                                         </div>
                                     </Card>
                                 </div>
@@ -434,12 +488,12 @@ export function Dashboard() {
                                                             <Button primary
                                                                 onClick={() => handleSelectProducts(user_template_id)}
                                                                 id='MediaCard-Btn'>Select Product</Button>
-                                                            {showProducts[user_template_id] &&
+                                                            {/* {productsModal[user_template_id] &&
                                                                 <span className='Polaris-MediaCard-Table'>
                                                                     <Card>
                                                                         <span className='MediaCard-Products-Cancel-Btn'>
                                                                             <Button size='slim'
-                                                                                onClick={() => setShowProducts(false)}>
+                                                                                onClick={() => setProductsModal(false)}>
                                                                                 <Icon source={CancelSmallMinor}></Icon>
                                                                             </Button>
                                                                         </span>
@@ -486,7 +540,7 @@ export function Dashboard() {
                                                                             </span>}
                                                                     </Card>
                                                                 </span>
-                                                            }
+                                                            } */}
                                                         </span>
 
 
