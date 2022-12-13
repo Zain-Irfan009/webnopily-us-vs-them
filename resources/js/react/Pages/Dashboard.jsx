@@ -441,7 +441,7 @@ export function Dashboard() {
                             {
                                 content: appEnable ? 'Disable the app' : 'Enable the app',
                                 disabled: btnloading ? true : false,
-                                onAction: () => handleAppStatus,
+                                onAction: handleAppStatus,
                             }
                         }
                         actionGroups={[
