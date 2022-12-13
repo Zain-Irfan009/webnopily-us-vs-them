@@ -41,6 +41,7 @@ Route::post('selected-products',[\App\Http\Controllers\Api\TemplateController::c
 
 Route::post('enable-app',[\App\Http\Controllers\Api\TemplateController::class,'EnableDisableApp']);
 
+Route::get('check-trial',[App\Http\Controllers\Api\TemplateController::class,'CheckTrial']);
 
 
 
