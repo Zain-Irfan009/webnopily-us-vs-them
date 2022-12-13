@@ -989,3 +989,39 @@
     justify-content: flex-end;
     margin-top: 1rem;
 }
+.Dashboard .ProgressBar-Section {
+    margin-bottom: 1rem;
+}
+.Dashboard .ProgressBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.Dashboard .ProgressBar button {
+    margin-left: 1.5rem;
+}
+.Dashboard .ProgressBar-Value {
+    position: relative;
+    width: 100%;
+}
+.Dashboard .ProgressBar p {
+    font-size: 13px;
+    font-weight: 500;
+    color: #000;
+    position: absolute;
+}
+.Dashboard .ProgressBar .Initial {
+    left: 0;
+}
+.Dashboard .ProgressBar .Final {
+    right: 0;
+}
+
+
+
+
+
+
+
+
+

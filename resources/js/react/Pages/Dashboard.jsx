@@ -19,6 +19,7 @@ export function Dashboard() {
     const redirect = Redirect.create(app);
 
     const [appEnable, setAppEnable] = useState(false)
+    const [progressBarValue, setProgressBarValue] = useState(70)
 
     const [products, setProducts] = useState([])
     const [showProducts, setShowProducts] = useState(false)
@@ -374,6 +375,25 @@ export function Dashboard() {
                                         </Banner>
                                     </div>
                                 }
+                                <div className='ProgressBar-Section'>
+                                    <Card sectioned>
+                                        <Text variant="headingLg" as="h5">
+                                            Free Plans
+                                        </Text>
+                                        <Text variant="bodyMd" as="p">
+                                            Get Upto 100 monthly views
+                                        </Text>
+                                        <div className='ProgressBar'>
+                                            <div className='ProgressBar-Value'>
+                                                <ProgressBar progress={progressBarValue} color="primary" />
+                                                <p className='Initial'>0</p>
+                                                <p style={{ left: `${progressBarValue - 1}%` }}>70</p>
+                                                <p className='Final'>100</p>
+                                            </div>
+                                            <Button primary>Upgrade</Button>
+                                        </div>
+                                    </Card>
+                                </div>
 
                                 <Card sectioned>
                                     <h5>Your current templates</h5>
