@@ -986,13 +986,14 @@ class TemplateController extends ApiController
         else{
             $status=1;
         }
+
         $client = new Rest($shop->shop, $shop->access_token);
 
         if($shop->metafield_id==null) {
             $shop_metafield = $client->post('/metafields.json', [
                 "metafield" => array(
                     "key" => 'setting',
-                    "value" => $app_status,
+                    "value" => $status,
                     "type" => "number_integer",
                     "namespace" => "usvsthem"
                 )
@@ -1007,7 +1008,7 @@ class TemplateController extends ApiController
         else{
             $shop_metafield = $client->put( '/metafields/' . $shop->metafield_id . '.json', [
                 "metafield" => [
-                    "value" => $app_status
+                    "value" => $status
                 ]
             ]);
             $shop->enable_app=$status;
