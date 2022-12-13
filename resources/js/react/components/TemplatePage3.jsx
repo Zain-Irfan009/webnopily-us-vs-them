@@ -253,6 +253,7 @@ export function TemplatePage3() {
 
 
   const submitData = async () => {
+    setBtnLoading(true)
     let newArray = [];
     let newArray2 = [];
     let newArray3 = [];
@@ -295,8 +296,10 @@ export function TemplatePage3() {
     try {
       const response = await axios.post(`${url}/step-2`, data)
       console.log(response);
+      setBtnLoading(false)
       setSuccessToast(true)
     } catch (error) {
+      setBtnLoading(false)
       alert('Error: ', error);
     }
   }
@@ -729,7 +732,8 @@ export function TemplatePage3() {
                 <PageActions
                   primaryAction={{
                     content: 'Save Template',
-                    onAction: submitData
+                    onAction: submitData,
+                    disabled: btnloading ? true : false,
                   }}
                 />
               </div>

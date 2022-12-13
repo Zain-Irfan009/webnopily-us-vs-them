@@ -309,15 +309,15 @@ export function TemplatePage2() {
 
   const handleSelectTemplate = async (templateId) => {
 
-    // setBtnLoading((prev) => {
-    //     let toggleId;
-    //     if (prev[templateId]) {
-    //         toggleId = {[templateId]: false};
-    //     } else {
-    //         toggleId = {[templateId]: true};
-    //     }
-    //     return {...toggleId};
-    // });
+    setBtnLoading((prev) => {
+        let toggleId;
+        if (prev[templateId]) {
+            toggleId = {[templateId]: false};
+        } else {
+            toggleId = {[templateId]: true};
+        }
+        return {...toggleId};
+    });
     const response = await axios
       .post(
         `${url}/step-1?template_id=${templateId}&user_template_id=${templateUserId}&shop_name=${host}`

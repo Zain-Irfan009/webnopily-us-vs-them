@@ -106,29 +106,6 @@ export function Dashboard() {
         <Toast content="Template Duplicate Sucessfully" onDismiss={toggleToastActive} duration={1500} />
     ) : null;
 
-    // function useOutsideAlerter(ref, id) {
-    //     useEffect(() => {
-
-    //         function handleClickOutside(event) {
-    //             if (ref.current && !ref.current.contains(event.target)) {
-    //                 if (id === 2) {
-    //                     setProductsModal(false)
-    //                     setSelectedItems([])
-    //                 }
-    //             }
-    //         }
-
-    //         document.addEventListener("mousedown", handleClickOutside);
-    //         return () => {
-    //             document.removeEventListener("mousedown", handleClickOutside);
-    //         };
-    //     }, [ref]);
-    // }
-
-    // const productsRef = useRef(null);
-    // useOutsideAlerter(productsRef, 2);
-
-
     const handleRenameTemplate = async () => {
         console.log(`rename clicked ${templateRenameUserId}`);
 
@@ -202,7 +179,6 @@ export function Dashboard() {
     }
 
     const handleChangeTemplate = (id, temp_id) => {
-        // console.log(`customize template clicked ${id}`);
         setSelectedTemplate(temp_id)
         setTemplateUserId(id)
         setActivePage(2)
@@ -215,6 +191,7 @@ export function Dashboard() {
 
     const handleSelectProducts = async (id) => {
         console.log(`select products clicked ${id}`);
+        setBtnLoading(true)
         setProducts([])
         setSelectedItems([])
 
@@ -234,22 +211,13 @@ export function Dashboard() {
                 })
                 setSelectedTemplate(id)
                 setSelectedItems(arr)
-
-                // setProductsModal((prev) => {
-                //     let toggleId;
-                //     if (prev[id]) {
-                //         toggleId = { [id]: false };
-                //     } else {
-                //         toggleId = { [id]: true };
-                //     }
-                //     return { ...toggleId };
-                // });
-
+                setBtnLoading(false)
                 setProductsModal(true)
 
             })
             .catch(error => {
                 alert('Error', error);
+                setBtnLoading(false)
                 setProductsModal(false);
                 setProducts([])
                 setSelectedItems([])
@@ -320,6 +288,7 @@ export function Dashboard() {
                 }
 
                 {productsModal &&
+                    products?.length ?
                     <Modal
                         open={productsModal}
                         onClose={() => setProductsModal(false)}
@@ -327,7 +296,7 @@ export function Dashboard() {
                         primaryAction={{
                             content: 'Save',
                             disabled: btnloading ? true : false,
-                            onAction:  handleSubmitProduct,
+                            onAction: handleSubmitProduct,
                         }}
                         secondaryActions={[
                             {
@@ -338,37 +307,62 @@ export function Dashboard() {
                     >
                         <Modal.Section>
                             <span className='Polaris-MediaCard-Table'>
-                                    <ResourceList
-                                        resourceName={{
-                                            singular: 'product',
-                                            plural: 'products'
-                                        }}
-                                        items={products}
-                                        renderItem={(item) => {
-                                            const { id, image, title } = item;
-                                            const media = <Avatar size="small"
-                                                shape="square"
-                                                name={title}
-                                                source={image} />;
-                                            return (
-                                                <ResourceItem
-                                                    id={id}
-                                                    media={media}
-                                                    accessibilityLabel={`View details for ${title}`}
-                                                >
-                                                    <Text variant="bodyMd"
-                                                        fontWeight="bold" as="h3">
-                                                        {title}
-                                                    </Text>
+                                <ResourceList
+                                    resourceName={{
+                                        singular: 'product',
+                                        plural: 'products'
+                                    }}
+                                    items={products}
+                                    renderItem={(item) => {
+                                        const { id, image, title } = item;
+                                        const media = <Avatar size="small"
+                                            shape="square"
+                                            name={title}
+                                            source={image} />;
+                                        return (
+                                            <ResourceItem
+                                                id={id}
+                                                media={media}
+                                                accessibilityLabel={`View details for ${title}`}
+                                            >
+                                                <Text variant="bodyMd"
+                                                    fontWeight="bold" as="h3">
+                                                    {title}
+                                                </Text>
 
-                                                </ResourceItem>
-                                            );
-                                        }}
-                                        selectedItems={selectedItems}
-                                        onSelectionChange={setSelectedItems}
-                                        selectable
-                                    />
+                                            </ResourceItem>
+                                        );
+                                    }}
+                                    selectedItems={selectedItems}
+                                    onSelectionChange={setSelectedItems}
+                                    selectable
+                                />
                             </span>
+                        </Modal.Section>
+                    </Modal>
+                    :
+
+                    <Modal
+                        open={productsModal}
+                        onClose={() => setProductsModal(false)}
+                        title="Select Products"
+                        primaryAction={{
+                            content: 'Save',
+                            disabled: true,
+                        }}
+                        secondaryActions={[
+                            {
+                                content: 'Cancel',
+                                onAction: () => setProductsModal(false),
+                            },
+                        ]}
+                    >
+                        <Modal.Section>
+                            <EmptyState
+                                heading="No Products to Show"
+                                image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+                            >
+                            </EmptyState>
                         </Modal.Section>
                     </Modal>
                 }
@@ -485,62 +479,13 @@ export function Dashboard() {
                                                     Here is the current Template that you've choosen. You can customize it every time you want.
                                                     <ButtonGroup id='MediaCard-BtnGroup'>
                                                         <span className='MediaCard-Products-handle'>
-                                                            <Button primary
-                                                                onClick={() => handleSelectProducts(user_template_id)}
-                                                                id='MediaCard-Btn'>Select Product</Button>
-                                                            {/* {productsModal[user_template_id] &&
-                                                                <span className='Polaris-MediaCard-Table'>
-                                                                    <Card>
-                                                                        <span className='MediaCard-Products-Cancel-Btn'>
-                                                                            <Button size='slim'
-                                                                                onClick={() => setProductsModal(false)}>
-                                                                                <Icon source={CancelSmallMinor}></Icon>
-                                                                            </Button>
-                                                                        </span>
-                                                                        <ResourceList
-                                                                            resourceName={{
-                                                                                singular: 'product',
-                                                                                plural: 'products'
-                                                                            }}
-                                                                            items={products}
-                                                                            renderItem={(item) => {
-                                                                                const { id, image, title } = item;
-                                                                                const media = <Avatar size="small"
-                                                                                    shape="square"
-                                                                                    name={title}
-                                                                                    source={image} />;
-                                                                                return (
-                                                                                    <ResourceItem
-                                                                                        id={id}
-                                                                                        media={media}
-                                                                                        accessibilityLabel={`View details for ${title}`}
-                                                                                    >
-                                                                                        <Text variant="bodyMd"
-                                                                                            fontWeight="bold" as="h3">
-                                                                                            {title}
-                                                                                        </Text>
-
-                                                                                    </ResourceItem>
-                                                                                );
-                                                                            }}
-                                                                            selectedItems={selectedItems}
-                                                                            onSelectionChange={setSelectedItems}
-                                                                            selectable
-                                                                        />
-                                                                        {btnloading ?
-                                                                            <span className='MediaCard-Products-Confirm-Btn'>
-                                                                                <Button disabled loading>
-                                                                                    Confirm
-                                                                                </Button>
-                                                                            </span> :
-                                                                            <span className='MediaCard-Products-Confirm-Btn'>
-                                                                                <Button primary onClick={() => handleSubmitProduct(user_template_id)}>
-                                                                                    Confirm
-                                                                                </Button>
-                                                                            </span>}
-                                                                    </Card>
-                                                                </span>
-                                                            } */}
+                                                            {btnloading ?
+                                                                <Button primary loading>Select</Button>
+                                                                :
+                                                                <Button primary
+                                                                    onClick={() => handleSelectProducts(user_template_id)}
+                                                                    id='MediaCard-Btn'>Select Product</Button>
+                                                            }
                                                         </span>
 
 
