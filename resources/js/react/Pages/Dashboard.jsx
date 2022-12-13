@@ -191,7 +191,15 @@ export function Dashboard() {
 
     const handleSelectProducts = async (id) => {
         console.log(`select products clicked ${id}`);
-        setBtnLoading(true)
+        setBtnLoading((prev) => {
+            let toggleId;
+            if (prev[id]) {
+                toggleId = {[id]: false};
+            } else {
+                toggleId = {[id]: true};
+            }
+            return {...toggleId};
+        });
         setProducts([])
         setSelectedItems([])
 
@@ -479,7 +487,7 @@ export function Dashboard() {
                                                     Here is the current Template that you've choosen. You can customize it every time you want.
                                                     <ButtonGroup id='MediaCard-BtnGroup'>
                                                         <span className='MediaCard-Products-handle'>
-                                                            {btnloading ?
+                                                            {btnloading[user_template_id] ?
                                                                 <Button primary loading>Select</Button>
                                                                 :
                                                                 <Button primary

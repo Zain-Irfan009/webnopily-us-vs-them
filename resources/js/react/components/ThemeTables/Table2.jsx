@@ -102,7 +102,7 @@ export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMob
 
                         <div className='Screen-Selection-Btn'>
                             {
-                                btnloading ?
+                                btnloading[2] ?
                                     <Button loading>Select</Button> :
                                     <Button primary onClick={() => handleSelectTemplate(2)}>Select</Button>
                             }
