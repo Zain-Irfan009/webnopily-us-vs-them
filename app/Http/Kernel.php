@@ -43,6 +43,9 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+        'cors'=>[
+            \App\Http\Middleware\Cors::class,
+        ],
     ];
 
     /**
@@ -63,6 +66,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         'shopify.auth' => \App\Http\Middleware\EnsureShopifySession::class,
-        'cors' => \App\Http\Middleware\Cors::class,
+
     ];
 }
