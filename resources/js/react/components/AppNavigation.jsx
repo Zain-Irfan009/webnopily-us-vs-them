@@ -18,18 +18,18 @@ function AppNavigation() {
         destination: '/templates',
     });
 
-    const locations = AppLink.create(app, {
-        label: 'Locations',
-        destination: '/locations',
-    });
+    // const locations = AppLink.create(app, {
+    //     label: 'Locations',
+    //     destination: '/locations',
+    // });
 
     const settings = AppLink.create(app, {
-        label: 'Settings1',
+        label: 'Settings',
         destination: '/settings',
     });
 
     const navigationMenu = NavigationMenu.create(app, {
-        items: [dashboard, templates, locations, settings],
+        items: [dashboard, templates, settings],
     });
     switch (location.pathname) {
         case "/":
