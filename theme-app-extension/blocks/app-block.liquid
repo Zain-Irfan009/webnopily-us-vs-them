@@ -193,6 +193,7 @@
     <table class="choose-table" style="margin: 0 auto;max-width: 600px;">
         <thead>
         <tr>
+
            <th>Advantages</th>
             <th>{{ xc_settings.brand }}</th>
         {% for xc_settings_comp_loop in  xc_settings.competitors_name %}
@@ -236,10 +237,8 @@
 {% endif %}
 {% endif %}
 
-
 <script>
-
-console.log('monday');
+console.log('tuesday');
 </script>
 
 
@@ -247,7 +246,8 @@ console.log('monday');
   {
     "name": "Product Template",
     "target": "section",
-    "templates": ["product"]
+    "templates": ["product"],
+     "javascript": "jquery.js"
 
   }
 {% endschema %}
