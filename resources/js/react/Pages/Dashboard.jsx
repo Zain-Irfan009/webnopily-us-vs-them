@@ -20,7 +20,6 @@ export function Dashboard() {
     const redirect = Redirect.create(app);
 
     const [appEnable, setAppEnable] = useState(false)
-    const [progressBarValue, setProgressBarValue] = useState(70)
     const [planName, setPlanName] = useState()
     const [planCount, setPlanCount] = useState()
     const [planExpiry, setPlanExpiry] = useState()
@@ -44,6 +43,30 @@ export function Dashboard() {
 
     const [templateTable, setTemplateTable] = useState([]);
 
+    const getPlanData = async () => {
+        const response = await axios
+            .get(
+                `${url}/check-trial?shop_name=${host}`
+            )
+            .then(res => {
+                console.log(res);
+                setAppEnable(res.data.result.app_status)
+                setPlanName(res.data.result.plan_name)
+                setPlanCount(res.data.result.count)
+                setPlanExpiry(res.data.result.trial_expiry_date)
+                setPlanTrialDays(res.data.result.trial_days)
+                setPlanUsageLimit(res.data.result.usage_limit)
+                setTimeout(() => {
+                    setLoading(false)
+                }, 0);
+            })
+            .catch(error =>
+                alert('Error', error));
+    }
+
+    useEffect(() => {
+        getPlanData();
+    }, []);
 
     const getData = async () => {
 
@@ -54,9 +77,7 @@ export function Dashboard() {
             .then(res => {
                 // console.log(res);
                 setTemplateTable(res.data.result);
-                setTimeout(() => {
-                    setLoading(false)
-                }, 0);
+
             })
             .catch(error =>
                 alert('Error', error));
@@ -66,27 +87,7 @@ export function Dashboard() {
         getData();
     }, [toggleReload]);
 
-    const getPlanData = async () => {
-        const response = await axios
-            .get(
-                `${url}/check-trial?shop_name=${host}`
-            )
-            .then(res => {
-                console.log(res);
-                setPlanName(res.data.result[0].plan_name)
-                setPlanCount(res.data.result[0].count)
-                setPlanExpiry(res.data.result[0].trial_expiry_date)
-                setPlanTrialDays(res.data.result[0].trial_days)
-                setPlanUsageLimit(res.data.result[0].usage_limit)
 
-            })
-            .catch(error =>
-                alert('Error', error));
-    }
-
-    useEffect(() => {
-        getPlanData();
-    }, []);
 
     useEffect(() => {
         console.log(planName, planCount, planExpiry, planTrialDays, planUsageLimit)
@@ -136,6 +137,25 @@ export function Dashboard() {
     const toastDuplicate = duplicatetoastActive ? (
         <Toast content="Template Duplicate Sucessfully" onDismiss={toggleToastActive} duration={1500} />
     ) : null;
+
+
+    const handleAppStatus=async ()=>{
+        setBtnLoading(true)
+        let data = {
+            status: !appEnable,
+            shop_name: host,
+        };
+        try {
+            const response = await axios.post(`${url}/enable-app`, data)
+            console.log(response);
+            setAppEnable(!appEnable)
+            setBtnLoading(false)
+
+        } catch (error) {
+            alert('Error', error);
+            setBtnLoading(false)
+        }
+    }
 
     const handleRenameTemplate = async () => {
         console.log(`rename clicked ${templateRenameUserId}`);
@@ -412,16 +432,16 @@ export function Dashboard() {
                         fullWidth
                         titleMetadata={
                             <>
-                                <Badge status="success">Active</Badge>
-                                <Badge status="attention">Pending Install</Badge>
+                            {appEnable ?
+                                <Badge status="success">Active</Badge> :
+                                <Badge status="attention">Pending Install</Badge> }
                             </>
                         }
                         primaryAction={
                             {
                                 content: appEnable ? 'Disable the app' : 'Enable the app',
-                                onAction: () => {
-                                    setAppEnable(!appEnable)
-                                },
+                                disabled: btnloading ? true : false,
+                                onAction: () => handleAppStatus,
                             }
                         }
                         actionGroups={[
@@ -464,20 +484,37 @@ export function Dashboard() {
                                         </Banner>
                                     </div>
                                 }
+
+
                                 <div className='ProgressBar-Section'>
                                     <Card sectioned>
-                                        <Text variant="headingLg" as="h5">
-                                            Free Plans
-                                        </Text>
+                                       <div className='Progress-Expiry'>
+                                          <span>
+                                               <Text variant="headingLg" as="h5">
+                                               {planName}
+                                           </Text>
+                                          </span>
+                                           <span>
+                                               <Text variant="headingSm" as="h6">
+                                               {`Remaining Trial Days: ${planTrialDays}`  }
+                                           </Text>
+                                               <Text variant="headingSm" as="h6">
+                                               {`Trial Expiry Date: ${planExpiry}`}
+                                           </Text>
+                                           </span>
+                                       </div>
+
                                         <Text variant="bodyMd" as="p">
-                                            Get Upto 100 monthly views
+                                            {`Get Upto ${planUsageLimit} monthly views`}
                                         </Text>
                                         <div className='ProgressBar'>
                                             <div className='ProgressBar-Value'>
-                                                <ProgressBar progress={progressBarValue} color="primary" />
+                                                <ProgressBar progress={((planCount/planUsageLimit)*100)} color="primary" />
                                                 <p className='Initial'>0</p>
-                                                <p style={{ left: `${progressBarValue - 1}%` }}>{progressBarValue}</p>
-                                                <p className='Final'>100</p>
+                                                {planCount > 100 &&
+                                                    <p style={{left: `${((planCount / planUsageLimit) * 100)}%`}}>{planCount}</p>
+                                                }
+                                                <p className='Final'>{planUsageLimit} </p>
                                             </div>
                                         </div>
                                     </Card>
@@ -486,11 +523,7 @@ export function Dashboard() {
                                 <Card sectioned>
                                     <h5>Your current templates</h5>
                                     <div className='Current-Templates-Card-Content'>
-                                        <p>{planName}</p>
-                                        <p>{planExpiry}</p>
-                                        <p>{planTrialDays}</p>
-                                        <p>{planCount}</p>
-                                        <p>{planUsageLimit}</p>
+
                                         <Stack>
                                             <p>
                                                 This is your dashboard. It gathers all your templates. You can
