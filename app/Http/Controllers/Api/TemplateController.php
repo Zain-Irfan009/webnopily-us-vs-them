@@ -1084,7 +1084,7 @@ class TemplateController extends ApiController
             $app_status=true;
         }
 
-        $difference = $current_date_time->diffInDays($trial_date);
+        $difference = $current_date_time->diffInDays($trial_date,false);
 
             $data = [
                 'trial_days' => $difference,
