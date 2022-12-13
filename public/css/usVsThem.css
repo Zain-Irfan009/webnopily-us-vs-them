@@ -71,6 +71,52 @@
 }
 
 /* ----------------------UsVsThem Dashboard--------------------------- */
+.Dashboard .ProgressBar-Section {
+    margin-bottom: 1rem;
+}
+
+
+@media (min-width: 768px) {
+    .Dashboard .ProgressBar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .Dashboard .ProgressBar button {
+        margin-left: 1.5rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .Dashboard .ProgressBar button {
+        display: flex;
+        margin: 0 auto;
+        margin-top: 1.5rem;
+    }
+}
+
+.Dashboard .ProgressBar-Value {
+    position: relative;
+    width: 100%;
+}
+
+.Dashboard .ProgressBar p {
+    font-size: 13px;
+    font-weight: 500;
+    color: #000;
+    position: absolute;
+}
+
+.Dashboard .ProgressBar .Initial {
+    left: 0;
+}
+
+.Dashboard .ProgressBar .Final {
+    right: 0;
+}
+
+
 
 .Dashboard .Polaris-Page {
     margin-bottom: 3rem !important;
@@ -944,7 +990,10 @@
 
 
 
-
+.Advantages-Tables-Preview .Polaris-Card .Polaris-Card__Section {
+    max-width: 99%;
+    overflow-x: auto;
+}
 
 
 
@@ -989,39 +1038,3 @@
     justify-content: flex-end;
     margin-top: 1rem;
 }
-.Dashboard .ProgressBar-Section {
-    margin-bottom: 1rem;
-}
-.Dashboard .ProgressBar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.Dashboard .ProgressBar button {
-    margin-left: 1.5rem;
-}
-.Dashboard .ProgressBar-Value {
-    position: relative;
-    width: 100%;
-}
-.Dashboard .ProgressBar p {
-    font-size: 13px;
-    font-weight: 500;
-    color: #000;
-    position: absolute;
-}
-.Dashboard .ProgressBar .Initial {
-    left: 0;
-}
-.Dashboard .ProgressBar .Final {
-    right: 0;
-}
-
-
-
-
-
-
-
-
-

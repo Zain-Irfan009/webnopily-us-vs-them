@@ -307,13 +307,7 @@ export function TemplatePage3() {
               <Card
                 sectioned
                 title='Top fields'
-                actions={[
-                  {
-                    content: 'Preview',
-                    onAction: () => {
-                    },
-                  }
-                ]}>
+                >
                 <TextField
                   label="Template Name"
                   value={templateName}
@@ -388,13 +382,8 @@ export function TemplatePage3() {
               <Card
                 sectioned
                 title='Advantages'
-                actions={[
-                  {
-                    content: 'Preview',
-                    onAction: () => {
-                    },
-                  }
-                ]}>
+
+              >
 
                 <div className='Advantages-Layout'>
                   <Layout>
@@ -541,13 +530,7 @@ export function TemplatePage3() {
               <Card
                 sectioned
                 title='Styling'
-                actions={[
-                  {
-                    content: 'Preview',
-                    onAction: () => {
-                    },
-                  }
-                ]}>
+                >
                 <Text variant="headingMd" as="h5" fontWeight='semibold'>
                   Colors
                 </Text>
