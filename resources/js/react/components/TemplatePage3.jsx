@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useContext } from 'react'
 import { Page, Layout, Text, Card, Select, Icon, Stack, TextField, Loading, PageActions,Toast } from '@shopify/polaris';
 import { CircleTickMajor, CircleCancelMajor } from '@shopify/polaris-icons';
-import { Table111, SideBarNavigation } from './index';
+import { Table1, Table2, Table3, Table4, SideBarNavigation } from './index';
 import axios from "axios";
 import { AppContext } from '../Context'
 
@@ -737,53 +737,46 @@ export function TemplatePage3() {
                   switch (selectedTemplate) {
                     case 1:
                       return (
-                        <div className='temp1-compare-section'>
-                          <Table111 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
-                            advantageLoading={advantageLoading} allValues={allValues}
-                            yourBrand={yourBrand} competitorName={competitorName}
-                            brandValue={brandValue} competitorValue={competitorValue}
-                            colorValues={colorValues} advantageColorValues={advantageColorValues} />
-                        </div>
+                        <Table1 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
+                          advantageLoading={advantageLoading} allValues={allValues}
+                          yourBrand={yourBrand} competitorName={competitorName}
+                          brandValue={brandValue} competitorValue={competitorValue}
+                          colorValues={colorValues} advantageColorValues={advantageColorValues} />
                       )
 
                     case 2:
                       return (
-                        <div className='temp1-compare-section'>
-                          <Table111 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
-                            advantageLoading={advantageLoading} allValues={allValues}
-                            yourBrand={yourBrand} competitorName={competitorName}
-                            brandValue={brandValue} competitorValue={competitorValue}
-                            colorValues={colorValues} advantageColorValues={advantageColorValues} />
-                        </div>
+                        <Table2 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
+                          advantageLoading={advantageLoading} allValues={allValues}
+                          yourBrand={yourBrand} competitorName={competitorName}
+                          brandValue={brandValue} competitorValue={competitorValue}
+                          colorValues={colorValues} advantageColorValues={advantageColorValues} />
                       )
+
                     case 3:
                       return (
-                        <div className='temp1-compare-section'>
-                          <Table111 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
-                            advantageLoading={advantageLoading} allValues={allValues}
-                            yourBrand={yourBrand} competitorName={competitorName}
-                            brandValue={brandValue} competitorValue={competitorValue}
-                            colorValues={colorValues} advantageColorValues={advantageColorValues} />
-                        </div>
+                        <Table3 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
+                          advantageLoading={advantageLoading} allValues={allValues}
+                          yourBrand={yourBrand} competitorName={competitorName}
+                          brandValue={brandValue} competitorValue={competitorValue}
+                          colorValues={colorValues} advantageColorValues={advantageColorValues} />
                       )
+
                     case 4:
                       return (
-                        <div className='temp1-compare-section'>
-                          <Table111 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
-                            advantageLoading={advantageLoading} allValues={allValues}
-                            yourBrand={yourBrand} competitorName={competitorName}
-                            brandValue={brandValue} competitorValue={competitorValue}
-                            colorValues={colorValues} advantageColorValues={advantageColorValues} />
-                        </div>
+                        <Table4 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
+                          advantageLoading={advantageLoading} allValues={allValues}
+                          yourBrand={yourBrand} competitorName={competitorName}
+                          brandValue={brandValue} competitorValue={competitorValue}
+                          colorValues={colorValues} advantageColorValues={advantageColorValues} />
                       )
+
                     default:
                       break
                   }
 
                 })()}
-
               </div>
-
 
             </Layout.Section>
           </Layout>

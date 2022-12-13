@@ -446,11 +446,13 @@
 }
 
 .Theme1-Pc-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:last-child .Polaris-IndexTable__TableCell:first-child,
-.Theme1-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:last-child {
+.Theme1-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:last-child,
+.Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:last-child,
+.Theme1-Mobile-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:last-child .Polaris-IndexTable__TableCell:first-child {
     background-color: transparent;
 }
 
-.Theme1-Pc-Table .Polaris-IndexTable__TableHeading:nth-child(3) {
+.Theme1-Pc-Table .Polaris-IndexTable__TableHeading {
     font-size: 13px;
     color: var(--template-table-black-color);
 }
@@ -488,7 +490,7 @@
 .Theme1-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:last-child .Polaris-IndexTable__TableCell,
 .Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:last-child .Polaris-IndexTable__TableCell {
     max-width: 20px;
-    white-space: pre-wrap;
+    /* white-space: break-spaces; */
     color: transparent;
 }
 
@@ -499,25 +501,23 @@
     font-size: 15px;
     font-weight: 500;
     letter-spacing: 0.4px;
-    max-width: 20px;
-    white-space: pre-wrap;
+    max-width: 80px;
+    overflow-wrap: break-word;
+    white-space: break-spaces;
     border: 0px solid var(--template-table-mobile-bg-darker-blue-color);
     border-radius: 200px 200px 0px 0px;
     -moz-border-radius: 200px 200px 0px 0px;
     -webkit-border-radius: 200px 200px 0px 0px;
 }
 
-.Theme1-Mobile-Table .Polaris-IndexTable__TableHeading:last-child {
-    color: var(--template-table-black-color);
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.4px;
-    max-width: 20px;
-    white-space: pre-wrap;
-}
-
 .Theme1-Mobile-Table .Polaris-IndexTable__TableHeading {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--template-table-black-color);
     padding: 10px 15px;
+    max-width: 80px;
+    overflow-wrap: break-word;
+    /* white-space: break-spaces; */
 }
 
 .Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell {
@@ -527,11 +527,6 @@
 .Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:last-child .Polaris-IndexTable__TableCell {
     padding: 14px;
 }
-
-.Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:last-child .Polaris-Icon {
-    fill: var(--template-table-mobile-bg-darker-blue-color);
-}
-
 
 .Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:last-child .Polaris-IndexTable__TableCell:nth-child(2) {
     border: 0px solid var(--template-table-mobile-bg-darker-blue-color);
@@ -561,10 +556,6 @@
     background-color: var(--template-table-bg-subdued-color);
 }
 
-/* .Theme2-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(even),
-.Theme2-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(even) {
-    background-color: var(--template-table2-bg-light-color);
-} */
 
 .Theme2-Pc-Table .Polaris-IndexTable__TableHeading:not(:nth-child(2)) {
     font-size: 12px;
@@ -614,6 +605,15 @@
     font-weight: 600;
     color: var(--template-table-black-color);
     padding: 8px;
+}
+
+.Theme2-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:first-child .Polaris-IndexTable__TableCell {
+    border-top: 3px solid var(--template-table2-rows-dark-color);
+    border-bottom: 3px solid var(--template-table2-rows-dark-color);
+}
+
+.Theme2-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:first-child .Polaris-IndexTable__TableCell:last-child {
+    border-right: 3px solid var(--template-table2-rows-dark-color);
 }
 
 .Theme2-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell {
@@ -702,6 +702,13 @@
     padding: var(--p-space-4);
 }
 
+.Theme3-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:not(:first-child) {
+    background-color: var(--template-table-bg-subdued-color);
+    color: var(--template-table-black-color);
+    font-size: 15px;
+    font-weight: 600;
+}
+
 .Theme3-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:nth-child(2) {
     background-color: var(--template-table3-rows-light-color);
     color: var(--template-table-white-color);
@@ -709,15 +716,6 @@
     font-weight: 600;
     color: var(--template-table-black-color);
 }
-
-.Theme3-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:last-child {
-    background-color: var(--template-table-bg-subdued-color);
-    color: var(--template-table-black-color);
-    font-size: 15px;
-    font-weight: 600;
-}
-
-
 
 
 
@@ -868,12 +866,6 @@
     justify-content: space-evenly;
 }
 
-.Template-Page3 .Advantages-Brands-Section .Polaris-Stack .Polaris-Stack__Item {
-    /* min-width: calc(50% - var(--pc-stack-spacing)); */
-    /* display: flex; */
-    /* justify-content: flex-start; */
-    /* width: 100%; */
-}
 
 .Template-Page3 .Advantages-Brands-Section .Polaris-Stack--vertical .Polaris-Stack__Item h2 {
     display: flex;
@@ -1002,6 +994,11 @@
     position: relative;
 }
 
+/* .Advantages-Tables-Preview .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableCell:first-child div {
+    max-width: 110px !important;
+    overflow-x: hidden;
+} */
+
 .Advantages-Tables-Preview .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableCell:first-child,
 .Advantages-Tables-Preview .Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableHeading--second.Polaris-IndexTable__TableHeading--unselectable {
     position: relative;
@@ -1010,12 +1007,10 @@
 
 
 
-.Advantages-Tables-Preview .Polaris-Card .Polaris-Card__Section {
+/* .Advantages-Tables-Preview .Polaris-Card .Polaris-Card__Section {
     max-width: 99%;
     overflow-x: auto;
-}
-
-
+} */
 
 
 
