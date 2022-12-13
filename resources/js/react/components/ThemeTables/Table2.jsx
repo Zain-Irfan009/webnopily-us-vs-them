@@ -1,91 +1,29 @@
 import React, { useState } from 'react'
-import { Card, IndexTable, Icon, Stack, Button } from '@shopify/polaris';
+import { Card, Icon, Stack, Button } from '@shopify/polaris';
 import {
-    MobileMajor, DesktopMajor, CircleTickMinor, CircleCancelMinor, CircleTickMajor, CircleCancelMajor
+    MobileMajor, DesktopMajor
 } from '@shopify/polaris-icons';
 
 
-export function Table2({ themePc, themeMobile, themeHeadingsPc, themeHeadingsMobile, btnShow, handleSelectTemplate, btnloading }) {
+export function Table2({  handleSelectTemplate, btnloading }) {
     const [screen, setScreen] = useState(true)
     const handleScreenSelection = () => {
         setScreen(!screen)
     }
 
 
-    const resourceName = {
-        singular: 'theme',
-        plural: 'themes',
-    };
-
-    const themeRowsPc = themePc?.map(
-        ({ name, yourBrand, competitor1 }, index) => (
-            <IndexTable.Row
-                id={index}
-                key={index}
-                position={index}
-            >
-
-                <IndexTable.Cell>{name}</IndexTable.Cell>
-                <IndexTable.Cell>
-                    {yourBrand ?
-                        <span className='Circle-bg-True-Icon'> <Icon source={CircleTickMinor} ></Icon>  </span> :
-                        <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMinor}></Icon> </span>
-                    }
-
-                </IndexTable.Cell>
-                <IndexTable.Cell>
-                    {competitor1 ?
-                        <span className='Circle-bg-True-Icon'> <Icon source={CircleTickMinor} ></Icon>  </span> :
-                        <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMinor}></Icon> </span>
-                    }
-                </IndexTable.Cell>
-
-            </IndexTable.Row>
-        ),
-    );
-
-    const themeRowsMobile = themeMobile?.map(
-        ({ name, advantage1, advantage2 }, index) => (
-            <IndexTable.Row
-                id={index}
-                key={index}
-                position={index}
-            >
-
-                <IndexTable.Cell>{name}</IndexTable.Cell>
-                <IndexTable.Cell>
-                    {advantage1 ?
-                        <span className='Circle-bg-True-Icon'> <Icon source={CircleTickMajor} ></Icon>  </span> :
-                        <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMajor}></Icon> </span>
-                    }
-
-                </IndexTable.Cell>
-                <IndexTable.Cell>
-                    {advantage2 ?
-                        <span className='Circle-bg-True-Icon'> <Icon source={CircleTickMajor} ></Icon>  </span> :
-                        <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMajor}></Icon> </span>
-                    }
-                </IndexTable.Cell>
-            </IndexTable.Row>
-        ),
-    );
-
-
     return (
         <Card sectioned>
             <div className='Theme-Card-Content'>
-                {/* <div className={`${screen ? 'Theme2-Pc-Table' : 'Theme2-Mobile-Table'} Theme-Table`}>
-                    <IndexTable
-                        resourceName={resourceName}
-                        itemCount={screen ? themePc?.length : themeMobile?.length}
-                        selectable={false}
-                        headings={screen ? themeHeadingsPc : themeHeadingsMobile}
-                    >
-                        {screen ? themeRowsPc : btnShow ? themeRowsMobile : themeRowsPc}
-                    </IndexTable>
-                </div> */}
+                <div className='Tables-Image-Section'>
+                    {screen ?
+                        <img src='./images/table2desktop.jpg' alt="desktop table" /> :
+                        <img src='./images/table2mobile.jpg' alt="mobile table" />
+                    }
 
-                
+                </div>
+
+
 
                 <div className='Screen-Selection'>
                     <Stack>

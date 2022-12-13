@@ -370,13 +370,6 @@ class TemplateController extends ApiController
 
         $shop = Session::where('shop', $request->shop_name)->first();
         $user_templates = UserTemplate::where('shop_id', $shop->id)->get();
-        $charge=Charge::where('shop_id',$shop->id)->latest()->first();
-        $plan=Plan::first();
-        $current_date_time =Carbon::parse(now()->toDateString()) ;
-        $trial_date=Carbon::parse($charge->trial_ends_on);
-
-        $difference = $current_date_time->diffInDays($trial_date,false);
-
         $result = [];
         if ($user_templates->count() > 0) {
             foreach ($user_templates as $user_template) {
@@ -388,15 +381,11 @@ class TemplateController extends ApiController
                     'user_template_id' => $user_template->id,
                     'name' => $user_template->template_name,
                     'image' => $template->image,
-                    'trial_days' => $difference,
-                    'plan_name' => $plan->name,
-                    'usage_limit'=>$plan->usage_limit,
-                    'count'=>$shop->count,
-                    'trial_expiry_date'=>$charge->trial_ends_on
                 ];
                 $result[] = $data;
             }
         }
+
         return $this->response($result, 200);
     }
 
@@ -1078,9 +1067,10 @@ dd($response);
                 'trial_days' => $difference,
                 'plan_name' => $plan->name,
                 'usage_limit'=>$plan->usage_limit,
-                'count'=>$shop->count
+                'count'=>$shop->count,
+                'trial_expiry_date'=>$charge->trial_ends_on,
             ];
-            $result[] = $data;
+            $result= $data;
         return $this->response($result, 200);
     }
     }

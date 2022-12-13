@@ -1,115 +1,30 @@
 import React, { useState } from 'react'
 import { Card, IndexTable, Icon, Stack, Button } from '@shopify/polaris';
 import {
-    MobileMajor, DesktopMajor, CircleTickMinor, CircleCancelMinor, CircleTickMajor, CircleCancelMajor
+    MobileMajor, DesktopMajor
 } from '@shopify/polaris-icons';
 
 
-export function Table3({ themePc, themeMobile, btnShow, handleSelectTemplate,btnloading }) {
+export function Table3({  handleSelectTemplate,btnloading }) {
     const [screen, setScreen] = useState(true)
     const handleScreenSelection = () => {
         setScreen(!screen)
     }
 
-    const resourceName = {
-        singular: 'theme',
-        plural: 'themes',
-    };
 
-    const themeRowsPc = themePc?.map(
-        ({ name, yourBrand, competitor1 }, index) => (
-            <IndexTable.Row
-                id={index}
-                key={index}
-                position={index}
-            >
 
-                <IndexTable.Cell>{name}</IndexTable.Cell>
-                <IndexTable.Cell>
-                    {yourBrand === 'true' ?
-                        <span className='Circle-bg-False-Icon'> <Icon source={CircleTickMinor} ></Icon>  </span>
-                        :
-                        yourBrand === 'false' ?
-                            <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMinor}></Icon> </span>
-                            :
-                            yourBrand
-                    }
-                </IndexTable.Cell>
 
-                <IndexTable.Cell>
-                    {competitor1 === 'true' ?
-                        <span className='Circle-bg-False-Icon'> <Icon source={CircleTickMinor} ></Icon>  </span>
-                        :
-                        competitor1 === 'false' ?
-                            <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMinor}></Icon> </span>
-                            :
-                            competitor1
-                    }
-                </IndexTable.Cell>
-            </IndexTable.Row>
-        ),
-    );
-
-    const themeRowsMobile = themeMobile?.map(
-        ({ name, yourBrand, competitor }, index) => (
-            <IndexTable.Row
-                id={index}
-                key={index}
-                position={index}
-            >
-
-                <IndexTable.Cell>{name}</IndexTable.Cell>
-                <IndexTable.Cell>
-                    {yourBrand === 'true' ?
-                        <span className='Circle-bg-False-Icon'> <Icon source={CircleTickMajor} ></Icon>  </span>
-                        :
-                        yourBrand === 'false' ?
-                            <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMajor}></Icon> </span>
-                            :
-                            yourBrand
-                    }
-                </IndexTable.Cell>
-
-                <IndexTable.Cell>
-                    {competitor === 'true' ?
-                        <span className='Circle-bg-False-Icon'> <Icon source={CircleTickMajor} ></Icon>  </span>
-                        :
-                        competitor === 'false' ?
-                            <span className='Circle-bg-False-Icon'> <Icon source={CircleCancelMajor}></Icon> </span>
-                            :
-                            competitor
-                    }
-                </IndexTable.Cell>
-
-            </IndexTable.Row>
-        ),
-    );
-
-    const themeHeadingsPc = [
-        { title: '' },
-        { title: 'Your Brand' },
-        { title: 'Competitor ' },
-    ]
-
-    const themeHeadingsMobile = [
-        { title: '' },
-        { title: 'Your Brand' },
-        { title: 'Competitor' },
-    ]
 
 
     return (
         <Card sectioned>
             <div className='Theme-Card-Content'>
-                <div className={`${screen ? 'Theme3-Pc-Table' : 'Theme3-Mobile-Table'} Theme-Table`}>
-                    <IndexTable
-                        resourceName={resourceName}
-                        itemCount={screen ? themePc?.length : themeMobile?.length}
-                        selectable={false}
-                        headings={screen ? themeHeadingsPc : themeHeadingsMobile}
-                    >
-                        {screen ? themeRowsPc : themeRowsMobile}
-                    </IndexTable>
+                <div className='Tables-Image-Section'>
+                    {screen ?
+                        <img src='./images/table3desktop.jpg' alt="desktop table" /> :
+                        <img src='./images/table3mobile.jpg' alt="mobile table" />
+                    }
+
                 </div>
 
                 <div className='Screen-Selection'>

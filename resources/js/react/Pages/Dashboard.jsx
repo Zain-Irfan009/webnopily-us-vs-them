@@ -21,6 +21,11 @@ export function Dashboard() {
 
     const [appEnable, setAppEnable] = useState(false)
     const [progressBarValue, setProgressBarValue] = useState(70)
+    const [planName, setPlanName] = useState()
+    const [planCount, setPlanCount] = useState()
+    const [planExpiry, setPlanExpiry] = useState()
+    const [planTrialDays, setPlanTrialDays] = useState()
+    const [planUsageLimit, setPlanUsageLimit] = useState()
 
     const [products, setProducts] = useState([])
     const [productsModal, setProductsModal] = useState(false)
@@ -59,8 +64,34 @@ export function Dashboard() {
 
     useEffect(() => {
         getData();
-        console.log(config);
     }, [toggleReload]);
+
+    const getPlanData = async () => {
+        const response = await axios
+            .get(
+                `${url}/check-trial?shop_name=${host}`
+            )
+            .then(res => {
+                console.log(res);
+                setPlanName(res.data.result[0].plan_name)
+                setPlanCount(res.data.result[0].count)
+                setPlanExpiry(res.data.result[0].trial_expiry_date)
+                setPlanTrialDays(res.data.result[0].trial_days)
+                setPlanUsageLimit(res.data.result[0].usage_limit)
+
+            })
+            .catch(error =>
+                alert('Error', error));
+    }
+
+    useEffect(() => {
+        getPlanData();
+    }, []);
+
+    useEffect(() => {
+        console.log(planName, planCount, planExpiry, planTrialDays, planUsageLimit)
+    }, [planName, planCount, planExpiry, planTrialDays, planExpiry,planUsageLimit]);
+
 
     const handleAppEnable = () => {
         console.log('enabled click');
@@ -455,6 +486,11 @@ export function Dashboard() {
                                 <Card sectioned>
                                     <h5>Your current templates</h5>
                                     <div className='Current-Templates-Card-Content'>
+                                        <p>{planName}</p>
+                                        <p>{planExpiry}</p>
+                                        <p>{planTrialDays}</p>
+                                        <p>{planCount}</p>
+                                        <p>{planUsageLimit}</p>
                                         <Stack>
                                             <p>
                                                 This is your dashboard. It gathers all your templates. You can
