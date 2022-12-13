@@ -1,7 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Page, Layout, Card, MediaCard, Button } from '@shopify/polaris';
-import { AppContext } from '../Context'
-
 
 export function TemplatePage4() {
 
@@ -121,9 +119,6 @@ export function TemplatePage4() {
 
                     <Layout.Section fullWidth>
                         <div className='GoTo-App-Btn'>
-                            {/* <Link url='/admin/apps/UsVsThem' onClick={handleLocationChange}>
-                                <Button primary>Go to app</Button>
-                            </Link> */}
                             <Button primary>Go to app</Button>
                         </div>
                     </Layout.Section>

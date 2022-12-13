@@ -7,7 +7,7 @@ import { AppContext } from '../Context'
 
 
 export function TemplatePage3() {
-  const { activePage, setActivePage, selectedTemplate, templateUserId, url } = useContext(AppContext);
+  const { selectedTemplate, templateUserId, url } = useContext(AppContext);
   let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
   const [btnloading, setBtnLoading] = useState(false)
   const [templateName, setTemplateName] = useState();
@@ -34,11 +34,6 @@ export function TemplatePage3() {
   const [successToast, setSuccessToast] = useState(false);
 
   const [themeInputTable1, setThemeInputTable1] = useState([]);
-  const [themeInputTable2, setThemeInputTable2] = useState([]);
-  const [themeInputTable2Mobile, setThemeInputTable2Mobile] = useState([]);
-  const [themeInputTable3, setThemeInputTable3] = useState([]);
-  const [themeInputTable3Mobile, setThemeInputTable3Mobile] = useState([]);
-  const [themeInputTable4, setThemeInputTable4] = useState([]);
 
   const handleTemplateName = useCallback((value) => setTemplateName(value), []);
   const handleBrandName = useCallback((value) => setYourBrand(value), []);
@@ -51,17 +46,13 @@ export function TemplatePage3() {
     setCompetitorToggle(true)
   }, []);
 
-  useEffect(() => {
-    console.log(competitorValue)
-  }, [competitorsCount, advantagesCount, competitorValue]);
-
   const getData = async () => {
     const response = await axios
       .get(
         `${url}/template-data?user_template_id=${templateUserId}&shop_name=${host}`
       )
       .then(res => {
-        console.log('table data', res.data.result);
+        console.log('table data response', res.data.result);
         setTemplateName(res.data.result.template_name)
         setYourBrand(res.data.result.brand)
         setCompetitorsCount(res.data.result.competators_count)
@@ -132,7 +123,6 @@ export function TemplatePage3() {
     let competitor_values = (competitorValue)
     competitor_values[index][index2] = value;
     setCompetitorValue(competitor_values)
-    console.log(competitor_values)
     setCompetitorValueToggle(!competitorValueToggle)
   }
 
@@ -271,12 +261,10 @@ export function TemplatePage3() {
 
     ))
 
-    console.log(newArray)
     let data = {
       brand: yourBrand,
       advantages: newArray,
       brand_values: brandValue,
-      // competitor_values: competitorValue,
       template_id: selectedTemplate,
       template_name: templateName,
       user_template_id: templateUserId,
@@ -295,12 +283,12 @@ export function TemplatePage3() {
 
     try {
       const response = await axios.post(`${url}/step-2`, data)
-      console.log(response);
+      console.log('submit template response ', response);
       setBtnLoading(false)
       setSuccessToast(true)
     } catch (error) {
       setBtnLoading(false)
-      alert('Error: ', error);
+      alert('Error ', error);
     }
   }
 

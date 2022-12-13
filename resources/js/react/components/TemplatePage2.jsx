@@ -37,7 +37,6 @@ export function TemplatePage2() {
         `${url}/step-1?template_id=${templateId}&user_template_id=${templateUserId}&shop_name=${host}`
       )
       .then(res => {
-        console.log(res);
         setBtnLoading(false)
         setSelectedTemplate(templateId)
         setTemplateUserId(res.data.result.user_template_id)

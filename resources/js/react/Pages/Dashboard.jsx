@@ -1,12 +1,10 @@
 import {
     Page, Card, Layout, ButtonGroup, Button, Stack, Badge, Banner, List, Modal, MediaCard,
-    Toast, ProgressBar, Icon, Text, Avatar, ResourceList, ResourceItem, TextField, Loading, Frame, EmptyState
+    Toast, ProgressBar, Text, Avatar, ResourceList, ResourceItem, TextField, Loading, Frame, EmptyState
 } from '@shopify/polaris';
-import { CancelSmallMinor } from '@shopify/polaris-icons';
 import createApp from '@shopify/app-bridge/development';
 import { Redirect } from '@shopify/app-bridge/actions';
-import { useAppQuery } from "../components/hooks/index";
-import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import axios from "axios";
 import { AppContext } from '../Context'
 import { Link } from 'react-router-dom'
@@ -50,7 +48,7 @@ export function Dashboard() {
                 `${url}/check-trial?shop_name=${host}`
             )
             .then(res => {
-                console.log(res);
+                console.log('plan data response', res);
                 setAppEnable(res.data.result.app_status)
                 setPlanName(res.data.result.plan_name)
                 setPlanCount(res.data.result.count)
@@ -76,7 +74,7 @@ export function Dashboard() {
                 `${url}/current-templates?shop_name=${host}`
             )
             .then(res => {
-                // console.log(res);
+                console.log('templates tables response', res);
                 setTemplateTable(res.data.result);
 
             })
@@ -136,7 +134,6 @@ export function Dashboard() {
         };
         try {
             const response = await axios.post(`${url}/enable-app`, data)
-            console.log(response);
             setAppEnable(!appEnable)
             setBtnLoading(false)
 
@@ -147,8 +144,6 @@ export function Dashboard() {
     }
 
     const handleRenameTemplate = async () => {
-        console.log(`rename clicked ${templateRenameUserId}`);
-
         let data = {
             user_template_id: templateRenameUserId,
             template_name: templateRenameValue,
@@ -156,7 +151,6 @@ export function Dashboard() {
         };
         try {
             const response = await axios.post(`${url}/rename-template`, data)
-            console.log(response);
             setRenameModalActive(false)
             setRenameToastActive(!renameToastActive)
             setToggleReload(!toggleReload)
@@ -168,7 +162,7 @@ export function Dashboard() {
     }
 
     const handleDuplicateTemplate = async (id) => {
-        console.log(`duplicate clicked ${id}`);
+
 
         let data = {
             user_template_id: id,
@@ -176,7 +170,6 @@ export function Dashboard() {
         };
         try {
             const response = await axios.post(`${url}/duplicate-template`, data)
-            console.log(response);
             setDuplicatetoastActive(!duplicatetoastActive)
             setToggleReload(!toggleReload)
 
@@ -187,15 +180,12 @@ export function Dashboard() {
     }
 
     const handleDeleteTemplate = async (id) => {
-        console.log(`delete clicked ${id}`);
-
         let data = {
             user_template_id: id,
             shop_name: host,
         };
         try {
             const response = await axios.post(`${url}/delete-template`, data)
-            console.log(response);
             setDeletetoastActive(!deletetoastActive)
             setToggleReload(!toggleReload)
 
@@ -207,12 +197,7 @@ export function Dashboard() {
 
     }
 
-    const handlePreviewTemplate = (id) => {
-        console.log(`preview template clicked ${id}`);
-    }
-
     const handleCustomizeTemplate = (id, temp_id) => {
-        console.log(`customize template clicked ${id}`);
         setSelectedTemplate(temp_id)
         setTemplateUserId(id)
         setActivePage(3)
@@ -230,7 +215,6 @@ export function Dashboard() {
     }
 
     const handleSelectProducts = async (id) => {
-        console.log(`select products clicked ${id}`);
         setBtnLoading((prev) => {
             let toggleId;
             if (prev[id]) {
@@ -249,7 +233,7 @@ export function Dashboard() {
             )
 
             .then(res => {
-                console.log(res);
+                console.log('select products response', res);
                 setProducts(res.data.result)
                 let arr = []
                 res.data.result?.map((item) => {
@@ -274,7 +258,6 @@ export function Dashboard() {
     }
 
     const handleSubmitProduct = async () => {
-        console.log(`submit products ${templateUserId} `);
         setBtnLoading(true)
         let unSelected = []
         var arr = products.filter(function (item) {
@@ -291,7 +274,7 @@ export function Dashboard() {
         };
         try {
             const response = await axios.post(`${url}/selected-products`, data)
-            console.log(response);
+            console.log('submit products response', response);
             setBtnLoading(false)
             setProductsModal(false);
             setTemplateUserId()
