@@ -2,7 +2,7 @@ import { Layout, Frame, Loading } from '@shopify/polaris';
 import React, { useState, useEffect, useContext } from 'react';
 
 import {
-  TemplatePage1, TemplatePage2, TemplatePage3, TemplatePage4, SideBarNavigation
+  TemplatePage1, TemplatePage2, TemplatePage3, SideBarNavigation
 } from '../components';
 import { AppContext } from '../Context'
 
@@ -31,8 +31,6 @@ export function Templates() {
                                       return <TemplatePage2/>
                                   case 3:
                                       return <TemplatePage3/>
-                                  case 4:
-                                      return <TemplatePage4/>
                                   default:
                                       return <TemplatePage1/>
                               }

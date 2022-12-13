@@ -19,7 +19,7 @@ import '../../../public/css/theme.css';
 import '../../../public/css/usVsThem.css';
 import '../../../public/css/tablePreview.css'
 
-import { Dashboard, Templates, Settings, Locations, TemplatePage1 } from './Pages/index'
+import { Dashboard, Templates, Settings, Locations } from './Pages/index'
 
 
 function userLoggedInFetch(app) {

@@ -5,10 +5,6 @@ import { AppContext } from '../Context'
 
 export function TemplatePage4() {
 
-    // const handleLocationChange = () => {
-    //     setLocationChange('/admin/apps/UsVsThem')
-    // }
-
     return (
         <div className='Template-Page4'>
             <Page fullWidth>

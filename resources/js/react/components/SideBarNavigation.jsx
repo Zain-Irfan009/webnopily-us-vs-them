@@ -46,15 +46,7 @@ export function SideBarNavigation() {
                                 onClick: () => {
                                     setActivePage(3)
                                 }
-                            },
-                            {
-                                label: 'Publish it',
-                                selected: activePage === 4,
-                                disabled: activePage === 4 ? false : true,
-                                onClick: () => {
-                                    setActivePage(4)
-                                }
-                            },
+                            }
                         ]}
                     />
                 </Navigation>
