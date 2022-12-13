@@ -71,6 +71,14 @@
 }
 
 /* ----------------------UsVsThem Dashboard--------------------------- */
+.Dashboard .Polaris-Banner--statusInfo{
+    margin-bottom: 1rem;
+}
+
+.Dashboard .Polaris-Banner--statusInfo button{
+    background: transparent;
+}
+
 .Dashboard .ProgressBar-Section {
     margin-bottom: 1rem;
 }

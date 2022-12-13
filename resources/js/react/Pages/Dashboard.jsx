@@ -487,7 +487,7 @@ export function Dashboard() {
                                             status="info"
                                             onDismiss={() => setPlanExpireBanner(!planExpireBanner)}>
 
-                                            <p>{`Your Plan will Expire in ${planTrialDays} at ${planExpiry}`}</p>
+                                            <p>{`Your Plan will Expire in ${planTrialDays} days at ${planExpiry}`}</p>
                                         </Banner>
                                     }
 
