@@ -501,7 +501,7 @@
     font-size: 15px;
     font-weight: 500;
     letter-spacing: 0.4px;
-    max-width: 80px;
+    max-width: 55px;
     overflow-wrap: break-word;
     white-space: break-spaces;
     border: 0px solid var(--template-table-mobile-bg-darker-blue-color);

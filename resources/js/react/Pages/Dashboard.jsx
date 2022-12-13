@@ -152,6 +152,7 @@ export function Dashboard() {
         try {
             const response = await axios.post(`${url}/rename-template`, data)
             setRenameModalActive(false)
+            setTemplateRenameUserId()
             setRenameToastActive(!renameToastActive)
             setToggleReload(!toggleReload)
         } catch (error) {

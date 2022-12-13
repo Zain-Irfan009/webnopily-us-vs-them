@@ -148,7 +148,7 @@ export function Table2({ yourBrand, competitorName, advantageLoading, allValues,
                         <div className={`${screen ? 'Theme2-Pc-Table' : 'Theme2-Mobile-Table'} Theme-Table`}>
                             <IndexTable
                                 resourceName={resourceName}
-                                itemCount={screen ? competitorsCount?.length : advantagesCount?.length}
+                                itemCount={ competitorsCount?.length}
                                 selectable={false}
                                 headings={screen ? themeHeadingsPc : themeHeadingsMobile}
                             >
