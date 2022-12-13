@@ -322,7 +322,7 @@
     margin: 0 auto;
     align-items: center;
     justify-content: center;
-    max-height: 380px;
+    min-height: 380px;
     max-width: 450px;
     padding-bottom: 40px;
 }
