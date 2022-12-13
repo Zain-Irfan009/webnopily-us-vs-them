@@ -825,9 +825,9 @@
 }
 
 .Template-Page3 .Advantages-Content-Section .Polaris-Layout__Section:first-child {
-    min-width: 51%;
-    max-width: 22%;
-    flex: 1 1 0rem;
+    min-width: 0;
+    /* max-width: 22%; */
+    flex: 1 1 10rem;
 }
 
 @media (max-width: 767px) {

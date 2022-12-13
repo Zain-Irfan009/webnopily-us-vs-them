@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Page, Layout, Card, Icon, Stack, Button } from '@shopify/polaris';
 import { MobileMajor, DesktopMajor } from '@shopify/polaris-icons';
-// import { Table1, Table2, Table3, Table4 } from './index'
 import axios from "axios";
 import { AppContext } from '../Context'
 
@@ -59,32 +58,12 @@ export function TemplatePage2() {
           <Layout.Section fullWidth>
 
             <Card sectioned>
-              <p>Testing 2...</p>
               <h5>Select your favorite template</h5>
               <p> Choose the template that best suits your needs. You will then be able to
                 fully customize it.</p>
             </Card>
 
           </Layout.Section>
-
-          {/* <Layout.Section oneHalf >
-            <Table1 handleSelectTemplate={handleSelectTemplate} btnloading={btnloading} />
-          </Layout.Section>
-
-
-          <Layout.Section oneHalf>
-            <Table2 handleSelectTemplate={handleSelectTemplate} btnloading={btnloading} />
-          </Layout.Section>
-
-
-          <Layout.Section oneHalf>
-            <Table3 handleSelectTemplate={handleSelectTemplate} btnloading={btnloading} />
-          </Layout.Section>
-
-
-          <Layout.Section oneHalf>
-            <Table4 handleSelectTemplate={handleSelectTemplate} btnloading={btnloading} />
-          </Layout.Section> */}
 
           {[1, 2, 3, 4].map((item) => {
             return (

@@ -427,7 +427,7 @@ export function TemplatePage3() {
                     <div className='Advantages-Content-Section'>
                       {[...Array(Number(advantagesCount))].map((item, index) => (
                         <Layout key={index + 1}>
-                          <Layout.Section>
+                          <Layout.Section oneHalf>
                             <div className='Advantages-Inputs-Section'>
                               <div className='Advantage-Input-Field'>
                                 <div className="Polaris-Labelled__LabelWrapper">
@@ -460,7 +460,7 @@ export function TemplatePage3() {
                             </div>
                           </Layout.Section>
 
-                          <Layout.Section secondary>
+                          <Layout.Section oneHalf>
                             <div className='Advantages-Brands-Section'>
                               <Stack>
                                 <Stack vertical>
