@@ -257,7 +257,7 @@ Route::post('/webhooks/product-delete', function (Request $request) {
 });
 
 
-Route::post('tes',[App\Http\Controllers\ProductController::class,'SyncProdcuts']);
+Route::get('tes',[App\Http\Controllers\ProductController::class,'MonthlyCharge']);
 Route::get('test',[App\Http\Controllers\Api\TemplateController::class,'testing']);
 
 

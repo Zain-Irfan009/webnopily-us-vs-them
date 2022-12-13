@@ -207,7 +207,7 @@ export function Dashboard() {
         setTemplateUserId(id)
         setActivePage(2)
 
-        
+
         // redirect.dispatch(Redirect.Action.APP, {
         //     path: `/templates`,
         // })
@@ -262,10 +262,10 @@ export function Dashboard() {
         setBtnLoading(true)
         let unSelected = []
         var arr = products.filter(function (item) {
-            return selectedItems.indexOf(item.selectedTemplate) === -1;
+            return selectedItems.indexOf(item.id) === -1;
         });
         arr?.map((item) => {
-            unSelected.push(item.selectedTemplate)
+            unSelected.push(item.id)
         })
         let data = {
             user_template_id: selectedTemplate,

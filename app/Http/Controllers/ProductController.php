@@ -156,7 +156,7 @@ class ProductController extends Controller
             if($shop->count > $plan->usage_limit){
                 $count=$shop->count-$plan->usage_limit;
                 if($count > 0){
-                $price=$count*0.0001;
+                $price=$count*$plan->per_visitor_price;
                 $chargeData = [
                     "usage_charge" => [
                         'description'=>$count.' Vistors limit increase',
@@ -164,6 +164,7 @@ class ProductController extends Controller
                     ]
                 ];
                 $response = $client->post('/recurring_application_charges/'.$charge->charge_id.'/usage_charges.json', $chargeData);
+                dd($response->getDecodedBody());
             }
             }
         }

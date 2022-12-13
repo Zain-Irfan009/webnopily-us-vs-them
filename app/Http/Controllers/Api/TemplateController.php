@@ -603,7 +603,7 @@ class TemplateController extends ApiController
 
     public function SelectedProducts(Request $request)
     {
-
+dd($request->all());
         $shop = Session::where('shop', $request->shop_name)->first();
         $client = new Rest($shop->shop, $shop->access_token);
 
