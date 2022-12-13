@@ -369,7 +369,7 @@ class TemplateController extends ApiController
     {
 
         $shop = Session::where('shop', $request->shop_name)->first();
-        $user_templates = UserTemplate::where('shop_id', $shop->id)->get();
+        $user_templates = UserTemplate::where('shop_id', $shop->id)->orderBy('id', 'DESC')->get();
         $result = [];
         if ($user_templates->count() > 0) {
             foreach ($user_templates as $user_template) {
