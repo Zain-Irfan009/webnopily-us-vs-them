@@ -59,6 +59,7 @@ export function TemplatePage2() {
           <Layout.Section fullWidth>
 
             <Card sectioned>
+              <p>Testing...</p>
               <h5>Select your favorite template</h5>
               <p> Choose the template that best suits your needs. You will then be able to
                 fully customize it.</p>
