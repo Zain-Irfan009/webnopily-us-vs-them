@@ -375,7 +375,7 @@ export function Dashboard() {
 
                     <Modal
                         open={productsModal}
-                        onClose={() => setProductsModal(false)}
+                        onClose={handleProductsModal}
                         title="Select Products"
                         primaryAction={{
                             content: 'Save',
@@ -384,7 +384,7 @@ export function Dashboard() {
                         secondaryActions={[
                             {
                                 content: 'Cancel',
-                                onAction: () => setProductsModal(false),
+                                onAction: handleProductsModal,
                             },
                         ]}
                     >
