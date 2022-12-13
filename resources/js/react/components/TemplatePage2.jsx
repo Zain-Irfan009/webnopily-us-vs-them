@@ -59,7 +59,7 @@ export function TemplatePage2() {
           <Layout.Section fullWidth>
 
             <Card sectioned>
-              <p>Testing...</p>
+              <p>Testing 2...</p>
               <h5>Select your favorite template</h5>
               <p> Choose the template that best suits your needs. You will then be able to
                 fully customize it.</p>
@@ -88,7 +88,7 @@ export function TemplatePage2() {
 
           {[1, 2, 3, 4].map((item) => {
             return (
-              <Layout.Section key={item}>
+              <Layout.Section key={item} oneHalf>
                 <Card sectioned>
                   <div className='Theme-Card-Content'>
 
