@@ -3,8 +3,7 @@ import { Card, IndexTable, Icon, Stack, Button, } from '@shopify/polaris';
 import {
     TickMinor, CancelMinor, MobileMajor, DesktopMajor, CircleTickMajor, CircleCancelMajor
 } from '@shopify/polaris-icons';
-import { AppContext } from '../../providers/Context'
-import axios from "axios";
+
 
 export function Table111({ yourBrand, competitorName, advantageLoading, allValues,
     competitorsCount, brandValue, competitorValue, advantagesCount, colorValues, advantageColorValues }) {

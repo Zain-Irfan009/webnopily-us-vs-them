@@ -1005,10 +1005,10 @@ dd($response);
     {
 
         $shop = Session::where('shop', $shop)->first();
-
         $client = new Rest($shop->shop, $shop->access_token);
         $plan = Plan::first();
-        $shop_url = env('app_url') . "check-charge?host=$host";
+        $shop_url = env('APP_URL') . "check-charge?host=$host";
+
         $productdata = [
             "recurring_application_charge" => [
                 "name" => $plan->name,
@@ -1024,6 +1024,8 @@ dd($response);
 
         $response = $client->post('/recurring_application_charges.json', $productdata);
         $response = $response->getDecodedBody();
+
+
         $response = json_decode(json_encode($response));
         $response = $response->recurring_application_charge;
 
