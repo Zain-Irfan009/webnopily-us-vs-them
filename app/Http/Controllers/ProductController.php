@@ -152,19 +152,32 @@ class ProductController extends Controller
         $plan=Plan::first();
         foreach ($shops as $shop){
             $client = new Rest($shop->shop, $shop->access_token);
-            $charge=Charge::where('shop_id',$shops->id)->latest()->first();
-            if($shop->count > $plan->usage_limit){
-                $count=$shop->count-$plan->usage_limit;
-                if($count > 0){
-                $price=$count*$plan->per_visitor_price;
-                $chargeData = [
-                    "usage_charge" => [
-                        'description'=>$count.' Vistors limit increase',
-                        "price" => $price,
-                    ]
-                ];
-                $response = $client->post('/recurring_application_charges/'.$charge->charge_id.'/usage_charges.json', $chargeData);
-                dd($response->getDecodedBody());
+            $charge=Charge::where('shop_id',$shop->id)->latest()->first();
+            if($shop->count > $plan->usage_limit) {
+                $count = $shop->count - $plan->usage_limit;
+                $per_visitor_price=1/$plan->usage_limit;
+//                dd($per_visitor_price);
+                if ($count > 0) {
+//                    $price = $count * $plan->per_visitor_price;
+                    $price = $count * $per_visitor_price;
+
+                    if ($price >= 1) {
+
+                        $chargeData = [
+                            "usage_charge" => [
+                                'description' => $count . ' Vistors limit increase',
+                                "price" => $price,
+                            ]
+                        ];
+                        $response = $client->post('/recurring_application_charges/' . $charge->charge_id . '/usage_charges.json', $chargeData);
+                       $response=$response->getDecodedBody();
+                        $response=   json_decode(json_encode($response));
+
+                        if(!isset($response->errors)){
+                            $shop->count=0;
+                            $shop->save();
+                    }
+                }
             }
             }
         }

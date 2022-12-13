@@ -1017,7 +1017,7 @@ dd($response);
                 "trial_days" => 7,
                 "test" => true,
                 "terms" => "1$ each 10,000 visitors",
-                "capped_amount" => 100,
+                "capped_amount" => $plan->capped_amount,
 
             ]
         ];
