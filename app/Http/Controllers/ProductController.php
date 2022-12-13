@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Charge;
+use App\Models\Log;
+use App\Models\Plan;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ProductVarient;
 use App\Models\Session;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Shopify\Clients\Rest;
 
@@ -135,7 +138,34 @@ class ProductController extends Controller
         $shop=Session::where('shop',$request->shop)->first();
         $shop->count=$shop->count+1;
         $shop->save();
+        $mytime = Carbon::now();
+        $log=new Log();
+        $log->shop_id=$shop->id;
+        $log->template_id=$request->template_id;
+        $log->date_time=$mytime;
+        $log->save();
+    }
 
+    public function MonthlyCharge(){
 
+        $shops=Session::all();
+        $plan=Plan::first();
+        foreach ($shops as $shop){
+            $client = new Rest($shop->shop, $shop->access_token);
+            $charge=Charge::where('shop_id',$shops->id)->latest()->first();
+            if($shop->count > $plan->usage_limit){
+                $count=$shop->count-$plan->usage_limit;
+                if($count > 0){
+                $price=$count*0.0001;
+                $chargeData = [
+                    "usage_charge" => [
+                        'description'=>$count.' Vistors limit increase',
+                        "price" => $price,
+                    ]
+                ];
+                $response = $client->post('/recurring_application_charges/'.$charge->charge_id.'/usage_charges.json', $chargeData);
+            }
+            }
+        }
     }
 }
