@@ -260,4 +260,4 @@ Route::post('/webhooks/product-delete', function (Request $request) {
 Route::post('tes',[App\Http\Controllers\ProductController::class,'SyncProdcuts']);
 Route::get('test',[App\Http\Controllers\Api\TemplateController::class,'testing']);
 
-Route::get('/update-count',[App\Http\Controllers\ProductController::class,'UpdateCount']);
+Route::get('/update-count',[App\Http\Controllers\ProductController::class,'UpdateCount'])->middleware('cors');
