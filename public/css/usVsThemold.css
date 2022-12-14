@@ -16,9 +16,6 @@
     --template-table3-rows-light-color: #f9f0ec;
     --template-table3-rows-border-color: rgba(232, 234, 235, 0.653);
     --template-table4-rows-light-color: #D2E8F4;
-
-    --template-table-bg-even-color: #EBECF0;
-    --template-table-bg-odd-color: #ffffff;
 }
 
 .Template-SideBar .Polaris-Navigation .Polaris-Navigation__PrimaryNavigation {
@@ -438,23 +435,15 @@
     fill: var(--template-table-white-color);
 }
 
-.Advantages-Tables-Preview .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(even) .Polaris-IndexTable__TableCell:first-child,
-.Advantages-Tables-Preview .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(even),
-.Advantages-Tables-Preview .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(even) .Polaris-IndexTable__TableCell:first-child,
-.Advantages-Tables-Preview .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(even) {
-    background-color: var(--template-table-bg-even-color);
-}
-
-.Advantages-Tables-Preview .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(odd) .Polaris-IndexTable__TableCell:first-child,
-.Advantages-Tables-Preview .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(odd),
-.Advantages-Tables-Preview .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(odd) .Polaris-IndexTable__TableCell:first-child,
-.Advantages-Tables-Preview .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(odd) {
-    background-color: var(--template-table-bg-odd-color);
-}
 
 
 /* ----------------------Template Page 2 - Table 1 Pc-------------------------- */
-
+.Theme1-Pc-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(even) .Polaris-IndexTable__TableCell:first-child,
+.Theme1-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(even),
+.Theme1-Mobile-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(even) .Polaris-IndexTable__TableCell:first-child,
+.Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(even) {
+    background-color: var(--template-table-bg-subdued-color);
+}
 
 .Theme1-Pc-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:last-child .Polaris-IndexTable__TableCell:first-child,
 .Theme1-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:last-child,
@@ -559,6 +548,12 @@
 .Theme2-Pc-Table .Circle-bg-False-Icon,
 .Theme2-Mobile-Table .Circle-bg-False-Icon {
     fill: var(--template-table2-rows-light-color);
+}
+
+.Theme2-Pc-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(odd) .Polaris-IndexTable__TableCell:first-child,
+.Theme2-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(odd),
+.Theme2-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(odd) {
+    background-color: var(--template-table-bg-subdued-color);
 }
 
 
@@ -998,7 +993,6 @@
 .Theme-Card-Content {
     position: relative;
 }
-
 
 /* .Advantages-Tables-Preview .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableCell:first-child div {
     max-width: 110px !important;

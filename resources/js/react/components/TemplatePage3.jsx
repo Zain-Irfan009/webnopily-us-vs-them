@@ -291,7 +291,10 @@ export function TemplatePage3() {
       alert('Error ', error);
     }
   }
-
+    useEffect(() => {
+        document.documentElement.style.setProperty('--template-table-bg-odd-color', colorValues?.background_color1);
+        document.documentElement.style.setProperty('--template-table-bg-even-color', colorValues?.background_color2);
+    }, [colorValues])
 
   return (
     <div className='Template-Page3'>

@@ -1024,7 +1024,7 @@ class TemplateController extends ApiController
         $shop = Session::where('shop', $shop)->first();
         $client = new Rest($shop->shop, $shop->access_token);
         $plan = Plan::first();
-        $shop_url = env('APP_URL') . "check-charge?host=$host&shop_name=$shop";
+        $shop_url = env('APP_URL') . "check-charge?host=$host&shop_name=$shop->shop";
 
         $productdata = [
             "recurring_application_charge" => [

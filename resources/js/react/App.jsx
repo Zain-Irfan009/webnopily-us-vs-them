@@ -68,16 +68,16 @@ function App({ shop, host, apiKey }) {
     // const url='https://us-vs-them.test/api'
     const url='https://phpstack-362288-3089196.cloudwaysapps.com/api';
 
-    useEffect(() => {
-        console.log('activePage: ', activePage);
-        console.log('selectedTemplate: ', selectedTemplate);
-        console.log('templateUserId: ', templateUserId);
-    }, [activePage, selectedTemplate, templateUserId])
-
-    useEffect(() => {
-        console.warn('app refresh now');
-
-    }, [])
+    // useEffect(() => {
+    //     console.log('activePage: ', activePage);
+    //     console.log('selectedTemplate: ', selectedTemplate);
+    //     console.log('templateUserId: ', templateUserId);
+    // }, [activePage, selectedTemplate, templateUserId])
+    //
+    // useEffect(() => {
+    //     console.warn('app refresh now');
+    //
+    // }, [])
 
 
     return (
