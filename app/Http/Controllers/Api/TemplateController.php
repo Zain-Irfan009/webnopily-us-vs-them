@@ -727,7 +727,7 @@ class TemplateController extends ApiController
                         $res_for_delete = $client->get('/products/' . $unSelected_id . '/metafields.json');
                         $res_for_delete = $res_for_delete->getDecodedBody();
 
-                        if($res_for_delete['metafields']){
+                        if(isset($res_for_delete['metafields'])){
                             foreach ($res_for_delete['metafields'] as $delete_meta) {
                                 if ($delete_meta['key'] == 'products') {
 
@@ -898,11 +898,11 @@ class TemplateController extends ApiController
         $client = new Rest($shop->shop, $shop->access_token);
 
 
-        $result = $client->get('/metafields/23483621703871.json');
+        $result = $client->get('/metafields/23490861859007.json');
         $result = $result->getDecodedBody();
 
         if($result['metafield']) {
-            $shop_metafield = $client->delete('/metafields/23483621703871.json');
+            $shop_metafield = $client->delete('/metafields/23490861859007.json');
         }
 
 //
