@@ -101,9 +101,9 @@ Route::get('/auth/callback', function (Request $request) {
     $response_products_create = Registry::register('/webhooks/product-create', Topics::PRODUCTS_CREATE, $shop, $session->getAccessToken());
     $response_products_update = Registry::register('/webhooks/product-update', Topics::PRODUCTS_UPDATE, $shop, $session->getAccessToken());
     $response_products_delete = Registry::register('/webhooks/product-delete', Topics::PRODUCTS_DELETE, $shop, $session->getAccessToken());
-    $response_customers_data_request = Registry::register('/webhooks/customers-data-request', 'CUSTOMERS_DATA_REQUEST', $shop, $session->getAccessToken());
-    $response_customers_redact = Registry::register('/webhooks/customers-redact', 'CUSTOMERS_REDACT', $shop, $session->getAccessToken());
-    $response_shop_redact = Registry::register('/webhooks/shop-redact', 'SHOP_REDACT', $shop, $session->getAccessToken());
+
+        $template_controller=new TemplateController();
+        $template_controller->RegisterGDPR($request->query('shop'));
     if ($response->isSuccess()) {
         Log::debug("Registered APP_UNINSTALLED webhook for shop $shop");
         $productcontroller = new ProductController();
@@ -179,6 +179,10 @@ Route::get('sync-products',[App\Http\Controllers\ProductController::class,'SyncP
 Route::post('/webhooks/app-uninstall', function (Request $request) {
 
     try {
+        $error_log=new \App\Models\ErrorLog();
+        $error_log->topic='uninstall';
+        $error_log->response=$request->header('x-shopify-shop-domain');
+        $error_log->save();
 
         $product=json_decode($request->getContent());
         $shop=$request->header('x-shopify-shop-domain');
@@ -191,7 +195,7 @@ Route::post('/webhooks/app-uninstall', function (Request $request) {
         \App\Models\Product::where('shop_id',$shop->id)->delete();
         $result = $client->get('/metafields/' .$shop->metafield_id. '.json');
         $result = $result->getDecodedBody();
-        if($result['metafield']) {
+        if(isset($result['metafield'])) {
             $shop_metafield = $client->delete('/metafields/' . $shop->metafield_id . '.json');
         }
         Session::where('id',$shop->id)->forceDelete();

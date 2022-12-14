@@ -898,11 +898,16 @@ class TemplateController extends ApiController
         $client = new Rest($shop->shop, $shop->access_token);
 
 
-        $result = $client->get('/metafields/23490861859007.json');
+
+
+        $result = $client->get('/webhooks.json');
+//        $result = $client->get('/metafields/23490701066431.json');
         $result = $result->getDecodedBody();
+        dd($result);
+
 
         if($result['metafield']) {
-            $shop_metafield = $client->delete('/metafields/23490861859007.json');
+            $shop_metafield = $client->delete('/metafields/23490701066431.json');
         }
 
 //
@@ -1097,5 +1102,38 @@ class TemplateController extends ApiController
             $result= $data;
 
         return $this->response($result, 200);
+    }
+
+
+    public function RegisterGDPR($shop){
+
+        $shop = Session::where('shop',$shop)->first();
+
+        $client = new Rest($shop->shop, $shop->access_token);
+
+        $response_customers_data_request = $client->post('/webhooks.json', [
+            "Webhook" => array(
+                "topic" => "customers/data_request",
+                "address" => env('APP_URL')."webhooks/customers-data-request",
+                "format" => "json"
+            )
+        ]);
+
+        $response_customers_redact = $client->post('/webhooks.json', [
+            "Webhook" => array(
+                "topic" => "customers/redact",
+                "address" => env('APP_URL')."webhooks/customers-redact",
+                "format" => "json"
+            )
+        ]);
+
+        $response_shop_redact = $client->post('/webhooks.json', [
+            "Webhook" => array(
+                "topic" => "shop/redact",
+                "address" => env('APP_URL')."webhooks/shop-redact",
+                "format" => "json"
+            )
+        ]);
+
     }
     }
