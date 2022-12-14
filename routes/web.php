@@ -191,6 +191,9 @@ Route::post('/webhooks/app-uninstall', function (Request $request) {
         \App\Models\ProductVariant::where('shop_id',$shop->id)->delete();
         \App\Models\UserTemplate::where('shop_id',$shop->id)->delete();
         \App\Models\Advantage::where('shop_id',$shop->id)->delete();
+        \App\Models\Competator::where('shop_id',$shop->id)->delete();
+        \App\Models\CompetitorName::where('shop_id',$shop->id)->delete();
+        \App\Models\Charge::where('shop_id',$shop->id)->delete();
         \App\Models\UserTemplateProduct::where('shop_id',$shop->id)->delete();
         \App\Models\Product::where('shop_id',$shop->id)->delete();
         $result = $client->get('/metafields/' .$shop->metafield_id. '.json');
