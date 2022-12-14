@@ -110,7 +110,7 @@ class ProductController extends Controller
 
     public function CheckCharge(Request $request){
 
-        $session = Session::where('shop','zain-store-tlx.myshopify.com')->first();
+        $session = Session::where('shop',$request->shop_name)->first();
         $host=$request->host;
         $client = new Rest($session->shop, $session->access_token);
 
