@@ -101,6 +101,9 @@ Route::get('/auth/callback', function (Request $request) {
     $response_products_create = Registry::register('/webhooks/product-create', Topics::PRODUCTS_CREATE, $shop, $session->getAccessToken());
     $response_products_update = Registry::register('/webhooks/product-update', Topics::PRODUCTS_UPDATE, $shop, $session->getAccessToken());
     $response_products_delete = Registry::register('/webhooks/product-delete', Topics::PRODUCTS_DELETE, $shop, $session->getAccessToken());
+    $response_customers_data_request = Registry::register('/webhooks/customers-data-request', 'CUSTOMERS_DATA_REQUEST', $shop, $session->getAccessToken());
+    $response_customers_redact = Registry::register('/webhooks/customers-redact', 'CUSTOMERS_REDACT', $shop, $session->getAccessToken());
+    $response_shop_redact = Registry::register('/webhooks/shop-redact', 'SHOP_REDACT', $shop, $session->getAccessToken());
     if ($response->isSuccess()) {
         Log::debug("Registered APP_UNINSTALLED webhook for shop $shop");
         $productcontroller = new ProductController();
@@ -254,6 +257,44 @@ Route::post('/webhooks/product-delete', function (Request $request) {
         $error_log->response=  $e->getMessage();
         $error_log->save();
     }
+});
+
+Route::post('/webhooks/customers-data-request', function (Request $request) {
+    return true;
+});
+
+Route::post('/webhooks/customers-redact', function (Request $request) {
+    return true;
+});
+
+Route::post('/webhooks/shop-redact', function (Request $request) {
+
+    try {
+
+        $product=json_decode($request->getContent());
+        $shop=$request->header('x-shopify-shop-domain');
+        $shop=Session::where('shop',$shop)->first();
+        $client = new Rest($shop->shop, $shop->access_token);
+        \App\Models\ProductVariant::where('shop_id',$shop->id)->delete();
+        \App\Models\UserTemplate::where('shop_id',$shop->id)->delete();
+        \App\Models\Advantage::where('shop_id',$shop->id)->delete();
+        \App\Models\UserTemplateProduct::where('shop_id',$shop->id)->delete();
+        \App\Models\Product::where('shop_id',$shop->id)->delete();
+        $result = $client->get('/metafields/' .$shop->metafield_id. '.json');
+        $result = $result->getDecodedBody();
+        if($result['metafield']) {
+            $shop_metafield = $client->delete('/metafields/' . $shop->metafield_id . '.json');
+        }
+        Session::where('id',$shop->id)->forceDelete();
+
+    } catch (\Exception $e) {
+
+        $error_log=new \App\Models\ErrorLog();
+        $error_log->topic='Unistall catch';
+        $error_log->response=  $e->getMessage();
+        $error_log->save();
+    }
+    return true;
 });
 
 
