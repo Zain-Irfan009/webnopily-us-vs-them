@@ -101,9 +101,9 @@ Route::get('/auth/callback', function (Request $request) {
     $response_products_create = Registry::register('/webhooks/product-create', Topics::PRODUCTS_CREATE, $shop, $session->getAccessToken());
     $response_products_update = Registry::register('/webhooks/product-update', Topics::PRODUCTS_UPDATE, $shop, $session->getAccessToken());
     $response_products_delete = Registry::register('/webhooks/product-delete', Topics::PRODUCTS_DELETE, $shop, $session->getAccessToken());
-
-        $template_controller=new TemplateController();
-        $template_controller->RegisterGDPR($request->query('shop'));
+//    $response_customers_data_request = Registry::register('/webhooks/customers-data-request', 'customers/data_request', $shop, $session->getAccessToken());
+//    $response_customers_redact = Registry::register('/webhooks/customers-redact', 'customers/redact', $shop, $session->getAccessToken());
+//    $response_shop_redact = Registry::register('/webhooks/shop-redact', 'shop/redact', $shop, $session->getAccessToken());
     if ($response->isSuccess()) {
         Log::debug("Registered APP_UNINSTALLED webhook for shop $shop");
         $productcontroller = new ProductController();
