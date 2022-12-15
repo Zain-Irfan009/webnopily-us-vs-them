@@ -2,7 +2,7 @@ import { Layout, Frame, Loading } from '@shopify/polaris';
 import React, { useState, useEffect, useContext } from 'react';
 
 import {
-  TemplatePage1, TemplatePage2, TemplatePage3, SideBarNavigation
+  TemplatePage1, TemplatePage2, TemplatePage3, TemplatePage4, SideBarNavigation
 } from '../components';
 import { AppContext } from '../Context'
 
@@ -20,36 +20,36 @@ export function Templates() {
 
   return (
     <div className='Navigation-Frame'>
-      <Frame>
-          {loading ? <Loading/> :
-              <div className={`Templates-Page`}>
-                  <Layout>
-                      <Layout.Section>
-                          {(() => {
-                              switch (activePage) {
-                                  case 2:
-                                      return <TemplatePage2/>
-                                  case 3:
-                                      return <TemplatePage3/>
-                                  default:
-                                      return <TemplatePage1/>
-                              }
+      {loading ? <Loading /> :
+        <div className={`Templates-Page`}>
+          <Layout>
+            <Layout.Section>
+              {(() => {
+                switch (activePage) {
+                  case 2:
+                    return <TemplatePage2 />
+                  case 3:
+                    return <TemplatePage3 />
+                  case 4:
+                    return <TemplatePage4 />
+                  default:
+                    return <TemplatePage1 />
+                }
 
-                          })()}
+              })()}
 
 
-                      </Layout.Section>
-                      {
-                          activePage != 3 &&
-                          <Layout.Section secondary>
-                              <SideBarNavigation/>
-                          </Layout.Section>
-                      }
+            </Layout.Section>
+            {
+              activePage != 3 &&
+              <Layout.Section secondary>
+                <SideBarNavigation />
+              </Layout.Section>
+            }
 
-                  </Layout>
-              </div>
-           }
-      </Frame>
+          </Layout>
+        </div>
+      }
     </div>
   );
 }

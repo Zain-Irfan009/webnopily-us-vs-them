@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext } from 'react'
-import { Page, Layout, Text, Card, Select, Icon, Stack, TextField, Loading, PageActions,Toast } from '@shopify/polaris';
+import { Page, Layout, Text, Card, Select, Icon, Stack, TextField, Loading, PageActions, Toast } from '@shopify/polaris';
 import { CircleTickMajor, CircleCancelMajor } from '@shopify/polaris-icons';
 import { Table1, Table2, Table3, Table4, SideBarNavigation } from './index';
 import axios from "axios";
@@ -7,7 +7,7 @@ import { AppContext } from '../Context'
 
 
 export function TemplatePage3() {
-  const { selectedTemplate, templateUserId, url } = useContext(AppContext);
+  const { selectedTemplate, templateUserId, url, setActivePage } = useContext(AppContext);
   let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
   const [btnloading, setBtnLoading] = useState(false)
   const [templateName, setTemplateName] = useState();
@@ -286,15 +286,16 @@ export function TemplatePage3() {
       console.log('submit template response ', response);
       setBtnLoading(false)
       setSuccessToast(true)
+      setActivePage(4)
     } catch (error) {
       setBtnLoading(false)
       alert('Error ', error);
     }
   }
-    useEffect(() => {
-        document.documentElement.style.setProperty('--template-table-bg-odd-color', colorValues?.background_color1);
-        document.documentElement.style.setProperty('--template-table-bg-even-color', colorValues?.background_color2);
-    }, [colorValues])
+  useEffect(() => {
+    document.documentElement.style.setProperty('--template-table-bg-odd-color', colorValues?.background_color1);
+    document.documentElement.style.setProperty('--template-table-bg-even-color', colorValues?.background_color2);
+  }, [colorValues])
 
   return (
     <div className='Template-Page3'>

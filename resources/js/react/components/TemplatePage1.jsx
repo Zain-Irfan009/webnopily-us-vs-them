@@ -7,6 +7,7 @@ export function TemplatePage1() {
     const { setActivePage, setTemplateUserId, setSelectedTemplate } = useContext(AppContext);
 
     useEffect(() => {
+        setActivePage(1)
         setSelectedTemplate()
         setTemplateUserId()
     }, [])

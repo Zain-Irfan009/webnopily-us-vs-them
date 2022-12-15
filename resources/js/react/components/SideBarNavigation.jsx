@@ -14,10 +14,6 @@ export function SideBarNavigation() {
         }
     }
 
-    const handleLocationChange = () => {
-        // setLocationChange('/admin/apps/UsVsThem')
-    }
-
     return (
         <>
             <div className={`${activePage === 1 && 'First-Page-Margin'} Template-SideBar`}>
@@ -46,18 +42,26 @@ export function SideBarNavigation() {
                                 onClick: () => {
                                     setActivePage(3)
                                 }
+                            },
+                            {
+                                label: 'Publish it',
+                                selected: activePage === 4,
+                                disabled: activePage === 4 ? false : true,
+                                onClick: () => {
+                                    setActivePage(4)
+                                }
                             }
                         ]}
                     />
                 </Navigation>
 
-                <Link url='/admin/apps/UsVsThem' onClick={handleLocationChange}>
+                {/* <Link url='/admin/apps/UsVsThem' onClick={handleLocationChange}>
                     <Button primary>Go to app</Button>
-                </Link>
+                </Link> */}
             </div>
 
 
-            <div className='Templates-Pagination'>
+            {/* <div className='Templates-Pagination'>
                 <Pagination
                     label={`Page ${activePage}`}
                     hasPrevious
@@ -65,7 +69,7 @@ export function SideBarNavigation() {
                     // hasNext
                     // onNext={() => { handlePagination('next') }}
                 />
-            </div>
+            </div> */}
         </>
     )
 }

@@ -23,13 +23,13 @@ function AppNavigation() {
     //     destination: '/locations',
     // });
 
-    const settings = AppLink.create(app, {
-        label: 'Settings',
-        destination: '/settings',
-    });
+    // const settings = AppLink.create(app, {
+    //     label: 'Settings',
+    //     destination: '/settings',
+    // });
 
     const navigationMenu = NavigationMenu.create(app, {
-        items: [dashboard, templates, settings],
+        items: [dashboard, templates],
     });
     switch (location.pathname) {
         case "/":
@@ -38,12 +38,12 @@ function AppNavigation() {
         case "/templates":
             navigationMenu.set({ active: templates });
             break;
-        case "/locations":
-            navigationMenu.set({ active: locations });
-            break;
-        case "/settings":
-            navigationMenu.set({ active: settings });
-            break;
+        // case "/locations":
+        //     navigationMenu.set({ active: locations });
+        //     break;
+        // case "/settings":
+        //     navigationMenu.set({ active: settings });
+        //     break;
         default:
             navigationMenu.set({ active: undefined });
     }

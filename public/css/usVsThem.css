@@ -74,6 +74,18 @@
 }
 
 /* ----------------------UsVsThem Dashboard--------------------------- */
+
+
+.Dashboard .Polaris-Spinner {
+    display: flex;
+    justify-content: center;
+    margin: 4rem 0;
+}
+
+.Dashboard .MediaCard-Products-handle .Polaris-Spinner {
+    margin: 0;
+}
+
 .Dashboard .Polaris-Banner--statusInfo {
     margin-bottom: 1rem;
 }
@@ -84,6 +96,13 @@
 
 .Dashboard .ProgressBar-Section {
     margin-bottom: 1rem;
+}
+
+.Dashboard .ProgressBar-Section h5 span {
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 5px;
+    letter-spacing: 0.2px;
 }
 
 .Dashboard .ProgressBar-Value {
@@ -1058,4 +1077,5 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 1rem;
+    margin-bottom: 2rem;
 }

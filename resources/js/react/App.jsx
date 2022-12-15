@@ -1,10 +1,10 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Redirect } from "@shopify/app-bridge/actions";
 import { authenticatedFetch } from "@shopify/app-bridge-utils"
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client/react';
-import { AppProvider } from "@shopify/polaris";
+import { AppProvider, Frame } from "@shopify/polaris";
 import translations from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
 import { Provider, useAppBridge } from '@shopify/app-bridge-react';
@@ -65,14 +65,14 @@ function App({ shop, host, apiKey }) {
     const [activePage, setActivePage] = useState(1)
     const [selectedTemplate, setSelectedTemplate] = useState()
     const [templateUserId, setTemplateUserId] = useState()
-    const url='https://us-vs-them.test/api'
+    const url = 'https://us-vs-them.test/api'
     // const url='https://phpstack-362288-3089196.cloudwaysapps.com/api';
 
-    // useEffect(() => {
-    //     console.log('activePage: ', activePage);
-    //     console.log('selectedTemplate: ', selectedTemplate);
-    //     console.log('templateUserId: ', templateUserId);
-    // }, [activePage, selectedTemplate, templateUserId])
+    useEffect(() => {
+        console.log('activePage: ', activePage);
+        console.log('selectedTemplate: ', selectedTemplate);
+        console.log('templateUserId: ', templateUserId);
+    }, [activePage, selectedTemplate, templateUserId])
     //
     // useEffect(() => {
     //     console.warn('app refresh now');
@@ -90,14 +90,16 @@ function App({ shop, host, apiKey }) {
                         <AppContext.Provider
                             value={{
                                 activePage, setActivePage, selectedTemplate, setSelectedTemplate,
-                                templateUserId, setTemplateUserId, config,url
+                                templateUserId, setTemplateUserId, config, url
                             }}>
-                            <Switch>
-                                <Route exact path="/" component={Dashboard} />
-                                <Route path="/templates" component={Templates} />
-                                <Route path="/locations" component={Locations} />
-                                <Route path="/settings" component={Settings} />
-                            </Switch>
+                            <Frame>
+                                <Switch>
+                                    <Route exact path="/" component={Dashboard} />
+                                    <Route path="/templates" component={Templates} />
+                                    <Route path="/locations" component={Locations} />
+                                    <Route path="/settings" component={Settings} />
+                                </Switch>
+                            </Frame>
                         </AppContext.Provider>
                     </AppBridgeApolloProvider>
                 </AppProvider>
