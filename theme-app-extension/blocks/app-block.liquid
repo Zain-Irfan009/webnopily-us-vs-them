@@ -27,12 +27,20 @@
               background: {{xc_settings.background_color2}};
         }
 
+       .choose-table-mobile tbody tr:nth-child(odd) {
+            background-color: {{xc_settings.background_color1}} !important;
+        }
+          .choose-table-mobile tbody tr {
+              background: {{xc_settings.background_color2}} !important;
+        }
+
      .page-section.temp1-compare-section table tbody tr:nth-child(odd) {
         background:  {{xc_settings.background_color1}};
     }
           .page-section.temp1-compare-section table tbody tr:nth-child(even) {
       background:  {{xc_settings.background_color2}};
     }
+
   </style>
 
 
@@ -101,6 +109,61 @@
   {{ 'template2.css' | asset_url | stylesheet_tag }}
 
 
+<div class="stickyTableColumns-mobile" style="overflow-y: auto;">
+    <table class="choose-table-mobile" >
+        <thead>
+        <tr>
+            <th></th>
+      {% for xc_settings_loop in  xc_settings.items %}
+            <th style="color:{{ xc_settings_loop.advantage_color_value  }} ">{{ xc_settings_loop.advantage  }} </th>
+
+        {% endfor %}
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>{{ xc_settings.brand }}</th>
+           {% for xc_settings_loop in  xc_settings.items %}
+            <td>
+          <span class="choose-table__price">
+          {% if  xc_settings_loop.brand == true %}
+          <i class="fa fa-check-circle check_brand "></i>
+                   {% else %}
+            <i class="fa  fa-times-circle cross_brand "></i>
+            {% endif %}
+          </span>
+        </td>
+     {% endfor %}
+        </tr>
+
+       {% for xc_settings_comp_loop in  xc_settings.competitors_name %}
+         {% assign index=forloop.index %}
+             <tr>
+                <th>{{ xc_settings_comp_loop }}</th>
+            {% for xc_settings_loop in  xc_settings.items %}
+              {% for xc_settings_nested_loop in  xc_settings_loop.competitor %}
+
+                {% if index==forloop.index %}
+
+                           <td>
+                        <span class="choose-table__price">
+                         {% if  xc_settings_nested_loop == true %}
+                         <i class="fa fa-check-circle check_competator "></i>
+                      {% else %}
+                        <i class="fa  fa-times-circle cross_competator "></i>
+                      {% endif %}
+                      </span></td>
+                  {% endif %}
+              {% endfor %}
+                {% endfor %}
+               </tr>
+             {% endfor %}
+
+
+        </tbody>
+    </table></div>
+
 <div class="stickyTableColumns-scroll" style="overflow-y: auto;">
     <table class="choose-table" style="margin: 0 auto;max-width: 800px;">
         <thead>
@@ -147,7 +210,7 @@
   {% elsif xc_settings and xc_settings.template_id == 3 %}
   {{ 'template3.css' | asset_url | stylesheet_tag }}
 <div class="stickyTableColumns-scroll" style="overflow-y: auto;">
-    <table class="choose-table" style="margin: 0 auto;max-width: 80%;">
+    <table class="choose-table" >
     <thead>
     <tr>
         <th></th><th>{{ xc_settings.brand }}</th>
@@ -190,7 +253,7 @@
   {{ 'template4.css' | asset_url | stylesheet_tag }}
 
   <div class="stickyTableColumns-scroll" style="overflow-y: auto;">
-    <table class="choose-table" style="margin: 0 auto;max-width: 600px;">
+    <table class="choose-table" >
         <thead>
         <tr>
 
@@ -247,7 +310,7 @@ if ('undefined' == typeof window.jQuery) {
 
 setTimeout(my_fun, 1000);
 function my_fun() {
-console.log('check');
+console.log('afternoon');
         $.ajax({
 
             url: 'https://phpstack-362288-3089196.cloudwaysapps.com/update-count?template_id={{  xc_settings.template_id }}&shop={{  shop.domain}}',

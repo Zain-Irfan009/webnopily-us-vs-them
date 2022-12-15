@@ -196,3 +196,25 @@ body {
     }
 
 }
+
+.choose-table{
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+@media only screen and (max-width: 767px)  {
+
+    .choose-table tbody tr td:not(:first-child) {
+        border: 5px solid white;
+
+    }
+    .choose-table tbody tr td:last-child {
+        border-right: 0;
+
+    }
+
+    .choose-table{
+        max-width:calc(100% - 20px)  ;
+        margin:0 10px;
+    }
+}

@@ -69,7 +69,7 @@ body {
 }
 .choose-table td,
 .choose-table th {
-    position: relative;
+    /*             position: relative; */
     padding: 22px 20px;
     width: 130px;
     height: 60px;
@@ -191,3 +191,18 @@ body {
 .choose-table tbody tr:last-child td:last-child {
     border-bottom-right-radius: 20px;
 }
+
+.choose-table{
+    max-width: 600px;
+    margin: 0 auto;
+}
+@media only screen and (max-width: 767px)  {
+
+
+    .choose-table{
+        max-width:calc(100% - 20px)  ;
+        margin:0 10px;
+        word-break: break-word;
+    }
+}
+

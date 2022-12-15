@@ -49,7 +49,7 @@
 }
 .page-section.temp1-compare-section table td:nth-child(2),
 .page-section.temp1-compare-section table th:nth-child(2) {
-    background: #ED706D;
+    background: #ff5859;
     color: #fff;
 }
 .page-section.temp1-compare-section table th:nth-child(2) {
@@ -93,7 +93,7 @@
     line-height: 16px;
 }
 .page-section.temp1-compare-section table tbody tr:nth-child(odd) td:nth-child(2) {
-    background: #EB4C50;
+    background: #ff3849;
 }
 .page-section.temp1-compare-section table tbody tr td:nth-child(3) {
     font-size: 14px;
@@ -262,6 +262,9 @@
     .page-section.temp1-compare-section table{
         width: 100%;
     }
+    .custom{
+        max-width:calc(100% - 20px) ;
+        margin:0 10px;
+    }
 }
-
 
