@@ -255,6 +255,7 @@ export function TemplatePage3() {
 
     [...Array(Number(advantagesCount))].map((item, index1) => (
       newArray2.push(allValues[index1]),
+      newArray2.push(valueType[index1]),
       [...Array(Number(competitorsCount))].map((item1, index2) => (
         newArray3.push(competitorValue[index1][index2])
       )),
@@ -272,16 +273,23 @@ export function TemplatePage3() {
       template_id: selectedTemplate,
       template_name: templateName,
       user_template_id: templateUserId,
+      advantages_count: advantagesCount,
+      competitors_name: competitorName,
+      competitor_value: competitorValue,
+
       background_color1: colorValues?.background_color1,
       background_color2: colorValues?.background_color2,
+      brand_background1: colorValues?.brand_background1,
+      brand_background2: colorValues?.brand_background2,
+      text_advantages_color: colorValues?.text_advantages_color,
+      text_brand_color: colorValues?.text_brand_color,
+      text_competitor_color: colorValues?.text_competitor_color,
       brand_checkbox_color1: colorValues?.text_brand_color,
       brand_checkbox_color2: colorValues?.brand_checkbox_color2,
       competitors_checkbox_color1: colorValues?.competitors_checkbox_color1,
       competitors_checkbox_color2: colorValues?.competitors_checkbox_color2,
       advantage_color_values: advantageColorValues,
-      advantages_count: advantagesCount,
-      competitors_name: competitorName,
-      competitor_value: competitorValue,
+
       shop_name: host,
     };
 
