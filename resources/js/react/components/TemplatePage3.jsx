@@ -34,14 +34,6 @@ export function TemplatePage3() {
   const [successToast, setSuccessToast] = useState(false);
   const [valueType, setValueType] = useState([])
 
-  // const [valueType, setValueType] = useState({
-  //   0: 'icon',
-  //   1: 'text',
-  //   2: 'icon',
-  //   3: 'icon',
-  //   4: 'icon',
-  // })
-
   const handleTemplateName = useCallback((value) => setTemplateName(value), []);
   const handleBrandName = useCallback((value) => setYourBrand(value), []);
   const handleAdvantagesCount = useCallback((value) => {
@@ -100,7 +92,6 @@ export function TemplatePage3() {
     <Toast content="Template Saved" onDismiss={toggleToastActive} duration={1500} />
   ) : null;
 
-  // const handleValueTypeChange = useCallback((value) => setValueType(value), []);
 
   const handleValueTypeChange = e => {
     setValueType({ ...valueType, [e.target.name]: e.target.value });
@@ -290,6 +281,8 @@ export function TemplatePage3() {
       competitor_backgorund2: colorValues?.competitor_backgorund2,
       competitors_checkbox_color1: colorValues?.competitors_checkbox_color1,
       competitors_checkbox_color2: colorValues?.competitors_checkbox_color2,
+      text_brand_color_inside: colorValues?.text_brand_color_inside,
+      text_competitor_color_inside: colorValues?.text_competitor_color_inside,
       advantage_color_values: advantageColorValues,
 
       shop_name: host,
@@ -1023,7 +1016,7 @@ export function TemplatePage3() {
                 </Card>
               } */}
 
-              {selectedTemplate === 1 || selectedTemplate === 2 &&
+              {selectedTemplate === 1 || selectedTemplate === 2 ?
                 <Card
                   sectioned
                   title='Styling'
@@ -1340,6 +1333,292 @@ export function TemplatePage3() {
                         </Stack>
                       </>
                     }
+
+                    <Stack>
+                      <label
+                        className={`${colorValues?.competitors_checkbox_color1 === '#ffffff' || colorValues?.competitors_checkbox_color1 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                        style={{ backgroundColor: colorValues?.competitors_checkbox_color1 }}>
+                        <input type="color"
+                          value={colorValues?.competitors_checkbox_color1}
+                          name='competitors_checkbox_color1'
+                          onChange={handleColorValues}
+                        />
+                      </label>
+
+                      <span className='Color-Property'>
+                        <Stack vertical>
+                          <Text variant="headingSm" as="h6" fontWeight="semibold">
+                            Check Color
+                          </Text>
+                          <Text variant="headingXs" as="h6" fontWeight="medium">
+                            {colorValues?.competitors_checkbox_color1}
+                          </Text>
+                        </Stack>
+                      </span>
+                    </Stack>
+
+                    <Stack>
+                      <label
+                        className={`${colorValues?.competitors_checkbox_color2 === '#ffffff' || colorValues?.competitors_checkbox_color2 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                        style={{ backgroundColor: colorValues?.competitors_checkbox_color2 }}>
+                        <input type="color"
+                          value={colorValues?.competitors_checkbox_color2}
+                          name='competitors_checkbox_color2'
+                          onChange={handleColorValues}
+                        />
+                      </label>
+
+                      <span className='Color-Property'>
+                        <Stack vertical>
+                          <Text variant="headingSm" as="h6" fontWeight="semibold">
+                            Cross Color
+                          </Text>
+                          <Text variant="headingXs" as="h6" fontWeight="medium">
+                            {colorValues?.competitors_checkbox_color2}
+                          </Text>
+                        </Stack>
+                      </span>
+                    </Stack>
+                  </div>
+
+                </Card>
+                :
+                <Card
+                  sectioned
+                  title='Styling'
+                >
+                  <Text variant="headingMd" as="h5" fontWeight='semibold'>
+                    Colors
+                  </Text>
+
+                  <div className='Color-Inputs MarginZero'>
+                    <Text variant="bodyMd" as="p" color="subdued">
+                      Advantages colors
+                    </Text>
+
+                    <Stack>
+                      <label
+                        className={`${colorValues?.background_color1 === '#ffffff' || colorValues?.background_color1 === '#ebecf0' ?
+                          'Color-Circle-Border' : ''} Color-Circle`}
+                        style={{ backgroundColor: colorValues?.background_color1 }}>
+                        <input type="color"
+                          value={colorValues?.background_color1}
+                          name='background_color1'
+                          onChange={handleColorValues}
+                        />
+                      </label>
+                      <span className='Color-Property'>
+                        <Stack vertical>
+                          <Text variant="headingSm" as="h6" fontWeight="semibold">
+                            Column Background 1
+                          </Text>
+                          <Text variant="headingXs" as="h6" fontWeight="medium">
+                            {colorValues?.background_color1}
+                          </Text>
+                        </Stack>
+                      </span>
+                    </Stack>
+
+                    <Stack>
+                      <label
+                        className={`${colorValues?.background_color2 === '#ffffff' || colorValues?.background_color2 === '#ebecf0' ?
+                          'Color-Circle-Border' : ''} Color-Circle`}
+                        style={{ backgroundColor: colorValues?.background_color2 }}>
+                        <input type="color"
+                          value={colorValues?.background_color2}
+                          name='background_color2'
+                          onChange={handleColorValues}
+                        />
+                      </label>
+                      <span className='Color-Property'>
+                        <Stack vertical>
+                          <Text variant="headingSm" as="h6" fontWeight="semibold">
+                            Column Background 2
+                          </Text>
+                          <Text variant="headingXs" as="h6" fontWeight="medium">
+                            {colorValues?.background_color2}
+                          </Text>
+                        </Stack>
+                      </span>
+                    </Stack>
+
+                    <Stack>
+                      <label
+                        className={`${colorValues?.text_advantages_color === '#FFFFFF' || colorValues?.text_advantages_color === '#EBECF0' ||
+                          colorValues?.text_advantages_color === '#ffffff' || colorValues?.text_advantages_color === '#ebecf0' ?
+                          'Color-Circle-Border' : ''} Color-Circle`}
+                        style={{ backgroundColor: colorValues?.text_advantages_color }}>
+                        <input type="color"
+                          value={colorValues?.text_advantages_color}
+                          name='text_advantages_color'
+                          onChange={handleColorValues}
+                        />
+                      </label>
+                      <span className='Color-Property'>
+                        <Stack vertical>
+                          <Text variant="headingSm" as="h6" fontWeight="semibold">
+                            Text Advantage Color
+                          </Text>
+                          <Text variant="headingXs" as="h6" fontWeight="medium">
+                            {colorValues?.text_advantages_color}
+                          </Text>
+                        </Stack>
+                      </span>
+                    </Stack>
+                  </div>
+
+                  <div className='Color-Inputs'>
+                    <Text variant="bodyMd" as="p" color="subdued">
+                      Brand Color
+                    </Text>
+
+                    <Stack>
+                      <label
+                        className={`${colorValues?.text_brand_color === '#ffffff' || colorValues?.text_brand_color === '#ebecf0' ?
+                          'Color-Circle-Border' : ''} Color-Circle`}
+                        style={{ backgroundColor: colorValues?.text_brand_color }}>
+                        <input type="color"
+                          value={colorValues?.text_brand_color}
+                          name='text_brand_color'
+                          onChange={handleColorValues}
+                        />
+                      </label>
+
+                      <span className='Color-Property'>
+                        <Stack vertical>
+                          <Text variant="headingSm" as="h6" fontWeight="semibold">
+                            Text Brand Color
+                          </Text>
+                          <Text variant="headingXs" as="h6" fontWeight="medium">
+                            {colorValues?.text_brand_color}
+                          </Text>
+                        </Stack>
+                      </span>
+                    </Stack>
+
+                    <Stack>
+                      <label
+                        className={`${colorValues?.text_brand_color_inside === '#ffffff' || colorValues?.text_brand_color_inside === '#ebecf0' ?
+                          'Color-Circle-Border' : ''} Color-Circle`}
+                        style={{ backgroundColor: colorValues?.text_brand_color_inside }}>
+                        <input type="color"
+                          value={colorValues?.text_brand_color_inside}
+                          name='text_brand_color_inside'
+                          onChange={handleColorValues}
+                        />
+                      </label>
+
+                      <span className='Color-Property'>
+                        <Stack vertical>
+                          <Text variant="headingSm" as="h6" fontWeight="semibold">
+                            Text Color
+                          </Text>
+                          <Text variant="headingXs" as="h6" fontWeight="medium">
+                            {colorValues?.text_brand_color_inside}
+                          </Text>
+                        </Stack>
+                      </span>
+                    </Stack>
+
+                    <Stack>
+                      <label
+                        className={`${colorValues?.brand_checkbox_color1 === '#ffffff' || colorValues?.brand_checkbox_color1 === '#ebecf0' ?
+                          'Color-Circle-Border' : ''} Color-Circle`}
+                        style={{ backgroundColor: colorValues?.brand_checkbox_color1 }}>
+                        <input type="color"
+                          value={colorValues?.brand_checkbox_color1}
+                          name='brand_checkbox_color1'
+                          onChange={handleColorValues}
+                        />
+                      </label>
+
+                      <span className='Color-Property'>
+                        <Stack vertical>
+                          <Text variant="headingSm" as="h6" fontWeight="semibold">
+                            Check Color
+                          </Text>
+                          <Text variant="headingXs" as="h6" fontWeight="medium">
+                            {colorValues?.brand_checkbox_color1}
+                          </Text>
+                        </Stack>
+                      </span>
+                    </Stack>
+
+                    <Stack>
+                      <label
+                        className={`${colorValues?.brand_checkbox_color2 === '#ffffff' || colorValues?.brand_checkbox_color2 === '#ebecf0' ?
+                          'Color-Circle-Border' : ''} Color-Circle`}
+                        style={{ backgroundColor: colorValues?.brand_checkbox_color2 }}>
+                        <input type="color"
+                          value={colorValues?.brand_checkbox_color2}
+                          name='brand_checkbox_color2'
+                          onChange={handleColorValues}
+                        />
+                      </label>
+
+                      <span className='Color-Property'>
+                        <Stack vertical>
+                          <Text variant="headingSm" as="h6" fontWeight="semibold">
+                            Cross Color
+                          </Text>
+                          <Text variant="headingXs" as="h6" fontWeight="medium">
+                            {colorValues?.brand_checkbox_color2}
+                          </Text>
+                        </Stack>
+                      </span>
+                    </Stack>
+                  </div>
+
+                  <div className='Color-Inputs'>
+                    <Text variant="bodyMd" as="p" color="subdued">
+                      Competitors Color
+                    </Text>
+
+                    <Stack>
+                      <label
+                        className={`${colorValues?.text_competitor_color === '#ffffff' || colorValues?.text_competitor_color === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                        style={{ backgroundColor: colorValues?.text_competitor_color }}>
+                        <input type="color"
+                          value={colorValues?.text_competitor_color}
+                          name='text_competitor_color'
+                          onChange={handleColorValues}
+                        />
+                      </label>
+
+                      <span className='Color-Property'>
+                        <Stack vertical>
+                          <Text variant="headingSm" as="h6" fontWeight="semibold">
+                            Text Competitor Color
+                          </Text>
+                          <Text variant="headingXs" as="h6" fontWeight="medium">
+                            {colorValues?.text_competitor_color}
+                          </Text>
+                        </Stack>
+                      </span>
+                    </Stack>
+
+                    <Stack>
+                      <label
+                        className={`${colorValues?.text_competitor_color_inside === '#ffffff' || colorValues?.text_competitor_color_inside === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                        style={{ backgroundColor: colorValues?.text_competitor_color_inside }}>
+                        <input type="color"
+                          value={colorValues?.text_competitor_color_inside}
+                          name='text_competitor_color_inside'
+                          onChange={handleColorValues}
+                        />
+                      </label>
+
+                      <span className='Color-Property'>
+                        <Stack vertical>
+                          <Text variant="headingSm" as="h6" fontWeight="semibold">
+                            Text Color
+                          </Text>
+                          <Text variant="headingXs" as="h6" fontWeight="medium">
+                            {colorValues?.text_competitor_color_inside}
+                          </Text>
+                        </Stack>
+                      </span>
+                    </Stack>
 
                     <Stack>
                       <label
