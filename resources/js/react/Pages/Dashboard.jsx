@@ -42,6 +42,7 @@ export function Dashboard() {
     const [btnloading, setBtnLoading] = useState(false)
 
     const [templateTable, setTemplateTable] = useState([]);
+    const [templateLoading, setTemplateLoading] = useState(true)
 
     useEffect(() => {
         setActivePage(1)
@@ -73,7 +74,7 @@ export function Dashboard() {
     }, []);
 
     const getData = async () => {
-
+        setTemplateLoading(true)
         const response = await axios
             .get(
                 `${url}/current-templates?shop_name=${host}`
@@ -81,7 +82,7 @@ export function Dashboard() {
             .then(res => {
                 console.log('templates tables response', res);
                 setTemplateTable(res.data.result);
-
+                setTemplateLoading(false)
             })
             .catch(error =>
                 alert('Error', error));
@@ -527,7 +528,7 @@ export function Dashboard() {
                             </Suspense>
 
                             <Suspense fallback={<Spinner accessibilityLabel="Loading..." size="large" />}>
-                                {!templateTable.length ?
+                                {templateLoading ?
                                     <Spinner accessibilityLabel="Loading..." size="large" /> :
                                     templateTable.length < 1 ?
                                         <Card sectioned>

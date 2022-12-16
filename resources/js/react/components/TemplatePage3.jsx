@@ -634,7 +634,7 @@ export function TemplatePage3() {
                                             <label
                                               className={`${competitorValue[index] && competitorValue[index][index2] === false ? 'Selected' : ''}`}
                                             >
-                                              <input type="radio" competitorValue
+                                              <input type="radio"
                                                 value={false}
                                                 onChange={(e) => handleCompetitorValue(index, index2, e)} />
                                               <Icon source={CircleCancelMajor}>
@@ -707,7 +707,7 @@ export function TemplatePage3() {
                                           <label
                                             className={`${competitorValue[index] && competitorValue[index][index2] === false ? 'Selected' : ''}`}
                                           >
-                                            <input type="radio" competitorValue
+                                            <input type="radio"
                                               value={false}
                                               onChange={(e) => handleCompetitorValue(index, index2, e)} />
                                             <Icon source={CircleCancelMajor}>

@@ -280,6 +280,8 @@ class TemplateController extends ApiController
             $user_template->text_competitor_color = $request->text_competitor_color;
             $user_template->competitor_backgorund1 = $request->competitor_backgorund1;
             $user_template->competitor_backgorund2 = $request->competitor_backgorund2;
+            $user_template->text_brand_color_inside = $request->text_brand_color_inside;
+            $user_template->text_competitor_color_inside = $request->text_competitor_color_inside;
             $user_template->template_id = $request->template_id;
             $user_template->advantages_count = $request->advantages_count;
             $user_template->save();
@@ -302,12 +304,13 @@ class TemplateController extends ApiController
                 $advantage->shop_id = $shop->id;
                 $advantage->save();
                 foreach ($value[2] as $compet){
+
                     $new_competator=new Competator();
                     if($value[1]=='icon') {
                         $new_competator->competator_status = $compet;
                     }
                     elseif($value[1]=='text'){
-                        $advantage->competitor_text = $compet;
+                        $new_competator->competitor_text = $compet;
                     }
                     $new_competator->advantage_id=$advantage->id;
                     $new_competator->shop_id = $shop->id;
@@ -382,6 +385,8 @@ class TemplateController extends ApiController
                     "competitor_backgorund2" => $user_template->competitor_backgorund2,
                     "competitors_checkbox_color1" => $user_template->competitors_checkbox_color1,
                     "competitors_checkbox_color2" => $user_template->competitors_checkbox_color2,
+                    "text_brand_color_inside" => $user_template->text_brand_color_inside,
+                    "text_competitor_color_inside" => $user_template->text_competitor_color_inside,
                     'competitors_name'=>$competitor_names,
                     'items' => $items_array
                 ];
@@ -595,16 +600,17 @@ class TemplateController extends ApiController
                 }
             $competitors= Competator::where('user_template_id', $duplicate_user_template->id)->where('shop_id', $duplicate_user_template->shop_id)->get();
 
-            foreach ($competitors as $competitor){
-                $competitor_data=new Competator();
-                $competitor_data->competator_status=$competitor->competator_status;
-                $competitor_data->advantage_id=$competitor->advantage_id;
-                $competitor_data->shop_id=$competitor->shop_id;
-                $competitor_data->user_template_id=$user_template->id;
-                $competitor_data->competitor_text=$competitor->competitor_text;
-                $competitor_data->save();
 
-            }
+                foreach ($competitors as $competitor) {
+                    $competitor_data = new Competator();
+                    $competitor_data->competator_status = $competitor->competator_status;
+                    $competitor_data->advantage_id = $competitor->id;
+                    $competitor_data->shop_id = $competitor->shop_id;
+                    $competitor_data->user_template_id = $user_template->id;
+                    $competitor_data->competitor_text = $competitor->competitor_text;
+                    $competitor_data->save();
+                }
+
 
 
             $all_user_templates = UserTemplate::where('shop_id', $duplicate_user_template->shop_id)->get();
@@ -904,7 +910,8 @@ class TemplateController extends ApiController
 
             $advantages = Advantage::where('user_template_id', $request->user_template_id)->get();
             $advantages_get = Advantage::where('user_template_id', $request->user_template_id)->pluck('advantage')->toArray();
-            $brands_get = Advantage::where('user_template_id', $request->user_template_id)->pluck('brand')->toArray();
+//            $brands_get = Advantage::where('user_template_id', $request->user_template_id)->pluck('brand')->toArray();
+            $brands_gets = Advantage::where('user_template_id', $request->user_template_id)->get();
             $competitors_get = Advantage::where('user_template_id', $request->user_template_id)->pluck('competitors')->toArray();
             $advantages_color_get = Advantage::where('user_template_id', $request->user_template_id)->pluck('advantage_column_color')->toArray();
             $advantages_text_icon = Advantage::where('user_template_id', $request->user_template_id)->pluck('text_icon')->toArray();
@@ -912,11 +919,16 @@ class TemplateController extends ApiController
                 $competitor_names_count=CompetitorName::where('user_template_id', $request->user_template_id)->count();
 
             $brands_array = [];
-            foreach ($brands_get as $brand_ge) {
-                if ($brand_ge == 1) {
-                    $brands = true;
-                } else {
-                    $brands = false;
+            foreach ($brands_gets as $brand_ge) {
+                if($brand_ge->text_icon=='icon') {
+                    if ($brand_ge->brand == 1) {
+                        $brands = true;
+                    } else {
+                        $brands = false;
+                    }
+                }
+                elseif($brand_ge->text_icon=='text'){
+                    $brands=$brand_ge->brand_text;
                 }
                 array_push($brands_array, $brands);
             }
@@ -938,17 +950,24 @@ class TemplateController extends ApiController
             $main_array=[];
             $item_advantage= array();
             foreach ($advantages as $index => $value) {
-                if ($value->brand == 1) {
-                    $brand = true;
-                } else {
-                    $brand = false;
+                if($value->text_icon=='icon') {
+                    if ($value->brand == 1) {
+                        $brand = true;
+                    } else {
+                        $brand = false;
+                    }
                 }
+                elseif($value->text_icon=='text'){
+                    $brand=$value->brand_text;
+                }
+
                 if ($value->competitors == 1) {
                     $competitor = true;
                 } else {
                     $competitor = false;
                 }
                 $item = [
+                    'text_icon'=>$value->text_icon,
                     'advantage' => $value->advantage,
                     'brand' => $brand,
                     'competitors'=>$competitor,
@@ -958,20 +977,22 @@ class TemplateController extends ApiController
 
 
 
-
                 $competators_data=Competator::where('advantage_id',$value->id)->get();
 
                 $result_new=array();
                 foreach ($competators_data as $data){
-                            if($data->competator_status==0){
-                                $competator_status=false;
-                            }
-                            else{
-                                $competator_status=true;
-                            }
-//                    $data_competator=[
-//                        'status'=>$data->competator_status
-//                    ];
+                    if($value->text_icon=='icon') {
+                        if ($data->competator_status == 0) {
+                            $competator_status = false;
+                        } else {
+                            $competator_status = true;
+                        }
+                    }
+                    elseif($value->text_icon=='text'){
+
+                        $competator_status=$data->competitor_text;
+                    }
+
 
                     array_push($result_new,$competator_status);
                 }
@@ -1003,12 +1024,13 @@ class TemplateController extends ApiController
                 'text_competitor_color_inside'=>$user_template->text_competitor_color_inside,
             ];
             array_push($colors_array, $color_data);
+
             $data = [
                 'template_name' => $user_template->template_name,
                 'brand' => $user_template->brand,
 //                'competitor' => $user_template->competitors,
                 'primary_colors' => $colors_array,
-                'advantages_count' => strval($user_template->advantages_count),
+                    'advantages_count' => strval($user_template->advantages_count),
                 'template_id' => $user_template->template_id,
                 'advantages' => $advantages_get,
                 'brand_value' => $brands_array,
