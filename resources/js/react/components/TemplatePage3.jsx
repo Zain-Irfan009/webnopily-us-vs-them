@@ -286,6 +286,8 @@ export function TemplatePage3() {
       text_competitor_color: colorValues?.text_competitor_color,
       brand_checkbox_color1: colorValues?.text_brand_color,
       brand_checkbox_color2: colorValues?.brand_checkbox_color2,
+      competitor_backgorund1: colorValues?.competitor_backgorund1,
+      competitor_backgorund2: colorValues?.competitor_backgorund2,
       competitors_checkbox_color1: colorValues?.competitors_checkbox_color1,
       competitors_checkbox_color2: colorValues?.competitors_checkbox_color2,
       advantage_color_values: advantageColorValues,
@@ -1231,6 +1233,52 @@ export function TemplatePage3() {
                           </Text>
                           <Text variant="headingXs" as="h6" fontWeight="medium">
                             {colorValues?.text_competitor_color}
+                          </Text>
+                        </Stack>
+                      </span>
+                    </Stack>
+
+                    <Stack>
+                      <label
+                        className={`${colorValues?.competitor_backgorund1 === '#ffffff' || colorValues?.competitor_backgorund1 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                        style={{ backgroundColor: colorValues?.competitor_backgorund1 }}>
+                        <input type="color"
+                          value={colorValues?.competitor_backgorund1}
+                          name='competitor_backgorund1'
+                          onChange={handleColorValues}
+                        />
+                      </label>
+
+                      <span className='Color-Property'>
+                        <Stack vertical>
+                          <Text variant="headingSm" as="h6" fontWeight="semibold">
+                            Competitor Background 1
+                          </Text>
+                          <Text variant="headingXs" as="h6" fontWeight="medium">
+                            {colorValues?.competitor_backgorund1}
+                          </Text>
+                        </Stack>
+                      </span>
+                    </Stack>
+
+                    <Stack>
+                      <label
+                        className={`${colorValues?.competitor_backgorund2 === '#ffffff' || colorValues?.competitor_backgorund2 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                        style={{ backgroundColor: colorValues?.competitor_backgorund2 }}>
+                        <input type="color"
+                          value={colorValues?.competitor_backgorund2}
+                          name='competitor_backgorund2'
+                          onChange={handleColorValues}
+                        />
+                      </label>
+
+                      <span className='Color-Property'>
+                        <Stack vertical>
+                          <Text variant="headingSm" as="h6" fontWeight="semibold">
+                            Competitor Background 2
+                          </Text>
+                          <Text variant="headingXs" as="h6" fontWeight="medium">
+                            {colorValues?.competitor_backgorund2}
                           </Text>
                         </Stack>
                       </span>
