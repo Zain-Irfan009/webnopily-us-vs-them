@@ -28,7 +28,6 @@ use Shopify\Webhooks\Topics;
 */
 
 Route::fallback(function (Request $request) {
-
     $shop = Utils::sanitizeShopDomain($request->query('shop'));
     $host = $request->query('host');
     $appInstalled = Session::where('shop', $shop)->exists();
@@ -43,6 +42,7 @@ Route::fallback(function (Request $request) {
            $url= $template_controller->PlanCreate($request->query('shop'),$host);
 
         }
+
         return view('react', [
             'shop' => $shop,
             'host' => $host,
