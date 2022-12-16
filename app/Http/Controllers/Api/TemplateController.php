@@ -273,7 +273,7 @@ class TemplateController extends ApiController
             $user_template->brand_checkbox_color2 = $request->brand_checkbox_color2;
             $user_template->competitors_checkbox_color1 = $request->competitors_checkbox_color1;
             $user_template->competitors_checkbox_color2 = $request->competitors_checkbox_color2;
-            $user_template->text_advantage_color = $request->text_advantage_color;
+            $user_template->text_advantage_color = $request->text_advantages_color;
             $user_template->text_brand_color = $request->text_brand_color;
             $user_template->brand_background1 = $request->brand_background1;
             $user_template->brand_background2 = $request->brand_background2;
@@ -554,13 +554,16 @@ class TemplateController extends ApiController
             $user_template->brand_checkbox_color2 = $duplicate_user_template->brand_checkbox_color2;
             $user_template->competitors_checkbox_color1 = $duplicate_user_template->competitors_checkbox_color1;
             $user_template->competitors_checkbox_color2 = $duplicate_user_template->competitors_checkbox_color2;
-            $user_template->text_advantage_color = $request->text_advantage_color;
-            $user_template->text_brand_color = $request->text_brand_color;
-            $user_template->brand_background1 = $request->brand_background1;
-            $user_template->brand_background2 = $request->brand_background2;
-            $user_template->text_competitor_color = $request->text_competitor_color;
-            $user_template->competitor_backgorund1 = $request->competitor_backgorund1;
-            $user_template->competitor_backgorund2 = $request->competitor_backgorund2;
+            $user_template->text_advantage_color = $duplicate_user_template->text_advantage_color;
+            $user_template->advantages_count = $duplicate_user_template->advantages_count;
+            $user_template->text_brand_color = $duplicate_user_template->text_brand_color;
+            $user_template->brand_background1 = $duplicate_user_template->brand_background1;
+            $user_template->brand_background2 = $duplicate_user_template->brand_background2;
+            $user_template->text_competitor_color = $duplicate_user_template->text_competitor_color;
+            $user_template->competitor_backgorund1 = $duplicate_user_template->competitor_backgorund1;
+            $user_template->competitor_backgorund2 = $duplicate_user_template->competitor_backgorund2;
+            $user_template->text_brand_color_inside = $duplicate_user_template->text_brand_color_inside;
+            $user_template->text_competitor_color_inside = $duplicate_user_template->text_competitor_color_inside;
             $user_template->template_id = $duplicate_user_template->template_id;
             $user_template->shop_id = $duplicate_user_template->shop_id;
             $user_template->save();
@@ -575,8 +578,34 @@ class TemplateController extends ApiController
                 $advantage->competitors = $advantage_value->competitors;
                 $advantage->user_template_id = $user_template->id;
                 $advantage->shop_id = $advantage_value->shop_id;
+                $advantage->advantage_column_color = $advantage_value->advantage_column_color;
+                $advantage->text_icon = $advantage_value->text_icon;
+                $advantage->brand_text = $advantage_value->brand_text;
                 $advantage->save();
             }
+
+            $competitor_names= CompetitorName::where('user_template_id', $duplicate_user_template->id)->where('shop_id', $duplicate_user_template->shop_id)->get();
+
+                foreach ($competitor_names as $competitor_name){
+                    $name_competitor=new CompetitorName();
+                    $name_competitor->name=$competitor_name->name;
+                    $name_competitor->user_template_id=$user_template->id;
+                    $name_competitor->shop_id=$competitor_name->shop_id;
+                    $name_competitor->save();
+                }
+            $competitors= Competator::where('user_template_id', $duplicate_user_template->id)->where('shop_id', $duplicate_user_template->shop_id)->get();
+
+            foreach ($competitors as $competitor){
+                $competitor_data=new Competator();
+                $competitor_data->competator_status=$competitor->competator_status;
+                $competitor_data->advantage_id=$competitor->advantage_id;
+                $competitor_data->shop_id=$competitor->shop_id;
+                $competitor_data->user_template_id=$user_template->id;
+                $competitor_data->competitor_text=$competitor->competitor_text;
+                $competitor_data->save();
+
+            }
+
 
             $all_user_templates = UserTemplate::where('shop_id', $duplicate_user_template->shop_id)->get();
             $result = [];
@@ -613,6 +642,8 @@ class TemplateController extends ApiController
         Advantage::where('user_template_id', $request->user_template_id)->delete();
         UserTemplate::where('id', $request->user_template_id)->delete();
         UserTemplateProduct::where('user_template_id', $request->user_template_id)->delete();
+        Competator::where('user_template_id', $request->user_template_id)->delete();
+        CompetitorName::where('user_template_id', $request->user_template_id)->delete();
         $user_templates = UserTemplate::all();
         $result = [];
         if ($user_templates->count() > 0) {
@@ -962,6 +993,8 @@ class TemplateController extends ApiController
                 'brand_checkbox_color2' => $user_template->brand_checkbox_color2,
                 'competitors_checkbox_color1' => $user_template->competitors_checkbox_color1,
                 'competitors_checkbox_color2' => $user_template->competitors_checkbox_color2,
+                'competitor_backgorund1' => $user_template->competitor_backgorund1,
+                'competitor_backgorund2' => $user_template->competitor_backgorund2,
                 'text_advantages_color'=>$user_template->text_advantage_color,
                 'text_brand_color'=>$user_template->text_brand_color,
                 'brand_background1'=>$user_template->brand_background1,
