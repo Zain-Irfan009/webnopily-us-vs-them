@@ -41,22 +41,48 @@
       background:  {{xc_settings.background_color2}};
     }
 
+  .template-container{
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+  @media screen and (min-width: 768px){
+    .template-container {
+    padding: 0 5rem;
+  }
+
+  }
+
   </style>
 
 
   {%  if shop.metafields.usvsthem.setting==1 %}
+    <div class="template-container">
 {% if xc_settings and xc_settings.template_id == 1 %}
 {{ 'template.css' | asset_url | stylesheet_tag }}
 
+  <style>
+      .page-section.temp1-compare-section table td:nth-child(2),
+    .page-section.temp1-compare-section table th:nth-child(2) {
+       background: {{ xc_settings.brand_background1 }};
+
+    }
+  .page-section.temp1-compare-section table tbody tr:nth-child(even) td:nth-child(2) {
+        background: {{ xc_settings.brand_background1 }};
+    }
+    .page-section.temp1-compare-section table tbody tr:nth-child(odd) td:nth-child(2) {
+        background: {{ xc_settings.brand_background2 }};
+    }
+  </style>
   <div class="page-section temp1-compare-section metafileds-comaparison lazyloaded">
 <table class="custom">
     <thead>
 
     <tr>
         <th></th>
-      <th>{{ xc_settings.brand }}</th>
+      <th style="color:{{  xc_settings.text_brand_color  }} ">{{ xc_settings.brand }}</th>
       {% for xc_settings_comp_loop in  xc_settings.competitors_name %}
-      <th>{{ xc_settings_comp_loop }}</th>
+      <th style="color:{{  xc_settings.text_competitor_color  }} ">{{ xc_settings_comp_loop }}</th>
         {% endfor %}
     </tr>
     </thead>
@@ -64,7 +90,7 @@
       {% for xc_settings_loop in  xc_settings.items %}
 
     <tr>
-        <td style="color:{{ xc_settings_loop.advantage_color_value  }} ">
+        <td style="color:{{  xc_settings.text_advantage_color  }} ">
         {{ xc_settings_loop.advantage  }}
         </td>
 
@@ -107,7 +133,15 @@
 
   {% elsif xc_settings and xc_settings.template_id == 2 %}
   {{ 'template2.css' | asset_url | stylesheet_tag }}
+<style>
+          .choose-table-mobile tbody tr:nth-child(even) th:first-child{
+            background: {{ xc_settings.competitor_backgorund1}};
+        }
+        .choose-table-mobile tbody tr:nth-child(odd) th:first-child{
+               background: {{ xc_settings.competitor_backgorund2}};
+        }
 
+  </style>
 
 <div class="stickyTableColumns-mobile" style="overflow-y: auto;">
     <table class="choose-table-mobile" >
@@ -115,7 +149,7 @@
         <tr>
             <th></th>
       {% for xc_settings_loop in  xc_settings.items %}
-            <th style="color:{{ xc_settings_loop.advantage_color_value  }} ">{{ xc_settings_loop.advantage  }} </th>
+            <th style="color:{{ xc_settings.text_advantage_color  }} ">{{ xc_settings_loop.advantage  }} </th>
 
         {% endfor %}
 
@@ -123,14 +157,14 @@
         </thead>
         <tbody>
         <tr>
-            <th>{{ xc_settings.brand }}</th>
+            <th style="color:{{ xc_settings.text_brand_color  }};background:{{ xc_settings.brand_background1 }} ">{{ xc_settings.brand }}</th>
            {% for xc_settings_loop in  xc_settings.items %}
             <td>
           <span class="choose-table__price">
           {% if  xc_settings_loop.brand == true %}
-          <i class="fa fa-check-circle check_brand "></i>
+          <i style="font-size:32px" class="fa fa-check-circle check_brand "></i>
                    {% else %}
-            <i class="fa  fa-times-circle cross_brand "></i>
+            <i style="font-size:32px" class="fa  fa-times-circle cross_brand "></i>
             {% endif %}
           </span>
         </td>
@@ -140,7 +174,7 @@
        {% for xc_settings_comp_loop in  xc_settings.competitors_name %}
          {% assign index=forloop.index %}
              <tr>
-                <th>{{ xc_settings_comp_loop }}</th>
+                <th style="color:{{ xc_settings.text_competitor_color  }}" >{{ xc_settings_comp_loop }}</th>
             {% for xc_settings_loop in  xc_settings.items %}
               {% for xc_settings_nested_loop in  xc_settings_loop.competitor %}
 
@@ -164,6 +198,7 @@
         </tbody>
     </table></div>
 
+  {% comment %}
 <div class="stickyTableColumns-scroll" style="overflow-y: auto;">
     <table class="choose-table" style="margin: 0 auto;max-width: 800px;">
         <thead>
@@ -206,39 +241,61 @@
         </tbody>
     </table></div>
 
-
+{% endcomment %}
   {% elsif xc_settings and xc_settings.template_id == 3 %}
   {{ 'template3.css' | asset_url | stylesheet_tag }}
+
+  <style>
+       .choose-table-temp3 tbody tr td:nth-child(2){
+          background: {{ xc_settings.background_color1}};
+       }
+      .choose-table-temp3 tbody tr td:nth-child(3){
+     background: {{ xc_settings.background_color2}};
+      }
+  </style>
 <div class="stickyTableColumns-scroll" style="overflow-y: auto;">
-    <table class="choose-table" >
+    <table class="choose-table-temp3" >
     <thead>
     <tr>
-        <th></th><th>{{ xc_settings.brand }}</th>
+        <th></th>
+  <th style="color:{{ xc_settings.text_brand_color  }} ">{{ xc_settings.brand }}</th>
        {% for xc_settings_comp_loop in  xc_settings.competitors_name %}
-      <th>{{ xc_settings_comp_loop }}</th>
+      <th  style="color:{{ xc_settings.text_competitor_color  }} ">{{ xc_settings_comp_loop }}</th>
         {% endfor %}
     </thead>
     <tbody>
           {% for xc_settings_loop in  xc_settings.items %}
     <tr>
-        <th style="color:{{ xc_settings_loop.advantage_color_value  }} ">   {{ xc_settings_loop.advantage  }} </th>
-  <td>
+        <th >
+           <div style="color:{{ xc_settings.text_advantage_color  }} ">  {{ xc_settings_loop.advantage  }}</div>
 
-          {% if  xc_settings_loop.brand == true %}
+            </th>
+  <td>
+        {% if  xc_settings_loop.text_icon == 'icon' %}
+        {% if  xc_settings_loop.brand == true %}
 
       <i class="fa fa-check check_brand "></i>
         {% else %}
        <i class="fa fa-close cross_brand "></i>
+
+          {% endif %}
+          {% else %}
+          <h3 style="font-weight:bold;margin:0;color:{{ xc_settings.text_brand_color_inside }}">{{ xc_settings_loop.brand }}</h3>
         {% endif %}
       </td>
         {% for xc_settings_nested_loop in  xc_settings_loop.competitor %}
           <td>
 
+              {% if  xc_settings_loop.text_icon == 'icon' %}
            {% if  xc_settings_nested_loop == true %}
             <i class="fa fa-check check_competator "></i>
         {% else %}
              <i class="fa fa-close cross_competator "></i>
         {% endif %}
+          {% else %}
+          <h3 style="font-weight:bold;margin:0;color:{{ xc_settings.text_competitor_color_inside }}">{{ xc_settings_nested_loop }}</h3>
+           {% endif %}
+
         </td>
            {% endfor %}
 
@@ -252,15 +309,33 @@
   {% elsif xc_settings and xc_settings.template_id == 4 %}
   {{ 'template4.css' | asset_url | stylesheet_tag }}
 
+<style>
+
+        .choose-table-temp4 tr th:nth-child(odd){
+            background: {{ xc_settings. background_color2}};
+        }
+        .choose-table-temp4 tbody tr td:nth-child(odd){
+          background: {{ xc_settings. background_color2}};
+        }
+
+        .choose-table-temp4 tr th:nth-child(even){
+           background: {{ xc_settings. background_color1}};
+        }
+        .choose-table-temp4 tbody tr td:nth-child(even){
+           background: {{ xc_settings. background_color1}};
+        }
+
+  </style>
+
   <div class="stickyTableColumns-scroll" style="overflow-y: auto;">
-    <table class="choose-table" >
+    <table class="choose-table-temp4" >
         <thead>
         <tr>
 
-           <th>Advantages</th>
-            <th>{{ xc_settings.brand }}</th>
+           <th style="color:{{ xc_settings.text_advantage_color  }} ">Advantages</th>
+            <th style="color:{{ xc_settings.text_brand_color  }} ">{{ xc_settings.brand }}</th>
         {% for xc_settings_comp_loop in  xc_settings.competitors_name %}
-      <th>{{ xc_settings_comp_loop }}</th>
+      <th style="color:{{ xc_settings.text_competitor_color  }} " >{{ xc_settings_comp_loop }}</th>
         {% endfor %}
 
         </tr>
@@ -269,27 +344,33 @@
           {% for xc_settings_loop in  xc_settings.items %}
         <tr>
 
-            <td style="color:{{ xc_settings_loop.advantage_color_value  }} ">
+            <td style="color:{{ xc_settings.text_advantage_color  }} ">
                 {{ xc_settings_loop.advantage  }}
             <td>
-                      {% if  xc_settings_loop.brand == true %}
-
+             {% if  xc_settings_loop.text_icon == 'icon' %}
+            {% if  xc_settings_loop.brand == true %}
 
             <i class="fa fa-check-circle check_brand "></i>
               {% else %}
             <i class="fa  fa-times-circle cross_brand "></i>
           {% endif %}
-            </td>
+                 {% else %}
+              <h3 style="font-weight:bold;margin:0;color:{{ xc_settings.text_brand_color_inside }}">{{  xc_settings_loop.brand }}</h3>
+                {% endif %}
+               </td>
 
           {% for xc_settings_nested_loop in  xc_settings_loop.competitor %}
           <td>
-
+           {% if  xc_settings_loop.text_icon == 'icon' %}
            {% if  xc_settings_nested_loop == true %}
-    <i class="fa fa-check-circle check_brand "></i>
+    <i class="fa fa-check-circle check_competator "></i>
         {% else %}
-        <i class="fa  fa-times-circle cross_brand "></i>
+        <i class="fa  fa-times-circle cross_competator "></i>
         {% endif %}
-       </td>
+                {% else %}
+         <h3 style="font-weight:bold;margin:0;color:{{ xc_settings.text_competitor_color_inside }}">{{ xc_settings_nested_loop }}</h3>
+                {% endif %}
+             </td>
            {% endfor %}
 
         </tr>
@@ -297,9 +378,10 @@
 
         </tbody>
     </table></div>
-{% endif %}
-{% endif %}
 
+{% endif %}
+    </div>
+{% endif %}
 <script>
 
 if ('undefined' == typeof window.jQuery) {
@@ -310,7 +392,7 @@ if ('undefined' == typeof window.jQuery) {
 
 setTimeout(my_fun, 1000);
 function my_fun() {
-console.log('afternoon');
+console.log('friday');
         $.ajax({
 
             url: 'https://phpstack-362288-3089196.cloudwaysapps.com/update-count?template_id={{  xc_settings.template_id }}&shop={{  shop.domain}}',

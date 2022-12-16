@@ -1,31 +1,31 @@
-.choose-table,
+.choose-table-temp3,
 body {
     table-layout: fixed;
 }
-.choose-table tbody tr th,
-.choose-table thead th {
+.choose-table-temp3 tbody tr th,
+.choose-table-temp3 thead th {
     padding: 10px 5px;
     font-size: 12px;
     font-weight: 700;
 }
 .btn,
-.choose-table thead th,
+.choose-table-temp3 thead th,
 .founded-counts__list__item-text,
 .person-block__title-2,
 .text-uppercase,
 .video-promo-block__link-text {
     text-transform: uppercase;
 }
-.block-with-bg,
-.choose-table tbody td:nth-child(2),
-.section.section--alt {
-    background: #faf3f0;
-}
-.block-with-bg,
-.choose-table tbody td:nth-child(2),
-.section.section--alt {
-    background: #faf3f0;
-}
+/*       .block-with-bg,
+      .choose-table-temp3 tbody td:nth-child(2),
+      .section.section--alt {
+          background: #faf3f0;
+      }
+      .block-with-bg,
+      .choose-table-temp3 tbody td:nth-child(2),
+      .section.section--alt {
+          background: #faf3f0;
+      } */
 
 .choose-table__img-box img,
 .contact-block__map-holder img {
@@ -35,26 +35,26 @@ body {
     top: 50%;
 }
 
-.choose-table {
+.choose-table-temp3 {
     font-size: 14px;
 }
-.choose-table {
+.choose-table-temp3 {
     border-collapse: collapse;
     width: 100%;
     line-height: 1.28;
 }
-.choose-table thead th:first-child {
-    width: 80px;
+.choose-table-temp3 thead th:first-child {
+    /*           width: 80px; */
     padding-left: 5px;
     padding-right: 5px;
 }
-.choose-table tbody tr th {
+.choose-table-temp3 tbody tr th {
     width: 82px;
     color: rgba(28, 28, 37, 0.5);
     /*           text-align: right; */
 }
-.choose-table tbody td:nth-child(3n + 1):after,
-.choose-table tbody td:nth-child(odd):after {
+.choose-table-temp3 tbody td:nth-child(3n + 1):after,
+.choose-table-temp3 tbody td:nth-child(odd):after {
     content: "";
     position: absolute;
     left: 0;
@@ -63,8 +63,8 @@ body {
     height: 0px;
     background: #faf3f0;
 }
-.choose-table td,
-.choose-table th {
+.choose-table-temp3 td,
+.choose-table-temp3 th {
     position: relative;
     padding: 22px 20px;
     width: 130px;
@@ -84,25 +84,25 @@ body {
 .choose-table-holder {
     padding: 0 8%;
 }
-.choose-table thead th:first-child {
-    width: 100px;
+.choose-table-temp3 thead th:first-child {
+    /*           width: 100px; */
     padding: 10px;
 }
-.choose-table tbody td:nth-child(3n + 1):after,
-.choose-table tbody td:nth-child(odd):after {
+.choose-table-temp3 tbody td:nth-child(3n + 1):after,
+.choose-table-temp3 tbody td:nth-child(odd):after {
     top: 0;
 }
-.choose-table td,
-.choose-table th {
+.choose-table-temp3 td,
+.choose-table-temp3 th {
     width: 21.25%;
     min-width: 0;
 }
-.choose-table tbody tr th {
+.choose-table-temp3 tbody tr th {
     width: 100px;
     padding: 10px;
 }
-.choose-table td,
-.choose-table th {
+.choose-table-temp3 td,
+.choose-table-temp3 th {
     padding: 22px 5%;
 }
 
@@ -116,8 +116,8 @@ body {
     left: 50%;
     max-width: 95%;
 }
-.choose-table td,
-.choose-table th {
+.choose-table-temp3 td,
+.choose-table-temp3 th {
     padding: 23px 1% 21px;
 }
 
@@ -141,7 +141,7 @@ body {
     top: 50%;
     transform: translate(-50%, -50%) rotate(45deg);
 }
-.choose-table tbody td .icon-check::before {
+.choose-table-temp3 tbody td .icon-check::before {
     background: url(//cdn.shopify.com/s/files/1/1582/3265/t/194/assets/check-w.png?v=5136325975738978373)
     no-repeat;
     transform: none;
@@ -153,7 +153,7 @@ body {
     height: 18px;
 }
 
-.choose-table tbody td .icon-check::before {
+.choose-table-temp3 tbody td .icon-check::before {
     background: url(//cdn.shopify.com/s/files/1/1582/3265/t/194/assets/check-b.png?v=7178031900948324017)
     no-repeat;
     transform: none;
@@ -165,7 +165,7 @@ body {
     height: 18px;
 }
 
-.choose-table tbody td .icon-cross::before {
+.choose-table-temp3 tbody td .icon-cross::before {
     background: url(//cdn.shopify.com/s/files/1/1582/3265/t/194/assets/close-b.png?v=6863522715621631396)
     no-repeat;
     transform: none;
@@ -190,30 +190,31 @@ body {
 
 @media only screen and (max-width: 610px)  {
 
-    .choose-table tr th {
+    .choose-table-temp3 tr th {
         overflow: hidden;
         word-break: break-word;
     }
 
 }
 
-.choose-table{
-    max-width: 80%;
+.choose-table-temp3{
+    /*   max-width: 50%; */
     margin: 0 auto;
+    width:100%;
 }
 
 @media only screen and (max-width: 767px)  {
 
-    .choose-table tbody tr td:not(:first-child) {
+    .choose-table-temp3 tbody tr td:not(:first-child) {
         border: 5px solid white;
 
     }
-    .choose-table tbody tr td:last-child {
+    .choose-table-temp3 tbody tr td:last-child {
         border-right: 0;
 
     }
 
-    .choose-table{
+    .choose-table-temp3{
         max-width:calc(100% - 20px)  ;
         margin:0 10px;
     }

@@ -1,16 +1,16 @@
-.choose-table,
+.choose-table-temp4,
 body {
     table-layout: fixed;
 }
-.choose-table tbody tr th,
-.choose-table thead th {
+.choose-table-temp4 tbody tr th,
+.choose-table-temp4 thead th {
     padding: 10px 5px;
     font-size: 12px;
     font-weight: 700;
     text-align: center;
 }
 .btn,
-.choose-table thead th,
+.choose-table-temp4 thead th,
 .founded-counts__list__item-text,
 .person-block__title-2,
 .text-uppercase,
@@ -25,7 +25,7 @@ body {
 /*    border-left: 4px solid #474B8BFF;*/
 /*}*/
 .block-with-bg,
-.choose-table tbody td:nth-child(2),
+.choose-table-temp4 tbody td:nth-child(2),
 .section.section--alt {
 
 }
@@ -38,27 +38,27 @@ body {
     top: 50%;
 }
 
-.choose-table {
+.choose-table-temp4 {
     font-size: 14px;
     border-spacing:0;
 
 }
-.choose-table {
+.choose-table-temp4 {
     border-collapse: inherit;
     width: 100%;
     line-height: 1.28;
 }
-.choose-table thead th:first-child {
+.choose-table-temp4 thead th:first-child {
     width: 80px;
     padding-left: 5px;
     padding-right: 5px;
 }
-.choose-table tbody tr th {
+.choose-table-temp4 tbody tr th {
     width: 82px;
     text-align: left;
 }
-.choose-table tbody td:nth-child(3n + 1):after,
-.choose-table tbody td:nth-child(odd):after {
+.choose-table-temp4 tbody td:nth-child(3n + 1):after,
+.choose-table-temp4 tbody td:nth-child(odd):after {
     content: "";
     position: absolute;
     left: 0;
@@ -67,8 +67,8 @@ body {
     height: 1px;
     background: #faf3f0;
 }
-.choose-table td,
-.choose-table th {
+.choose-table-temp4 td,
+.choose-table-temp4 th {
     /*             position: relative; */
     padding: 22px 20px;
     width: 130px;
@@ -88,25 +88,25 @@ body {
 .choose-table-holder {
     padding: 0 8%;
 }
-.choose-table thead th:first-child {
+.choose-table-temp4 thead th:first-child {
     width: 100px;
     padding: 10px;
 }
-.choose-table tbody td:nth-child(3n + 1):after,
-.choose-table tbody td:nth-child(odd):after {
+.choose-table-temp4 tbody td:nth-child(3n + 1):after,
+.choose-table-temp4 tbody td:nth-child(odd):after {
     top: 0;
 }
-.choose-table td,
-.choose-table th {
+.choose-table-temp4 td,
+.choose-table-temp4 th {
     width: 21.25%;
     min-width: 0;
 }
-.choose-table tbody tr th {
+.choose-table-temp4 tbody tr th {
     width: 100px;
     padding: 10px;
 }
-.choose-table td,
-.choose-table th {
+.choose-table-temp4 td,
+.choose-table-temp4 th {
     padding: 22px 5%;
 }
 
@@ -120,8 +120,8 @@ body {
     left: 50%;
     max-width: 95%;
 }
-.choose-table td,
-.choose-table th {
+.choose-table-temp4 td,
+.choose-table-temp4 th {
     padding: 23px 1% 21px;
 }
 
@@ -131,12 +131,12 @@ body {
 /*    border-bottom: 4px solid #474B8BFF;*/
 
 /*}*/
-.choose-table th:last-child {
+.choose-table-temp4 th:last-child {
     border-right: 4px solid #474B8BFF;
     margin-right: -5px;
 }
 
-.choose-table th{
+.choose-table-temp4 th{
     border: 0;
     border-left: 4px solid black;
     border-top: 4px solid black;
@@ -153,53 +153,54 @@ body {
 /*    border-left: 4px solid #474B8BFF;*/
 /*}*/
 
-.choose-table tbody tr:nth-child(odd) {
+.choose-table-temp4 tbody tr:nth-child(odd) {
     /*background-color: #EBECF0FF;*/
 }
-.choose-table tbody tr:last-child td:nth-child(2) {
+.choose-table-temp4 tbody tr:last-child td:nth-child(2) {
     /*border-bottom: 4px solid #474B8BFF;*/
 }
-.choose-table tbody tr {
+.choose-table-temp4 tbody tr {
     /*background: green;*/
 
 }
-.choose-table tbody td {
+.choose-table-temp4 tbody td {
     border: 0;
     border-left: 4px solid black;
     border-top: 4px solid black;
     /*border-bottom: 4px solid black;*/
 }
 
-.choose-table tbody td:last-child {
+.choose-table-temp4 tbody td:last-child {
     border-right: 4px solid black;
 }
-.choose-table tbody tr:last-child td {
+.choose-table-temp4 tbody tr:last-child td {
 
     border-bottom: 4px solid black;
 }
 
-.choose-table thead tr th:first-child {
+.choose-table-temp4 thead tr th:first-child {
     border-top-left-radius: 20px;
 }
 
-.choose-table thead tr th:last-child {
+.choose-table-temp4 thead tr th:last-child {
     border-top-right-radius: 20px;
 }
-.choose-table tbody tr:last-child td:first-child {
+.choose-table-temp4 tbody tr:last-child td:first-child {
     border-bottom-left-radius: 20px;
 }
-.choose-table tbody tr:last-child td:last-child {
+.choose-table-temp4 tbody tr:last-child td:last-child {
     border-bottom-right-radius: 20px;
 }
 
-.choose-table{
-    max-width: 600px;
+.choose-table-temp4{
+    /*   max-width: 600px; */
     margin: 0 auto;
+    width:100%;
 }
 @media only screen and (max-width: 767px)  {
 
 
-    .choose-table{
+    .choose-table-temp4{
         max-width:calc(100% - 20px)  ;
         margin:0 10px;
         word-break: break-word;

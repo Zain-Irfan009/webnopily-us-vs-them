@@ -15,8 +15,9 @@
 }
 .page-section.temp1-compare-section table {
     border: 0;
-    max-width: 1010px;
+    /*         max-width: 1010px; */
     margin: 0 auto;
+    width:100%;
     background: transparent;
 }
 .page-section.temp1-compare-section table th {
@@ -47,11 +48,7 @@
     text-transform: lowercase;
     letter-spacing: 1px;
 }
-.page-section.temp1-compare-section table td:nth-child(2),
-.page-section.temp1-compare-section table th:nth-child(2) {
-    background: #ff5859;
-    color: #fff;
-}
+
 .page-section.temp1-compare-section table th:nth-child(2) {
     border-top-right-radius: 40px;
     border-top-left-radius: 40px;
@@ -92,9 +89,7 @@
     color: #fff;
     line-height: 16px;
 }
-.page-section.temp1-compare-section table tbody tr:nth-child(odd) td:nth-child(2) {
-    background: #ff3849;
-}
+
 .page-section.temp1-compare-section table tbody tr td:nth-child(3) {
     font-size: 14px;
     color: #282828;
@@ -104,9 +99,7 @@
     border-top-right-radius: 20px;
 }
 
-.page-section.temp1-compare-section table tbody tr:nth-child(even) td:nth-child(2) {
-    background: #ff6668;
-}
+
 .page-section.temp1-compare-section table tfoot tr td:nth-child(2) {
     border-bottom-right-radius: 40px;
     border-bottom-left-radius: 40px;
@@ -164,7 +157,7 @@
 
 }
 
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 767px) {
     .page-section.temp1-compare-section > .page-width {
         padding-left: 15px;
         padding-right: 15px;
@@ -183,7 +176,7 @@
     }
     .page-section.temp1-compare-section table td,
     .page-section.temp1-compare-section table th {
-        padding: 7px 10px;
+        padding: 7px 13px;
     }
 }
 @media only screen and (max-width: 767px) {
