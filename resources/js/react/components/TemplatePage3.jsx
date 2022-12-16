@@ -735,7 +735,7 @@ export function TemplatePage3() {
                 </div>
               </Card>
 
-              {selectedTemplate === 1 &&
+              {/* {selectedTemplate === 1 || selectedTemplate === 2 &&
                 <Card
                   sectioned
                   title='Styling'
@@ -1021,9 +1021,9 @@ export function TemplatePage3() {
                   </div>
 
                 </Card>
-              }
+              } */}
 
-              {selectedTemplate === 2 &&
+              {selectedTemplate === 1 || selectedTemplate === 2 &&
                 <Card
                   sectioned
                   title='Styling'
@@ -1107,7 +1107,6 @@ export function TemplatePage3() {
                     </Stack>
                   </div>
 
-
                   <div className='Color-Inputs'>
                     <Text variant="bodyMd" as="p" color="subdued">
                       Brand Color
@@ -1136,29 +1135,83 @@ export function TemplatePage3() {
                       </span>
                     </Stack>
 
-                    <Stack>
-                      <label
-                        className={`${colorValues?.brand_background1 === '#ffffff' || colorValues?.brand_background1 === '#ebecf0' ?
-                          'Color-Circle-Border' : ''} Color-Circle`}
-                        style={{ backgroundColor: colorValues?.brand_background1 }}>
-                        <input type="color"
-                          value={colorValues?.brand_background1}
-                          name='brand_background1'
-                          onChange={handleColorValues}
-                        />
-                      </label>
+                    {selectedTemplate === 1 &&
+                      <>
+                        <Stack>
+                          <label
+                            className={`${colorValues?.brand_background1 === '#ffffff' || colorValues?.brand_background1 === '#ebecf0' ?
+                              'Color-Circle-Border' : ''} Color-Circle`}
+                            style={{ backgroundColor: colorValues?.brand_background1 }}>
+                            <input type="color"
+                              value={colorValues?.brand_background1}
+                              name='brand_background1'
+                              onChange={handleColorValues}
+                            />
+                          </label>
 
-                      <span className='Color-Property'>
-                        <Stack vertical>
-                          <Text variant="headingSm" as="h6" fontWeight="semibold">
-                            Brand Background
-                          </Text>
-                          <Text variant="headingXs" as="h6" fontWeight="medium">
-                            {colorValues?.brand_background1}
-                          </Text>
+                          <span className='Color-Property'>
+                            <Stack vertical>
+                              <Text variant="headingSm" as="h6" fontWeight="semibold">
+                                Brand Background 1
+                              </Text>
+                              <Text variant="headingXs" as="h6" fontWeight="medium">
+                                {colorValues?.brand_background1}
+                              </Text>
+                            </Stack>
+                          </span>
                         </Stack>
-                      </span>
-                    </Stack>
+
+                        <Stack>
+                          <label
+                            className={`${colorValues?.brand_background2 === '#ffffff' || colorValues?.brand_background2 === '#ebecf0' ?
+                              'Color-Circle-Border' : ''} Color-Circle`}
+                            style={{ backgroundColor: colorValues?.brand_background2 }}>
+                            <input type="color"
+                              value={colorValues?.brand_background2}
+                              name='brand_background2'
+                              onChange={handleColorValues}
+                            />
+                          </label>
+
+                          <span className='Color-Property'>
+                            <Stack vertical>
+                              <Text variant="headingSm" as="h6" fontWeight="semibold">
+                                Brand Background 2
+                              </Text>
+                              <Text variant="headingXs" as="h6" fontWeight="medium">
+                                {colorValues?.brand_background2}
+                              </Text>
+                            </Stack>
+                          </span>
+                        </Stack>
+                      </>
+                    }
+
+                    {selectedTemplate === 2 &&
+                      <Stack>
+                        <label
+                          className={`${colorValues?.brand_background1 === '#ffffff' || colorValues?.brand_background1 === '#ebecf0' ?
+                            'Color-Circle-Border' : ''} Color-Circle`}
+                          style={{ backgroundColor: colorValues?.brand_background1 }}>
+                          <input type="color"
+                            value={colorValues?.brand_background1}
+                            name='brand_background1'
+                            onChange={handleColorValues}
+                          />
+                        </label>
+
+                        <span className='Color-Property'>
+                          <Stack vertical>
+                            <Text variant="headingSm" as="h6" fontWeight="semibold">
+                              Brand Background
+                            </Text>
+                            <Text variant="headingXs" as="h6" fontWeight="medium">
+                              {colorValues?.brand_background1}
+                            </Text>
+                          </Stack>
+                        </span>
+                      </Stack>
+                    }
 
                     <Stack>
                       <label
@@ -1209,7 +1262,6 @@ export function TemplatePage3() {
                     </Stack>
                   </div>
 
-
                   <div className='Color-Inputs'>
                     <Text variant="bodyMd" as="p" color="subdued">
                       Competitors Color
@@ -1238,51 +1290,56 @@ export function TemplatePage3() {
                       </span>
                     </Stack>
 
-                    <Stack>
-                      <label
-                        className={`${colorValues?.competitor_backgorund1 === '#ffffff' || colorValues?.competitor_backgorund1 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
-                        style={{ backgroundColor: colorValues?.competitor_backgorund1 }}>
-                        <input type="color"
-                          value={colorValues?.competitor_backgorund1}
-                          name='competitor_backgorund1'
-                          onChange={handleColorValues}
-                        />
-                      </label>
+                    {
+                      selectedTemplate === 2 &&
+                      <>
+                        <Stack>
+                          <label
+                            className={`${colorValues?.competitor_backgorund1 === '#ffffff' || colorValues?.competitor_backgorund1 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                            style={{ backgroundColor: colorValues?.competitor_backgorund1 }}>
+                            <input type="color"
+                              value={colorValues?.competitor_backgorund1}
+                              name='competitor_backgorund1'
+                              onChange={handleColorValues}
+                            />
+                          </label>
 
-                      <span className='Color-Property'>
-                        <Stack vertical>
-                          <Text variant="headingSm" as="h6" fontWeight="semibold">
-                            Competitor Background 1
-                          </Text>
-                          <Text variant="headingXs" as="h6" fontWeight="medium">
-                            {colorValues?.competitor_backgorund1}
-                          </Text>
+                          <span className='Color-Property'>
+                            <Stack vertical>
+                              <Text variant="headingSm" as="h6" fontWeight="semibold">
+                                Competitor Background 1
+                              </Text>
+                              <Text variant="headingXs" as="h6" fontWeight="medium">
+                                {colorValues?.competitor_backgorund1}
+                              </Text>
+                            </Stack>
+                          </span>
                         </Stack>
-                      </span>
-                    </Stack>
 
-                    <Stack>
-                      <label
-                        className={`${colorValues?.competitor_backgorund2 === '#ffffff' || colorValues?.competitor_backgorund2 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
-                        style={{ backgroundColor: colorValues?.competitor_backgorund2 }}>
-                        <input type="color"
-                          value={colorValues?.competitor_backgorund2}
-                          name='competitor_backgorund2'
-                          onChange={handleColorValues}
-                        />
-                      </label>
+                        <Stack>
+                          <label
+                            className={`${colorValues?.competitor_backgorund2 === '#ffffff' || colorValues?.competitor_backgorund2 === '#ebecf0' ? 'Color-Circle-Border' : ''} Color-Circle`}
+                            style={{ backgroundColor: colorValues?.competitor_backgorund2 }}>
+                            <input type="color"
+                              value={colorValues?.competitor_backgorund2}
+                              name='competitor_backgorund2'
+                              onChange={handleColorValues}
+                            />
+                          </label>
 
-                      <span className='Color-Property'>
-                        <Stack vertical>
-                          <Text variant="headingSm" as="h6" fontWeight="semibold">
-                            Competitor Background 2
-                          </Text>
-                          <Text variant="headingXs" as="h6" fontWeight="medium">
-                            {colorValues?.competitor_backgorund2}
-                          </Text>
+                          <span className='Color-Property'>
+                            <Stack vertical>
+                              <Text variant="headingSm" as="h6" fontWeight="semibold">
+                                Competitor Background 2
+                              </Text>
+                              <Text variant="headingXs" as="h6" fontWeight="medium">
+                                {colorValues?.competitor_backgorund2}
+                              </Text>
+                            </Stack>
+                          </span>
                         </Stack>
-                      </span>
-                    </Stack>
+                      </>
+                    }
 
                     <Stack>
                       <label
@@ -1333,6 +1390,8 @@ export function TemplatePage3() {
 
                 </Card>
               }
+
+
 
               <div className='Template-Save-Actions'>
                 <PageActions
