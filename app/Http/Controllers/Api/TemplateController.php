@@ -985,7 +985,6 @@ class TemplateController extends ApiController
             $result = [];
 
             $colors_array = [];
-
             $color_data = [
                 'background_color1' => $user_template->background_color1,
                 'background_color2' => $user_template->background_color2,
