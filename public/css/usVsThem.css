@@ -857,7 +857,17 @@
 .Template-Page3 .Advantages-Content-Section .Polaris-Layout__Section:first-child {
     min-width: 0;
     /* max-width: 22%; */
-    flex: 1 1 10rem;
+    flex: 1 1 15rem;
+}
+
+.Template-Page3 .Advantages-Content-Section .Polaris-Layout__Section:first-child .Polaris-Stack{
+    flex-wrap: unset;
+}
+
+@media (min-width: 1024px) {
+    .Template-Page3 .Advantages-Count-Section {
+        max-width: 50%;
+    }
 }
 
 @media (max-width: 767px) {
@@ -886,29 +896,44 @@
     min-width: 0;
 }
 
-.Template-Page3 .Advantages-Brands-Section .Polaris-Stack {
+.Template-Page3 .Advantages-Icons-Section .Polaris-Stack,
+.Template-Page3 .Advantages-Text-Section .Polaris-Stack {
     justify-content: space-evenly;
 }
 
+.Template-Page3 .Advantages-Brands-Type .Polaris-Stack__Item:last-child {
+    margin-top: 4px;
+}
 
-.Template-Page3 .Advantages-Brands-Section .Polaris-Stack--vertical .Polaris-Stack__Item h2 {
+.Template-Page3 .Advantages-Brands-Type .Polaris-Select__Content {
+    min-height: 2rem;
+}
+
+.Template-Page3 .Advantages-Text-Section .Polaris-Stack--vertical .Polaris-Stack__Item:last-child{
+    margin-top: 4px;
+}
+
+.Template-Page3 .Advantages-Icons-Section .Polaris-Stack--vertical .Polaris-Stack__Item h2,
+.Template-Page3 .Advantages-Text-Section .Polaris-Stack--vertical .Polaris-Stack__Item h2 {
     display: flex;
     justify-content: center;
 }
 
-.Template-Page3 .Advantages-Brands-Section .Polaris-Stack--vertical .Polaris-Stack__Item .Polaris-Stack {
+.Template-Page3 .Advantages-Icons-Section .Polaris-Stack--vertical .Polaris-Stack__Item .Polaris-Stack,
+.Template-Page3 .Advantages-Text-Section .Polaris-Stack--vertical .Polaris-Stack__Item .Polaris-Stack {
     justify-content: center;
 }
 
-.Template-Page3 .Advantages-Brands-Section .Polaris-Stack--vertical .Polaris-Stack__Item .Polaris-Stack .Polaris-Stack__Item {
+.Template-Page3 .Advantages-Icons-Section .Polaris-Stack--vertical .Polaris-Stack__Item .Polaris-Stack .Polaris-Stack__Item,
+.Template-Page3 .Advantages-Text-Section .Polaris-Stack--vertical .Polaris-Stack__Item .Polaris-Stack .Polaris-Stack__Item {
     min-width: 0;
 }
 
-.Template-Page3 .Advantages-Brands-Section .Advantages-Input-True-Icon {
+.Template-Page3 .Advantages-Icons-Section .Advantages-Input-True-Icon {
     fill: var(--p-action-primary);
 }
 
-.Template-Page3 .Advantages-Brands-Section .Advantages-Input-False-Icon {
+.Template-Page3 .Advantages-Icons-Section .Advantages-Input-False-Icon {
     fill: var(--p-action-critical);
 }
 
@@ -921,24 +946,24 @@
     padding: 1rem 0.5rem;
 }
 
-.Advantages-Brands-Section input {
+.Advantages-Icons-Section input {
     display: none;
 }
 
-.Advantages-Brands-Section .Polaris-Icon {
+.Advantages-Icons-Section .Polaris-Icon {
     height: 1.3rem;
     width: 1.3rem;
     cursor: pointer;
 }
 
-.Advantages-Brands-Section .Polaris-Icon:hover,
-.Advantages-Brands-Section .Selected .Polaris-Icon {
+.Advantages-Icons-Section .Polaris-Icon:hover,
+.Advantages-Icons-Section .Selected .Polaris-Icon {
     border: 1px solid var(--template-table-black-color);
     border-radius: 50%;
 }
 
-.Advantages-Brands-Section .Polaris-Icon svg:hover,
-.Advantages-Brands-Section .Selected .Polaris-Icon svg {
+.Advantages-Icons-Section .Polaris-Icon svg:hover,
+.Advantages-Icons-Section .Selected .Polaris-Icon svg {
     padding: 1px;
 }
 
@@ -1079,3 +1104,69 @@
     margin-top: 1rem;
     margin-bottom: 2rem;
 }
+
+
+/* .Template-Page3 .Advantages-Content-Section .Polaris-Layout .Polaris-Layout__Section:first-child{
+    min-width: 35%;
+    max-width: 35%;
+}
+
+.Template-Page3 .Advantages-Content-Section .Polaris-Layout .Polaris-Layout__Section:last-child {
+    min-width: 60%;
+    max-width: 60%;
+} */
+
+/* .Template-Page3 .Advantages-Content-Section .Layout-Section {
+    margin-top: var(--p-space-4);
+    margin-left: var(--p-space-5);
+    width: calc(100% - var(--p-space-5));
+}
+
+.Template-Page3 .Advantages-Content-Section .Advantages-Icons-Section {
+    width: 100%;
+}
+
+@media (min-width: 1024px) {
+    .Template-Page3 .Advantages-Content-Section .Layout-Section:first-child {
+        width: calc(35% - var(--p-space-5));
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .Template-Page3 .Advantages-Content-Section .Layout-Section:last-child {
+        width: calc(65% - var(--p-space-5));
+        display: flex;
+        justify-content: center;
+    }
+} */
+
+
+
+
+
+/* .Template-Page3 .Advantages-Content-Section .Custom-Layout {
+    display: flex;
+    align-items: center;
+}
+
+.Template-Page3 .Advantages-Content-Section .Custom-Layout .Custom-Layout-Section:first-child {
+    margin-top: var(--p-space-4);
+    width: 35% !important;
+}
+
+.Template-Page3 .Advantages-Content-Section .Custom-Layout .Custom-Layout-Section:last-child {
+    width: 65% !important;
+    margin-top: var(--p-space-4);
+}
+
+@media (max-width: 1023px) {
+    .Template-Page3 .Advantages-Content-Section .Custom-Layout .Custom-Layout-Section {
+        margin-top: var(--p-space-4);
+        width: 100%;
+    }
+
+    .Template-Page3 .Advantages-Content-Section .Custom-Layout {
+        flex-direction: column;
+    }
+
+} */

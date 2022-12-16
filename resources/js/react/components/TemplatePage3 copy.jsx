@@ -32,13 +32,8 @@ export function TemplatePage3() {
   const [colorValues, setColorValues] = useState([])
   const [advantageColorValues, setAdvantageColorValues] = useState([])
   const [successToast, setSuccessToast] = useState(false);
-  const [valueType, setValueType] = useState({
-    0: 'icon',
-    1: 'text',
-    2: 'icon',
-    3: 'icon',
-    4: 'icon',
-  })
+
+  const [themeInputTable1, setThemeInputTable1] = useState([]);
 
   const handleTemplateName = useCallback((value) => setTemplateName(value), []);
   const handleBrandName = useCallback((value) => setYourBrand(value), []);
@@ -50,7 +45,6 @@ export function TemplatePage3() {
     setCompetitorsCount(value)
     setCompetitorToggle(true)
   }, []);
-
 
   const getData = async () => {
     const response = await axios
@@ -70,6 +64,7 @@ export function TemplatePage3() {
         setCompetitorValue(res.data.result.competitor_value)
         setColorValues(res.data.result.primary_colors[0])
         setAdvantageColorValues(res.data.result.advantage_color_values)
+        setThemeInputTable1(res.data.result.items)
         setFixedAdvantages(res.data.result.advantages)
         setFixedBrand(res.data.result.brand_value)
         setCompetitor(res.data.result.competitor_value)
@@ -96,48 +91,37 @@ export function TemplatePage3() {
     <Toast content="Template Saved" onDismiss={toggleToastActive} duration={1500} />
   ) : null;
 
-  // const handleValueTypeChange = useCallback((value) => setValueType(value), []);
-
-  const handleValueTypeChange = e => {
-    setValueType({ ...valueType, [e.target.name]: e.target.value });
-  }
-
   const handleAllValues = e => {
-    setAllValues({ ...allValues, [e.target.name]: e.target.value });
+    setAllValues({ ...allValues, [e.target.name - 1]: e.target.value });
+    themeInputTable1[e.target.name - 1].advantage = e.target.value;
   }
 
   const handleCompetitorName = e => {
-    setCompetitorName({ ...competitorName, [e.target.name]: e.target.value });
+    setCompetitorName({ ...competitorName, [e.target.name - 1]: e.target.value });
   }
+
 
   const handleBrandValue = e => {
 
     if (e.target.value === 'true') {
       setBrandValue({ ...brandValue, [e.target.name]: true });
+      themeInputTable1[e.target.name].brand = true;
     }
     else if (e.target.value === 'false') {
       setBrandValue({ ...brandValue, [e.target.name]: false });
+      themeInputTable1[e.target.name].brand = false;
+      ;
     }
     else {
-      setBrandValue({ ...brandValue, [e.target.name]: e.target.value });
+      themeInputTable1[e.target.name].brand = e.target.value;
     }
 
   }
 
 
-  const handleCompetitorValue = (index, index2, e) => {
+  const handleCompetitorValue = (index, index2, value) => {
     let competitor_values = (competitorValue)
-
-    if (e.target.value === 'true') {
-      competitor_values[index][index2] = true;
-    }
-    else if (e.target.value === 'false') {
-      competitor_values[index][index2] = false;
-    }
-    else {
-      competitor_values[index][index2] = e.target.value;
-    }
-
+    competitor_values[index][index2] = value;
     setCompetitorValue(competitor_values)
     setCompetitorValueToggle(!competitorValueToggle)
   }
@@ -156,7 +140,7 @@ export function TemplatePage3() {
     let brandValues = {};
     let competitor_value = [];
     let advantageColorValue = {};
-    let value_type = {};
+    let theme1 = [];
 
 
     [...Array(Number(advantagesCount))].map((item, index) => {
@@ -165,17 +149,33 @@ export function TemplatePage3() {
       //   advantagesValues = ({ ...advantagesValues, [index]: fixedAdvantages[index] })
       //   brandValues = ({ ...brandValues, [index]: fixedBrand[index] })
       //   competitorValues = ({ ...competitorValues, [index]: fixedCompetitor[index] })
+      //   theme1.push({
+      //     advantage: fixedTable[index].advantage,
+      //     brand: fixedTable[index].brand,
+      //     competitor: fixedTable[index].competitor,
+      //   })
       // }
       // else {
       //   advantagesValues = ({ ...advantagesValues, [index]: `Advantage ${index + 1}` })
       //   brandValues = ({ ...brandValues, [index]: true })
       //   competitorValues = ({ ...competitorValues, [index]: false })
+      //   theme1.push({
+      //     advantage: `Advantage ${index + 1}`,
+      //     brand: true,
+      //     competitor: false,
+      //   })
       // }
 
       advantagesValues = ({ ...advantagesValues, [index]: `Advantage ${index + 1}` })
       brandValues = ({ ...brandValues, [index]: true })
-      value_type = ({ ...value_type, [index]: 'icon' })
+
       advantageColorValue = ({ ...advantageColorValue, [index]: '#000000' })
+      theme1.push({
+        advantage: `Advantage ${index + 1}`,
+        brand: true,
+        competitor: false,
+      })
+
     }),
 
       [...Array(Number(advantagesCount))].map((item, index) => {
@@ -188,8 +188,8 @@ export function TemplatePage3() {
 
     setAllValues(advantagesValues)
     setBrandValue(brandValues)
-    setValueType(value_type)
     setCompetitorValue(competitor_value)
+    setThemeInputTable1(theme1)
     setAdvantageToggle(false)
     setAdvantageColorValues(advantageColorValue)
     setTimeout(() => {
@@ -297,22 +297,6 @@ export function TemplatePage3() {
     document.documentElement.style.setProperty('--template-table-bg-even-color', colorValues?.background_color2);
   }, [colorValues])
 
-
-  useEffect(() => {
-    // console.log('allValues:', allValues);
-    // console.log('competitorName:', competitorName);
-    // console.log('valueType: ', valueType);
-    // console.log('brandValue', brandValue);
-    // console.log('competitorValue: ', competitorValue);
-  }, [allValues, competitorName, valueType, brandValue, competitorValue])
-
-  // useEffect(() => {
-  //   console.log('valueType: ', valueType);
-  //   console.log('brandValue', brandValue);
-  //   console.log('competitorValue: ', competitorValue);
-  // })
-
-
   return (
     <div className='Template-Page3'>
       <Page fullWidth>
@@ -344,25 +328,20 @@ export function TemplatePage3() {
                 />
                 <br />
 
-                {selectedTemplate === 2 ?
-                  <span>
-                    <Select
-                      label="Number of Competitors"
-                      options={[
-                        { label: '1', value: '1' },
-                        { label: '2', value: '2' },
-                        { label: '3', value: '3' },
-                        { label: '4', value: '4' },
-                        { label: '5', value: '5' },
-                      ]}
+                <Select
+                  label="Number of Competitors"
+                  options={[
+                    { label: '1', value: '1' },
+                    { label: '2', value: '2' },
+                    { label: '3', value: '3' },
+                    { label: '4', value: '4' },
+                    { label: '5', value: '5' },
+                  ]}
 
-                      onChange={handleCompetitorsCount}
-                      value={competitorsCount}
-                    />
-                    <br />
-                  </span> : ""
-                }
-
+                  onChange={handleCompetitorsCount}
+                  value={competitorsCount}
+                />
+                <br />
 
                 <div className='Advantages-Content-Section'>
                   {[...Array(Number(competitorsCount))].map((item, index) => (
@@ -371,17 +350,10 @@ export function TemplatePage3() {
                       <div className='Advantage-Input-Field'>
                         <div className="Polaris-Labelled__LabelWrapper">
                           <div className="Polaris-Label">
-                            <label htmlFor={index}
+                            <label id={index + 1} htmlFor={index + 1}
                               className="Polaris-Label__Text">
-                              {selectedTemplate === 2 ?
-                                <span className="Polaris-Text--root Polaris-Text--bodyMd Polaris-Text--regular">
-                                  Competitor {index + 1}
-                                </span>
-                                :
-                                <span className="Polaris-Text--root Polaris-Text--bodyMd Polaris-Text--regular">
-                                  Competitor
-                                </span>
-                              }
+                              <span
+                                className="Polaris-Text--root Polaris-Text--bodyMd Polaris-Text--regular">Competitor {index + 1}</span>
                             </label>
                           </div>
                         </div>
@@ -392,10 +364,10 @@ export function TemplatePage3() {
                               className="Polaris-TextField Polaris-TextField--hasValue">
                               <input type="text"
                                 className="Polaris-TextField__Input"
-                                id={index}
+                                id={index + 1}
                                 autoComplete="off"
                                 value={competitorName[index]}
-                                name={index}
+                                name={index + 1}
                                 onChange={handleCompetitorName}
                               />
                               <div className="Polaris-TextField__Backdrop"></div>
@@ -418,302 +390,139 @@ export function TemplatePage3() {
               >
 
                 <div className='Advantages-Layout'>
-                  <div className='Advantages-Count-Section'>
-                    <Select
-                      label="Number of advantages"
-                      options={[
-                        { label: '1', value: '1' },
-                        { label: '2', value: '2' },
-                        { label: '3', value: '3' },
-                        { label: '4', value: '4' },
-                        { label: '5', value: '5' },
-                        { label: '6', value: '6' },
-                        { label: '7', value: '7' },
-                        { label: '8', value: '8' },
-                        { label: '9', value: '9' },
-                        { label: '10', value: '10' },
-                      ]}
-                      onChange={handleAdvantagesCount}
-                      value={advantagesCount}
-                    />
-                  </div>
+                  <Layout>
+                    <Layout.Section oneHalf>
+
+                      <Select
+                        label="Number of advantages"
+                        options={[
+                          { label: '1', value: '1' },
+                          { label: '2', value: '2' },
+                          { label: '3', value: '3' },
+                          { label: '4', value: '4' },
+                          { label: '5', value: '5' },
+                          { label: '6', value: '6' },
+                          { label: '7', value: '7' },
+                          { label: '8', value: '8' },
+                          { label: '9', value: '9' },
+                          { label: '10', value: '10' },
+                        ]}
+                        onChange={handleAdvantagesCount}
+                        value={advantagesCount}
+                      />
+                    </Layout.Section>
+
+                    <Layout.Section oneHalf></Layout.Section>
+                  </Layout>
 
                   {advantageLoading ? <Loading /> :
                     <div className='Advantages-Content-Section'>
                       {[...Array(Number(advantagesCount))].map((item, index) => (
-                        <Layout key={index}>
+                        <Layout key={index + 1}>
                           <Layout.Section oneHalf>
-                            <Stack>
-                              <div className='Advantages-Inputs-Section'>
-                                <div className='Advantage-Input-Field'>
-                                  <div className="Polaris-Labelled__LabelWrapper">
-                                    <div className="Polaris-Label">
-                                      <label htmlFor={index}
-                                        className="Polaris-Label__Text">
-                                        <span
-                                          className="Polaris-Text--root Polaris-Text--bodyMd Polaris-Text--regular">Advantage {index + 1}</span>
-                                      </label>
-                                    </div>
+                            <div className='Advantages-Inputs-Section'>
+                              <div className='Advantage-Input-Field'>
+                                <div className="Polaris-Labelled__LabelWrapper">
+                                  <div className="Polaris-Label">
+                                    <label id={index + 1} htmlFor={index + 1}
+                                      className="Polaris-Label__Text">
+                                      <span
+                                        className="Polaris-Text--root Polaris-Text--bodyMd Polaris-Text--regular">Advantage {index + 1}</span>
+                                    </label>
                                   </div>
-                                  <div className="Polaris-Connected">
+                                </div>
+                                <div className="Polaris-Connected">
+                                  <div
+                                    className="Polaris-Connected__Item Polaris-Connected__Item--primary">
                                     <div
-                                      className="Polaris-Connected__Item Polaris-Connected__Item--primary">
-                                      <div
-                                        className="Polaris-TextField Polaris-TextField--hasValue">
-                                        <input type="text"
-                                          className="Polaris-TextField__Input"
-                                          id={index}
-                                          autoComplete="off"
-                                          value={allValues[index]}
-                                          name={index}
-                                          onChange={handleAllValues}
-                                        />
-                                        <div className="Polaris-TextField__Backdrop"></div>
-                                      </div>
+                                      className="Polaris-TextField Polaris-TextField--hasValue">
+                                      <input type="text"
+                                        className="Polaris-TextField__Input"
+                                        id={index + 1}
+                                        autoComplete="off"
+                                        value={allValues[index]}
+                                        name={index + 1}
+                                        onChange={handleAllValues}
+                                      />
+                                      <div className="Polaris-TextField__Backdrop"></div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-
-                              {selectedTemplate === 3 | selectedTemplate === 4 ?
-                                <div className='Advantages-Brands-Type'>
-                                  <Stack vertical>
-                                    <h2>Text Or Icon </h2>
-                                    <div className="Polaris-Select">
-                                      <select
-                                        id={index}
-                                        name={index}
-                                        className="Polaris-Select__Input"
-                                        aria-invalid="false"
-                                        onChange={handleValueTypeChange}
-                                      >
-                                        <option value="icon">Icon</option>
-                                        <option value="text">Text</option>
-                                      </select>
-                                      <div className="Polaris-Select__Content" aria-hidden="true">
-                                        <span className="Polaris-Select__SelectedOption">{valueType[index]}</span>
-                                        <span className="Polaris-Select__Icon">
-                                          <span className="Polaris-Icon">
-                                            <span className="Polaris-Text--root Polaris-Text--bodySm Polaris-Text--regular Polaris-Text--visuallyHidden">
-                                            </span>
-                                            <svg viewBox="0 0 20 20" className="Polaris-Icon__Svg" focusable="false" aria-hidden="true">
-                                              <path d="M7.676 9h4.648c.563 0 .879-.603.53-1.014l-2.323-2.746a.708.708 0 0 0-1.062 0l-2.324 2.746c-.347.411-.032 1.014.531 1.014Zm4.648 2h-4.648c-.563 0-.878.603-.53 1.014l2.323 2.746c.27.32.792.32 1.062 0l2.323-2.746c.349-.411.033-1.014-.53-1.014Z">
-                                              </path>
-                                            </svg>
-                                          </span>
-                                        </span>
-                                      </div>
-                                      <div className="Polaris-Select__Backdrop"></div>
-                                    </div>
-                                  </Stack>
-                                </div>
-                                : ""
-                              }
-
-                            </Stack>
-
+                            </div>
                           </Layout.Section>
 
                           <Layout.Section oneHalf>
-                            {selectedTemplate === 3 | selectedTemplate === 4 ?
-                              valueType[index] === 'text' ?
-
-                                <div className='Advantages-Text-Section'>
+                            <div className='Advantages-Brands-Section'>
+                              <Stack>
+                                <Stack vertical>
+                                  <h2>
+                                    {yourBrand}
+                                  </h2>
                                   <Stack>
-                                    <Stack vertical>
-                                      <h2>
-                                        {yourBrand}
-                                      </h2>
-                                      <div className="Polaris-Connected">
-                                        <div
-                                          className="Polaris-Connected__Item Polaris-Connected__Item--primary">
-                                          <div
-                                            className="Polaris-TextField Polaris-TextField--hasValue">
-                                            <input type="text"
-                                              className="Polaris-TextField__Input"
-                                              id={index}
-                                              autoComplete="off"
-                                              value={brandValue[index]}
-                                              name={index}
-                                              onChange={handleBrandValue}
-                                            />
-                                            <div className="Polaris-TextField__Backdrop"></div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </Stack>
+                                    <span className='Advantages-Input-True-Icon'>
+                                      <label
+                                        className={`${brandValue[index] === true || brandValue[index] === 'true' ? 'Selected' : ''}`}>
+                                        <input type="radio"
+                                          id={index}
+                                          name={index}
+                                          value={true}
+                                          onChange={handleBrandValue}
+                                        />
+                                        <Icon source={CircleTickMajor}></Icon>
+                                      </label>
+                                    </span>
 
-                                    {[...Array(Number(competitorsCount))].map((item, index2) => (
-                                      <Stack vertical>
-                                        <h2>
-                                          {competitorName[index2]}
-                                        </h2>
-                                        <div className="Polaris-Connected">
-                                          <div
-                                            className="Polaris-Connected__Item Polaris-Connected__Item--primary">
-                                            <div
-                                              className="Polaris-TextField Polaris-TextField--hasValue">
-                                              <input type="text"
-                                                className="Polaris-TextField__Input"
-                                                autoComplete="off"
-                                                value={competitorValue[index] && competitorValue[index][index2]}
-                                                onChange={(e) => handleCompetitorValue(index, index2, e)}
-                                              />
-                                              <div className="Polaris-TextField__Backdrop"></div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </Stack>
-                                    ))}
+                                    <span className='Advantages-Input-False-Icon'>
+                                      <label
+                                        className={`${brandValue[index] === false || brandValue[index] === 'false' ? 'Selected' : ''}`}>
+                                        <input type="radio"
+                                          id={index}
+                                          name={index}
+                                          value={false}
+                                          onChange={handleBrandValue}
+                                        />
+                                        <Icon source={CircleCancelMajor}>
+                                        </Icon>
+                                      </label>
+                                    </span>
                                   </Stack>
-                                </div>
+                                </Stack>
 
-                                :
-
-                                <div className='Advantages-Icons-Section'>
-                                  <Stack>
-                                    <Stack vertical>
-                                      <h2>
-                                        {yourBrand}
-                                      </h2>
-                                      <Stack>
-                                        <span className='Advantages-Input-True-Icon'>
-                                          <label
-                                            className={`${brandValue[index] === true || brandValue[index] === 'true' ? 'Selected' : ''}`}>
-                                            <input type="radio"
-                                              id={index}
-                                              name={index}
-                                              value={true}
-                                              onChange={handleBrandValue}
-                                            />
-                                            <Icon source={CircleTickMajor}></Icon>
-                                          </label>
-                                        </span>
-
-                                        <span className='Advantages-Input-False-Icon'>
-                                          <label
-                                            className={`${brandValue[index] === false || brandValue[index] === 'false' ? 'Selected' : ''}`}>
-                                            <input type="radio"
-                                              id={index}
-                                              name={index}
-                                              value={false}
-                                              onChange={handleBrandValue}
-                                            />
-                                            <Icon source={CircleCancelMajor}>
-                                            </Icon>
-                                          </label>
-                                        </span>
-                                      </Stack>
-                                    </Stack>
-
-                                    {[...Array(Number(competitorsCount))].map((item, index2) => (
-                                      <Stack vertical key={index2}>
-                                        <h2>
-                                          {competitorName[index2]}
-                                        </h2>
-                                        <Stack>
-                                          <span className='Advantages-Input-True-Icon'>
-                                            <label
-                                              className={`${competitorValue[index] && competitorValue[index][index2] === true ? 'Selected' : ''}`}
-                                            >
-                                              <input type="radio"
-                                                value={true}
-                                                onChange={(e) => handleCompetitorValue(index, index2, e)} />
-                                              <Icon source={CircleTickMajor}></Icon>
-                                            </label>
-                                          </span>
-
-                                          <span className='Advantages-Input-False-Icon'>
-                                            <label
-                                              className={`${competitorValue[index] && competitorValue[index][index2] === false ? 'Selected' : ''}`}
-                                            >
-                                              <input type="radio" competitorValue
-                                                value={false}
-                                                onChange={(e) => handleCompetitorValue(index, index2, e)} />
-                                              <Icon source={CircleCancelMajor}>
-                                              </Icon>
-                                            </label>
-                                          </span>
-                                        </Stack>
-                                      </Stack>
-                                    ))}
-
-                                  </Stack>
-                                </div>
-
-                              :
-
-                              <div className='Advantages-Icons-Section'>
-                                <Stack>
-                                  <Stack vertical>
+                                {[...Array(Number(competitorsCount))].map((item, index2) => (
+                                  <Stack vertical key={index2}>
                                     <h2>
-                                      {yourBrand}
+                                      {competitorName[index2]}
                                     </h2>
                                     <Stack>
                                       <span className='Advantages-Input-True-Icon'>
                                         <label
-                                          className={`${brandValue[index] === true || brandValue[index] === 'true' ? 'Selected' : ''}`}>
+                                          className={`${competitorValue[index] && competitorValue[index][index2] === true ? 'Selected' : ''}`}
+                                        >
                                           <input type="radio"
-                                            id={index}
-                                            name={index}
                                             value={true}
-                                            onChange={handleBrandValue}
-                                          />
+                                            onChange={() => handleCompetitorValue(index, index2, true)} />
                                           <Icon source={CircleTickMajor}></Icon>
                                         </label>
                                       </span>
 
                                       <span className='Advantages-Input-False-Icon'>
                                         <label
-                                          className={`${brandValue[index] === false || brandValue[index] === 'false' ? 'Selected' : ''}`}>
-                                          <input type="radio"
-                                            id={index}
-                                            name={index}
+                                          className={`${competitorValue[index] && competitorValue[index][index2] === false ? 'Selected' : ''}`}
+                                        >
+                                          <input type="radio" competitorValue
                                             value={false}
-                                            onChange={handleBrandValue}
-                                          />
+                                            onChange={() => handleCompetitorValue(index, index2, false)} />
                                           <Icon source={CircleCancelMajor}>
                                           </Icon>
                                         </label>
                                       </span>
                                     </Stack>
                                   </Stack>
+                                ))}
 
-                                  {[...Array(Number(competitorsCount))].map((item, index2) => (
-                                    <Stack vertical key={index2}>
-                                      <h2>
-                                        {competitorName[index2]}
-                                      </h2>
-                                      <Stack>
-                                        <span className='Advantages-Input-True-Icon'>
-                                          <label
-                                            className={`${competitorValue[index] && competitorValue[index][index2] === true ? 'Selected' : ''}`}
-                                          >
-                                            <input type="radio"
-                                              value={true}
-                                              onChange={(e) => handleCompetitorValue(index, index2, e)} />
-                                            <Icon source={CircleTickMajor}></Icon>
-                                          </label>
-                                        </span>
-
-                                        <span className='Advantages-Input-False-Icon'>
-                                          <label
-                                            className={`${competitorValue[index] && competitorValue[index][index2] === false ? 'Selected' : ''}`}
-                                          >
-                                            <input type="radio" competitorValue
-                                              value={false}
-                                              onChange={(e) => handleCompetitorValue(index, index2, e)} />
-                                            <Icon source={CircleCancelMajor}>
-                                            </Icon>
-                                          </label>
-                                        </span>
-                                      </Stack>
-                                    </Stack>
-                                  ))}
-
-                                </Stack>
-                              </div>
-                            }
+                              </Stack>
+                            </div>
                           </Layout.Section>
                         </Layout>
                       ))}
@@ -722,7 +531,7 @@ export function TemplatePage3() {
               </Card>
 
 
-              {/* <Card
+              <Card
                 sectioned
                 title='Styling'
               >
@@ -909,7 +718,7 @@ export function TemplatePage3() {
                   </Stack>
                 </div>
 
-              </Card> */}
+              </Card>
 
               <div className='Template-Save-Actions'>
                 <PageActions
