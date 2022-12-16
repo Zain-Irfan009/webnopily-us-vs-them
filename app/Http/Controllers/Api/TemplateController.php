@@ -998,7 +998,9 @@ class TemplateController extends ApiController
                 'text_brand_color'=>$user_template->text_brand_color,
                 'brand_background1'=>$user_template->brand_background1,
                 'brand_background2'=>$user_template->brand_background2,
-                'text_competitor_color'=>$user_template->text_competitor_color
+                'text_competitor_color'=>$user_template->text_competitor_color,
+                'text_brand_color_inside'=>$user_template->text_brand_color_inside,
+                'text_competitor_color_inside'=>$user_template->text_competitor_color_inside,
             ];
             array_push($colors_array, $color_data);
             $data = [
