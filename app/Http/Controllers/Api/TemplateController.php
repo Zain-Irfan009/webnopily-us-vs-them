@@ -86,20 +86,28 @@ class TemplateController extends ApiController
                 $competators_data=Competator::where('advantage_id',$value->id)->get();
                 $result_new=array();
                 foreach ($competators_data as $data){
-                    if($data->competator_status==0){
-                        $competator_status=false;
+                    if($value->text_icon=='icon') {
+                        if ($data->competator_status == 0) {
+                            $competator_status = false;
+                        } else {
+                            $competator_status = true;
+                        }
                     }
-                    else{
-                        $competator_status=true;
+                    elseif($value->text_icon=='text'){
+                        $competator_status=$data->competitor_text;
                     }
 
                     array_push($result_new,$competator_status);
                 }
-
-                if ($value->brand == 1) {
-                    $brand = true;
-                } else {
-                    $brand = false;
+                if($value->text_icon=='icon') {
+                    if ($value->brand == 1) {
+                        $brand = true;
+                    } else {
+                        $brand = false;
+                    }
+                }
+                else{
+                    $brand=$value->brand_text;
                 }
                 if ($value->competitors == 'true') {
                     $competitor = true;
@@ -107,6 +115,7 @@ class TemplateController extends ApiController
                     $competitor = false;
                 }
                 $item = [
+                    'text_icon'=>$value->text_icon,
                     'advantage' => $value->advantage,
                     'advantage_color_value'=>$value->advantage_column_color,
                     'brand' => $brand,
@@ -116,6 +125,7 @@ class TemplateController extends ApiController
             }
             $result = [];
             $data = [
+
                 'template_id' => $template->id,
                 'user_template_id' => $user_template->id,
                 'shop_name' => $shop->shop
