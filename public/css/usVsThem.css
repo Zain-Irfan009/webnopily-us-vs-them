@@ -8,17 +8,27 @@
     --template-table-mobile-bg-light-blue-color: #A9AFFF;
     --template-table-mobile-bg-dark-blue-color: #8C94FF;
     --template-table-mobile-bg-darker-blue-color: #626DFF;
-    --template-table1-bg-red-color: #EB4C50;
-    --template-table1-bg-red-subdued-color: #ED706D;
+
     --template-table2-bg-light-color: #F5F5F5;
     --template-table2-rows-dark-color: #474B8B;
     --template-table2-rows-light-color: #7B7EAC;
     --template-table3-rows-light-color: #f9f0ec;
     --template-table3-rows-border-color: rgba(232, 234, 235, 0.653);
-    --template-table4-rows-light-color: #D2E8F4;
 
-    --template-table-bg-even-color: #EBECF0;
-    --template-table-bg-odd-color: #ffffff;
+    --template1-row-bg-even-color: #EBECF0;
+    --template1-row-bg-odd-color: #ffffff;
+    --template1-column2-bg-odd-color: #EB4C50;
+    --template1-column2-bg-even-color: #ED706D;
+    --template1-heading-brand-color: #ffffff;
+    --template1-heading-competitor-color: #000000;
+
+    --template2-competitor-bg-odd-color: #474B8B;
+    --template2-competitor-bg-even-color: #7B7EAC;
+    --template2-brand-bg-color: #474B8B;
+    --template2-advantage-text-color: #000000;
+
+    --template3-brand-text-color: #000000;
+    --template3-competitor-text-color: #000000;
 }
 
 .Template-SideBar .Polaris-Navigation .Polaris-Navigation__PrimaryNavigation {
@@ -457,19 +467,6 @@
     fill: var(--template-table-white-color);
 }
 
-.Advantages-Tables-Preview .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(even) .Polaris-IndexTable__TableCell:first-child,
-.Advantages-Tables-Preview .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(even),
-.Advantages-Tables-Preview .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(even) .Polaris-IndexTable__TableCell:first-child,
-.Advantages-Tables-Preview .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(even) {
-    background-color: var(--template-table-bg-even-color);
-}
-
-.Advantages-Tables-Preview .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(odd) .Polaris-IndexTable__TableCell:first-child,
-.Advantages-Tables-Preview .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(odd),
-.Advantages-Tables-Preview .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(odd) .Polaris-IndexTable__TableCell:first-child,
-.Advantages-Tables-Preview .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(odd) {
-    background-color: var(--template-table-bg-odd-color);
-}
 
 
 /* ----------------------Template Page 2 - Table 1 Pc-------------------------- */
@@ -484,28 +481,15 @@
 
 .Theme1-Pc-Table .Polaris-IndexTable__TableHeading {
     font-size: 13px;
-    color: var(--template-table-black-color);
 }
 
 .Theme1-Pc-Table .Polaris-IndexTable__TableHeading:nth-child(2) {
     font-size: 14px;
-    color: var(--template-table-white-color);
-    background-color: var(--template-table1-bg-red-subdued-color);
     border-top-left-radius: 22px;
     border-top-right-radius: 22px;
 }
 
-.Theme1-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(odd) .Polaris-IndexTable__TableCell:nth-child(2),
-.Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(odd) .Polaris-IndexTable__TableCell:nth-child(2) {
-    background-color: var(--template-table1-bg-red-color);
-}
 
-.Theme1-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(even) .Polaris-IndexTable__TableCell:nth-child(2),
-.Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(even) .Polaris-IndexTable__TableCell:nth-child(2),
-.Theme1-Mobile-Table .Polaris-IndexTable__TableHeading:nth-child(2),
-.Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:last-child .Polaris-IndexTable__TableCell:nth-child(2) {
-    background-color: var(--template-table1-bg-red-subdued-color);
-}
 
 
 .Theme1-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:last-child .Polaris-IndexTable__TableCell:nth-child(2) {
@@ -527,7 +511,6 @@
 
 /* ----------------------Template Page 2 - Table 1 Mobile-------------------------- */
 .Theme1-Mobile-Table .Polaris-IndexTable__TableHeading:nth-child(2) {
-    color: var(--template-table-white-color);
     font-size: 15px;
     font-weight: 500;
     letter-spacing: 0.4px;
@@ -543,11 +526,9 @@
 .Theme1-Mobile-Table .Polaris-IndexTable__TableHeading {
     font-size: 13px;
     font-weight: 500;
-    color: var(--template-table-black-color);
     padding: 10px 15px;
     max-width: 80px;
     overflow-wrap: break-word;
-    /* white-space: break-spaces; */
 }
 
 .Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell {
@@ -584,6 +565,33 @@
 .Theme2-Pc-Table .Polaris-IndexTable__TableHeading:not(:nth-child(2)) {
     font-size: 12px;
     font-weight: 700;
+}
+
+.Theme2-Pc-Table .Polaris-IndexTable__TableHeading:last-child {
+    margin-right: -5px;
+}
+
+.Theme2-Pc-Table .Polaris-IndexTable__TableHeading:nth-child(2) {
+    font-size: 14px;
+    border: none;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+
+
+.Theme2-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:last-child .Polaris-IndexTable__TableCell:nth-child(2) {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.Theme2-Pc-Table .Polaris-IndexTable__TableHeading:nth-child(2) {
+    color: var(--template-table-white-color);
+    background-color: var(--template-table2-rows-dark-color);
+    border: 4px solid var(--template-table2-rows-dark-color);
+}
+
+.Theme2-Pc-Table .Polaris-IndexTable__TableHeading:not(:nth-child(2)) {
     color: var(--template-table-black-color);
 }
 
@@ -594,18 +602,8 @@
 
 .Theme2-Pc-Table .Polaris-IndexTable__TableHeading:last-child {
     border-right: 4px solid var(--template-table2-rows-light-color);
-    margin-right: -5px;
 }
 
-.Theme2-Pc-Table .Polaris-IndexTable__TableHeading:nth-child(2) {
-    font-size: 14px;
-    color: var(--template-table-white-color);
-    background-color: var(--template-table2-rows-dark-color);
-    border: none;
-    border: 4px solid var(--template-table2-rows-dark-color);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-}
 
 .Theme2-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:nth-child(2) {
     border-right: 4px solid var(--template-table2-rows-dark-color);
@@ -615,11 +613,7 @@
 
 .Theme2-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:last-child .Polaris-IndexTable__TableCell:nth-child(2) {
     border-bottom: 4px solid var(--template-table2-rows-dark-color);
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
 }
-
-
 
 /* ----------------------Template Page 2 - Table 2 Mobile-------------------------- */
 
@@ -627,36 +621,20 @@
 .Theme2-Mobile-Table .Polaris-IndexTable__TableHeading {
     font-size: 12px;
     font-weight: 600;
-    color: var(--template-table-black-color);
     padding: 8px;
 }
 
-.Theme2-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:first-child .Polaris-IndexTable__TableCell {
-    border-top: 3px solid var(--template-table2-rows-dark-color);
-    border-bottom: 3px solid var(--template-table2-rows-dark-color);
-}
 
-.Theme2-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:first-child .Polaris-IndexTable__TableCell:last-child {
-    border-right: 3px solid var(--template-table2-rows-dark-color);
-}
 
 .Theme2-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell {
     padding: 14px;
 }
 
 .Theme2-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:first-child {
-    color: var(--template-table-white-color);
     font-weight: 500;
     font-size: 14px;
 }
 
-.Theme2-Mobile-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(odd) .Polaris-IndexTable__TableCell:first-child {
-    background-color: var(--template-table2-rows-dark-color);
-}
-
-.Theme2-Mobile-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(even) .Polaris-IndexTable__TableCell:first-child {
-    background-color: var(--template-table2-rows-light-color);
-}
 
 
 
@@ -673,17 +651,7 @@
 }
 
 .Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell {
-    color: var(--template-table-black-color);
     padding: var(--p-space-5);
-}
-
-.Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:nth-child(2) {
-    background-color: var(--template-table3-rows-light-color);
-}
-
-.Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(1) .Polaris-IndexTable__TableCell:nth-child(2),
-.Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(2) .Polaris-IndexTable__TableCell:nth-child(2) {
-    color: var(--template-table2-rows-dark-color);
 }
 
 .Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading,
@@ -691,16 +659,11 @@
     border-bottom: var(--p-border-width-1) solid var(--template-table3-rows-border-color);
 }
 
-.Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading {
-    color: var(--template-table-black-color);
-}
-
 .Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading:nth-child(2) {
     font-weight: 700;
 }
 
 .Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableCell:first-child {
-    color: var(--p-text-subdued);
     font-size: 12px;
 }
 
@@ -713,7 +676,6 @@
 /* ----------------------Template Page 2 - Table 3 Mobile-------------------------- */
 
 .Theme3-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading {
-    color: var(--template-table-black-color);
     font-size: 14px;
     font-weight: 600;
 }
@@ -727,18 +689,13 @@
 }
 
 .Theme3-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:not(:first-child) {
-    background-color: var(--template-table-bg-subdued-color);
-    color: var(--template-table-black-color);
     font-size: 15px;
     font-weight: 600;
 }
 
 .Theme3-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:nth-child(2) {
-    background-color: var(--template-table3-rows-light-color);
-    color: var(--template-table-white-color);
     font-size: 15px;
     font-weight: 600;
-    color: var(--template-table-black-color);
 }
 
 
@@ -752,58 +709,33 @@
     fill: var(--template-table-black-color);
 }
 
-.Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableCell,
-.Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading,
-.Theme4-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableCell,
-.Theme4-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading {
-    border: 2px solid var(--template-table-black-color);
-}
-
-/* .Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading:first-child {
-    border-top-left-radius: 20px;
-}
-
-.Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading:last-child{
-    border-top-right-radius: 20px;
-} */
-
 .Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading {
     font-size: 14px;
     font-weight: 700;
-    color: var(--template-table-black-color);
     padding: var(--p-space-4);
 }
 
 .Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading:nth-child(2) {
     font-size: 15px;
-    background-color: var(--template-table4-rows-light-color);
 }
 
+
 .Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell {
-    color: var(--template-table-black-color);
+    font-size: 13px;
+    font-weight: 600;
     padding: var(--p-space-3) var(--p-space-4);
 }
 
-.Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:first-child {
-    font-size: 13px;
-}
-
 .Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:nth-child(2) {
+    font-size: 13px;
     font-weight: 700;
-    background-color: var(--template-table4-rows-light-color);
 }
 
 .Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:last-child {
     font-size: 12px;
+    font-weight: 500;
 }
 
-.Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(1) .Polaris-IndexTable__TableCell:nth-child(2) {
-    font-size: 12px;
-}
-
-.Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(3) .Polaris-IndexTable__TableCell:nth-child(2) {
-    font-size: 15px;
-}
 
 
 
@@ -811,27 +743,248 @@
 .Theme4-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading {
     font-size: 14px;
     font-weight: 700;
-    color: var(--template-table-black-color);
     padding: var(--p-space-4);
 }
 
 .Theme4-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading:nth-child(2) {
     font-size: 14px;
-    background-color: var(--template-table4-rows-light-color);
-    color: var(--template-table-black-color);
-
 }
-
-.Theme4-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:nth-child(2) {
-    background-color: var(--template-table4-rows-light-color);
-    color: var(--template-table-black-color);
-    font-size: 12px;
-}
-
 
 .Theme4-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell {
     padding: 12px 16px;
+    font-size: 11.5px;
+    font-weight: 600;
 }
+
+.Theme4-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:first-child {
+    font-size: 13px;
+}
+
+
+
+
+.Theme1-Pc-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(even) .Polaris-IndexTable__TableCell:first-child,
+.Theme1-Mobile-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(even) .Polaris-IndexTable__TableCell:first-child,
+.Theme1-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(even),
+.Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(even) {
+    background-color: var(--template1-row-bg-even-color);
+}
+
+.Theme1-Pc-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(odd) .Polaris-IndexTable__TableCell:first-child,
+.Theme1-Mobile-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(odd) .Polaris-IndexTable__TableCell:first-child,
+.Theme1-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(odd),
+.Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(odd) {
+    background-color: var(--template1-row-bg-odd-color);
+}
+
+.Theme1-Pc-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:last-child .Polaris-IndexTable__TableCell:first-child,
+.Theme1-Mobile-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:last-child .Polaris-IndexTable__TableCell:first-child,
+.Theme1-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:last-child,
+.Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:last-child {
+    background-color: #fff;
+}
+
+
+.Theme1-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(odd) .Polaris-IndexTable__TableCell:nth-child(2),
+.Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(odd) .Polaris-IndexTable__TableCell:nth-child(2) {
+    background-color: var(--template1-column2-bg-odd-color);
+}
+
+.Theme1-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(even) .Polaris-IndexTable__TableCell:nth-child(2),
+.Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(even) .Polaris-IndexTable__TableCell:nth-child(2),
+.Theme1-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:last-child .Polaris-IndexTable__TableCell:nth-child(2),
+.Theme1-Mobile-Table .Polaris-IndexTable__TableHeading:nth-child(2),
+.Theme1-Pc-Table .Polaris-IndexTable__TableHeading:nth-child(2) {
+    background-color: var(--template1-column2-bg-even-color);
+}
+
+.Theme1-Pc-Table .Polaris-IndexTable__TableHeading,
+.Theme1-Mobile-Table .Polaris-IndexTable__TableHeading {
+    color: var(--template1-heading-competitor-color);
+}
+
+.Theme1-Pc-Table .Polaris-IndexTable__TableHeading:nth-child(2),
+.Theme1-Mobile-Table .Polaris-IndexTable__TableHeading:nth-child(2) {
+    color: var(--template1-heading-brand-color);
+}
+
+
+
+
+
+.Theme2-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(odd) {
+    background-color: var(--template1-row-bg-odd-color);
+}
+
+.Theme2-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:nth-child(even) {
+    background-color: var(--template1-row-bg-even-color);
+}
+
+
+.Theme2-Mobile-Table .Polaris-IndexTable__TableHeading {
+    color: var(--template2-advantage-text-color);
+}
+
+.Theme2-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:first-child {
+    color: var(--template1-heading-competitor-color);
+}
+
+.Theme2-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:first-child .Polaris-IndexTable__TableCell:first-child {
+    color: var(--template1-heading-brand-color);
+}
+
+.Theme2-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:first-child .Polaris-IndexTable__TableCell {
+    border-top: 3px solid var(--template2-brand-bg-color);
+    border-bottom: 3px solid var(--template2-brand-bg-color);
+}
+
+.Theme2-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow:first-child .Polaris-IndexTable__TableCell:last-child {
+    border-right: 3px solid var(--template2-brand-bg-color);
+}
+
+.Theme2-Mobile-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(odd) .Polaris-IndexTable__TableCell:first-child {
+    background-color: var(--template2-competitor-bg-odd-color);
+}
+
+.Theme2-Mobile-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:nth-child(even) .Polaris-IndexTable__TableCell:first-child {
+    background-color: var(--template2-competitor-bg-even-color);
+}
+
+.Theme2-Mobile-Table .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableRow:first-child .Polaris-IndexTable__TableCell:first-child {
+    background-color: var(--template2-brand-bg-color);
+}
+
+
+
+
+
+
+
+.Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading,
+.Theme3-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading {
+    color: var(--template1-heading-brand-color);
+}
+
+.Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading:last-child,
+.Theme3-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading:last-child {
+    color: var(--template1-heading-competitor-color);
+}
+
+.Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:nth-child(2),
+.Theme3-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:nth-child(2) {
+    background-color: var(--template1-column2-bg-odd-color);
+    color: var(--template3-brand-text-color);
+}
+
+.Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:last-child,
+.Theme3-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:last-child {
+    background-color: var(--template1-column2-bg-even-color);
+    color: var(--template3-competitor-text-color);
+}
+
+
+
+
+.Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableCell,
+.Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading,
+.Theme4-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableCell,
+.Theme4-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading {
+    border: 2px solid var(--template-table-black-color);
+}
+
+.Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading,
+.Theme4-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading {
+    color: var(--template1-heading-competitor-color);
+    background-color: var(--template1-row-bg-odd-color);
+}
+
+.Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading:first-child,
+.Theme4-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading:first-child {
+    color: var(--template2-advantage-text-color);
+}
+
+.Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading:nth-child(2),
+.Theme4-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading:nth-child(2) {
+    color: var(--template1-heading-brand-color);
+    background-color: var(--template1-row-bg-even-color);
+}
+
+.Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell,
+.Theme4-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell {
+    background-color: var(--template1-row-bg-odd-color);
+}
+
+.Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:nth-child(2),
+.Theme4-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:nth-child(2) {
+    color: var(--template3-brand-text-color);
+    background-color: var(--template1-row-bg-even-color);
+}
+
+.Theme4-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:last-child,
+.Theme4-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:last-child {
+    color: var(--template3-competitor-text-color);
+}
+
+
+
+.sticky {
+    position: sticky;
+    top: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -860,7 +1013,7 @@
     flex: 1 1 15rem;
 }
 
-.Template-Page3 .Advantages-Content-Section .Polaris-Layout__Section:first-child .Polaris-Stack{
+.Template-Page3 .Advantages-Content-Section .Polaris-Layout__Section:first-child .Polaris-Stack {
     flex-wrap: unset;
 }
 
@@ -909,7 +1062,7 @@
     min-height: 2rem;
 }
 
-.Template-Page3 .Advantages-Text-Section .Polaris-Stack--vertical .Polaris-Stack__Item:last-child{
+.Template-Page3 .Advantages-Text-Section .Polaris-Stack--vertical .Polaris-Stack__Item:last-child {
     margin-top: 4px;
 }
 

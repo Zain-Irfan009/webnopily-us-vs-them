@@ -8,6 +8,7 @@ import React, { useState, useEffect, useCallback, useContext, Suspense } from 'r
 import axios from "axios";
 import { AppContext } from '../Context'
 import { Link } from 'react-router-dom'
+import { Templates } from './Templates';
 
 
 
@@ -412,6 +413,8 @@ export function Dashboard() {
             }
 
             {loading ? <Loading /> :
+                // templateTable.length < 1 ?
+                //     <Templates /> :
                 <Page
                     title="Us vs Them"
                     fullWidth
@@ -429,20 +432,6 @@ export function Dashboard() {
                             onAction: handleAppStatus,
                         }
                     }
-                // actionGroups={[
-                //     {
-                //         title: 'More actions',
-                //         accessibilityLabel: 'Action group label',
-                //         actions: [
-                //             {
-                //                 content: 'Info',
-                //                 accessibilityLabel: 'Individual action label',
-                //                 onAction: () => {
-                //                 },
-                //             },
-                //         ],
-                //     },
-                // ]}
                 >
                     <Layout>
                         <Layout.Section>
@@ -481,8 +470,7 @@ export function Dashboard() {
                                     </Banner>
                                 } */}
 
-                            <Suspense fallback={<Spinner accessibilityLabel="Loading..." size="large" />}>
-
+                            <Suspense>
                                 <div className='ProgressBar-Section'>
                                     <Card sectioned>
                                         <Text variant="headingLg" as="h5">
@@ -490,7 +478,6 @@ export function Dashboard() {
                                             <span>
                                                 ($7.99/month, additional charges $0.0001/view)
                                             </span>
-                                            {/* {`${planName} ($7.99/month, addionally $0.001/view)`}   */}
                                         </Text>
                                         <Text variant="bodyMd" as="p">
                                             {`Get Upto ${planUsageLimit} monthly views`}
@@ -527,7 +514,7 @@ export function Dashboard() {
                                 </Card>
                             </Suspense>
 
-                            <Suspense fallback={<Spinner accessibilityLabel="Loading..." size="large" />}>
+                            <Suspense>
                                 {templateLoading ?
                                     <Spinner accessibilityLabel="Loading..." size="large" /> :
                                     templateTable.length < 1 ?
@@ -575,8 +562,6 @@ export function Dashboard() {
                                                                 </Button>
                                                             </Link>
 
-
-                                                            {/* <Button plain onClick={() => handlePreviewTemplate(user_template_id)}>Preview</Button> */}
                                                         </ButtonGroup>
                                                     </span>
                                                 }
@@ -616,7 +601,8 @@ export function Dashboard() {
                     {toastDelete}
                     {toastDuplicate}
                     {toastProducts}
-                </Page>}
+                </Page>
+            }
         </div>
     );
 }

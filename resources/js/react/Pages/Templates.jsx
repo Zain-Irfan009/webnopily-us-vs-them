@@ -20,36 +20,34 @@ export function Templates() {
 
   return (
     <div className='Navigation-Frame'>
-      {loading ? <Loading /> :
-        <div className={`Templates-Page`}>
-          <Layout>
-            <Layout.Section>
-              {(() => {
-                switch (activePage) {
-                  case 2:
-                    return <TemplatePage2 />
-                  case 3:
-                    return <TemplatePage3 />
-                  case 4:
-                    return <TemplatePage4 />
-                  default:
-                    return <TemplatePage1 />
-                }
+      <div className={`Templates-Page`}>
+        <Layout>
+          <Layout.Section>
+            {(() => {
+              switch (activePage) {
+                case 2:
+                  return <TemplatePage2 />
+                case 3:
+                  return <TemplatePage3 />
+                case 4:
+                  return <TemplatePage4 />
+                default:
+                  return <TemplatePage1 />
+              }
 
-              })()}
+            })()}
 
 
+          </Layout.Section>
+          {
+            activePage != 3 &&
+            <Layout.Section secondary>
+              <SideBarNavigation />
             </Layout.Section>
-            {
-              activePage != 3 &&
-              <Layout.Section secondary>
-                <SideBarNavigation />
-              </Layout.Section>
-            }
+          }
 
-          </Layout>
-        </div>
-      }
+        </Layout>
+      </div>
     </div>
   );
 }

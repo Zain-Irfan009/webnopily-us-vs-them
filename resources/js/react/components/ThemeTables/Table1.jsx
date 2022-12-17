@@ -3,7 +3,7 @@ import { Card, IndexTable, Icon, Stack } from '@shopify/polaris';
 import { TickMinor, CancelMinor, MobileMajor, DesktopMajor } from '@shopify/polaris-icons';
 
 export function Table1({ yourBrand, competitorName, advantageLoading, allValues,
-    competitorsCount, brandValue, competitorValue, advantagesCount, colorValues, advantageColorValues }) {
+    competitorsCount, brandValue, competitorValue, advantagesCount, colorValues }) {
 
     const [screen, setScreen] = useState(true)
     const handleScreenSelection = () => {
@@ -24,7 +24,7 @@ export function Table1({ yourBrand, competitorName, advantageLoading, allValues,
                     position={index1}
                 >
                     <IndexTable.Cell>
-                        <div style={{ color: `${advantageColorValues[index1]}` }}>
+                        <div style={{ color: `${colorValues?.text_advantages_color}` }}>
                             {allValues[index1]}
                         </div>
                     </IndexTable.Cell>

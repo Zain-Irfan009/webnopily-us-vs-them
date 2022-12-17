@@ -5,8 +5,8 @@ import {
 } from '@shopify/polaris-icons';
 
 
-export function Table4({ yourBrand, competitorName, advantageLoading, allValues,
-    competitorsCount, brandValue, competitorValue, advantagesCount, colorValues, advantageColorValues }) {
+export function Table4({ yourBrand, competitorName, advantageLoading, allValues, valueType,
+    competitorsCount, brandValue, competitorValue, advantagesCount, colorValues }) {
 
     const [screen, setScreen] = useState(true)
     const handleScreenSelection = () => {
@@ -27,30 +27,40 @@ export function Table4({ yourBrand, competitorName, advantageLoading, allValues,
                     position={index1}
                 >
                     <IndexTable.Cell>
-                        <div style={{ color: `${advantageColorValues[index1]}` }}>
+                        <div style={{ color: `${colorValues?.text_advantages_color}` }}>
                             {allValues[index1]}
                         </div>
                     </IndexTable.Cell>
                     <IndexTable.Cell >
-                        {brandValue[index1] ?
-                            <span style={{ fill: `${colorValues.brand_checkbox_color1}` }}>
-                                <Icon source={CircleTickMinor}></Icon>
-                            </span>
+                        {valueType[index1] === 'icon' ?
+                            brandValue[index1] ?
+                                <span style={{ fill: `${colorValues.brand_checkbox_color1}` }}>
+                                    <Icon source={CircleTickMinor}></Icon>
+                                </span>
+                                :
+                                <span style={{ fill: `${colorValues.brand_checkbox_color2}` }} >
+                                    <Icon source={CircleCancelMinor}></Icon>
+                                </span>
                             :
-                            <span style={{ fill: `${colorValues.brand_checkbox_color2}` }} >
-                                <Icon source={CircleCancelMinor}></Icon>
-                            </span>
+                            !brandValue[index1] === true || !brandValue[index1] === false &&
+                            <span>{brandValue[index1]}</span>
+
                         }
                     </IndexTable.Cell>
                     {[...Array(Number(competitorsCount))]?.map((item2, index2) => (
                         <IndexTable.Cell>
-                            {competitorValue[index1] && competitorValue[index1][index2] ?
-                                <span style={{ fill: `${colorValues.competitors_checkbox_color1}` }}>
-                                    <Icon source={CircleTickMinor}></Icon>
-                                </span> :
-                                <span style={{ fill: `${colorValues.competitors_checkbox_color2}` }}>
-                                    <Icon source={CircleCancelMinor}></Icon>
-                                </span>
+                            {valueType[index1] === 'icon' ?
+                                competitorValue[index1] && competitorValue[index1][index2] ?
+                                    <span style={{ fill: `${colorValues.competitors_checkbox_color1}` }}>
+                                        <Icon source={CircleTickMinor}></Icon>
+                                    </span> :
+                                    <span style={{ fill: `${colorValues.competitors_checkbox_color2}` }}>
+                                        <Icon source={CircleCancelMinor}></Icon>
+                                    </span>
+                                :
+                                competitorValue[index1] && !competitorValue[index1][index2] === true ||
+                                competitorValue[index1] && !competitorValue[index1][index2] === false &&
+                                <span>{competitorValue[index1] && competitorValue[index1][index2]}</span>
                             }
                         </IndexTable.Cell>
                     ))}
@@ -60,7 +70,7 @@ export function Table4({ yourBrand, competitorName, advantageLoading, allValues,
 
 
     const themeHeadingsPc = [];
-    themeHeadingsPc.push({ title: '' }),
+    themeHeadingsPc.push({ title: 'Advantages' }),
         themeHeadingsPc.push({ title: `${yourBrand}` }),
         [...Array(Number(competitorsCount))].map((item, index) => (
             themeHeadingsPc.push({ title: `${competitorName[index]}` })

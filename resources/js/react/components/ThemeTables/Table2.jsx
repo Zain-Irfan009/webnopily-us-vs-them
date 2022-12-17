@@ -6,7 +6,7 @@ import {
 
 
 export function Table2({ yourBrand, competitorName, advantageLoading, allValues,
-    competitorsCount, brandValue, competitorValue, advantagesCount, colorValues, advantageColorValues }) {
+    competitorsCount, brandValue, competitorValue, advantagesCount, colorValues }) {
 
     const [screen, setScreen] = useState(true)
     const handleScreenSelection = () => {
@@ -19,45 +19,45 @@ export function Table2({ yourBrand, competitorName, advantageLoading, allValues,
     };
 
 
-    const themeRowsPc = [...Array(Number(advantagesCount))]?.map(
-        (item1, index1) => {
-            return (
-                <IndexTable.Row
-                    id={index1}
-                    key={index1}
-                    position={index1}
-                >
-                    <IndexTable.Cell>
-                        <div style={{ color: `${advantageColorValues[index1]}` }}>
-                            {allValues[index1]}
-                        </div>
-                    </IndexTable.Cell>
-                    <IndexTable.Cell >
-                        {brandValue[index1] ?
-                            <span style={{ fill: `${colorValues.brand_checkbox_color1}` }}>
-                                <Icon source={CircleTickMinor}></Icon>
-                            </span>
-                            :
-                            <span style={{ fill: `${colorValues.brand_checkbox_color2}` }} >
-                                <Icon source={CircleCancelMinor}></Icon>
-                            </span>
-                        }
-                    </IndexTable.Cell>
-                    {[...Array(Number(competitorsCount))]?.map((item2, index2) => (
-                        <IndexTable.Cell>
-                            {competitorValue[index1] && competitorValue[index1][index2] ?
-                                <span style={{ fill: `${colorValues.competitors_checkbox_color1}` }}>
-                                    <Icon source={CircleTickMinor}></Icon>
-                                </span> :
-                                <span style={{ fill: `${colorValues.competitors_checkbox_color2}` }}>
-                                    <Icon source={CircleCancelMinor}></Icon>
-                                </span>
-                            }
-                        </IndexTable.Cell>
-                    ))}
-                </IndexTable.Row>
-            )
-        });
+    // const themeRowsPc = [...Array(Number(advantagesCount))]?.map(
+    //     (item1, index1) => {
+    //         return (
+    //             <IndexTable.Row
+    //                 id={index1}
+    //                 key={index1}
+    //                 position={index1}
+    //             >
+    //                 <IndexTable.Cell>
+    //                     <div style={{ color: `${advantageColorValues[index1]}` }}>
+    //                         {allValues[index1]}
+    //                     </div>
+    //                 </IndexTable.Cell>
+    //                 <IndexTable.Cell >
+    //                     {brandValue[index1] ?
+    //                         <span style={{ fill: `${colorValues.brand_checkbox_color1}` }}>
+    //                             <Icon source={CircleTickMinor}></Icon>
+    //                         </span>
+    //                         :
+    //                         <span style={{ fill: `${colorValues.brand_checkbox_color2}` }} >
+    //                             <Icon source={CircleCancelMinor}></Icon>
+    //                         </span>
+    //                     }
+    //                 </IndexTable.Cell>
+    //                 {[...Array(Number(competitorsCount))]?.map((item2, index2) => (
+    //                     <IndexTable.Cell>
+    //                         {competitorValue[index1] && competitorValue[index1][index2] ?
+    //                             <span style={{ fill: `${colorValues.competitors_checkbox_color1}` }}>
+    //                                 <Icon source={CircleTickMinor}></Icon>
+    //                             </span> :
+    //                             <span style={{ fill: `${colorValues.competitors_checkbox_color2}` }}>
+    //                                 <Icon source={CircleCancelMinor}></Icon>
+    //                             </span>
+    //                         }
+    //                     </IndexTable.Cell>
+    //                 ))}
+    //             </IndexTable.Row>
+    //         )
+    //     });
 
 
     const themeRowsMobile = [...Array(Number(competitorsCount) + 1)]?.map(
@@ -126,12 +126,12 @@ export function Table2({ yourBrand, competitorName, advantageLoading, allValues,
         });
 
 
-    const themeHeadingsPc = [];
-    themeHeadingsPc.push({ title: '' }),
-        themeHeadingsPc.push({ title: `${yourBrand}` }),
-        [...Array(Number(competitorsCount))].map((item, index) => (
-            themeHeadingsPc.push({ title: `${competitorName[index]}` })
-        ))
+    // const themeHeadingsPc = [];
+    // themeHeadingsPc.push({ title: '' }),
+    //     themeHeadingsPc.push({ title: `${yourBrand}` }),
+    //     [...Array(Number(competitorsCount))].map((item, index) => (
+    //         themeHeadingsPc.push({ title: `${competitorName[index]}` })
+    //     ))
 
     const themeHeadingsMobile = [];
     themeHeadingsMobile.push({ title: '' }),
@@ -145,18 +145,18 @@ export function Table2({ yourBrand, competitorName, advantageLoading, allValues,
             {!advantageLoading &&
                 <Card sectioned>
                     <div className='Theme-Card-Content'>
-                        <div className={`${screen ? 'Theme2-Pc-Table' : 'Theme2-Mobile-Table'} Theme-Table`}>
+                        <div className={`${'Theme2-Mobile-Table'} Theme-Table`}>
                             <IndexTable
                                 resourceName={resourceName}
-                                itemCount={ competitorsCount?.length}
+                                itemCount={competitorsCount?.length}
                                 selectable={false}
-                                headings={screen ? themeHeadingsPc : themeHeadingsMobile}
+                                headings={themeHeadingsMobile}
                             >
-                                {screen ? themeRowsPc : themeRowsMobile}
+                                {themeRowsMobile}
                             </IndexTable>
                         </div>
 
-                        <div className='Screen-Selection'>
+                       <div className='Screen-Selection'>
                             <Stack>
                                 <span></span>
                                 <div className='Screen-Selection-Icons'>
@@ -172,7 +172,7 @@ export function Table2({ yourBrand, competitorName, advantageLoading, allValues,
                                 </div>
                                 <span></span>
                             </Stack>
-                        </div>
+                        </div> 
 
                     </div>
                 </Card>
