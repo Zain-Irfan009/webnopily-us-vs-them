@@ -96,6 +96,10 @@
     margin: 0;
 }
 
+.Dashboard .Screen-Selection .Polaris-Spinner {
+    margin: 0;
+}
+
 .Dashboard .Polaris-Banner--statusInfo {
     margin-bottom: 1rem;
 }

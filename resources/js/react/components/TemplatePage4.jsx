@@ -1,14 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Page, Layout, Card, MediaCard, Button, Loading } from '@shopify/polaris';
+import { Page, Layout, Card, MediaCard, Button, Loading, Link } from '@shopify/polaris';
 import { AppContext } from '../Context'
 import axios from "axios";
+import createApp from '@shopify/app-bridge/development';
+import { Redirect } from '@shopify/app-bridge/actions';
 
 
 export function TemplatePage4() {
-    const { setActivePage, setTemplateUserId, setSelectedTemplate, config, url } = useContext(AppContext);
+    const { setActivePage, setTemplateUserId, setSelectedTemplate, templatesCount, config, url } = useContext(AppContext);
     const [appEnable, setAppEnable] = useState(false)
     const [btnloading, setBtnLoading] = useState(false)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
 
     // useEffect(() => {
@@ -44,11 +46,27 @@ export function TemplatePage4() {
             const response = await axios.post(`${url}/enable-app`, data)
             setAppEnable(!appEnable)
             setBtnLoading(false)
+            const app = createApp(config);
+            const redirect = Redirect.create(app);
+            redirect.dispatch(Redirect.Action.APP, {
+                path: `/`,
+            })
 
         } catch (error) {
             alert('Error', error);
             setBtnLoading(false)
         }
+    }
+
+    const handleAppLocation = () => {
+        // if (!templatesCount) {
+        //     const app = createApp(config);
+        //     const redirect = Redirect.create(app);
+        //     redirect.dispatch(Redirect.Action.APP, {
+        //         path: `/`,
+        //     })
+        // }
+
     }
 
     return (
@@ -170,7 +188,9 @@ export function TemplatePage4() {
 
                         <Layout.Section fullWidth>
                             <div className='GoTo-App-Btn'>
-                                <Button primary>Go to app</Button>
+                                <Link url={`/?shop=${config.shopOrigin}&host=${config.host}`}>
+                                    <Button primary onClick={handleAppLocation}>Go to app</Button>
+                                </Link>          
                             </div>
                         </Layout.Section>
 

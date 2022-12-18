@@ -412,9 +412,9 @@ export function Dashboard() {
                 </Modal>
             }
 
-            {loading ? <Loading /> :
-                // templateTable.length < 1 ?
-                //     <Templates /> :
+            {templateLoading ? <Loading /> :
+                templateTable.length < 1 ?
+                    <Templates /> :
                 <Page
                     title="Us vs Them"
                     fullWidth

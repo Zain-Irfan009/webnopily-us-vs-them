@@ -28,30 +28,30 @@ function AppNavigation() {
     //     destination: '/settings',
     // });
 
-    const navigationMenu = NavigationMenu.create(app, {
-        items: [dashboard, templates],
-    });
+    // const navigationMenu = NavigationMenu.create(app, {
+    //     items: [dashboard, templates],
+    // });
 
-    // const navigationMenu = NavigationMenu.create(app);
+    const navigationMenu = NavigationMenu.create(app);
 
     switch (location.pathname) {
         case "/":
             navigationMenu.set({ active: dashboard });
             break;
-        case "/templates":
-            navigationMenu.set({ active: templates });
-            break;
+        // case "/templates":
+        //     navigationMenu.set({ active: templates });
+        //     break;
         // case "/locations":
         //     navigationMenu.set({ active: locations });
         //     break;
         // case "/settings":
         //     navigationMenu.set({ active: settings });
         //     break;
-        default:
-            navigationMenu.set({ active: undefined });
-
         // default:
-        //     navigationMenu.set({ active: dashboard });
+        //     navigationMenu.set({ active: undefined });
+
+        default:
+            navigationMenu.set({ active: dashboard });
     }
 
     return null

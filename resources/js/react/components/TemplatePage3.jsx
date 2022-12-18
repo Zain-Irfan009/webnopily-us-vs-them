@@ -3,11 +3,13 @@ import { Page, Layout, Text, Card, Select, Icon, Stack, TextField, Loading, Page
 import { CircleTickMajor, CircleCancelMajor } from '@shopify/polaris-icons';
 import { Table1, Table2, Table3, Table4, SideBarNavigation } from './index';
 import axios from "axios";
+import createApp from '@shopify/app-bridge/development';
+import { Redirect } from '@shopify/app-bridge/actions';
 import { AppContext } from '../Context'
 
 
 export function TemplatePage3() {
-  const { selectedTemplate, templateUserId, url, setActivePage } = useContext(AppContext);
+  const { selectedTemplate, templateUserId, url, setActivePage, templatesCount, config } = useContext(AppContext);
   let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
   const [btnloading, setBtnLoading] = useState(false)
   const [templateName, setTemplateName] = useState();
@@ -309,7 +311,23 @@ export function TemplatePage3() {
       console.log('submit template response ', response);
       setBtnLoading(false)
       setSuccessToast(true)
-      setActivePage(4)
+      if (templatesCount) {
+        setActivePage(4)
+      }
+      else {
+        const app = createApp(config);
+        const redirect = Redirect.create(app);
+        redirect.dispatch(Redirect.Action.APP, {
+          path: `/`,
+        })
+      }
+
+      // const app = createApp(config);
+      // const redirect = Redirect.create(app);
+      // redirect.dispatch(Redirect.Action.APP, {
+      //   path: `/`,
+      // })
+
     } catch (error) {
       setBtnLoading(false)
       alert('Error ', error);

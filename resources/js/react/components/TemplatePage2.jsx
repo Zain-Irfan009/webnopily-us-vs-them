@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Page, Layout, Card, Icon, Stack, Button } from '@shopify/polaris';
 import { MobileMajor, DesktopMajor } from '@shopify/polaris-icons';
 import axios from "axios";
@@ -6,7 +6,7 @@ import { AppContext } from '../Context'
 
 
 export function TemplatePage2() {
-  const { setActivePage, templateUserId, setTemplateUserId, setSelectedTemplate, url } = useContext(AppContext);
+  const { setActivePage, templateUserId, setTemplateUserId, setSelectedTemplate, url, setTemplatesCount } = useContext(AppContext);
 
   let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
   const [btnloading, setBtnLoading] = useState(false)
@@ -48,6 +48,29 @@ export function TemplatePage2() {
       });
 
   }
+
+  const getData = async () => {
+    const response = await axios
+      .get(
+        `${url}/current-templates?shop_name=${host}`
+      )
+      .then(res => {
+        if (res.data.result.length < 1) {
+          setTemplatesCount(true)
+          console.log('no template saved');
+        }
+        else {
+          setTemplatesCount(false)
+          console.log('templates found');
+        }
+      })
+      .catch(error =>
+        console.log('Error', error));
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className='Template-Page2'>
