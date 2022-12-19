@@ -703,7 +703,19 @@ class TemplateController extends ApiController
 
             }])->where('shop_id', $shop->id)->get();
             $prodcuts_array = [];
-            foreach ($products as $product) {
+
+            foreach ($products as $loop_index=> $product) {
+
+
+
+                    $user_template_product_count=UserTemplateProduct::where('shopify_product_id',$product->shopify_id)->where('shop_id', $shop->id)->count();
+                if($user_template_product_count >0){
+                    $selected=true;
+                }
+                else{
+                    $selected=false;
+                }
+
                $user_template_product=UserTemplateProduct::where('shopify_product_id',$product->shopify_id)->where('shop_id', $shop->id)->first();
 
                 if($user_template_product==null){
@@ -711,7 +723,7 @@ class TemplateController extends ApiController
                     $name=null;
                 }
                 else{
-                    $template_user=UserTemplate::find($request->user_template_id);
+                    $template_user=UserTemplate::find($user_template_product->user_template_id);
                     $name=$template_user->template_name;
                     $assigned=true;
                 }
@@ -719,10 +731,12 @@ class TemplateController extends ApiController
                     'id' => $product->shopify_id,
                     'title' => $product->title,
                     'image' => $product->featured_image,
-                    'selected' => ($product->templateProducts->count() > 0) ? true : false,
+//                    'selected' => ($product->templateProducts->count() > 0) ? true : false,
+                    'selected' => $selected,
                     'assigned'=>$assigned,
                      'template_name'=>$name
                 ];
+
                 $prodcuts_array[] = $item;
 
             }
