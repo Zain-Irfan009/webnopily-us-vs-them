@@ -372,27 +372,29 @@ export function Dashboard() {
                                 items={products}
                                 loading={btnloading ? true : false}
                                 renderItem={(item) => {
-                                    const { id, image, title, assigned, template_name } = item;
+                                    const { id, image, title, selected, assigned, template_name } = item;
                                     const media = <Avatar size="small"
                                         shape="square"
                                         name={title}
                                         source={image} />;
                                     return (
-                                        <ResourceItem
-                                            id={id}
-                                            media={media}
-                                            accessibilityLabel={`View details for ${title}`}
-                                        >
-                                            <Text variant="bodyMd"
-                                                fontWeight="bold" as="h3">
-                                                {title}
-                                                {assigned &&
-                                                    <p className='Product-Assigned'>
-                                                        {`Product assigned to ${template_name}`}
-                                                    </p>
-                                                }
-                                            </Text>
-                                        </ResourceItem>
+                                        <span className={!selected && assigned ? 'Selected-Product ResourceItem-ListItem' : 'ResourceItem-ListItem'}>
+                                            <ResourceItem
+                                                id={id}
+                                                media={media}
+                                                accessibilityLabel={`View details for ${title}`}
+                                            >
+                                                <Text variant="bodyMd"
+                                                    fontWeight="bold" as="h3">
+                                                    {title}
+                                                    {!selected && assigned &&
+                                                        <p className='Product-Assigned'>
+                                                            {`Product assigned to ${template_name}`}
+                                                        </p>
+                                                    }
+                                                </Text>
+                                            </ResourceItem>
+                                        </span>
                                     );
                                 }}
                                 selectedItems={selectedItems}

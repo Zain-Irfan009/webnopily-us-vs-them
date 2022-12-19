@@ -302,15 +302,19 @@
     min-height: 0;
 }
 
+.Dashboard .Polaris-MediaCard-Table .ResourceItem-ListItem{
+    border-top: var(--p-border-divider);
+}
+
 .Dashboard .Polaris-MediaCard-Table .Product-Assigned {
     font-size: 12px;
     font-weight: 500;
 }
 
-.Dashboard .Polaris-MediaCard-Table .Selected-Product{
+.Selected-Product{
     pointer-events: none;
     cursor: none;
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 
