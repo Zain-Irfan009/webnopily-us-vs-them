@@ -152,9 +152,8 @@ export function TemplatePage3() {
 
 
   const handleCompetitorValue = (e, index, index2) => {
+
     let competitor_values = (competitorValue)
-    console.log('function clicked');
-    console.log('value: ', e.target.value);
 
     if (e.target.value === 'true') {
       competitor_values[index][index2] = true;
@@ -169,11 +168,6 @@ export function TemplatePage3() {
     setCompetitorValue(competitor_values)
     setCompetitorValueToggle(!competitorValueToggle)
   }
-
-  // useEffect(() => {
-  //   console.log('competitor values: ', competitorValue);
-  // })
-
 
   const handleColorValues = e => {
     setColorValues({ ...colorValues, [e.target.name]: e.target.value });
@@ -662,7 +656,7 @@ export function TemplatePage3() {
                                             >
                                               <input type="radio"
                                                 value={true}
-                                                onChange={(e) => handleCompetitorValue(e, index, index2)} />
+                                                onClick={(e) => handleCompetitorValue(e, index, index2)} />
                                               <Icon source={CircleTickMajor}></Icon>
                                             </label>
                                           </span>
@@ -672,8 +666,8 @@ export function TemplatePage3() {
                                               className={`${competitorValue[index] && competitorValue[index][index2] === false ? 'Selected' : ''}`}
                                             >
                                               <input type="radio"
-                                                value={false}
-                                                onChange={(e) => handleCompetitorValue(e, index, index2)} />
+                                                value={ false}
+                                                onClick={(e) => handleCompetitorValue(e, index, index2)} />
                                               <Icon source={CircleCancelMajor}>
                                               </Icon>
                                             </label>
@@ -735,7 +729,7 @@ export function TemplatePage3() {
                                           >
                                             <input type="radio"
                                               value={true}
-                                              onChange={(e) => handleCompetitorValue(e, index, index2)} />
+                                              onClick={(e) => handleCompetitorValue(e, index, index2)} />
                                             <Icon source={CircleTickMajor}></Icon>
                                           </label>
                                         </span>
@@ -746,7 +740,7 @@ export function TemplatePage3() {
                                           >
                                             <input type="radio"
                                               value={false}
-                                              onChange={(e) => handleCompetitorValue(e, index, index2)} />
+                                              onClick={(e) => handleCompetitorValue(e, index, index2)} />
                                             <Icon source={CircleCancelMajor}>
                                             </Icon>
                                           </label>
