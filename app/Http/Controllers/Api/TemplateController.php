@@ -190,21 +190,77 @@ class TemplateController extends ApiController
             $user_templates->template_name = 'My Template_' . $random_number;
             $user_templates->brand = 'Your Brand';
             $user_templates->competitors = 'competitor';
-            $user_templates->background_color1 = '#ffffff';
-            $user_templates->background_color2 = '#ebecf0';
-            $user_templates->brand_checkbox_color1 = '#474b8b';
-            $user_templates->brand_checkbox_color2 = '#7b7eac';
-            $user_templates->competitors_checkbox_color1 = '#474b8b';
-            $user_templates->competitors_checkbox_color2 = '#7b7eac';
-            $user_templates->text_advantage_color = '#000000';
-            $user_templates->text_brand_color = '#000000';
-            $user_templates->brand_background1 = '#ec645f';
-            $user_templates->brand_background2 = '#eb4c50';
-            $user_templates->competitor_backgorund1 = '#6E71A6';
-            $user_templates->competitor_backgorund2 = '#3B3F84';
-            $user_templates->text_brand_color_inside = '#000000';
-            $user_templates->text_competitor_color_inside = '#000000';
-            $user_templates->text_competitor_color = '#000000';
+            if($template->id==1) {
+                $user_templates->background_color1 = '#ffffff';
+                $user_templates->background_color2 = '#ebecf0';
+                $user_templates->brand_checkbox_color1 = '#ffffff';
+                $user_templates->brand_checkbox_color2 = '#ffffff';
+                $user_templates->competitors_checkbox_color1 = '#000000';
+                $user_templates->competitors_checkbox_color2 = '#000000';
+                $user_templates->text_advantage_color = '#000000';
+                $user_templates->text_brand_color = '#ffffff';
+                $user_templates->brand_background1 = '#ec645f';
+                $user_templates->brand_background2 = '#eb4c50';
+                $user_templates->competitor_backgorund1 = '#6E71A6';
+                $user_templates->competitor_backgorund2 = '#3B3F84';
+                $user_templates->text_brand_color_inside = '#000000';
+                $user_templates->text_competitor_color_inside = '#000000';
+                $user_templates->text_competitor_color = '#000000';
+            }
+
+            if($template->id==2) {
+                $user_templates->background_color1 = '#e7e9ee';
+                $user_templates->background_color2 = '#ffffff';
+                $user_templates->brand_checkbox_color1 = '#3b3f84';
+                $user_templates->brand_checkbox_color2 = '#6e71a6';
+                $user_templates->competitors_checkbox_color1 = '#3b3f84';
+                $user_templates->competitors_checkbox_color2 = '#6e71a6';
+                $user_templates->text_advantage_color = '#000000';
+                $user_templates->text_brand_color = '#ffffff';
+                $user_templates->brand_background1 = '#3b3f84';
+                $user_templates->brand_background2 = '#eb4c50';
+                $user_templates->competitor_backgorund1 = '#6E71A6';
+                $user_templates->competitor_backgorund2 = '#3B3F84';
+                $user_templates->text_brand_color_inside = '#000000';
+                $user_templates->text_competitor_color_inside = '#000000';
+                $user_templates->text_competitor_color = '#ffffff';
+            }
+
+            if($template->id==3) {
+                $user_templates->background_color1 = '#f9f3f0';
+                $user_templates->background_color2 = '#ebecf0';
+                $user_templates->brand_checkbox_color1 = '#787dac';
+                $user_templates->brand_checkbox_color2 = '#787dac';
+                $user_templates->competitors_checkbox_color1 = '#787dac';
+                $user_templates->competitors_checkbox_color2 = '#787dac';
+                $user_templates->text_advantage_color = '#000000';
+                $user_templates->text_brand_color = '#000000';
+                $user_templates->brand_background1 = '#3b3f84';
+                $user_templates->brand_background2 = '#eb4c50';
+                $user_templates->competitor_backgorund1 = '#6E71A6';
+                $user_templates->competitor_backgorund2 = '#3B3F84';
+                $user_templates->text_brand_color_inside = '#000000';
+                $user_templates->text_competitor_color_inside = '#000000';
+                $user_templates->text_competitor_color = '#000000';
+            }
+
+            if($template->id==4) {
+                $user_templates->background_color1 = '#efefef';
+                $user_templates->background_color2 = '#bfe5f4';
+                $user_templates->brand_checkbox_color1 = '#000000';
+                $user_templates->brand_checkbox_color2 = '#000000';
+                $user_templates->competitors_checkbox_color1 = '#000000';
+                $user_templates->competitors_checkbox_color2 = '#000000';
+                $user_templates->text_advantage_color = '#000000';
+                $user_templates->text_brand_color = '#000000';
+                $user_templates->brand_background1 = '#3b3f84';
+                $user_templates->brand_background2 = '#eb4c50';
+                $user_templates->competitor_backgorund1 = '#6E71A6';
+                $user_templates->competitor_backgorund2 = '#3B3F84';
+                $user_templates->text_brand_color_inside = '#000000';
+                $user_templates->text_competitor_color_inside = '#000000';
+                $user_templates->text_competitor_color = '#000000';
+            }
             $user_templates->advantages_count = 5;
             $user_templates->shop_id = $shop->id;
             $user_templates->save();
