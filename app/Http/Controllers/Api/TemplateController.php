@@ -719,13 +719,13 @@ class TemplateController extends ApiController
                $user_template_product=UserTemplateProduct::where('shopify_product_id',$product->shopify_id)->where('shop_id', $shop->id)->first();
 
                 if($user_template_product==null){
-                    $assigned=false;
+                    $assigned=true;
                     $name=null;
                 }
                 else{
                     $template_user=UserTemplate::find($user_template_product->user_template_id);
                     $name=$template_user->template_name;
-                    $assigned=true;
+//                    $assigned=true;
                 }
 
                 if($selected==true){
