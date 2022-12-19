@@ -702,16 +702,17 @@ class TemplateController extends ApiController
                 $q->where('user_template_id', $user_template->id);
 
             }])->where('shop_id', $shop->id)->get();
-
-
             $prodcuts_array = [];
             foreach ($products as $product) {
                $user_template_product=UserTemplateProduct::where('shopify_product_id',$product->shopify_id)->where('shop_id', $shop->id)->first();
+
                 if($user_template_product==null){
-                    $template_user=UserTemplate::find($user_template_product->user_template_id);
                     $assigned=false;
+                    $name=null;
                 }
                 else{
+                    $template_user=UserTemplate::find($request->user_template_id);
+                    $name=$template_user->template_name;
                     $assigned=true;
                 }
                $item = [
@@ -720,7 +721,7 @@ class TemplateController extends ApiController
                     'image' => $product->featured_image,
                     'selected' => ($product->templateProducts->count() > 0) ? true : false,
                     'assigned'=>$assigned,
-                     'template_name'=>$template_user->template_name
+                     'template_name'=>$name
                 ];
                 $prodcuts_array[] = $item;
 
