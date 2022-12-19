@@ -727,6 +727,11 @@ class TemplateController extends ApiController
                     $name=$template_user->template_name;
                     $assigned=true;
                 }
+
+                if($selected==true){
+                    $assigned=false;
+                }
+
                $item = [
                     'id' => $product->shopify_id,
                     'title' => $product->title,
@@ -734,6 +739,7 @@ class TemplateController extends ApiController
 //                    'selected' => ($product->templateProducts->count() > 0) ? true : false,
                     'selected' => $selected,
                     'assigned'=>$assigned,
+
                      'template_name'=>$name
                 ];
 
