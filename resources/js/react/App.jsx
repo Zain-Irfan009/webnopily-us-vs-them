@@ -66,8 +66,8 @@ function App({ shop, host, apiKey }) {
     const [selectedTemplate, setSelectedTemplate] = useState()
     const [templateUserId, setTemplateUserId] = useState()
 
-    const url = 'https://us-vs-them.test/api'
-    // const url='https://phpstack-362288-3089196.cloudwaysapps.com/api';
+    // const url = 'https://us-vs-them.test/api'
+    const url='https://phpstack-362288-3089196.cloudwaysapps.com/api';
 
     // useEffect(() => {
     //     console.log('activePage: ', activePage);
