@@ -378,7 +378,7 @@ export function Dashboard() {
                                         name={title}
                                         source={image} />;
                                     return (
-                                        <span className={!selected && assigned ? 'Selected-Product ResourceItem-ListItem' : 'ResourceItem-ListItem'}>
+                                        <span className={assigned ? 'Selected-Product ResourceItem-ListItem' : 'ResourceItem-ListItem'}>
                                             <ResourceItem
                                                 id={id}
                                                 media={media}
@@ -387,7 +387,7 @@ export function Dashboard() {
                                                 <Text variant="bodyMd"
                                                     fontWeight="bold" as="h3">
                                                     {title}
-                                                    {!selected && assigned &&
+                                                    {assigned &&
                                                         <p className='Product-Assigned'>
                                                             {`Product assigned to ${template_name}`}
                                                         </p>
