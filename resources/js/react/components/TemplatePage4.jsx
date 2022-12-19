@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Page, Layout, Card, MediaCard, Button, Loading, Link } from '@shopify/polaris';
+import { Page, Layout, Card, MediaCard, Button, Loading, Link, Toast } from '@shopify/polaris';
 import { AppContext } from '../Context'
 import axios from "axios";
 import createApp from '@shopify/app-bridge/development';
@@ -8,10 +8,26 @@ import { Redirect } from '@shopify/app-bridge/actions';
 
 export function TemplatePage4() {
     const { setActivePage, setTemplateUserId, setSelectedTemplate, templatesCount, config, url } = useContext(AppContext);
+    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+    const app = createApp(config);
+    const redirect = Redirect.create(app);
     const [appEnable, setAppEnable] = useState(false)
     const [btnloading, setBtnLoading] = useState(false)
     const [loading, setLoading] = useState(false)
-    let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+    const [appStatusToast, setAppStatusToast] = useState(false);
+
+
+
+    const toggleToastAppStatus = () => {
+        setAppStatusToast(false);
+    }
+
+    const toastAppStatus = appStatusToast ?
+        (
+            appEnable ?
+                <Toast content="App Enabled" onDismiss={toggleToastAppStatus} duration={1500} /> :
+                <Toast content="App Disabled" onDismiss={toggleToastAppStatus} duration={1500} />
+        ) : null;
 
     // useEffect(() => {
     //     setActivePage(1)
@@ -27,6 +43,7 @@ export function TemplatePage4() {
             .then(res => {
                 setAppEnable(res.data.result.app_status)
                 setLoading(false)
+                
             })
             .catch(error =>
                 alert('Error', error));
@@ -46,12 +63,7 @@ export function TemplatePage4() {
             const response = await axios.post(`${url}/enable-app`, data)
             setAppEnable(!appEnable)
             setBtnLoading(false)
-            const app = createApp(config);
-            const redirect = Redirect.create(app);
-            redirect.dispatch(Redirect.Action.APP, {
-                path: `/`,
-            })
-
+            setAppStatusToast(true)
         } catch (error) {
             alert('Error', error);
             setBtnLoading(false)
@@ -60,12 +72,13 @@ export function TemplatePage4() {
 
     const handleAppLocation = () => {
         // if (!templatesCount) {
-        //     const app = createApp(config);
-        //     const redirect = Redirect.create(app);
         //     redirect.dispatch(Redirect.Action.APP, {
         //         path: `/`,
         //     })
         // }
+        redirect.dispatch(Redirect.Action.APP, {
+            path: `/`,
+        })
 
     }
 
@@ -99,26 +112,12 @@ export function TemplatePage4() {
                                     title="Last Step: Activate the app !"
                                     primaryAction={{
                                         content: appEnable ? 'Disable the app' : 'Enable the app',
-                                        // content: 'Enable the app',
                                         disabled: btnloading ? true : false,
                                         primary: true,
                                         onAction: handleAppStatus,
                                     }}
                                     description={`You just have one more step to activate your application, you just have to click on the button below!`}
-                                // popoverActions={[
-                                //   {
-                                //     content: 'Rename',
-                                //     onAction: () => { }
-                                //   },
-                                //   {
-                                //     content: 'Duplicate',
-                                //     onAction: () => { }
-                                //   },
-                                //   {
-                                //     content: 'Delete',
-                                //     onAction: () => { }
-                                //   }
-                                // ]}
+
                                 >
                                     <img
                                         alt="table1"
@@ -135,20 +134,6 @@ export function TemplatePage4() {
                                     title="Add an app block"
                                     description={`Using the theme customizer for your published theme, navigate to the template for product pages.
                                 Use the block list navigator to add a new block and add the Trial Offers Block.`}
-                                // popoverActions={[
-                                //   {
-                                //     content: 'Rename',
-                                //     onAction: () => { }
-                                //   },
-                                //   {
-                                //     content: 'Duplicate',
-                                //     onAction: () => { }
-                                //   },
-                                //   {
-                                //     content: 'Delete',
-                                //     onAction: () => { }
-                                //   }
-                                // ]}
                                 >
                                     <img
                                         alt="table1"
@@ -161,20 +146,6 @@ export function TemplatePage4() {
                                 <MediaCard
                                     title="Reorder an app block"
                                     description={`Hover over the app block you want to move and grab the grid icon. you can drag and drop to re-order the block.`}
-                                // popoverActions={[
-                                //   {
-                                //     content: 'Rename',
-                                //     onAction: () => { }
-                                //   },
-                                //   {
-                                //     content: 'Duplicate',
-                                //     onAction: () => { }
-                                //   },
-                                //   {
-                                //     content: 'Delete',
-                                //     onAction: () => { }
-                                //   }
-                                // ]}
                                 >
                                     <img
                                         alt="table1"
@@ -190,11 +161,12 @@ export function TemplatePage4() {
                             <div className='GoTo-App-Btn'>
                                 <Link url={`/?shop=${config.shopOrigin}&host=${config.host}`}>
                                     <Button primary onClick={handleAppLocation}>Go to app</Button>
-                                </Link>          
+                                </Link>
                             </div>
                         </Layout.Section>
 
                     </Layout>
+                    {toastAppStatus}
                 </Page>
             }
         </div>

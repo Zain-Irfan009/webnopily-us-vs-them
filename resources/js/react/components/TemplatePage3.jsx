@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext } from 'react'
-import { Page, Layout, Text, Card, Select, Icon, Stack, TextField, Loading, PageActions, Toast } from '@shopify/polaris';
+import { Page, Layout, Text, Card, Select, Icon, Stack, TextField, Loading, PageActions, Toast, Button } from '@shopify/polaris';
 import { CircleTickMajor, CircleCancelMajor } from '@shopify/polaris-icons';
 import { Table1, Table2, Table3, Table4, SideBarNavigation } from './index';
 import axios from "axios";
@@ -9,8 +9,11 @@ import { AppContext } from '../Context'
 
 
 export function TemplatePage3() {
-  const { selectedTemplate, templateUserId, url, setActivePage, templatesCount, config } = useContext(AppContext);
+  const { selectedTemplate, templateUserId, url, setActivePage, config } = useContext(AppContext);
   let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
+  const app = createApp(config);
+  const redirect = Redirect.create(app);
+  const [appEnable, setAppEnable] = useState(false)
   const [btnloading, setBtnLoading] = useState(false)
   const [templateName, setTemplateName] = useState();
   const [yourBrand, setYourBrand] = useState();
@@ -82,8 +85,21 @@ export function TemplatePage3() {
         alert('Error: ', error));
   }
 
+  const getPlanData = async () => {
+    const response = await axios
+      .get(
+        `${url}/check-trial?shop_name=${host}`
+      )
+      .then(res => {
+        setAppEnable(res.data.result.app_status)
+      })
+      .catch(error =>
+        alert('Error', error));
+  }
+
   useEffect(() => {
     getData();
+    getPlanData();
   }, []);
 
   const toggleToastActive = () => {
@@ -205,9 +221,7 @@ export function TemplatePage3() {
     setCompetitorValue(competitor_value)
     setAdvantageToggle(false)
     setAdvantageColorValues(advantageColorValue)
-    setTimeout(() => {
-      setAdvantageLoading(false);
-    }, 1000);
+    setAdvantageLoading(false);
 
   }
 
@@ -241,9 +255,10 @@ export function TemplatePage3() {
     setCompetitorName(competitors_Name)
     setCompetitorValue(competitor_value)
     setCompetitorToggle(false)
-    setTimeout(() => {
-      setAdvantageLoading(false);
-    }, 1000);
+    // setTimeout(() => {
+    //   setAdvantageLoading(false);
+    // }, 1000);
+    setAdvantageLoading(false);
   }
 
   useEffect(() => {
@@ -311,22 +326,14 @@ export function TemplatePage3() {
       console.log('submit template response ', response);
       setBtnLoading(false)
       setSuccessToast(true)
-      if (templatesCount) {
-        setActivePage(4)
-      }
-      else {
-        const app = createApp(config);
-        const redirect = Redirect.create(app);
+      if (appEnable) {
         redirect.dispatch(Redirect.Action.APP, {
           path: `/`,
         })
       }
-
-      // const app = createApp(config);
-      // const redirect = Redirect.create(app);
-      // redirect.dispatch(Redirect.Action.APP, {
-      //   path: `/`,
-      // })
+      else {
+        setActivePage(4)
+      }
 
     } catch (error) {
       setBtnLoading(false)
@@ -1414,22 +1421,22 @@ export function TemplatePage3() {
 
 
 
-              <div className='Template-Save-Actions'>
+              {/* <div className='Template-Save-Actions'>
                 <PageActions
                   primaryAction={{
                     content: 'Save Template',
                     onAction: submitData,
-                    disabled: btnloading ? true : false,
+                    loading: btnloading ? true : false,
                   }}
                 />
-              </div>
+              </div> */}
             </Layout.Section>
 
 
             <Layout.Section secondary>
               <SideBarNavigation />
 
-              <div className='Advantages-Tables-Preview sticky'>
+              <div className='Advantages-Tables-Preview'>
                 {(() => {
                   switch (selectedTemplate) {
                     case 1:
@@ -1471,6 +1478,9 @@ export function TemplatePage3() {
                 })()}
               </div>
 
+              <div className='Template-Save-Actions'>
+                <Button primary loading={btnloading ? true : false} onClick={submitData}> Save Template</Button>
+              </div>
             </Layout.Section>
           </Layout>
         }

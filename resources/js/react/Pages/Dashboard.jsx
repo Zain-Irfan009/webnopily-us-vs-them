@@ -17,6 +17,7 @@ export function Dashboard() {
     let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
     const app = createApp(config);
     const redirect = Redirect.create(app);
+    const [onlineStoreUrl, setOnlineStoreUrl] = useState()
 
     const [appEnable, setAppEnable] = useState(false)
     const [planName, setPlanName] = useState()
@@ -38,6 +39,7 @@ export function Dashboard() {
     const [deletetoastActive, setDeletetoastActive] = useState(false);
     const [duplicatetoastActive, setDuplicatetoastActive] = useState(false);
     const [productsToastActive, setProductsToastActive] = useState(false);
+    const [appStatusToast, setAppStatusToast] = useState(false);
 
     const [loading, setLoading] = useState(true)
     const [btnloading, setBtnLoading] = useState(false)
@@ -64,6 +66,7 @@ export function Dashboard() {
                 setPlanExpiry(res.data.result.trial_expiry_date)
                 setPlanTrialDays(res.data.result.trial_days)
                 setPlanUsageLimit(res.data.result.usage_limit)
+                setOnlineStoreUrl(res.data.result.link)
                 setLoading(false)
             })
             .catch(error =>
@@ -120,7 +123,8 @@ export function Dashboard() {
         setRenameToastActive(false);
         setDeletetoastActive(false);
         setDuplicatetoastActive(false);
-        setProductsToastActive(false)
+        setProductsToastActive(false);
+        setAppStatusToast(false);
     }
 
     const toastRename = renameToastActive ? (
@@ -135,6 +139,13 @@ export function Dashboard() {
     const toastProducts = productsToastActive ? (
         <Toast content="Products Updated Sucessfully" onDismiss={toggleToastActive} duration={1500} />
     ) : null;
+    const toastAppStatus = appStatusToast ?
+        (
+            appEnable ?
+                <Toast content="App Enabled" onDismiss={toggleToastActive} duration={1500} /> :
+                <Toast content="App Disabled" onDismiss={toggleToastActive} duration={1500} />
+        ) : null;
+
 
 
 
@@ -148,6 +159,7 @@ export function Dashboard() {
             const response = await axios.post(`${url}/enable-app`, data)
             setAppEnable(!appEnable)
             setBtnLoading(false)
+            setAppStatusToast(true)
 
         } catch (error) {
             alert('Error', error);
@@ -247,13 +259,14 @@ export function Dashboard() {
 
             .then(res => {
                 console.log('select products response', res);
-                setProducts(res.data.result)
+
                 let arr = []
                 res.data.result?.map((item) => {
                     if (item.selected === true) {
                         arr.push(item.id)
                     }
                 })
+                setProducts(res.data.result)
                 setTemplateUserId(id)
                 setSelectedItems(arr)
                 setBtnLoading(false)
@@ -359,7 +372,7 @@ export function Dashboard() {
                                 items={products}
                                 loading={btnloading ? true : false}
                                 renderItem={(item) => {
-                                    const { id, image, title } = item;
+                                    const { id, image, title, assigned, template_name } = item;
                                     const media = <Avatar size="small"
                                         shape="square"
                                         name={title}
@@ -373,8 +386,12 @@ export function Dashboard() {
                                             <Text variant="bodyMd"
                                                 fontWeight="bold" as="h3">
                                                 {title}
+                                                {assigned &&
+                                                    <p className='Product-Assigned'>
+                                                        {`Product assigned to ${template_name}`}
+                                                    </p>
+                                                }
                                             </Text>
-
                                         </ResourceItem>
                                     );
                                 }}
@@ -415,51 +432,55 @@ export function Dashboard() {
             {templateLoading ? <Loading /> :
                 templateTable.length < 1 ?
                     <Templates /> :
-                <Page
-                    title="Us vs Them"
-                    fullWidth
-                    titleMetadata={
-                        <>
-                            {appEnable ?
-                                <Badge status="success">Active</Badge> :
-                                <Badge status="attention">Pending</Badge>}
-                        </>
-                    }
-                    primaryAction={
-                        {
-                            content: appEnable ? 'Disable the app' : 'Enable the app',
-                            disabled: btnloading ? true : false,
-                            onAction: handleAppStatus,
+                    <Page
+                        title="Us vs Them"
+                        fullWidth
+                        titleMetadata={
+                            <>
+                                {appEnable ?
+                                    <Badge status="success">Active</Badge> :
+                                    <Badge status="attention">Pending</Badge>}
+                            </>
                         }
-                    }
-                >
-                    <Layout>
-                        <Layout.Section>
-                            {!appEnable &&
-                                <div className='App-Banner'>
-                                    <Banner
-                                        title="Your Us vs Them Widget was created. Now install the forms theme app embed."
-                                        action={
-                                            {
-                                                content: 'Go to online store',
-                                                onAction: () => {
-                                                },
-                                            }
-                                        }
-                                        status="warning"
-                                    >
-                                        <List>
-                                            <List.Item>
-                                                In order for your widgets to work on your storefront, go to your
-                                                online store editor
-                                                and turn on the forms theme app embed.
-                                            </List.Item>
-                                        </List>
-                                    </Banner>
-                                </div>
+                        primaryAction={
+                            {
+                                content: appEnable ? 'Disable the app' : 'Enable the app',
+                                disabled: btnloading ? true : false,
+                                onAction: handleAppStatus,
                             }
+                        }
+                    >
+                        <Layout>
+                            <Layout.Section>
+                                {!appEnable &&
+                                    <div className='App-Banner'>
+                                        <Banner
+                                            title="Your Us vs Them Widget was created. Now install the forms theme app embed."
+                                            status="warning"
+                                        >
+                                            <List>
+                                                <List.Item>
+                                                    In order for your widgets to work on your storefront, go to your
+                                                    online store editor
+                                                    and turn on the forms theme app embed.
+                                                </List.Item>
+                                            </List>
+                                            <div className='Polaris-Banner__Actions'>
+                                                <div className='Polaris-ButtonGroup'>
+                                                    <div className='Polaris-ButtonGroup__Item'>
+                                                        <div className='Polaris-Banner__PrimaryAction'>
+                                                            <button className='Polaris-Banner__Button'>
+                                                                <a href={onlineStoreUrl} target='_blank'>Go to online store</a>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </Banner>
+                                    </div>
+                                }
 
-                            {/* {planExpireBanner &&
+                                {/* {planExpireBanner &&
                                     planTrialDays > 0 &&
                                     <Banner
                                         title="Plan Expiry"
@@ -470,138 +491,139 @@ export function Dashboard() {
                                     </Banner>
                                 } */}
 
-                            <Suspense>
-                                <div className='ProgressBar-Section'>
-                                    <Card sectioned>
-                                        <Text variant="headingLg" as="h5">
-                                            {planName}
-                                            <span>
-                                                ($7.99/month, additional charges $0.0001/view)
-                                            </span>
-                                        </Text>
-                                        <Text variant="bodyMd" as="p">
-                                            {`Get Upto ${planUsageLimit} monthly views`}
-                                        </Text>
-                                        <div className='ProgressBar'>
-                                            <div className='ProgressBar-Value'>
-                                                <ProgressBar progress={((planCount / planUsageLimit) * 100)} color="primary" />
-                                                <p className='Initial'>0</p>
-                                                {planCount > 100 &&
-                                                    <p style={{ left: `${((planCount / planUsageLimit) * 100)}%` }}>{planCount}</p>
-                                                }
-                                                <p className='Final'>{planUsageLimit} </p>
+                                <Suspense>
+                                    <div className='ProgressBar-Section'>
+                                        <Card sectioned>
+                                            <Text variant="headingLg" as="h5">
+                                                {planName}
+                                                <span>
+                                                    ($7.99/month, additional charges $0.0001/view)
+                                                </span>
+                                            </Text>
+                                            <Text variant="bodyMd" as="p">
+                                                {`Get Upto ${planUsageLimit} monthly views`}
+                                            </Text>
+                                            <div className='ProgressBar'>
+                                                <div className='ProgressBar-Value'>
+                                                    <ProgressBar progress={((planCount / planUsageLimit) * 100)} color="primary" />
+                                                    <p className='Initial'>0</p>
+                                                    {planCount > 100 &&
+                                                        <p style={{ left: `${((planCount / planUsageLimit) * 100)}%` }}>{planCount}</p>
+                                                    }
+                                                    <p className='Final'>{planUsageLimit} </p>
+                                                </div>
                                             </div>
+                                        </Card>
+                                    </div>
+
+                                    <Card sectioned>
+                                        <h5>Your current templates</h5>
+                                        <div className='Current-Templates-Card-Content'>
+
+                                            <Stack>
+                                                <p>
+                                                    This is your dashboard. It gathers all your templates. You can
+                                                    create as many
+                                                    as you want for each product.
+                                                </p>
+
+                                                <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
+                                                    <Button size="slim" >Create a Table</Button>
+                                                </Link>
+                                            </Stack>
                                         </div>
                                     </Card>
-                                </div>
+                                </Suspense>
 
-                                <Card sectioned>
-                                    <h5>Your current templates</h5>
-                                    <div className='Current-Templates-Card-Content'>
+                                <Suspense>
+                                    {templateLoading ?
+                                        <Spinner accessibilityLabel="Loading..." size="large" /> :
+                                        templateTable.length < 1 ?
+                                            <Card sectioned>
+                                                <EmptyState
+                                                    heading="No table created yet!"
+                                                    image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
 
-                                        <Stack>
-                                            <p>
-                                                This is your dashboard. It gathers all your templates. You can
-                                                create as many
-                                                as you want for each product.
-                                            </p>
-
-                                            <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
-                                                <Button size="slim" >Create a Table</Button>
-                                            </Link>
-                                        </Stack>
-                                    </div>
-                                </Card>
-                            </Suspense>
-
-                            <Suspense>
-                                {templateLoading ?
-                                    <Spinner accessibilityLabel="Loading..." size="large" /> :
-                                    templateTable.length < 1 ?
-                                        <Card sectioned>
-                                            <EmptyState
-                                                heading="No table created yet!"
-                                                image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
-
-                                            >
-                                                <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
-                                                    <Button primary>Create a table</Button>
-                                                </Link>
-                                            </EmptyState>
-                                        </Card>
-                                        :
-                                        templateTable?.map(({ name, image, template_id, user_template_id }, index) =>
-                                            <MediaCard
-                                                key={user_template_id}
-                                                title={name}
-                                                description={
-                                                    <span className='MediaCard-Description'>
-                                                        Here is the current Template that you've choosen. You can customize it every time you want.
-                                                        <ButtonGroup id='MediaCard-BtnGroup'>
-                                                            <span className='MediaCard-Products-handle'>
-                                                                {btnloading[user_template_id] ?
-                                                                    <Button primary loading>Select</Button>
-                                                                    :
-                                                                    <Button primary
-                                                                        onClick={() => handleSelectProducts(user_template_id)}
-                                                                        id='MediaCard-Btn'>Select Product</Button>
-                                                                }
-                                                            </span>
+                                                >
+                                                    <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
+                                                        <Button primary>Create a table</Button>
+                                                    </Link>
+                                                </EmptyState>
+                                            </Card>
+                                            :
+                                            templateTable?.map(({ name, image, template_id, user_template_id }, index) =>
+                                                <MediaCard
+                                                    key={user_template_id}
+                                                    title={name}
+                                                    description={
+                                                        <span className='MediaCard-Description'>
+                                                            Here is the current Template that you've choosen. You can customize it every time you want.
+                                                            <ButtonGroup id='MediaCard-BtnGroup'>
+                                                                <span className='MediaCard-Products-handle'>
+                                                                    {btnloading[user_template_id] ?
+                                                                        <Button primary loading>Select</Button>
+                                                                        :
+                                                                        <Button primary
+                                                                            onClick={() => handleSelectProducts(user_template_id)}
+                                                                            id='MediaCard-Btn'>Select Product</Button>
+                                                                    }
+                                                                </span>
 
 
-                                                            <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
-                                                                <Button onClick={() => handleChangeTemplate(user_template_id, template_id)}>
-                                                                    Change Template
-                                                                </Button>
-                                                            </Link>
+                                                                <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
+                                                                    <Button onClick={() => handleChangeTemplate(user_template_id, template_id)}>
+                                                                        Change Template
+                                                                    </Button>
+                                                                </Link>
 
 
-                                                            <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
-                                                                <Button onClick={() => handleCustomizeTemplate(user_template_id, template_id)}>
-                                                                    Customize Template
-                                                                </Button>
-                                                            </Link>
+                                                                <Link to={`/templates?shop=${config.shopOrigin}&host=${config.host}`}>
+                                                                    <Button onClick={() => handleCustomizeTemplate(user_template_id, template_id)}>
+                                                                        Customize Template
+                                                                    </Button>
+                                                                </Link>
 
-                                                        </ButtonGroup>
-                                                    </span>
-                                                }
-
-                                                popoverActions={[
-                                                    {
-                                                        id: user_template_id,
-                                                        content: 'Rename',
-                                                        onAction: () => handleRenameModal(user_template_id, name)
-                                                    },
-                                                    {
-                                                        id: user_template_id,
-                                                        content: 'Duplicate',
-                                                        onAction: () => handleDuplicateTemplate(user_template_id)
-                                                    },
-                                                    {
-                                                        id: user_template_id,
-                                                        content: 'Delete',
-                                                        onAction: () => handleDeleteTemplate(user_template_id)
+                                                            </ButtonGroup>
+                                                        </span>
                                                     }
-                                                ]}
-                                            >
-                                                <img
-                                                    alt="table"
-                                                    className='MediaCard-Img'
-                                                    src={image}
-                                                />
-                                            </MediaCard>
-                                        )
-                                }
-                            </Suspense>
 
-                        </Layout.Section>
+                                                    popoverActions={[
+                                                        {
+                                                            id: user_template_id,
+                                                            content: 'Rename',
+                                                            onAction: () => handleRenameModal(user_template_id, name)
+                                                        },
+                                                        {
+                                                            id: user_template_id,
+                                                            content: 'Duplicate',
+                                                            onAction: () => handleDuplicateTemplate(user_template_id)
+                                                        },
+                                                        {
+                                                            id: user_template_id,
+                                                            content: 'Delete',
+                                                            onAction: () => handleDeleteTemplate(user_template_id)
+                                                        }
+                                                    ]}
+                                                >
+                                                    <img
+                                                        alt="table"
+                                                        className='MediaCard-Img'
+                                                        src={image}
+                                                    />
+                                                </MediaCard>
+                                            )
+                                    }
+                                </Suspense>
 
-                    </Layout>
-                    {toastRename}
-                    {toastDelete}
-                    {toastDuplicate}
-                    {toastProducts}
-                </Page>
+                            </Layout.Section>
+
+                        </Layout>
+                        {toastRename}
+                        {toastDelete}
+                        {toastDuplicate}
+                        {toastProducts}
+                        {toastAppStatus}
+                    </Page>
             }
         </div>
     );

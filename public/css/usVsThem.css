@@ -92,11 +92,9 @@
     margin: 4rem 0;
 }
 
-.Dashboard .MediaCard-Products-handle .Polaris-Spinner {
-    margin: 0;
-}
-
-.Dashboard .Screen-Selection .Polaris-Spinner {
+.Dashboard .MediaCard-Products-handle .Polaris-Spinner,
+.Dashboard .Screen-Selection .Polaris-Spinner,
+.Template-Page3 .Template-Save-Actions .Polaris-Spinner {
     margin: 0;
 }
 
@@ -304,6 +302,17 @@
     min-height: 0;
 }
 
+.Dashboard .Polaris-MediaCard-Table .Product-Assigned {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.Dashboard .Polaris-MediaCard-Table .Selected-Product{
+    pointer-events: none;
+    cursor: none;
+    opacity: 0.5;
+}
+
 
 .Dashboard .MediaCard-Description .Polaris-ButtonGroup {
     margin-top: 12px;
@@ -376,10 +385,15 @@
 
 
 
-
+.Template-Page2 .Polaris-Layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    margin-top: calc(var(--p-space-4)*-1);
+}
 
 .Template-Page2 .Polaris-Layout .Polaris-Layout__Section {
-    min-width: 0;
+    /* min-width: 0; */
+    min-width: 47%;
 }
 
 .Theme-Table .Polaris-IndexTable__TableHeading {
@@ -660,7 +674,7 @@
 
 .Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading,
 .Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell {
-    border-bottom: var(--p-border-width-1) solid var(--template-table3-rows-border-color);
+    /* border-bottom: var(--p-border-width-1) solid var(--template-table3-rows-border-color); */
 }
 
 .Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableHeading:nth-child(2) {
@@ -876,13 +890,13 @@
 
 .Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:nth-child(2),
 .Theme3-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:nth-child(2) {
-    background-color: var(--template1-column2-bg-odd-color);
+    background-color: var(--template1-row-bg-odd-color);
     color: var(--template3-brand-text-color);
 }
 
 .Theme3-Pc-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:last-child,
 .Theme3-Mobile-Table .Polaris-IndexTable__Table .Polaris-IndexTable__TableRow .Polaris-IndexTable__TableCell:last-child {
-    background-color: var(--template1-column2-bg-even-color);
+    background-color: var(--template1-row-bg-even-color);
     color: var(--template3-competitor-text-color);
 }
 
@@ -1183,7 +1197,9 @@
 }
 
 .Template-Page3 .Template-Save-Actions {
-    margin-top: var(--p-space-4);
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
 }
 
 
