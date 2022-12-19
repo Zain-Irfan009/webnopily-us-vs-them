@@ -1276,6 +1276,7 @@ class TemplateController extends ApiController
         $shop = Session::where('shop', $request->shop_name)->first();
         $charge=Charge::where('shop_id',$shop->id)->latest()->first();
         $plan=Plan::first();
+        $product=Product::where('shop_id',$shop->id)->first();
         $current_date_time = now();
         $trial_date=Carbon::parse($charge->trial_ends_on);
         if($shop->enable_app==0){
@@ -1294,6 +1295,7 @@ class TemplateController extends ApiController
                 'count'=>$shop->count,
                 'trial_expiry_date'=>$charge->trial_ends_on,
                 'app_status'=>$app_status,
+                'link'=>'https://'.$shop->shop.'/admin/themes/current/editor?previewPath=/products/'.$product->handle
             ];
             $result= $data;
 
