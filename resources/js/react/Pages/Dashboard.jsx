@@ -28,6 +28,7 @@ export function Dashboard() {
     const [planExpireBanner, setPlanExpireBanner] = useState(true)
 
     const [products, setProducts] = useState([])
+    const [assignedItems, setAssignedItems] = useState([]);
     const [productsModal, setProductsModal] = useState(false)
     const [selectedItems, setSelectedItems] = useState([]);
     const [templateRenameValue, setTemplateRenameValue] = useState()
@@ -258,7 +259,7 @@ export function Dashboard() {
             )
 
             .then(res => {
-                console.log('select products response', res);
+                console.log('select products response', res.data.result);
 
                 let arr = []
                 res.data.result?.map((item) => {
@@ -268,6 +269,7 @@ export function Dashboard() {
                 })
                 setProducts(res.data.result)
                 setTemplateUserId(id)
+                setAssignedItems(arr)
                 setSelectedItems(arr)
                 setBtnLoading(false)
                 setProductsModal(true)
@@ -286,15 +288,22 @@ export function Dashboard() {
     const handleSubmitProduct = async () => {
         setBtnLoading(true)
         let unSelected = []
-        var arr = products.filter(function (item) {
+
+        var selected = selectedItems.filter(function (item) {
+            return assignedItems.indexOf(item) === -1;
+        });
+
+        var arr2 = products.filter(function (item) {
             return selectedItems.indexOf(item.id) === -1;
         });
-        arr?.map((item) => {
+
+        arr2?.map((item) => {
             unSelected.push(item.id)
         })
+
         let data = {
             user_template_id: templateUserId,
-            product_ids: selectedItems,
+            product_ids: selected,
             unSelected_ids: unSelected,
             shop_name: host,
         };
@@ -378,7 +387,7 @@ export function Dashboard() {
                                         name={title}
                                         source={image} />;
                                     return (
-                                        // <span className={assigned ? 'Selected-Product ResourceItem-ListItem' : 'ResourceItem-ListItem'}>
+                                        <span className={selected ? !assigned ? 'Selected-Product ResourceItem-ListItem' : 'ResourceItem-ListItem' : 'ResourceItem-ListItem'}>
                                             <ResourceItem
                                                 id={id}
                                                 media={media}
@@ -387,14 +396,15 @@ export function Dashboard() {
                                                 <Text variant="bodyMd"
                                                     fontWeight="bold" as="h3">
                                                     {title}
-                                                    {assigned &&
+                                                    {selected ? !assigned ?
                                                         <p className='Product-Assigned'>
                                                             {`Product assigned to ${template_name}`}
                                                         </p>
+                                                        : '' : ''
                                                     }
                                                 </Text>
                                             </ResourceItem>
-                                        // </span>
+                                        </span>
                                     );
                                 }}
                                 selectedItems={selectedItems}

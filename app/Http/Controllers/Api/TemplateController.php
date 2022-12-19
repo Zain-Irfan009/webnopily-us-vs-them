@@ -746,55 +746,65 @@ class TemplateController extends ApiController
         if (isset($request->user_template_id)) {
             $user_template = UserTemplate::where('id', $request->user_template_id)->where('shop_id', $shop->id)->first();
 
-             $products = Product::with(['templateProducts' => function ($q) use ($user_template) {
-                 $q->where('user_template_id', $user_template->id);
+            //  $products = Product::with(['templateProducts' => function ($q) use ($user_template) {
+            //      $q->where('user_template_id', $user_template->id);
 
-             }])->whereDoesntHave('templateProducts', function ($q) use ($user_template) {
-                 $q->where('user_template_id', '!=', $user_template->id);
+            //  }])->whereDoesntHave('templateProducts', function ($q) use ($user_template) {
+            //      $q->where('user_template_id', '!=', $user_template->id);
 
-             })->where('shop_id', $shop->id)->get();
+            //  })->where('shop_id', $shop->id)->get();
 
-//            $products = Product::with(['templateProducts' => function ($q) use ($user_template) {
-//                $q->where('user_template_id', $user_template->id);
-//
-//            }])->where('shop_id', $shop->id)->get();
+           $products = Product::with(['templateProducts' => function ($q) use ($user_template) {
+               $q->where('user_template_id', $user_template->id);
+
+           }])->where('shop_id', $shop->id)->get();
             $prodcuts_array = [];
 
             foreach ($products as $loop_index=> $product) {
 
-//                    $user_template_product_count=UserTemplateProduct::where('shopify_product_id',$product->shopify_id)->where('shop_id', $shop->id)->count();
-//                if($user_template_product_count >0){
-//                    $selected=true;
-//                }
-//                else{
-//                    $selected=false;
-//                }
+                   $user_template_product_count=UserTemplateProduct::where('shopify_product_id',$product->shopify_id)->where('shop_id', $shop->id)->count();
+               if($user_template_product_count >0){
+                   $selected=true;
+                    $user_template_id_first=UserTemplateProduct::where('user_template_id',$request->user_template_id)->where('shopify_product_id',$product->shopify_id)->where('shop_id', $shop->id)->first();
+                // dd($user_template_id_first);
+                    if($user_template_id_first){
+                    $assigned=false;
+                 }
+               }
+               else{
+                   $selected=false;
+                   $assigned=true; 
+               }
 
-//               $user_template_product=UserTemplateProduct::where('shopify_product_id',$product->shopify_id)->where('shop_id', $shop->id)->first();
-//
-//                if($user_template_product==null){
-//                    $assigned=true;
-//                    $name=null;
-//                }
-//                else{
-//                    $template_user=UserTemplate::find($user_template_product->user_template_id);
-//                    $name=$template_user->template_name;
-//                    $assigned=true;
-//                }
+              $user_template_product=UserTemplateProduct::where('shopify_product_id',$product->shopify_id)->where('shop_id', $shop->id)->first();
 
-//                if($selected==true){
-//                    $assigned=false;
-//                }
+               if($user_template_product==null){
+                //    $assigned=null;
+                   $name=null;
+               }
+               else{
+                   $template_user=UserTemplate::find($user_template_product->user_template_id);
+                   $name=$template_user->template_name;
+                //    $assigned=true;
+               }
+
+ $user_template_id_get=UserTemplateProduct::where('user_template_id',$request->user_template_id)->where('shopify_product_id',$product->shopify_id)->where('shop_id', $shop->id)->first();
+// dd($user_template_id_get);
+   $assigned=false;
+            if($user_template_id_get!=null){
+                            $assigned=true;
+                    }
+              
 
                $item = [
                     'id' => $product->shopify_id,
                     'title' => $product->title,
                     'image' => $product->featured_image,
-                    'selected' => ($product->templateProducts->count() > 0) ? true : false,
-//                    'selected' => $selected,
-//                    'assigned'=>$assigned,
+                    // 'selected' => ($product->templateProducts->count() > 0) ? true : false,
+                   'selected' => $selected,
+                   'assigned'=>$assigned,
 
-//                     'template_name'=>$name
+                    'template_name'=>$name
                 ];
 
                 $prodcuts_array[] = $item;
@@ -827,7 +837,7 @@ class TemplateController extends ApiController
 
     public function SelectedProducts(Request $request)
     {
-
+// dd($request->all());
         $shop = Session::where('shop', $request->shop_name)->first();
         $client = new Rest($shop->shop, $shop->access_token);
 

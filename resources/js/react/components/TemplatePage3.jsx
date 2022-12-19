@@ -1413,22 +1413,12 @@ export function TemplatePage3() {
                 </Card>
               }
 
-
-
-              {/* <div className='Template-Save-Actions'>
-                <PageActions
-                  primaryAction={{
-                    content: 'Save Template',
-                    onAction: submitData,
-                    loading: btnloading ? true : false,
-                  }}
-                />
-              </div> */}
             </Layout.Section>
 
 
             <Layout.Section secondary>
               <SideBarNavigation />
+
 
               <div className='Advantages-Tables-Preview'>
                 {(() => {
