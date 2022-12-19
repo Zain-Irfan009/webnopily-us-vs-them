@@ -11,6 +11,7 @@ export function TemplatePage4() {
     let host = location.ancestorOrigins[0].replace(/^https?:\/\//, '');
     const app = createApp(config);
     const redirect = Redirect.create(app);
+    const [onlineStoreUrl, setOnlineStoreUrl] = useState()
     const [appEnable, setAppEnable] = useState(false)
     const [btnloading, setBtnLoading] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -42,6 +43,7 @@ export function TemplatePage4() {
             )
             .then(res => {
                 setAppEnable(res.data.result.app_status)
+                setOnlineStoreUrl(res.data.result.link)
                 setLoading(false)
                 
             })
@@ -101,7 +103,7 @@ export function TemplatePage4() {
                                 </p>
                                 <br />
                                 <Button>
-                                    Enable App Embed (Legacy Themes)
+                                    <a href={onlineStoreUrl} target='_blank'> Enable App Embed (Legacy Themes)</a>
                                 </Button>
                             </Card>
                         </Layout.Section>

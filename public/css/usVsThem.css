@@ -1248,6 +1248,9 @@
 
 
 /* ----------------------Template Page 4-------------------------- */
+.Template-Page4 button a{
+    color: #000;
+}
 
 .Template-Page4 .Polaris-Page--fullWidth .Polaris-Page__Content {
     padding-top: 0;
