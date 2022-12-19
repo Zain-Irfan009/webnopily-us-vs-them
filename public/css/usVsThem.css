@@ -302,7 +302,7 @@
     min-height: 0;
 }
 
-.Dashboard .Polaris-MediaCard-Table .ResourceItem-ListItem{
+.Dashboard .Polaris-MediaCard-Table .ResourceItem-ListItem {
     border-top: var(--p-border-divider);
 }
 
@@ -311,7 +311,7 @@
     font-weight: 500;
 }
 
-.Selected-Product{
+.Selected-Product {
     pointer-events: none;
     cursor: none;
     opacity: 0.6;
@@ -1221,11 +1221,6 @@
 }
 
 
-/* .Advantages-Tables-Preview .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableCell:first-child div {
-    max-width: 110px !important;
-    overflow-x: hidden;
-} */
-
 .Advantages-Tables-Preview .Polaris-IndexTable__Table--unselectable.Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableCell:first-child,
 .Advantages-Tables-Preview .Polaris-IndexTable__Table--sticky .Polaris-IndexTable__TableHeading--second.Polaris-IndexTable__TableHeading--unselectable {
     position: relative;
@@ -1234,12 +1229,15 @@
 
 
 
-/* .Advantages-Tables-Preview .Polaris-Card .Polaris-Card__Section {
-    max-width: 99%;
-    overflow-x: auto;
-} */
 
-
+@media (min-width: 764px) {
+    .Template-Page3 .Preview-Sticky {
+        position: fixed;
+        top: 0;
+        /* top: 120px; */
+        width: -webkit-fill-available;
+    }
+}
 
 
 
@@ -1248,7 +1246,7 @@
 
 
 /* ----------------------Template Page 4-------------------------- */
-.Template-Page4 button a{
+.Template-Page4 button a {
     color: #000;
 }
 

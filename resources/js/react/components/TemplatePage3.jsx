@@ -50,7 +50,22 @@ export function TemplatePage3() {
     setCompetitorToggle(true)
   }, []);
 
+  const listenToScroll = () => {
+    let stickyTemplate = document.getElementById('templateSticky');
+    let scrollValue = document.body.scrollTop || document.documentElement.scrollTop;
+    if (scrollValue < 120) {
+      stickyTemplate.classList.remove('Preview-Sticky');
+    }
+    else {
+      stickyTemplate.classList.add('Preview-Sticky');
+    }
+  };
 
+  useEffect(() => {
+    window.addEventListener("scroll", listenToScroll);
+    return () => window.removeEventListener("scroll", listenToScroll);
+  }, []);
+  
   const getData = async () => {
     const response = await axios
       .get(
@@ -666,7 +681,7 @@ export function TemplatePage3() {
                                               className={`${competitorValue[index] && competitorValue[index][index2] === false ? 'Selected' : ''}`}
                                             >
                                               <input type="radio"
-                                                value={ false}
+                                                value={false}
                                                 onClick={(e) => handleCompetitorValue(e, index, index2)} />
                                               <Icon source={CircleCancelMajor}>
                                               </Icon>
@@ -1419,52 +1434,54 @@ export function TemplatePage3() {
             <Layout.Section secondary>
               <SideBarNavigation />
 
+              <div className='' id='templateSticky'>
+                <div className='Advantages-Tables-Preview'>
+                  {(() => {
+                    switch (selectedTemplate) {
+                      case 1:
+                        return (
+                          <Table1 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
+                            advantageLoading={advantageLoading} allValues={allValues}
+                            yourBrand={yourBrand} competitorName={competitorName} colorValues={colorValues}
+                            brandValue={brandValue} competitorValue={competitorValue} />
+                        )
 
-              <div className='Advantages-Tables-Preview'>
-                {(() => {
-                  switch (selectedTemplate) {
-                    case 1:
-                      return (
-                        <Table1 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
-                          advantageLoading={advantageLoading} allValues={allValues}
-                          yourBrand={yourBrand} competitorName={competitorName} colorValues={colorValues}
-                          brandValue={brandValue} competitorValue={competitorValue} />
-                      )
+                      case 2:
+                        return (
+                          <Table2 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
+                            advantageLoading={advantageLoading} allValues={allValues}
+                            yourBrand={yourBrand} competitorName={competitorName} colorValues={colorValues}
+                            brandValue={brandValue} competitorValue={competitorValue} />
+                        )
 
-                    case 2:
-                      return (
-                        <Table2 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
-                          advantageLoading={advantageLoading} allValues={allValues}
-                          yourBrand={yourBrand} competitorName={competitorName} colorValues={colorValues}
-                          brandValue={brandValue} competitorValue={competitorValue} />
-                      )
+                      case 3:
+                        return (
+                          <Table3 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
+                            advantageLoading={advantageLoading} allValues={allValues} valueType={valueType}
+                            yourBrand={yourBrand} competitorName={competitorName} colorValues={colorValues}
+                            brandValue={brandValue} competitorValue={competitorValue} />
+                        )
 
-                    case 3:
-                      return (
-                        <Table3 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
-                          advantageLoading={advantageLoading} allValues={allValues} valueType={valueType}
-                          yourBrand={yourBrand} competitorName={competitorName} colorValues={colorValues}
-                          brandValue={brandValue} competitorValue={competitorValue} />
-                      )
+                      case 4:
+                        return (
+                          <Table4 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
+                            advantageLoading={advantageLoading} allValues={allValues} valueType={valueType}
+                            yourBrand={yourBrand} competitorName={competitorName} colorValues={colorValues}
+                            brandValue={brandValue} competitorValue={competitorValue} />
+                        )
 
-                    case 4:
-                      return (
-                        <Table4 competitorsCount={competitorsCount} advantagesCount={advantagesCount}
-                          advantageLoading={advantageLoading} allValues={allValues} valueType={valueType}
-                          yourBrand={yourBrand} competitorName={competitorName} colorValues={colorValues}
-                          brandValue={brandValue} competitorValue={competitorValue} />
-                      )
+                      default:
+                        break
+                    }
 
-                    default:
-                      break
-                  }
+                  })()}
+                </div>
 
-                })()}
+                <div className='Template-Save-Actions'>
+                  <Button primary loading={btnloading ? true : false} onClick={submitData}> Save Template</Button>
+                </div>
               </div>
 
-              <div className='Template-Save-Actions'>
-                <Button primary loading={btnloading ? true : false} onClick={submitData}> Save Template</Button>
-              </div>
             </Layout.Section>
           </Layout>
         }
