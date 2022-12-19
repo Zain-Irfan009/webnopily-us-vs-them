@@ -576,20 +576,26 @@ class TemplateController extends ApiController
 
             $advantages = Advantage::where('user_template_id', $duplicate_user_template->id)->where('shop_id', $duplicate_user_template->shop_id)->get();
 
+            $advantages_count = Advantage::where('user_template_id', $duplicate_user_template->id)->where('shop_id', $duplicate_user_template->shop_id)->count();
+
             foreach ($advantages as $advantage_value) {
                 $advantage = new Advantage();
                 $advantage->advantage = $advantage_value->advantage;
-                $advantage->brand = $advantage_value->brand;
+                // $advantage->brand = $advantage_value->brand;
+                $advantage->brand = 0;
                 $advantage->competitors = $advantage_value->competitors;
                 $advantage->user_template_id = $user_template->id;
                 $advantage->shop_id = $advantage_value->shop_id;
                 $advantage->advantage_column_color = $advantage_value->advantage_column_color;
-                $advantage->text_icon = $advantage_value->text_icon;
+                // $advantage->text_icon = $advantage_value->text_icon;
+                $advantage->text_icon = 'icon';
                 $advantage->brand_text = $advantage_value->brand_text;
                 $advantage->save();
             }
 
             $competitor_names= CompetitorName::where('user_template_id', $duplicate_user_template->id)->where('shop_id', $duplicate_user_template->shop_id)->get();
+
+
 
                 foreach ($competitor_names as $competitor_name){
                     $name_competitor=new CompetitorName();
@@ -600,16 +606,27 @@ class TemplateController extends ApiController
                 }
             $competitors= Competator::where('user_template_id', $duplicate_user_template->id)->where('shop_id', $duplicate_user_template->shop_id)->get();
 
+            $competitors_count= Competator::where('user_template_id', $duplicate_user_template->id)->where('shop_id', $duplicate_user_template->shop_id)->count();
 
-                foreach ($competitors as $competitor) {
+
+            $competitor_divide=$competitors_count/$advantages_count;
+
+            $new_advantages = Advantage::where('user_template_id', $user_template->id)->where('shop_id', $duplicate_user_template->shop_id)->get();
+
+            // foreach ($competitors as $competitor) {
+             foreach($new_advantages as $new_advantage){
+                for($i=1; $i <=$competitor_divide;  ){
                     $competitor_data = new Competator();
-                    $competitor_data->competator_status = $competitor->competator_status;
-                    $competitor_data->advantage_id = $competitor->id;
-                    $competitor_data->shop_id = $competitor->shop_id;
+                    $competitor_data->competator_status =0;
+                    $competitor_data->advantage_id = $new_advantage->id;
+                    $competitor_data->shop_id = $duplicate_user_template->shop_id;
                     $competitor_data->user_template_id = $user_template->id;
-                    $competitor_data->competitor_text = $competitor->competitor_text;
+                    $competitor_data->competitor_text =null;
                     $competitor_data->save();
-                }
+                    $i++;
+             }
+            }
+                // }
 
 
 
@@ -673,25 +690,43 @@ class TemplateController extends ApiController
         if (isset($request->user_template_id)) {
             $user_template = UserTemplate::where('id', $request->user_template_id)->where('shop_id', $shop->id)->first();
 
+            // $products = Product::with(['templateProducts' => function ($q) use ($user_template) {
+            //     $q->where('user_template_id', $user_template->id);
+
+            // }])->whereDoesntHave('templateProducts', function ($q) use ($user_template) {
+            //     $q->where('user_template_id', '!=', $user_template->id);
+
+            // })->where('shop_id', $shop->id)->get();
+
             $products = Product::with(['templateProducts' => function ($q) use ($user_template) {
                 $q->where('user_template_id', $user_template->id);
 
-            }])->whereDoesntHave('templateProducts', function ($q) use ($user_template) {
-                $q->where('user_template_id', '!=', $user_template->id);
+            }])->where('shop_id', $shop->id)->get();
 
-            })->where('shop_id', $shop->id)->get();
 
             $prodcuts_array = [];
             foreach ($products as $product) {
-
-                $item = [
+               $user_template_product=UserTemplateProduct::where('shopify_product_id',$product->shopify_id)->where('shop_id', $shop->id)->first();
+                if($user_template_product==null){
+                    $template_user=UserTemplate::find($user_template_product->user_template_id);
+                    $assigned=false;
+                }
+                else{
+                    $assigned=true;
+                }
+               $item = [
                     'id' => $product->shopify_id,
                     'title' => $product->title,
                     'image' => $product->featured_image,
-                    'selected' => ($product->templateProducts->count() > 0) ? true : false
+                    'selected' => ($product->templateProducts->count() > 0) ? true : false,
+                    'assigned'=>$assigned,
+                     'template_name'=>$template_user->template_name
                 ];
                 $prodcuts_array[] = $item;
+
             }
+
+
         } else {
             $products = Product::whereDoesntHave('templateProducts', function ($q) use ($shop) {
                 $q->where('shop_id', $shop->id);
