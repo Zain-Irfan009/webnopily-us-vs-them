@@ -706,8 +706,6 @@ class TemplateController extends ApiController
 
             foreach ($products as $loop_index=> $product) {
 
-
-
                     $user_template_product_count=UserTemplateProduct::where('shopify_product_id',$product->shopify_id)->where('shop_id', $shop->id)->count();
                 if($user_template_product_count >0){
                     $selected=true;
